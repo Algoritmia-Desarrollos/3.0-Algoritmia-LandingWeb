@@ -30,6 +30,7 @@ export default {
 				'apple-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025)',
 			},
 			animation: {
+				'scroll-fast': 'scroll 20s linear infinite',
 				'scroll': 'scroll 40s linear infinite',
 				'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
 			},
