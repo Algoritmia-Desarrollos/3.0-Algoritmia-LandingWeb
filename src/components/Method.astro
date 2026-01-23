@@ -17,11 +17,9 @@
                 <div class="timeline-marker">1</div>
                 <div class="timeline-content">
                     <div class="timeline-icon"><i class="ph ph-magnifying-glass"></i></div>
-                    <h3 class="text-h3 mb-2">01. Diagnóstico Estratégico</h3>
-                    <p class="text-sm">
-                        <strong>Analizamos tu negocio, métricas y mercado a fondo.</strong> 
-                        Definimos objetivos claros y rentables contigo. 
-                        Entendemos antes de ejecutar.
+                    <h3 class="text-h3 mb-2">Diagnóstico</h3>
+                    <p class="text-sm text-secondary">
+                        Auditoría profunda. Entendemos tus números antes de ejecutar.
                     </p>
                 </div>
             </div>
@@ -30,11 +28,9 @@
                 <div class="timeline-marker">2</div>
                 <div class="timeline-content">
                     <div class="timeline-icon"><i class="ph ph-clipboard-text"></i></div>
-                    <h3 class="text-h3 mb-2">02. Evaluación de Viabilidad</h3>
-                    <p class="text-sm">
-                        <strong>Evaluamos si tu objetivo es alcanzable hoy.</strong> 
-                        Identificamos riesgos y ajustes necesarios. 
-                        Si no es viable, proponemos alternativas.
+                    <h3 class="text-h3 mb-2">Viabilidad</h3>
+                    <p class="text-sm text-secondary">
+                        Validamos tu potencial. Si no es rentable, te lo decimos.
                     </p>
                 </div>
             </div>
@@ -43,11 +39,9 @@
                 <div class="timeline-marker">3</div>
                 <div class="timeline-content">
                     <div class="timeline-icon"><i class="ph ph-strategy"></i></div>
-                    <h3 class="text-h3 mb-2">03. Plan de Acción & Propuesta</h3>
-                    <p class="text-sm">
-                        <strong>Diseñamos una estrategia clara con acciones concretas.</strong> 
-                        Definimos inversión, plazos y expectativas. 
-                        Sin letra chica ni promesas vacías.
+                    <h3 class="text-h3 mb-2">Plan de Acción</h3>
+                    <p class="text-sm text-secondary">
+                        Hoja de ruta exacta. Inversión, tiempos y retorno.
                     </p>
                 </div>
             </div>
@@ -56,11 +50,9 @@
                 <div class="timeline-marker">4</div>
                 <div class="timeline-content">
                     <div class="timeline-icon"><i class="ph ph-rocket-launch"></i></div>
-                    <h3 class="text-h3 mb-2">04. Ejecución y Escalado</h3>
-                    <p class="text-sm">
-                        Implementamos campañas y activos digitales rentables. 
-                        Iteramos basándonos en datos reales. 
-                        <strong>Trabajamos contigo enfocados en tu crecimiento.</strong>
+                    <h3 class="text-h3 mb-2">Escalado</h3>
+                    <p class="text-sm text-secondary">
+                        Lanzamos campañas que venden y optimizamos con datos.
                     </p>
                 </div>
             </div>
@@ -113,14 +105,8 @@
         transform: translateY(0);
     }
 
-    /* Hover Spotlight Effect - Only triggers when hovering an item */
-    .timeline-wrapper:has(.timeline-item:hover) .timeline-item {
-        opacity: 0.4;
-    }
-    
+    /* Hover Effect */
     .timeline-wrapper .timeline-item:hover {
-        opacity: 1;
-        filter: blur(0);
         transform: scale(1.02);
         z-index: 10;
     }
@@ -151,20 +137,15 @@
     }
 
     .timeline-content {
-        background: var(--bg-surface);
-        border: 1px solid transparent;
-        border-radius: var(--radius-md);
-        padding: 1.5rem 2rem;
+        background: transparent;
+        padding: 1rem 0;
         width: 100%;
         transition: all 0.3s ease;
         position: relative;
-        overflow: hidden;
     }
     
     .timeline-item:hover .timeline-content {
-        background: var(--color-white);
-        box-shadow: var(--shadow-md);
-        border-color: var(--border-light);
+        transform: translateY(-5px);
     }
 
     .timeline-icon {
@@ -174,25 +155,58 @@
         transition: color 0.3s ease;
     }
 
-    @media (min-width: 768px) {
-        .timeline-line { left: 50%; transform: translateX(-50%); }
-        .timeline-item { width: 50%; margin-bottom: 1.5rem; padding-bottom: 4rem; }
-        .timeline-marker { width: 50px; height: 50px; font-size: 1.1rem; }
-
-        .timeline-item:nth-child(odd) {
-            margin-left: 0;
-            margin-right: auto;
-            padding-right: 3rem;
-            flex-direction: row-reverse;
-            text-align: right;
+    @media (min-width: 1024px) {
+        .timeline-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding-top: 3rem; /* Space for the line */
+            max-width: 1200px;
         }
-        .timeline-item:nth-child(odd) .timeline-marker { position: absolute; right: -25px; top: 0; }
 
+        .timeline-line { 
+            left: 0; 
+            right: 0;
+            top: 20px; /* Align with markers */
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--border-light) 10%, var(--border-light) 90%, transparent);
+            transform: none;
+        }
+
+        .timeline-item { 
+            width: 100%; 
+            margin-bottom: 0; 
+            padding: 0;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .timeline-marker { 
+            width: 50px; 
+            height: 50px; 
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            z-index: 10;
+        }
+
+        /* Reset odd/even logic from mobile */
+        .timeline-item:nth-child(odd),
         .timeline-item:nth-child(even) {
-            margin-left: auto;
-            margin-right: 0;
-            padding-left: 3rem;
+            margin: 0;
+            padding: 0;
+            flex-direction: column;
+            text-align: center;
         }
-        .timeline-item:nth-child(even) .timeline-marker { position: absolute; left: -25px; top: 0; }
+
+        .timeline-item:nth-child(odd) .timeline-marker,
+        .timeline-item:nth-child(even) .timeline-marker {
+            position: static; /* Reset absolute positioning */
+        }
+
+        .timeline-content {
+            padding: 2rem 1.5rem;
+        }
     }
 </style>

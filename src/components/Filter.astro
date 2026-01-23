@@ -29,19 +29,24 @@ import Button from './UI/Button.astro';
 <style>
     .filter-section { background-color: var(--bg-dark); color: var(--color-white); padding: var(--section-spacing) 0; }
     .filter-box { background: rgba(255,255,255,0.05); padding: 3rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); }
-    .filter-list { list-style: none; padding: 0; }
+    .filter-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1rem; }
     .filter-list li { 
-        margin-bottom: 1.5rem; 
+        margin-bottom: 0;
         display: flex; 
         gap: 1rem; 
-        align-items: flex-start; 
-        color: var(--text-inverse); 
+        align-items: center; 
+        color: var(--color-white); 
         font-size: 1.1rem;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
+        padding: 1rem 1.5rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.05);
     }
     .filter-list li:hover {
         transform: translateX(10px);
-        color: var(--color-white);
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.2);
     }
-    .filter-list i { color: var(--color-white); margin-top: 4px; font-size: 1.5rem; }
+    .filter-list i { color: var(--color-white); font-size: 1.5rem; }
 </style>
