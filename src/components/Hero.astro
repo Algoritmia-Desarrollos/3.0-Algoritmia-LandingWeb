@@ -4,8 +4,8 @@ import heroBg from '../assets/hero-bg.jpg';
 import Button from './UI/Button.astro';
 ---
 
-<section class="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 py-32 pt-40">
-  <div class="max-w-4xl w-full text-center space-y-6 animate-fade-in-up">
+<section class="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 py-20 pt-32 md:py-32 md:pt-40">
+  <div class="max-w-4xl w-full text-center space-y-4 md:space-y-6 animate-fade-in-up">
     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface text-[11px] font-semibold tracking-wide mb-3 text-primary">
       <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></span>
       Disponible para nuevos proyectos
@@ -18,10 +18,14 @@ import Button from './UI/Button.astro';
         Tu socio digital
       </p>
     </div>
-    <p class="text-base md:text-lg text-primary/60 max-w-xl mx-auto font-normal leading-relaxed pt-2">
-      Escalamos negocios con estrategia, datos y ejecución real.
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+    <div class="relative max-w-xl mx-auto">
+      <p id="ghost-text" class="text-base md:text-lg text-primary/60 font-normal leading-relaxed pt-2 invisible" aria-hidden="true">
+        Escalamos negocios con estrategia, datos y ejecución real.
+      </p>
+      <p id="typewriter-text" class="absolute top-0 left-0 w-full h-full text-base md:text-lg text-primary/60 font-normal leading-relaxed pt-2">
+      </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-4 md:pt-6">
       <Button variant="primary">
         Empieza la Conversación
       </Button>
@@ -32,9 +36,9 @@ import Button from './UI/Button.astro';
     </div>
   </div>
   
-  <div class="mt-20 w-full max-w-[1200px] mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative group">
+  <div class="mt-10 md:mt-20 w-full max-w-[1200px] mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative group">
     <div class="absolute inset-0 bg-black/0 z-10 group-hover:bg-black/0 transition-colors duration-500"></div>
-    <div class="w-full h-full relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-1000">
+    <div class="w-full h-full relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-1000 will-change-transform">
        <Image 
         src={heroBg} 
         alt="Cinematic landscape shot showing misty mountains in monochrome tones representing scope and vision"
@@ -52,3 +56,25 @@ import Button from './UI/Button.astro';
     </div>
   </div>
 </section>
+
+<script>
+  const ghostElement = document.getElementById('ghost-text');
+  const targetElement = document.getElementById('typewriter-text');
+  
+  if (ghostElement && targetElement) {
+    const text = ghostElement.textContent?.trim() || '';
+    targetElement.textContent = '';
+    
+    let i = 0;
+    const typeWriter = () => {
+      if (i < text.length) {
+        targetElement.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 30); // Adjust speed here (lower is faster)
+      }
+    };
+    
+    // Start animation with a slight delay
+    setTimeout(typeWriter, 500);
+  }
+</script>
