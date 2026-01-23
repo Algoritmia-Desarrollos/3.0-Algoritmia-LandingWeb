@@ -1,0 +1,47 @@
+---
+import Button from './UI/Button.astro';
+---
+
+<section class="filter-section reveal">
+    <div class="container">
+        <div class="grid-2 grid-center">
+            <div>
+                <h2 class="text-h2 mb-4 text-white">No somos para todos.</h2>
+                <p class="text-lg mb-4 text-inverse">
+                    Filtramos con quién trabajamos para asegurar resultados reales. Nos enfocamos en calidad, no cantidad.
+                </p>
+                <Button href="/contacto" variant="inverse">
+                    Ver si califico <i class="ph ph-check"></i>
+                </Button>
+            </div>
+            <div class="filter-box">
+                <h3 class="text-h3 mb-4 text-white">Buscamos:</h3>
+                <ul class="filter-list">
+                    <li><i class="ph ph-check-circle"></i> <span>Producto o Servicio Validado.</span></li>
+                    <li><i class="ph ph-check-circle"></i> <span>Mentalidad de Inversión.</span></li>
+                    <li><i class="ph ph-check-circle"></i> <span>Capacidad de Escalar Operaciones.</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .filter-section { background-color: var(--bg-dark); color: var(--color-white); padding: var(--section-spacing) 0; }
+    .filter-box { background: rgba(255,255,255,0.05); padding: 3rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.1); }
+    .filter-list { list-style: none; padding: 0; }
+    .filter-list li { 
+        margin-bottom: 1.5rem; 
+        display: flex; 
+        gap: 1rem; 
+        align-items: flex-start; 
+        color: var(--text-inverse); 
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+    .filter-list li:hover {
+        transform: translateX(10px);
+        color: var(--color-white);
+    }
+    .filter-list i { color: var(--color-white); margin-top: 4px; font-size: 1.5rem; }
+</style>

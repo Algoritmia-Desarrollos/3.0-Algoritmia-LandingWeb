@@ -1,0 +1,26 @@
+---
+interface Props {
+	href?: string;
+	variant?: 'primary' | 'secondary' | 'inverse';
+	class?: string;
+    onclick?: string;
+    style?: string;
+}
+
+const { href, variant = 'primary', class: className, onclick, style } = Astro.props;
+
+const baseClass = "btn";
+const variantClass = `btn-${variant}`;
+---
+
+{
+    href ? (
+        <a href={href} class:list={[baseClass, variantClass, className]} onclick={onclick} style={style}>
+            <slot />
+        </a>
+    ) : (
+        <button class:list={[baseClass, variantClass, className]} onclick={onclick} style={style}>
+            <slot />
+        </button>
+    )
+}

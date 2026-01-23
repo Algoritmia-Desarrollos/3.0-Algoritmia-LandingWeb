@@ -1,0 +1,79 @@
+---
+const clients = [
+    { name: "Armura", logo: "/assets/logos/armura.webp" },
+    { name: "Casse Rossi", logo: "/assets/logos/caserossi.webp" },
+    { name: "Fagaz SA", logo: "/assets/logos/fagazsa.webp" },
+    { name: "Industria 4", logo: "/assets/logos/industria4.webp" },
+    { name: "Intertenis", logo: "/assets/logos/intertenis.webp" },
+    { name: "Libreria", logo: "/assets/logos/libreria.webp" },
+    { name: "Notem", logo: "/assets/logos/notem.webp" },
+    { name: "Nouryon", logo: "/assets/logos/nouryon.png" },
+    { name: "Puertas Jack", logo: "/assets/logos/puertasjack.webp" },
+    { name: "Renova", logo: "/assets/logos/renova.webp" },
+    { name: "Savages", logo: "/assets/logos/savages.webp" },
+    { name: "Selecta", logo: "/assets/logos/selecta.webp" },
+    { name: "Step Mza", logo: "/assets/logos/stepmza.webp" },
+    { name: "Terravento", logo: "/assets/logos/terravento.webp" },
+    { name: "Zaida Egea", logo: "/assets/logos/zaidaegea.webp" },
+];
+
+// Duplicate for infinite scroll
+const allClients = [...clients, ...clients];
+---
+
+<section class="section-clients reveal">
+    <div class="container">
+        <p class="text-uppercase text-center mb-4 text-secondary-color">
+            Escalando negocios desde Argentina
+        </p>
+        <div class="carousel-container">
+            <div class="carousel-track">
+                {allClients.map(client => (
+                    <img src={client.logo} alt={client.name} class="client-logo" loading="lazy" width="120" height="90" />
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section-clients { padding: 3rem 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+    
+    .carousel-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .carousel-track {
+        display: flex;
+        width: max-content;
+        animation: scroll 40s linear infinite;
+        gap: 6rem;
+    }
+
+    .carousel-track:hover {
+        animation-play-state: paused;
+    }
+
+    .client-logo {
+        height: 90px;
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.3s ease, filter 0.3s ease;
+        background: transparent; 
+        padding: 0 1rem;
+        filter: grayscale(0%) opacity(1);
+    }
+
+    .client-logo:hover {
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .carousel-track { gap: 3rem; }
+        .client-logo { height: 80px; padding: 0 0.5rem; }
+    }
+</style>

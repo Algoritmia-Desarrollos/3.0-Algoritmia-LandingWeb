@@ -1,0 +1,177 @@
+---
+import Button from './UI/Button.astro';
+
+const cases = [
+    {
+        title: "Mayorista Leo",
+        desc: "+100% Rentabilidad en 1 año. De negocio tradicional a máquina de ventas digital.",
+        metrics: [
+            { value: "+100%", label: "Rentabilidad" },
+            { value: "1 Año", label: "Consistencia" }
+        ],
+        img: "/assets/imgwebs/libreriamyoristaleo.webp",
+        link: "/cases/libreria-leo"
+    },
+    {
+        title: "Puertas Jack",
+        desc: "8 Ventas High-Ticket desde cero. Resultados inmediatos en productos de alto valor.",
+        metrics: [
+            { value: "8+", label: "Ventas High-Ticket" },
+            { value: "Mes 1", label: "Resultados" }
+        ],
+        img: "/assets/logos/puertasjack.webp",
+        link: "/cases/puertas-jack"
+    },
+    {
+        title: "Casse Rossi",
+        desc: "+100% Tráfico Total en 3 meses. Impacto real en web, local y redes.",
+        metrics: [
+            { value: "+100%", label: "Tráfico Total" },
+            { value: "3 Meses", label: "Impacto Rápido" }
+        ],
+        img: "/assets/logos/caserossi.webp",
+        link: "/cases/casse-rossi"
+    },
+    {
+        title: "Intertenis",
+        desc: "+800 Jugadores gestionados en tiempo real. Digitalización total de club deportivo.",
+        metrics: [
+            { value: "+800", label: "Usuarios App" },
+            { value: "100%", label: "Digitalizado" }
+        ],
+        img: "/assets/logos/intertenis.webp",
+        link: "/cases/intertenis"
+    }
+];
+---
+
+<section id="casos" class="reveal py-section overflow-hidden">
+    <div class="container">
+        <div class="section-header mb-4 flex-between-end">
+            <div>
+                <p class="text-uppercase text-secondary mb-2">Resultados</p>
+                <h2 class="text-h2">Casos de Éxito.</h2>
+            </div>
+            <div class="carousel-controls">
+                <button class="btn-icon prev-case" aria-label="Anterior"><i class="ph ph-caret-left"></i></button>
+                <button class="btn-icon next-case" aria-label="Siguiente"><i class="ph ph-caret-right"></i></button>
+            </div>
+        </div>
+
+        <div class="cases-slider">
+            {cases.map((item, index) => (
+                <div class={`case-slide ${index === 0 ? 'active' : ''}`}>
+                    <div class="grid-2 grid-center">
+                        <div class="case-img">
+                            <img src={item.img} alt={`Caso ${item.title}`} loading="lazy" />
+                        </div>
+                        <div class="case-info"> 
+                            <h3 class="text-h2 mb-2">{item.title}</h3>
+                            <p class="text-lg mb-4">
+                                <strong>{item.desc.split('.')[0]}.</strong> {item.desc.split('.').slice(1).join('.')}
+                            </p>
+                            <div class="metrics-grid mb-4">
+                                {item.metrics.map(metric => (
+                                    <div>
+                                        <span class="metric-value">{metric.value}</span>
+                                        <span class="metric-label">{metric.label}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <Button href={item.link} variant="primary">Ver Caso <i class="ph ph-arrow-right"></i></Button>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<script>
+    const slides = document.querySelectorAll('.case-slide');
+    const prevBtn = document.querySelector('.prev-case');
+    const nextBtn = document.querySelector('.next-case');
+    let currentSlide = 0;
+
+    function showSlide(n: number) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+    }
+</script>
+
+<style>
+    .cases-slider {
+        position: relative;
+        min-height: 400px;
+    }
+
+    .case-slide {
+        display: none;
+        animation: fadeSlide 0.5s ease forwards;
+    }
+
+    .case-slide.active {
+        display: block;
+    }
+
+    .metrics-grid {
+        display: flex;
+        gap: 2rem;
+        margin-top: 1.5rem;
+    }
+
+    .metric-value {
+        display: block;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--text-primary);
+    }
+
+    .metric-label {
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+
+    .case-img img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-lg);
+        object-fit: cover;
+        background: #fff;
+    }
+
+    .btn-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1px solid var(--color-black); /* Visible border */
+        background: transparent;
+        color: var(--color-black); /* Visible icon */
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-icon:hover {
+        background: var(--color-black);
+        color: white;
+        border-color: var(--color-black);
+        transform: scale(1.1);
+    }
+    
+    .carousel-controls {
+        display: flex;
+        gap: 0.5rem;
+    }
+</style>

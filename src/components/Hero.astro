@@ -1,0 +1,176 @@
+---
+import Button from './UI/Button.astro';
+// import { Image } from 'astro:assets';
+// Import assets here if they exist, otherwise using paths for now
+---
+
+<section class="hero-wrapper reveal">
+    <div class="container">
+        <div class="hero-grid">
+            <div class="hero-text-area">
+                <p class="text-uppercase text-secondary fw-600 ls-1">Growth Partner & Estrategia</p>
+                
+                <h1 class="text-display hero-title">
+                    <span style="display: block;" class="reveal-text" style="--delay: 0.1s">Algoritmia.</span>
+                    <span style="display: block; color: var(--text-secondary);" class="reveal-text" style="--delay: 0.2s">Tu socio digital.</span>
+                </h1>
+                
+                <p class="hero-desc reveal-text" style="--delay: 0.3s">
+                   Escalamos negocios con 
+<strong class="text-highlight-temp">estrategia,  datos y ejecución real.</strong>
+                </p>
+
+                <div class="hero-buttons reveal-text" style="--delay: 0.4s">
+                    <Button href="https://wa.me/5493476245523" variant="primary" onclick="fireConversion('whatsapp_hero')">
+                        Iniciar Auditoría Gratuita <i class="ph ph-chart-line-up"></i>
+                    </Button>
+                    <Button href="#casos" variant="secondary">
+                        Ver Casos Reales
+                    </Button>
+                </div>
+            </div>
+
+            <div class="hero-video-area">
+                <div class="video-container">
+                    <video autoplay loop muted playsinline poster="/assets/img/og-image.jpg">
+                        <source src="/assets/video/hero.mp4" type="video/mp4">
+                        Tu navegador no soporta videos.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-wrapper {
+        position: relative; 
+        min-height: 100vh;
+        display: flex; 
+        align-items: center;
+        padding: 3rem 0;
+    }
+    .hero-title { 
+        width: 100%;
+        max-width: none;
+        margin-bottom: 1.5rem; 
+        font-size: clamp(2.5rem, 5vw, 4.5rem); /* Reduced size */
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+    }
+    .hero-desc { 
+        font-size: 1.125rem; 
+        color: var(--text-secondary); 
+        margin-bottom: 2.5rem; 
+        max-width: 550px; 
+        line-height: 1.6;
+    }
+
+    .hero-desc strong {
+        color: var(--color-black);
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+    }
+
+    .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Balanced columns */
+        gap: 6rem; /* Increased gap */
+        align-items: center;
+        padding-top: 0;
+    }
+
+    .video-container {
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(255,255,255,0.1);
+        background: #000;
+        aspect-ratio: 16/9;
+        transform: perspective(1000px) rotateY(-2deg);
+        transition: transform 0.5s ease;
+    }
+
+    .video-container:hover {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    @media (min-width: 769px) {
+        .hero-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        .hero-text-area { padding-right: 1rem; }
+    }
+
+    @media (max-width: 768px) {
+        .hero-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.5rem;
+        }
+        
+        .hero-text-area { 
+            display: contents;
+        }
+        
+        .hero-text-area > * { order: 1; }
+        .hero-video-area { order: 2; width: 100%; margin: 0; }
+
+        .video-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3); 
+        }
+
+        .hero-buttons {
+            order: 3;
+            flex-direction: column;
+            width: 100%;
+            max-width: 280px; 
+            margin-top: 0.5rem;
+        }
+
+        .hero-title { 
+            font-size: 2.4rem; 
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0rem;
+        } 
+
+        .hero-desc {
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0.3rem;
+            margin-top: 0.8rem;
+        }
+    }
+
+    /* Staggered Animation */
+    .reveal-text {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
