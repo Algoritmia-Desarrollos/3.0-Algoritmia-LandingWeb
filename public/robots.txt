@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://algoritmia.io/sitemap-index.xml

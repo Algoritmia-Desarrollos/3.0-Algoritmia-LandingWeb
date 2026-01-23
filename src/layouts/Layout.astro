@@ -12,7 +12,7 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -20,6 +20,28 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		
+		<!-- SEO -->
+		<link rel="canonical" href="https://algoritmia.io/" />
+		<meta name="robots" content="index, follow" />
+		<meta name="keywords" content="desarrollo web, diseño web, branding, marketing digital, software a medida, aplicaciones web, seo, crecimiento digital" />
+		<meta name="author" content="Algoritmia" />
+		<meta name="publisher" content="Algoritmia" />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://algoritmia.io/" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="https://algoritmia.io/og-image.jpg" />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content="https://algoritmia.io/" />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content="https://algoritmia.io/og-image.jpg" />
+
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 		<ClientRouter />
 	</head>
