@@ -35,8 +35,8 @@ const brands = [
 
 <section class="py-12 border-y border-primary/5 bg-white overflow-hidden">
   <div class="relative w-full mask-linear-fade">
-    <div class="flex whitespace-nowrap animate-scroll w-[200%]">
-      <div class="flex items-center gap-16 md:gap-24 px-12 w-1/2 justify-around opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+    <div class="flex whitespace-nowrap animate-scroll">
+      <div class="flex items-center gap-16 md:gap-48 pr-16 md:pr-48 flex-shrink-0 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
         {brands.map(brand => (
           <Image 
             src={brand.logo} 
@@ -47,7 +47,7 @@ const brands = [
           />
         ))}
       </div>
-      <div class="flex items-center gap-16 md:gap-24 px-12 w-1/2 justify-around opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+      <div class="flex items-center gap-16 md:gap-48 pr-16 md:pr-48 flex-shrink-0 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
         {brands.map(brand => (
           <Image 
             src={brand.logo} 
