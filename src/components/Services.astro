@@ -1,205 +1,48 @@
 ---
+const services = [
+  {
+    icon: "code",
+    title: "Diseño Web",
+    description: "Arquitectura digital de alto rendimiento. Velocidad, accesibilidad y estética en perfecta sintonía."
+  },
+  {
+    icon: "brush",
+    title: "Branding",
+    description: "Identidades visuales que trascienden lo estético para convertirse en activos culturales."
+  },
+  {
+    icon: "share",
+    title: "Redes Sociales",
+    description: "Narrativas que conectan. Construimos comunidades leales a través de contenido estratégico."
+  },
+  {
+    icon: "trending_up",
+    title: "Growth",
+    description: "Marketing de precisión. Datos y creatividad unidos para maximizar el retorno de inversión."
+  }
+];
 ---
-<section id="servicios" class="reveal py-16 bg-dark text-white">
-    <div class="container">
-        <div class="header-grid mb-4">
-            <div>
-                <p class="text-uppercase text-inverse ls-1">Nuestros Servicios</p>
-                <h2 class="text-display text-white">Todo en un solo lugar.</h2>
-            </div>
-            <div class="flex-end">
-                <p class="text-lg text-inverse max-w-600 text-right-desktop">
-                    Dejamos de lado las agencias fragmentadas. 
-                    Unificamos estrategia, diseño y tecnología para escalar tu negocio.
-                </p>
-            </div>
-        </div>
 
-        <div class="bento-grid">
-            <!-- Card 1: Web (Large) -->
-            <div class="bento-card card-web">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <!-- Web Icon -->
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="3" y1="9" x2="21" y2="9"></line>
-                            <line x1="9" y1="21" x2="9" y2="9"></line>
-                        </svg>
-                    </div>
-                    <h3 class="text-h3 mb-2">Desarrollo Web</h3>
-                    <p class="text-inverse text-sm">
-                        Sitios de alto rendimiento y E-Commerce escalables.
-                    </p>
-                </div>
-                <div class="card-visual visual-code">
-                    <div class="code-block">
-                        <span>&lt;</span><span>Code</span> <span>/&gt;</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2: Marketing (Large) -->
-            <div class="bento-card card-marketing">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <!-- Marketing Icon -->
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 6l-9.5 9.5-5-5L1 18"></path>
-                            <path d="M17 6h6v6"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-h3 mb-2">Growth Marketing</h3>
-                    <p class="text-inverse text-sm">
-                        Estrategias de Ads y funnels que convierten.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Card 3: Branding (Tall/Square) -->
-            <div class="bento-card card-branding">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <!-- Branding Icon -->
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                            <path d="M2 2l7.586 7.586"></path>
-                            <circle cx="11" cy="11" r="2"></circle>
-                        </svg>
-                    </div>
-                    <h3 class="text-h3 mb-2">Branding</h3>
-                    <p class="text-inverse text-sm">
-                        Identidad visual que impacta.
-                    </p>
-                </div>
-                <div class="card-visual visual-circle"></div>
-            </div>
-
-            <!-- Card 4: Content (Tall/Square) -->
-            <div class="bento-card card-content-creation">
-                <div class="card-content">
-                    <div class="icon-wrapper">
-                        <!-- Content Icon -->
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-                            <line x1="7" y1="2" x2="7" y2="22"></line>
-                            <line x1="17" y1="2" x2="17" y2="22"></line>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <line x1="2" y1="7" x2="7" y2="7"></line>
-                            <line x1="2" y1="17" x2="7" y2="17"></line>
-                            <line x1="17" y1="17" x2="22" y2="17"></line>
-                            <line x1="17" y1="7" x2="22" y2="7"></line>
-                        </svg>
-                    </div>
-                    <h3 class="text-h3 mb-2">Contenido</h3>
-                    <p class="text-inverse text-sm">
-                        Producción audiovisual de calidad.
-                    </p>
-                </div>
-            </div>
-        </div>
+<section class="py-32 px-6 md:px-12 max-w-[1440px] mx-auto" id="services">
+  <div class="mb-24 flex flex-col md:flex-row justify-between items-end gap-6">
+    <div>
+      <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-primary">Nuestra Experiencia</h2>
+      <p class="text-primary/50 text-lg max-w-md">Soluciones integrales diseñadas para el ecosistema moderno.</p>
     </div>
+    <div class="h-px w-full md:w-auto md:flex-1 bg-primary/10 mb-2 md:ml-12"></div>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16">
+    {services.map(service => (
+      <div class="group">
+        <div class="mb-6 text-primary w-14 h-14 rounded-2xl bg-surface flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <span class="material-symbols-outlined text-3xl font-light">{service.icon}</span>
+        </div>
+        <h3 class="text-xl font-semibold tracking-tight mb-3">{service.title}</h3>
+        <p class="text-sm text-primary/60 leading-relaxed">
+          {service.description}
+        </p>
+      </div>
+    ))}
+  </div>
 </section>
-
-<style>
-    .bg-dark { background-color: #050505; color: white; }
-    .text-inverse { color: #a1a1a6; }
-    .text-right-desktop { text-align: left; }
-    
-    .header-grid {
-        display: grid;
-        gap: 1rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .bento-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .bento-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        padding: 1.5rem;
-        position: relative;
-        overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .bento-card:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.4);
-        transform: translateY(-4px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        z-index: 2;
-    }
-
-    .icon-wrapper {
-        width: 40px;
-        height: 40px;
-        background: white;
-        color: black;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        margin-bottom: 1rem;
-    }
-
-    .feature-list { list-style: none; padding: 0; }
-    .feature-list li { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; font-size: 0.85rem; color: #ccc; }
-    .feature-list i { color: white; }
-
-    .stats-mini { display: flex; gap: 1.5rem; }
-    .stat-num { display: block; font-size: 1.25rem; font-weight: 700; color: white; }
-    .stat-label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
-
-    /* Visuals */
-    .visual-code {
-        margin-top: 1.5rem;
-        background: #111;
-        padding: 0.75rem;
-        border-radius: 8px;
-        font-family: monospace;
-        font-size: 0.8rem;
-        opacity: 0.7;
-        border: 1px solid #333;
-    }
-    .visual-code span:nth-child(1) { color: #ff79c6; }
-    .visual-code span:nth-child(2) { color: #8be9fd; }
-    .visual-code span:nth-child(3) { color: #ff79c6; }
-    .visual-code span:nth-child(4) { color: #f1fa8c; }
-
-    .visual-circle {
-        width: 80px;
-        height: 80px;
-        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0) 70%);
-        border-radius: 50%;
-        position: absolute;
-        bottom: -15px;
-        right: -15px;
-        filter: blur(15px);
-    }
-
-    @media (min-width: 768px) {
-        .header-grid { grid-template-columns: 1fr 1fr; align-items: end; }
-        .text-right-desktop { text-align: right; }
-        
-        .bento-grid {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, minmax(240px, auto));
-        }
-
-        .card-web { grid-column: 1 / 3; grid-row: 1 / 2; }
-        .card-branding { grid-column: 3 / 4; grid-row: 1 / 2; }
-        .card-marketing { grid-column: 1 / 3; grid-row: 2 / 3; }
-        .card-content-creation { grid-column: 3 / 4; grid-row: 2 / 3; }
-    }
-</style>

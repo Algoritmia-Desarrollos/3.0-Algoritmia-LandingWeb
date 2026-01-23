@@ -1,28 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Services from '../components/Services.astro';
-import Clients from '../components/Clients.astro';
-import Method from '../components/Method.astro';
-import Filter from '../components/Filter.astro';
-import Cases from '../components/Cases.astro';
-import Quote from '../components/Quote.astro';
-import CTA from '../components/CTA.astro';
-import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Algoritmia | Growth Partner & Estrategia Digital">
-    <Header />
-    <main>
-        <Hero />
-        <Clients />
-        <Services />
-        <Method />
-        <Filter />
-        <Cases />
-        <Quote />
-        <CTA />
-    </main>
-    <Footer />
+<Layout title="Welcome to Astro.">
+	<main class="flex min-h-screen flex-col items-center justify-center p-24">
+		<h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+			Welcome to <span class="text-gradient">Astro</span>
+		</h1>
+		<p class="mt-6 text-lg leading-8 text-gray-300">
+			High performance scaffolding ready for production.
+		</p>
+	</main>
 </Layout>
+
+<style>
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+</style>

@@ -1,18 +1,18 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
+// Supports weights 100-900
 import '@fontsource-variable/inter';
-import '../styles/global.css';
 
 interface Props {
 	title: string;
 	description?: string;
 }
 
-const { title, description = "Escalamos tu negocio con datos y ejecución real. Garantía de resultados: si no cumplimos, te devolvemos el dinero." } = Astro.props;
+const { title, description = "Astro high performance starter" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
@@ -20,51 +20,39 @@ const { title, description = "Escalamos tu negocio con datos y ejecución real. 
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content="/web-app-manifest-512x512.png" />
-
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={Astro.url} />
-		<meta property="twitter:title" content={title} />
-		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content="/web-app-manifest-512x512.png" />
-
-		<ViewTransitions />
+		<ClientRouter />
 	</head>
-	<body>
+	<body class="antialiased text-gray-900 bg-white">
 		<slot />
-        <script>
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-        
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-        
-            document.addEventListener('astro:page-load', () => {
-                document.querySelectorAll('.reveal').forEach((element) => {
-                    observer.observe(element);
-                });
-            });
-            
-            // Initial load
-            document.querySelectorAll('.reveal').forEach((element) => {
-                observer.observe(element);
-            });
-        </script>
 	</body>
 </html>
+
+<style is:global>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+	}
+	html {
+		font-family: 'Inter Variable', sans-serif;
+		background: #13151a;
+		background-size: 224px;
+	}
+	code {
+		font-family:
+			Menlo,
+			Monaco,
+			Lucida Console,
+			Liberation Mono,
+			DejaVu Sans Mono,
+			Bitstream Vera Sans Mono,
+			Courier New,
+			monospace;
+	}
+</style>

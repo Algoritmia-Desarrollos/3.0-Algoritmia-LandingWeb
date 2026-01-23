@@ -1,26 +1,30 @@
 ---
 interface Props {
-	href?: string;
-	variant?: 'primary' | 'secondary' | 'inverse';
-	class?: string;
-    onclick?: string;
-    style?: string;
+  variant?: 'primary' | 'secondary' | 'outline';
+  href?: string;
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+  [key: string]: any;
 }
 
-const { href, variant = 'primary', class: className, onclick, style } = Astro.props;
+const { variant = 'primary', href, class: className, type = 'button', ...rest } = Astro.props;
 
-const baseClass = "btn";
-const variantClass = `btn-${variant}`;
+const baseStyles = "h-12 px-8 rounded-full text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2";
+
+const variants = {
+  primary: "bg-primary text-white hover:scale-105 shadow-xl shadow-primary/10 hover:bg-black/90",
+  secondary: "bg-white border border-primary/10 text-primary hover:bg-surface group",
+  outline: "border border-white/20 text-white hover:bg-white/10"
+};
+
+const Element = href ? 'a' : 'button';
 ---
 
-{
-    href ? (
-        <a href={href} class:list={[baseClass, variantClass, className]} onclick={onclick} style={style}>
-            <slot />
-        </a>
-    ) : (
-        <button class:list={[baseClass, variantClass, className]} onclick={onclick} style={style}>
-            <slot />
-        </button>
-    )
-}
+<Element 
+  href={href} 
+  type={!href ? type : undefined}
+  class:list={[baseStyles, variants[variant], className]}
+  {...rest}
+>
+  <slot />
+</Element>

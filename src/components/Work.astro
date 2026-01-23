@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import workFintech from '../assets/work-fintech.jpg';
+import workEcomoda from '../assets/work-ecomoda.jpg';
+
+const projects = [
+  {
+    title: "Revolución FinTech",
+    description: "Escalando una startup Serie B de cero a $10M ARR mediante rebranding estratégico.",
+    year: "2023",
+    image: workFintech,
+    alt: "Modern office meeting room with charts on glass walls showing growth"
+  },
+  {
+    title: "Eco-Moda",
+    description: "Transformación digital completa para una marca de moda sostenible global.",
+    year: "2024",
+    image: workEcomoda,
+    alt: "Close up of fashion apparel texture and design sketches"
+  }
+];
+---
+
+<section class="py-32 bg-black text-white" id="work">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+      <div class="space-y-2">
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">Casos de Éxito</h2>
+        <p class="text-white/40 text-lg">Resultados reales para visionarios.</p>
+      </div>
+      <a class="hidden md:inline-flex items-center gap-2 text-white text-sm font-medium hover:text-white/70 transition-colors" href="#">
+        Ver todos los proyectos <span class="material-symbols-outlined text-sm">arrow_forward</span>
+      </a>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      {projects.map(project => (
+        <div class="group cursor-pointer">
+          <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
+            <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
+              <Image 
+                src={project.image} 
+                alt={project.alt}
+                class="w-full h-full object-cover"
+                width={800}
+                height={600}
+              />
+              <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+            </div>
+          </div>
+          <div class="flex justify-between items-start">
+            <div>
+              <h3 class="text-2xl font-bold mb-2">{project.title}</h3>
+              <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
+            </div>
+            <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="mt-12 md:hidden text-center">
+      <a class="inline-flex items-center gap-2 text-white text-sm font-medium border-b border-white/20 pb-1" href="#">
+        Ver Todos
+      </a>
+    </div>
+  </div>
+</section>

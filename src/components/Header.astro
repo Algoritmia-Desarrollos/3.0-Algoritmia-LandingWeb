@@ -1,245 +1,41 @@
 ---
-import Button from './UI/Button.astro';
 ---
 
-<div id="navbar-container">
-    <div class="navbar-fixed-wrapper">
-        <nav class="navbar liquidGlass-wrapper" id="main-nav">
-            <div class="liquidGlass-effect"></div>
-            <div class="liquidGlass-tint"></div>
-            <div class="liquidGlass-shine"></div>
-            
-            <div class="liquidGlass-content nav-content">
-                <a href="/" class="logo">
-                    <span>A</span>Algoritmia
-                </a>
-
-                <ul class="nav-links desktop-only">
-                    <li><a href="/clientes">Casos Reales</a></li>
-                    <li><a href="/contacto">Contacto</a></li>
-                </ul>
-
-                <div class="nav-actions">
-                    <Button href="https://wa.me/5493476245523" variant="primary" class="btn-sm mobile-hidden" onclick="fireConversion('whatsapp_nav')">
-                        Auditoría Gratis
-                    </Button>
-                    
-                    <button class="hamburger" id="mobile-toggle" aria-label="Menú">
-                        <i class="ph ph-list" style="font-size: 1.5rem;"></i>
-                    </button>
-                </div>
-            </div>
-        </nav>
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4 pointer-events-none">
+  <div class="pointer-events-auto glass-nav border border-white/20 shadow-lg shadow-black/5 rounded-full px-6 py-3 flex items-center gap-6 md:gap-12 transition-all duration-300 ring-1 ring-black/5">
+    <div class="flex items-center gap-2 text-primary">
+      <span class="material-symbols-outlined text-[20px]">token</span>
+      <span class="text-sm font-semibold tracking-tight">Algoritmia</span>
     </div>
-
-    <div class="mobile-menu liquidGlass-wrapper" id="mobile-menu">
-        <div class="liquidGlass-effect"></div>
-        <div class="liquidGlass-tint"></div>
-        <div class="liquidGlass-shine"></div>
-        
-        <div class="liquidGlass-content" style="flex-direction: column; align-items: flex-start; gap: 1.5rem;">
-            <a href="/" class="mobile-link">Inicio</a>
-            <a href="/clientes" class="mobile-link">Casos Reales</a>
-            <a href="/contacto" class="mobile-link">Contacto</a>
-            <hr style="opacity: 0.1; margin: 0.5rem 0; width: 100%; border-color: black;">
-            <Button href="https://wa.me/5493476245523" variant="primary" onclick="fireConversion('whatsapp_mobile')" style="width: 100%;">
-                Pedir Auditoría
-            </Button>
-        </div>
+    <nav class="hidden md:flex items-center gap-8">
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="#work">Proyectos</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="#services">Servicios</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="#philosophy">Filosofía</a>
+    </nav>
+    <div class="flex items-center gap-4 pl-2">
+      <a class="hidden md:flex bg-primary text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-black/90 transition-all shadow-md shadow-primary/10" href="#contact">
+        Hablemos
+      </a>
+      <button id="mobile-menu-btn" class="md:hidden text-primary p-1">
+        <span class="material-symbols-outlined text-[20px]">menu</span>
+      </button>
     </div>
-    
-    <svg style="display: none">
-        <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
-            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" seed="5" result="turbulence" />
-            <feComponentTransfer in="turbulence" result="mapped">
-                <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
-                <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
-                <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
-            </feComponentTransfer>
-            <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
-            <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lighting-color="white" result="specLight">
-                <fePointLight x="-200" y="-200" z="300" />
-            </feSpecularLighting>
-            <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
-            <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-    </svg>
-</div>
-
-<script>
-    // Navbar Logic
-    const nav = document.getElementById('main-nav');
-    const toggle = document.getElementById('mobile-toggle');
-    const menu = document.getElementById('mobile-menu');
-    const links = document.querySelectorAll('.mobile-link');
-    const icon = toggle?.querySelector('i');
-
-    if (nav && toggle && menu) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        toggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = menu.classList.contains('active');
-            if (isOpen) {
-                menu.classList.remove('active');
-                icon?.classList.replace('ph-x', 'ph-list');
-            } else {
-                menu.classList.add('active');
-                icon?.classList.replace('ph-list', 'ph-x');
-            }
-        });
-
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.remove('active');
-                icon?.classList.replace('ph-x', 'ph-list');
-            });
-        });
-    }
-</script>
+  </div>
+</header>
 
 <style>
-    /* --- NAVBAR (Liquid Glass Redesign) --- */
-    .navbar-fixed-wrapper {
-        position: fixed;
-        top: 2rem;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        z-index: 1000;
-        pointer-events: none;
-    }
-
-    .navbar {
-        position: relative;
-        width: auto;
-        min-width: 750px;
-        background: transparent;
-        border: none;
-        padding: 0.75rem 3rem;
-        pointer-events: auto;
-        
-        display: flex;
-        font-weight: 600;
-        overflow: hidden;
-        border-radius: 2rem;
-        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
-    }
-
-    .liquidGlass-wrapper {
-        position: relative;
-        display: flex;
-        font-weight: 600;
-        overflow: hidden;
-    }
-
-    .liquidGlass-effect {
-        position: absolute;
-        z-index: 0;
-        inset: 0;
-        backdrop-filter: blur(5px);
-        filter: url(#glass-distortion);
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    @supports not (backdrop-filter: blur(5px)) {
-        .liquidGlass-effect {
-            background: rgba(255, 255, 255, 0.95);
-        }
-    }
-
-    .liquidGlass-tint {
-        z-index: 1;
-        position: absolute;
-        inset: 0;
-        background: rgba(255, 255, 255, 0.6);
-        opacity: 0.8;
-    }
-
-    .liquidGlass-shine {
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        overflow: hidden;
-        box-shadow: inset 2px 2px 1px 0 rgba(255, 255, 255, 0.5),
-            inset -1px -1px 1px 1px rgba(255, 255, 255, 0.5);
-        border-radius: 2rem;
-    }
-
-    .liquidGlass-content {
-        z-index: 3;
-        position: relative;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        justify-content: space-between;
-        gap: 4rem;
-    }
-
-    .nav-links { display: flex; gap: 0.5rem; align-items: center; list-style: none; }
-    .nav-links a { 
-        text-decoration: none; 
-        color: var(--text-primary); 
-        font-weight: 500; 
-        padding: 0.6rem 1.2rem;
-        border-radius: var(--radius-full);
-        transition: all 0.3s var(--transition-smooth);
-        position: relative;
-    }
-    .nav-links a:hover { 
-        background: rgba(0, 0, 0, 0.05);
-        color: var(--color-black);
-        transform: scale(1.02);
-    }
-
-    .logo { font-weight: 800; font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--color-black); }
-    .logo span { background: var(--color-black); color: var(--color-white); width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-
-    .nav-actions { display: flex; align-items: center; gap: 1rem; }
-
-    .navbar.scrolled {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: var(--shadow-sm);
-    }
-
-    /* Mobile Menu */
-    .mobile-menu {
-        position: fixed; top: 5.5rem; left: 50%; transform: translateX(-50%) translateY(-150%);
-        width: 90%; max-width: 400px;
-        background: transparent;
-        padding: 2rem;
-        border-radius: 2rem;
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 900; display: flex; flex-direction: column; gap: 1.5rem;
-        overflow: hidden;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    .mobile-menu.active { transform: translateX(-50%) translateY(0); }
-    .mobile-link { font-size: 1.25rem; font-weight: 600; text-decoration: none; color: var(--color-black); z-index: 5; position: relative; }
-
-    .mobile-menu .liquidGlass-tint {
-        background: rgba(255, 255, 255, 0.9);
-        opacity: 1;
-    }
-
-    .hamburger { background: none; border: none; cursor: pointer; display: none; padding: 0.5rem; color: #000 !important;}
-
-    @media (max-width: 768px) {
-        .navbar-fixed-wrapper { top: 1rem; }
-        .navbar { min-width: 90%; padding: 0.5rem 1rem; }
-        .nav-links { display: none; }
-        .desktop-only { display: none; }
-        .mobile-hidden { display: none !important; }
-        .hamburger { display: block; }
-        .liquidGlass-content { gap: 1rem; }
-    }
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
 </style>
+
+<script>
+  // Mobile menu logic can be added here if needed, for now just a placeholder
+  const btn = document.getElementById('mobile-menu-btn');
+  btn?.addEventListener('click', () => {
+    // Implement mobile menu toggle
+    console.log('Toggle menu');
+  });
+</script>
