@@ -80,4 +80,42 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 			Courier New,
 			monospace;
 	}
+	
+	/* Scroll Reveal Animation */
+	.reveal {
+		opacity: 0;
+		transform: translateY(30px);
+		transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+	}
+	
+	.reveal.active {
+		opacity: 1;
+		transform: translateY(0);
+	}
 </style>
+
+<script>
+	const observerOptions = {
+		root: null,
+		rootMargin: '0px',
+		threshold: 0.1
+	};
+
+	const observer = new IntersectionObserver((entries, observer) => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				entry.target.classList.add('active');
+				observer.unobserve(entry.target); // Only animate once
+			}
+		});
+	}, observerOptions);
+
+	document.addEventListener('astro:page-load', () => {
+		const revealElements = document.querySelectorAll('.reveal');
+		revealElements.forEach(el => observer.observe(el));
+	});
+	
+	// Initial check for non-SPA navigation or first load
+	const revealElements = document.querySelectorAll('.reveal');
+	revealElements.forEach(el => observer.observe(el));
+</script>

@@ -24,15 +24,15 @@ const services = [
 ---
 
 <section class="py-32 px-6 md:px-12 max-w-[1440px] mx-auto" id="services">
-  <div class="mb-24 flex flex-col md:flex-row justify-between items-end gap-6">
+  <div class="mb-24 flex flex-col md:flex-row justify-between items-end gap-6 reveal">
     <div>
       <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-primary">Nuestra Experiencia</h2>
       <p class="text-primary/50 text-lg max-w-md">Soluciones integrales diseñadas para el ecosistema moderno.</p>
     </div>
-    <div class="h-px w-full md:w-auto md:flex-1 bg-primary/10 mb-2 md:ml-12"></div>
+    <div class="h-px w-full md:w-auto md:flex-1 bg-primary/10 mb-2 md:ml-12 reveal"></div>
   </div>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16 reveal">
     {services.map(service => (
       <div class="group">
         <div class="mb-6 text-primary w-14 h-14 rounded-2xl bg-surface flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -46,3 +46,5 @@ const services = [
     ))}
   </div>
 </section>
+
+
