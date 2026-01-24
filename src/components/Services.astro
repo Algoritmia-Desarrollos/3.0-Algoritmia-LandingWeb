@@ -32,9 +32,9 @@ const services = [
     <div class="h-px w-full md:w-auto md:flex-1 bg-primary/10 mb-2 md:ml-12 reveal"></div>
   </div>
   
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16 reveal">
-    {services.map(service => (
-      <div class="group">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-16">
+    {services.map((service, index) => (
+      <div class="group reveal" style={`transition-delay: ${index * 100}ms`}>
         <div class="mb-6 text-primary w-14 h-14 rounded-2xl bg-surface flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
           <span class="material-symbols-outlined text-3xl font-light">{service.icon}</span>
         </div>

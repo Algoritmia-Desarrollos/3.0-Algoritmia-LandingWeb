@@ -60,19 +60,28 @@
   const menuIcon = document.getElementById('menu-icon');
   let isOpen = false;
 
-  btn?.addEventListener('click', () => {
-    isOpen = !isOpen;
-    
+  function openMenu() {
+    isOpen = true;
+    navbar?.classList.remove('max-h-[64px]');
+    navbar?.classList.add('max-h-[400px]', 'bg-white'); // Expand and solidify bg
+    menuItems?.classList.remove('opacity-0');
+    if (menuIcon) menuIcon.textContent = 'close';
+  }
+
+  function closeMenu() {
+    isOpen = false;
+    navbar?.classList.add('max-h-[64px]');
+    navbar?.classList.remove('max-h-[400px]', 'bg-white');
+    menuItems?.classList.add('opacity-0');
+    if (menuIcon) menuIcon.textContent = 'menu';
+  }
+
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent immediate closing from document click
     if (isOpen) {
-      navbar?.classList.remove('max-h-[64px]');
-      navbar?.classList.add('max-h-[400px]', 'bg-white'); // Expand and solidify bg
-      menuItems?.classList.remove('opacity-0');
-      if (menuIcon) menuIcon.textContent = 'close';
+      closeMenu();
     } else {
-      navbar?.classList.add('max-h-[64px]');
-      navbar?.classList.remove('max-h-[400px]', 'bg-white');
-      menuItems?.classList.add('opacity-0');
-      if (menuIcon) menuIcon.textContent = 'menu';
+      openMenu();
     }
   });
 
@@ -80,11 +89,21 @@
   const mobileLinks = menuItems?.querySelectorAll('a');
   mobileLinks?.forEach(link => {
     link.addEventListener('click', () => {
-      isOpen = false;
-      navbar?.classList.add('max-h-[64px]');
-      navbar?.classList.remove('max-h-[400px]', 'bg-white');
-      menuItems?.classList.add('opacity-0');
-      if (menuIcon) menuIcon.textContent = 'menu';
+      closeMenu();
     });
   });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (isOpen && navbar && !navbar.contains(e.target as Node) && !btn?.contains(e.target as Node)) {
+      closeMenu();
+    }
+  });
+
+  // Close menu on scroll
+  window.addEventListener('scroll', () => {
+    if (isOpen) {
+      closeMenu();
+    }
+  }, { passive: true });
 </script>
