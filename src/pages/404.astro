@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/UI/Button.astro';
+---
+
+<Layout title="404 - Página no encontrada | Algoritmia">
+  <main class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-black text-white px-6">
+    <!-- Background Effects -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[128px] animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-900/10 rounded-full blur-[128px] animate-pulse" style="animation-delay: 2s;"></div>
+    </div>
+
+    <div class="relative z-10 text-center space-y-8 max-w-2xl mx-auto">
+      <div class="space-y-2">
+        <h1 class="text-9xl md:text-[12rem] font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/10 leading-none select-none">
+          404
+        </h1>
+        <p class="text-2xl md:text-3xl font-medium text-white/80">
+          Algo salió mal en la matrix.
+        </p>
+      </div>
+      
+      <p class="text-lg text-white/50 max-w-md mx-auto leading-relaxed">
+        La página que buscas no existe o ha sido movida a otra dimensión.
+      </p>
+
+      <div class="pt-8">
+        <Button variant="primary" href="/">
+          <span class="material-symbols-outlined text-lg">arrow_back</span>
+          Volver al inicio
+        </Button>
+      </div>
+    </div>
+  </main>
+</Layout>

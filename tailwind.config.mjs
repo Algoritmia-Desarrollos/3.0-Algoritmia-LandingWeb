@@ -31,7 +31,7 @@ export default {
 			},
 			animation: {
 				'scroll-fast': 'scroll 40s linear infinite',
-				'scroll': 'scroll 50s linear infinite',
+				'scroll': 'scroll 60s linear infinite',
 				'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
 			},
 			keyframes: {
