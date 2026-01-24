@@ -5,7 +5,7 @@
   <div id="navbar" class="pointer-events-auto glass-nav border border-white/20 shadow-lg shadow-black/5 rounded-[2rem] px-6 md:px-8 py-3 flex flex-col md:flex-row items-center gap-0 md:gap-24 transition-all duration-500 ring-1 ring-black/5 w-[95%] md:w-auto overflow-hidden max-h-[64px] md:max-h-none">
     
     <div class="flex items-center justify-between w-full md:w-auto relative">
-      <a href="/" id="logo-link" class="flex items-center gap-2 text-primary hover:opacity-80 transition-opacity">
+      <a href="/" id="logo-link" class="home-link flex items-center gap-2 text-primary hover:opacity-80 transition-opacity">
         <span class="material-symbols-outlined text-[20px]">token</span>
         <span class="text-sm font-semibold tracking-tight">Algoritmia</span>
       </a>
@@ -18,7 +18,7 @@
     </div>
 
     <nav class="hidden md:flex items-center gap-8">
-      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/">Inicio</a>
+      <a class="home-link text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/">Inicio</a>
       <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/#services">Servicios</a>
       <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/#work">Proyectos</a>
       <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/#philosophy">Filosofía</a>
@@ -33,7 +33,7 @@
     <!-- Mobile Menu Items -->
     <div class="md:hidden flex flex-col gap-6 pt-8 pb-4 w-full opacity-0 transition-opacity duration-300 delay-100" id="mobile-menu-items">
       <nav class="flex flex-col gap-4">
-        <a class="text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="/">Inicio</a>
+        <a class="home-link text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="/">Inicio</a>
         <a class="text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="/#services">Servicios</a>
         <a class="text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="/#work">Proyectos</a>
         <a class="text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="/#philosophy">Filosofía</a>
@@ -107,12 +107,17 @@
     }
   }, { passive: true });
 
-  // Logo click handler
-  const logoLink = document.getElementById('logo-link');
-  logoLink?.addEventListener('click', (e) => {
-    if (window.location.pathname === '/' || window.location.pathname === '') {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  // Home links click handler (Logo + Inicio)
+  const homeLinks = document.querySelectorAll('.home-link');
+  homeLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.location.pathname === '/' || window.location.pathname === '') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Close mobile menu if open
+        if (isOpen) closeMenu();
+      }
+    });
   });
 </script>
