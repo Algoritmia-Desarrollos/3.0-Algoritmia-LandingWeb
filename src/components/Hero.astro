@@ -73,52 +73,65 @@ import Button from './UI/Button.astro';
 </section>
 
 <script>
-  const ghostElement = document.getElementById('ghost-text');
-  const targetElement = document.getElementById('typewriter-text');
-  
-  if (ghostElement && targetElement) {
-    const text = ghostElement.textContent?.trim() || '';
-    targetElement.textContent = '';
+  document.addEventListener('astro:page-load', () => {
+    const ghostElement = document.getElementById('ghost-text');
+    const targetElement = document.getElementById('typewriter-text');
     
-    let i = 0;
-    const typeWriter = () => {
-      if (i < text.length) {
-        targetElement.textContent += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 30); // Adjust speed here (lower is faster)
-      }
-    };
-    
-    // Start animation with a slight delay
-    setTimeout(typeWriter, 500);
-  }
+    if (ghostElement && targetElement) {
+      const text = ghostElement.textContent?.trim() || '';
+      targetElement.textContent = '';
+      
+      let i = 0;
+      const typeWriter = () => {
+        if (i < text.length) {
+          targetElement.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 50); // Slower speed (50ms)
+        }
+      };
+      
+      // Start animation with a slight delay
+      setTimeout(typeWriter, 500);
+    }
 
-  // Video Modal Logic
-  const videoBtn = document.getElementById('video-btn');
-  const videoModal = document.getElementById('video-modal');
-  const closeVideo = document.getElementById('close-video');
-  const videoContainer = document.getElementById('video-container');
+    // Video Modal Logic
+    const videoBtn = document.getElementById('video-btn');
+    const videoModal = document.getElementById('video-modal');
+    const closeVideo = document.getElementById('close-video');
+    const videoContainer = document.getElementById('video-container');
 
-  if (videoBtn && videoModal && closeVideo) {
-    videoBtn.addEventListener('click', () => {
-      videoModal.classList.remove('opacity-0', 'pointer-events-none');
-      videoContainer?.classList.remove('scale-95');
-      videoContainer?.classList.add('scale-100');
-    });
+    if (videoBtn && videoModal && closeVideo) {
+      // Remove existing listeners to avoid duplicates on re-render
+      const newVideoBtn = videoBtn.cloneNode(true);
+      videoBtn.parentNode?.replaceChild(newVideoBtn, videoBtn);
+      
+      const newCloseVideo = closeVideo.cloneNode(true);
+      closeVideo.parentNode?.replaceChild(newCloseVideo, closeVideo);
 
-    const closeModal = () => {
-      videoModal.classList.add('opacity-0', 'pointer-events-none');
-      videoContainer?.classList.add('scale-95');
-      videoContainer?.classList.remove('scale-100');
-    };
+      // Re-select elements after replacement
+      const currentVideoBtn = document.getElementById('video-btn');
+      const currentCloseVideo = document.getElementById('close-video');
 
-    closeVideo.addEventListener('click', closeModal);
-    videoModal.addEventListener('click', (e) => {
-      if (e.target === videoModal) closeModal();
-    });
-    
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
-  }
+      currentVideoBtn?.addEventListener('click', () => {
+        videoModal.classList.remove('opacity-0', 'pointer-events-none');
+        videoContainer?.classList.remove('scale-95');
+        videoContainer?.classList.add('scale-100');
+      });
+
+      const closeModal = () => {
+        videoModal.classList.add('opacity-0', 'pointer-events-none');
+        videoContainer?.classList.add('scale-95');
+        videoContainer?.classList.remove('scale-100');
+      };
+
+      currentCloseVideo?.addEventListener('click', closeModal);
+      videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) closeModal();
+      });
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+    }
+  });
 </script>
