@@ -1,0 +1,214 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = "Puertas Jack - Caso de Éxito | Algoritmia";
+const description = "Cómo escalamos las ventas de puertas de alta seguridad de 3 a 12 unidades mensuales con Google Ads.";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main class="bg-white text-black selection:bg-gray-200">
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1 space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-tight text-black mb-8">
+              De 3 a 12 puertas vendidas al mes.
+            </h1>
+            
+            <p class="text-xl text-gray-500 max-w-xl leading-relaxed mb-8">
+              Recuperación y escalado de un negocio High Ticket con estrategia digital enfocada en Google Ads.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+              <a href="https://puertasjack.com.ar/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
+                Ver sitio web
+                <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+              </a>
+
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">x4</span>
+                <span class="text-sm text-gray-600 font-medium">Crecimiento en ventas</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-1 w-full">
+            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xl shadow-gray-200/50 group">
+              <img 
+                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=2070&auto=format&fit=crop" 
+                alt="Puertas Jack" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Challenge Section -->
+    <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
+      <div class="max-w-4xl mx-auto text-center space-y-8">
+        <blockquote class="text-2xl md:text-4xl font-medium text-black leading-tight max-w-5xl mx-auto">
+          "Fabricamos puertas de alta calidad, pero vendemos 2 o 3 por mes. El objetivo es llegar a 10 puertas mensuales estables."
+        </blockquote>
+        <p class="text-gray-400 mt-6 font-medium">— El Problema Inicial</p>
+      </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="py-32 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-black">Lo que hicimos</h2>
+          <p class="text-gray-500 text-lg">Estrategia iterativa para transformar un producto premium en ventas consistentes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Card 1 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">desktop_windows</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Diseño Web Premium</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Sitio web diseñado para transmitir calidad, seguridad y confianza. Cada detalle pensado para convertir visitas en ventas.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">photo_camera</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Contenido para Redes</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Contenido visual que muestra la calidad del producto y genera confianza en clientes potenciales.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">search</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Google Ads</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Captura de demanda intencional. Aparecer cuando la gente busca "puertas de seguridad" en el momento exacto de compra.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">campaign</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Meta Ads</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Campañas en Facebook e Instagram para generar reconocimiento de marca y captar clientes en fase de consideración.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-32 px-6 md:px-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div class="space-y-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
+            <p class="text-gray-500 text-lg">
+              Los números no mienten.
+            </p>
+            
+            <div class="space-y-6">
+              <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Antes</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-4xl font-bold text-gray-300">2-3</span>
+                  <span class="text-sm text-gray-400 mb-2">Puertas/mes</span>
+                </div>
+              </div>
+              
+              <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Ahora</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-5xl font-bold text-black">12</span>
+                  <span class="text-sm text-gray-500 mb-2">Puertas/mes</span>
+                </div>
+                <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[18px]">trending_up</span>
+                  Crecimiento sostenido
+                </p>
+              </div>
+            </div>
+            
+            <div class="pt-4">
+              <p class="text-7xl font-bold text-black tracking-tighter">
+                x4
+              </p>
+              <p class="text-gray-500 mt-2 text-xl font-medium">Multiplicador de ventas</p>
+            </div>
+          </div>
+          
+          <!-- Graph Visualization -->
+          <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
+            <div class="absolute top-8 left-8">
+              <h3 class="text-xl font-bold text-black">Evolución de Ventas</h3>
+              <p class="text-gray-400 text-sm">Puertas vendidas por mes</p>
+            </div>
+            
+            <!-- Simple CSS Chart -->
+            <div class="flex items-end justify-between gap-2 h-[200px] w-full">
+              <!-- Initial months -->
+              <div class="w-full bg-gray-100 rounded-t-sm h-[20%]"></div>
+              <div class="w-full bg-gray-100 rounded-t-sm h-[25%]"></div>
+              <div class="w-full bg-gray-200 rounded-t-sm h-[35%]"></div>
+              <div class="w-full bg-gray-200 rounded-t-sm h-[45%]"></div>
+              <div class="w-full bg-gray-300 rounded-t-sm h-[55%]"></div>
+              <div class="w-full bg-gray-300 rounded-t-sm h-[70%]"></div>
+              <div class="w-full bg-gray-400 rounded-t-sm h-[80%]"></div>
+              <div class="w-full bg-gray-400 rounded-t-sm h-[90%]"></div>
+              <div class="w-full bg-black rounded-t-sm h-[100%] relative group">
+                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-black">Pico</div>
+              </div>
+            </div>
+            
+            <!-- Axis Line -->
+            <div class="w-full h-px bg-gray-200 mt-0"></div>
+            <div class="flex justify-between text-xs text-gray-400 mt-2">
+              <span>Inicio</span>
+              <span>12 Meses</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 text-center bg-black text-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-6">¿Listo para escalar?</h2>
+        <p class="text-white/60 text-lg mb-10">
+          Llevamos tu negocio al siguiente nivel.
+        </p>
+        <a href="/#contact" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-medium text-sm hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl">
+          Solicitar Consultoría
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

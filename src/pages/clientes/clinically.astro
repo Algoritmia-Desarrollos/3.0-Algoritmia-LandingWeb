@@ -1,0 +1,216 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = "Clinically - Caso de Éxito | Algoritmia";
+const description = "Cómo lanzamos Clinically desde cero y logramos 10-20 pacientes diarios en 3 meses.";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main class="bg-white text-black selection:bg-gray-200">
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1 space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-tight text-black mb-8">
+              De 0 a marca reconocida en el sector.
+            </h1>
+            
+            <p class="text-xl text-gray-500 max-w-xl leading-relaxed mb-8">
+              Construimos una clínica estética desde cero, logrando reconocimiento de marca y flujo constante de pacientes.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+              <a href="https://clinicallyestetica.com.ar/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
+                Ver sitio web
+                <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+              </a>
+
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">10-20</span>
+                <span class="text-sm text-gray-600 font-medium">Pacientes/día</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-1 w-full">
+            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xl shadow-gray-200/50 group">
+              <img 
+                src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2070&auto=format&fit=crop" 
+                alt="Clinically" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Challenge Section -->
+    <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
+      <div class="max-w-4xl mx-auto text-center space-y-8">
+        <blockquote class="text-2xl md:text-4xl font-medium text-black leading-tight max-w-5xl mx-auto">
+          "Abrimos una nueva clínica y nadie nos conoce. Necesitamos llenar la agenda de turnos desde cero."
+        </blockquote>
+        <p class="text-gray-400 mt-6 font-medium">— El Problema Inicial</p>
+      </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="py-32 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-black">Lo que hicimos</h2>
+          <p class="text-gray-500 text-lg">Construimos una marca médica sólida desde cero y generamos flujo constante de pacientes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Card 1 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">palette</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Branding Médico</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Creación de identidad de marca desde cero, transmitiendo profesionalismo, confianza y cercanía en el sector salud.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">desktop_windows</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Web con Reserva Online</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Sitio optimizado para que los pacientes puedan agendar turnos fácilmente, reduciendo fricción en la conversión.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">photo_camera</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Contenido Educativo</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Videos de los médicos explicando tratamientos en redes sociales para generar confianza y autoridad.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">campaign</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Publicidad Digital</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Google Ads Local y Meta Ads para aparecer cuando buscan especialistas en la zona y generar reconocimiento de marca.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-32 px-6 md:px-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div class="space-y-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
+            <p class="text-gray-500 text-lg">
+              Los números no mienten.
+            </p>
+            
+            <div class="space-y-6">
+              <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Inicio</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-4xl font-bold text-gray-300">1-2</span>
+                  <span class="text-sm text-gray-400 mb-2">Pacientes/día</span>
+                </div>
+                <p class="text-gray-400 text-sm mt-2">Marca nueva, sin reconocimiento</p>
+              </div>
+              
+              <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Mes 3</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-5xl font-bold text-black">10-20</span>
+                  <span class="text-sm text-gray-500 mb-2">Pacientes/día</span>
+                </div>
+                <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[18px]">trending_up</span>
+                  Agenda completa
+                </p>
+              </div>
+            </div>
+            
+            <div class="p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
+              <p class="text-xs text-green-700 uppercase mb-2 font-bold tracking-wider">Reconocimiento</p>
+              <p class="text-green-900 font-medium text-lg">
+                Hoy mucha gente conoce y elige Clinically por su reputación y presencia digital.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Graph Visualization -->
+          <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
+            <div class="absolute top-8 left-8">
+              <h3 class="text-xl font-bold text-black">Crecimiento de Pacientes</h3>
+              <p class="text-gray-400 text-sm">Pacientes diarios</p>
+            </div>
+            
+            <!-- Simple CSS Chart -->
+            <div class="flex items-end justify-between gap-2 h-[200px] w-full">
+              <!-- Launch phase -->
+              <div class="w-full bg-gray-100 rounded-t-sm h-[10%]"></div>
+              <div class="w-full bg-gray-200 rounded-t-sm h-[15%]"></div>
+              <div class="w-full bg-gray-200 rounded-t-sm h-[25%] relative group">
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-600">Inicio</div>
+              </div>
+              <div class="w-full bg-green-200 rounded-t-sm h-[45%]"></div>
+              <div class="w-full bg-green-300 rounded-t-sm h-[65%]"></div>
+              <div class="w-full bg-green-400 rounded-t-sm h-[85%]"></div>
+              <div class="w-full bg-green-500 rounded-t-sm h-[95%]"></div>
+              <div class="w-full bg-black rounded-t-sm h-[100%] relative group">
+                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-black">Hoy</div>
+              </div>
+            </div>
+            
+            <!-- Axis Line -->
+            <div class="w-full h-px bg-gray-200 mt-0"></div>
+            <div class="flex justify-between text-xs text-gray-400 mt-2">
+              <span>Lanzamiento</span>
+              <span>Consolidación</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 text-center bg-black text-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-6">¿Listo para escalar?</h2>
+        <p class="text-white/60 text-lg mb-10">
+          Llevamos tu negocio al siguiente nivel.
+        </p>
+        <a href="/#contact" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-medium text-sm hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl">
+          Solicitar Consultoría
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

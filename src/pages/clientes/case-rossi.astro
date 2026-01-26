@@ -1,0 +1,215 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = "Case Rossi Informática - Caso de Éxito | Algoritmia";
+const description = "Cómo ayudamos a Case Rossi Informática a recuperar y multiplicar sus ventas con estrategia digital integral.";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main class="bg-white text-black selection:bg-gray-200">
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1 space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-tight text-black mb-8">
+              De perder clientes a crecer sostenidamente.
+            </h1>
+            
+            <p class="text-xl text-gray-500 max-w-xl leading-relaxed mb-8">
+              Recuperamos una tienda de informática en declive con estrategia digital integral y posicionamiento online.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+              <a href="https://caserossiinformatica.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
+                Ver sitio web
+                <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+              </a>
+
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">10-15</span>
+                <span class="text-sm text-gray-600 font-medium">Clientes/semana</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-1 w-full">
+            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xl shadow-gray-200/50 group">
+              <img 
+                src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=2070&auto=format&fit=crop" 
+                alt="Case Rossi Informática" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Challenge Section -->
+    <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
+      <div class="max-w-4xl mx-auto text-center space-y-8">
+        <blockquote class="text-2xl md:text-4xl font-medium text-black leading-tight max-w-5xl mx-auto">
+          "El negocio está cayendo, perdemos clientes todos los meses. Necesitamos recuperar las ventas y volver a crecer."
+        </blockquote>
+        <p class="text-gray-400 mt-6 font-medium">— El Problema Inicial</p>
+      </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="py-32 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-black">Lo que hicimos</h2>
+          <p class="text-gray-500 text-lg">Estrategia digital integral para recuperar ventas y captar nuevos clientes en el sector tecnológico.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Card 1 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">desktop_windows</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">E-commerce Optimizado</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Tienda online moderna con catálogo completo de productos informáticos, búsqueda rápida y proceso de compra simplificado.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">photo_camera</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Contenido de Producto</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Fichas de producto optimizadas con especificaciones técnicas claras y fotografías de calidad para facilitar la decisión de compra.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">trending_up</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Posicionamiento SEO</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Optimización para aparecer cuando buscan insumos de oficina, periféricos y productos informáticos en Rosario.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">campaign</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Publicidad Digital</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Campañas en Meta Ads y Google Ads para captar empresas y particulares que necesitan productos tecnológicos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="py-32 px-6 md:px-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div class="space-y-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
+            <p class="text-gray-500 text-lg">
+              Los números no mienten.
+            </p>
+            
+            <div class="space-y-6">
+              <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Antes</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-4xl font-bold text-gray-300">En Caída</span>
+                </div>
+                <p class="text-gray-400 text-sm mt-2">Pérdida constante de clientes</p>
+              </div>
+              
+              <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Ahora</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-5xl font-bold text-black">10-15</span>
+                  <span class="text-sm text-gray-500 mb-2">Clientes/semana</span>
+                </div>
+                <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[18px]">trending_up</span>
+                  Recuperación total
+                </p>
+              </div>
+            </div>
+            
+            <div class="p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
+              <p class="text-xs text-green-700 uppercase mb-2 font-bold tracking-wider">El Cambio</p>
+              <p class="text-green-900 font-medium text-lg">
+                Recuperamos el flujo de clientes y logramos un crecimiento sostenido mes a mes.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Graph Visualization -->
+          <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
+            <div class="absolute top-8 left-8">
+              <h3 class="text-xl font-bold text-black">Tráfico al Showroom</h3>
+              <p class="text-gray-400 text-sm">Clientes semanales</p>
+            </div>
+            
+            <!-- Simple CSS Chart -->
+            <div class="flex items-end justify-between gap-2 h-[200px] w-full">
+              <!-- Declining then recovering -->
+              <div class="w-full bg-red-200 rounded-t-sm h-[40%]"></div>
+              <div class="w-full bg-red-300 rounded-t-sm h-[30%]"></div>
+              <div class="w-full bg-red-400 rounded-t-sm h-[20%] relative group">
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-red-600">Crisis</div>
+              </div>
+              <div class="w-full bg-gray-200 rounded-t-sm h-[35%]"></div>
+              <div class="w-full bg-green-200 rounded-t-sm h-[50%]"></div>
+              <div class="w-full bg-green-300 rounded-t-sm h-[70%]"></div>
+              <div class="w-full bg-green-400 rounded-t-sm h-[85%]"></div>
+              <div class="w-full bg-green-500 rounded-t-sm h-[100%] relative group">
+                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-green-700">Ahora</div>
+              </div>
+            </div>
+            
+            <!-- Axis Line -->
+            <div class="w-full h-px bg-gray-200 mt-0"></div>
+            <div class="flex justify-between text-xs text-gray-400 mt-2">
+              <span>Inicio</span>
+              <span>6 Meses</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 text-center bg-black text-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-6">¿Listo para escalar?</h2>
+        <p class="text-white/60 text-lg mb-10">
+          Llevamos tu negocio al siguiente nivel.
+        </p>
+        <a href="/#contact" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-medium text-sm hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl">
+          Solicitar Consultoría
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
