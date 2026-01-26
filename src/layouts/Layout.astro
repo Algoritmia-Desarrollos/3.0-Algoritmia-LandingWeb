@@ -125,7 +125,7 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 
 <script>
 	// Preloader Logic
-	window.addEventListener('load', () => {
+	function hidePreloader() {
 		const preloader = document.getElementById('preloader');
 		const status = document.getElementById('status');
 		const body = document.body;
@@ -145,7 +145,13 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 				}, 500); // Wait for opacity transition
 			}, 350);
 		}
-	});
+	}
+
+	// Run on initial load
+	window.addEventListener('load', hidePreloader);
+	
+	// Run on View Transitions navigation
+	document.addEventListener('astro:page-load', hidePreloader);
 
 	const observerOptions = {
 		root: null,

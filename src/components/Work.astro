@@ -2,35 +2,38 @@
 import { Image } from 'astro:assets';
 import workFintech from '../assets/work-fintech.jpg';
 import workEcomoda from '../assets/work-ecomoda.jpg';
-
 const projects = [
   {
-    title: "Revolución FinTech",
-    description: "Escalando una startup Serie B de cero a $10M ARR mediante rebranding estratégico.",
-    year: "2023",
-    image: workFintech,
-    alt: "Modern office meeting room with charts on glass walls showing growth"
+    title: "Librería Mayorista Leo",
+    description: "Automatización de ventas mayoristas y escalado estacional.",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=2070&auto=format&fit=crop",
+    alt: "Dashboard de ventas",
+    year: "2024",
+    link: "/cases/libreria-leo"
   },
   {
     title: "Eco-Moda",
     description: "Transformación digital completa para una marca de moda sostenible global.",
-    year: "2024",
-    image: workEcomoda,
-    alt: "Close up of fashion apparel texture and design sketches"
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop",
+    alt: "E-commerce de moda",
+    year: "2023",
+    link: null
   },
   {
     title: "Revolución FinTech II",
     description: "Escalando una startup Serie B de cero a $10M ARR mediante rebranding estratégico.",
-    year: "2023",
-    image: workFintech,
-    alt: "Modern office meeting room with charts on glass walls showing growth"
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+    alt: "App financiera",
+    year: "2024",
+    link: null
   },
   {
     title: "Eco-Moda II",
     description: "Transformación digital completa para una marca de moda sostenible global.",
-    year: "2024",
-    image: workEcomoda,
-    alt: "Close up of fashion apparel texture and design sketches"
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop",
+    alt: "E-commerce de moda",
+    year: "2023",
+    link: null
   }
 ];
 ---
@@ -59,35 +62,61 @@ const projects = [
         <div class="flex transition-transform duration-500 ease-out select-none" id="carousel-track">
           {projects.map(project => (
             <div class="w-full md:w-1/2 flex-shrink-0 px-6 pointer-events-none md:pointer-events-auto">
-              <div class="group cursor-pointer pointer-events-auto">
-                <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
-                  <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
-                    <Image 
-                      src={project.image} 
-                      alt={project.alt}
-                      class="w-full h-full object-cover pointer-events-none"
-                      width={800}
-                      height={600}
-                      decoding="async"
-                    />
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+              {project.link ? (
+                <a href={project.link} class="block group cursor-pointer pointer-events-auto">
+                  <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
+                    <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
+                      <Image 
+                        src={project.image} 
+                        alt={project.alt}
+                        class="w-full h-full object-cover pointer-events-none"
+                        width={800}
+                        height={600}
+                        decoding="async"
+                      />
+                      <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <h3 class="text-2xl font-bold mb-2 flex items-center gap-2">
+                        {project.title}
+                        <span class="material-symbols-outlined text-white/40 text-sm group-hover:text-white group-hover:translate-x-1 transition-all">arrow_outward</span>
+                      </h3>
+                      <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
+                    </div>
+                    <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
+                  </div>
+                </a>
+              ) : (
+                <div class="group cursor-pointer pointer-events-auto">
+                  <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
+                    <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
+                      <Image 
+                        src={project.image} 
+                        alt={project.alt}
+                        class="w-full h-full object-cover pointer-events-none"
+                        width={800}
+                        height={600}
+                        decoding="async"
+                      />
+                      <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <h3 class="text-2xl font-bold mb-2">{project.title}</h3>
+                      <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
+                    </div>
+                    <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
                   </div>
                 </div>
-                <div class="flex justify-between items-start">
-                  <div>
-                    <h3 class="text-2xl font-bold mb-2">{project.title}</h3>
-                    <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
-                  </div>
-                  <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
-                </div>
-              </div>
+              )}
             </div>
           ))}
         </div>
       </div>
     </div>
-    
-    <!-- Mobile Navigation (optional, or keep hidden/use swipe in future) -->
     <div class="mt-8 flex justify-center gap-4 md:hidden">
        <button id="prev-btn-mobile" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" aria-label="Previous slide">
           <span class="material-symbols-outlined">arrow_back</span>
