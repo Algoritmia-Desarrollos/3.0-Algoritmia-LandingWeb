@@ -21,21 +21,17 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		
-		<!-- SEO -->
 		<link rel="canonical" href="https://algoritmia.io/" />
 		<meta name="robots" content="index, follow" />
 		<meta name="keywords" content="desarrollo web, diseño web, branding, marketing digital, software a medida, aplicaciones web, seo, crecimiento digital" />
 		<meta name="author" content="Algoritmia" />
 		<meta name="publisher" content="Algoritmia" />
 		
-		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://algoritmia.io/" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content="https://algoritmia.io/og-image.jpg" />
-
-		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content="https://algoritmia.io/" />
 		<meta property="twitter:title" content={title} />
@@ -43,14 +39,14 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 		<meta property="twitter:image" content="https://algoritmia.io/og-image.jpg" />
 
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+        
+        <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+        
 		<ClientRouter />
 	</head>
-	<body class="antialiased text-gray-900 bg-white overflow-hidden">
-		<!-- Preloader -->
-		<div id="preloader">
-			<div id="status">&nbsp;</div>
-		</div>
-		<slot />
+    
+    <body class="antialiased text-gray-900 bg-white">
+        <slot />
 	</body>
 </html>
 
@@ -69,52 +65,46 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 	html {
 		font-family: 'Inter Variable', sans-serif;
 		background: #13151a;
-		scrollbar-gutter: stable;
-		scroll-behavior: smooth;
+        /* IMPORTANTE: Cambiamos 'smooth' a 'auto' para que Lenis controle el scroll */
+		scroll-behavior: auto; 
+        
+        /* Fix opcional para evitar saltos laterales */
+        width: 100%;
+        overflow-x: hidden;
 	}
+
+    /* Esto fuerza a que las secciones de pantalla completa usen la medida 'svh' (small viewport height) que es estable en móviles */
+    .h-screen {
+        height: 100svh !important;
+    }
+    .min-h-screen {
+        min-height: 100svh !important;
+    }
 </style>
 
 <script>
-	// Preloader Logic
-	function hidePreloader() {
-		const preloader = document.getElementById('preloader');
-		const status = document.getElementById('status');
-		const body = document.body;
+    // Configuración de Lenis (Scroll Suave)
+    // @ts-ignore
+    const lenis = new Lenis();
 
-		if (preloader && status) {
-			// Fade out status
-			status.style.opacity = '0';
-			status.style.transition = 'opacity 0.35s';
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
-			setTimeout(() => {
-				// Fade out preloader background
-				preloader.style.opacity = '0';
-				
-				setTimeout(() => {
-					preloader.style.display = 'none';
-					body.classList.remove('overflow-hidden');
-				}, 500); // Wait for opacity transition
-			}, 350);
-		}
-	}
-
-	// Run on initial load
-	window.addEventListener('load', hidePreloader);
-	
-	// Run on View Transitions navigation
-	document.addEventListener('astro:page-load', hidePreloader);
-
+    // Animaciones Reveal (Se mantienen, pero sin la lógica del preloader)
 	const observerOptions = {
 		root: null,
 		rootMargin: '0px',
 		threshold: 0.1
 	};
-
+    
 	const observer = new IntersectionObserver((entries, observer) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
 				entry.target.classList.add('active');
-				observer.unobserve(entry.target); // Only animate once
+				observer.unobserve(entry.target); 
 			}
 		});
 	}, observerOptions);
@@ -122,9 +112,13 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 	document.addEventListener('astro:page-load', () => {
 		const revealElements = document.querySelectorAll('.reveal');
 		revealElements.forEach(el => observer.observe(el));
+        
+        // Reiniciamos Lenis al cambiar de página por si acaso
+        // @ts-ignore
+        if(window.lenis) window.lenis.scrollTo(0, { immediate: true });
 	});
 	
-	// Initial check for non-SPA navigation or first load
+	// Check inicial
 	const revealElements = document.querySelectorAll('.reveal');
 	revealElements.forEach(el => observer.observe(el));
 </script>

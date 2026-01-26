@@ -123,37 +123,35 @@
         if (targetId) {
           const targetElement = document.getElementById(targetId);
           
-          // Only prevent default if target exists on current page
           if (targetElement) {
             e.preventDefault();
-            e.stopImmediatePropagation(); // Prevent other listeners (like Astro router)
+            e.stopImmediatePropagation();
             
-            // Close menu if open (we need to access the closeMenu from setupNavbar scope? 
-            // Actually setupNavbar defines local variables. We should probably merge these or make closeMenu global/accessible.
-            // For simplicity, let's just re-implement closure or trigger a click on body/outside to close it?
-            // Or better, just let setupNavbar handle the menu logic and this handle scroll.
-            // But we need to close menu here.
-            
-            // Let's dispatch a custom event or just click the body?
+            // Cerrar menú si está abierto (simulamos clic fuera)
             document.body.click();
-            
-            // Calculate position to scroll to (exact top of the element)
-            const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset;
-      
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth"
-            });
-            
-            // Update URL without jump
+
+            // Usar LENIS para el scroll si existe
+            // @ts-ignore
+            if (window.lenis) {
+                // @ts-ignore
+                window.lenis.scrollTo(targetElement, {
+                    offset: 0, 
+                    duration: 1.2, // Ajusta la duración a tu gusto
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Efecto exponencial suave
+                });
+            } else {
+                // Fallback por si acaso
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Actualizar URL
             history.pushState(null, null, `#${targetId}`);
           }
         }
       });
     });
 
-    // Home links click handler (Logo + Inicio)
+    // Lógica para el logo (Home link)
     const homeLinks = document.querySelectorAll('.home-link');
     homeLinks.forEach(link => {
       link.addEventListener('click', (e) => {
@@ -161,11 +159,12 @@
           e.preventDefault();
           e.stopImmediatePropagation();
           
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // Scroll al tope con Lenis
+          // @ts-ignore
+          if (window.lenis) window.lenis.scrollTo(0);
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
           
-          document.body.click(); // Close menu
-          
-          // Update URL to root
+          document.body.click(); 
           history.pushState(null, null, '/');
         }
       });
