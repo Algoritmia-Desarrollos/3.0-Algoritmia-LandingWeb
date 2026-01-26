@@ -17,11 +17,11 @@
       </div>
     </div>
 
-    <nav class="hidden md:flex items-center gap-8">
-      <a class="home-link text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/">Inicio</a>
-      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/#services">Servicios</a>
-      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/#work">Proyectos</a>
-      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-colors" href="/#philosophy">Filosofía</a>
+    <nav class="hidden md:flex items-center gap-1">
+      <a class="home-link text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5" href="/">Inicio</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5" href="/#services">Servicios</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5" href="/#work">Proyectos</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5" href="/#philosophy">Filosofía</a>
     </nav>
 
     <div class="hidden md:flex items-center gap-4 pl-2">
@@ -108,46 +108,62 @@
   }, { passive: true });
 
   // Handle all links with hashes for smooth scrolling
-  document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      const targetId = href.includes('#') ? href.split('#')[1] : null;
-      
-      if (targetId) {
-        const targetElement = document.getElementById(targetId);
+  function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        const targetId = href.includes('#') ? href.split('#')[1] : null;
         
-        // Only prevent default if target exists on current page
-        if (targetElement) {
-          e.preventDefault();
+        if (targetId) {
+          const targetElement = document.getElementById(targetId);
           
-          // Close menu if open
+          // Only prevent default if target exists on current page
+          if (targetElement) {
+            e.preventDefault();
+            e.stopImmediatePropagation(); // Prevent other listeners (like Astro router)
+            
+            // Close menu if open
+            if (isOpen) closeMenu();
+            
+            const headerOffset = 80; // Adjust based on header height
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+            
+            // Update URL without jump
+            history.pushState(null, null, `#${targetId}`);
+          }
+        }
+      });
+    });
+
+    // Home links click handler (Logo + Inicio)
+    const homeLinks = document.querySelectorAll('.home-link');
+    homeLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (window.location.pathname === '/' || window.location.pathname === '') {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+          // Close mobile menu if open
           if (isOpen) closeMenu();
           
-          targetElement.scrollIntoView({
-            behavior: 'smooth'
-          });
-          
-          // Update URL without jump
-          history.pushState(null, null, `#${targetId}`);
+          // Update URL to root
+          history.pushState(null, null, '/');
         }
-      }
+      });
     });
-  });
+  }
 
-  // Home links click handler (Logo + Inicio)
-  const homeLinks = document.querySelectorAll('.home-link');
-  homeLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      if (window.location.pathname === '/' || window.location.pathname === '') {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        // Close mobile menu if open
-        if (isOpen) closeMenu();
-        
-        // Update URL to root
-        history.pushState(null, null, '/');
-      }
-    });
-  });
+  // Run on initial load
+  setupSmoothScroll();
+
+  // Run on view transitions
+  document.addEventListener('astro:page-load', setupSmoothScroll);
 </script>
