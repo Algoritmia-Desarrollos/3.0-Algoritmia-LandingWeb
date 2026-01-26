@@ -125,9 +125,9 @@
             // Close menu if open
             if (isOpen) closeMenu();
             
-            const headerOffset = 80; // Adjust based on header height
+            // Calculate position to scroll to (exact top of the element)
             const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            const offsetPosition = elementPosition + window.pageYOffset;
       
             window.scrollTo({
               top: offsetPosition,

@@ -45,7 +45,11 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 		<ClientRouter />
 	</head>
-	<body class="antialiased text-gray-900 bg-white">
+	<body class="antialiased text-gray-900 bg-white overflow-hidden">
+		<!-- Preloader -->
+		<div id="preloader">
+			<div id="status">&nbsp;</div>
+		</div>
 		<slot />
 	</body>
 </html>
@@ -68,7 +72,32 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 		background-size: 224px;
 		scroll-behavior: smooth;
 		text-rendering: optimizeLegibility;
+		scrollbar-gutter: stable; /* Prevent layout shift when scrollbar disappears */
 	}
+	
+	/* Preloader */
+	#preloader {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ffffff; /* White background as requested */
+		z-index: 9999; /* High z-index to cover everything */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: opacity 0.5s ease-out;
+	}
+
+	#status {
+		width: 200px;
+		height: 200px;
+		background-image: url(https://raw.githubusercontent.com/niklausgerber/PreLoadMe/master/img/status.gif);
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+
 	code {
 		font-family:
 			Menlo,
@@ -95,6 +124,29 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 </style>
 
 <script>
+	// Preloader Logic
+	window.addEventListener('load', () => {
+		const preloader = document.getElementById('preloader');
+		const status = document.getElementById('status');
+		const body = document.body;
+
+		if (preloader && status) {
+			// Fade out status
+			status.style.opacity = '0';
+			status.style.transition = 'opacity 0.35s';
+
+			setTimeout(() => {
+				// Fade out preloader background
+				preloader.style.opacity = '0';
+				
+				setTimeout(() => {
+					preloader.style.display = 'none';
+					body.classList.remove('overflow-hidden');
+				}, 500); // Wait for opacity transition
+			}, 350);
+		}
+	});
+
 	const observerOptions = {
 		root: null,
 		rootMargin: '0px',
