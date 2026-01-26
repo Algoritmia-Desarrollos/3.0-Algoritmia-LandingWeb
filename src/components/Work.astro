@@ -1,64 +1,70 @@
 ---
 import { Image } from 'astro:assets';
+// Asegúrate de que las rutas de las imágenes sean correctas
 import workFintech from '../assets/work-fintech.jpg';
 import workEcomoda from '../assets/work-ecomoda.jpg';
+
 const projects = [
   {
     title: "Librería Mayorista Leo",
-    description: "Automatización de ventas mayoristas y escalado estacional.",
+    description: "E-commerce B2B de Alto Volumen. Automatizamos la toma de pedidos de +2.000 productos, permitiendo facturar 24/7 sin depender de vendedores presenciales.",
     image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=2070&auto=format&fit=crop",
-    alt: "Librería mayorista",
+    alt: "E-commerce B2B Mayorista",
     year: "2024",
     link: "/clientes/libreria-leo"
   },
   {
     title: "Puertas Jack",
-    description: "Transformación digital para empresa de puertas de alta gama.",
+    description: "Posicionamiento High-End. Dejamos de competir por precio para competir por valor. Elevamos la percepción de marca para atraer clientes dispuestos a pagar un ticket premium.",
     image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=2070&auto=format&fit=crop",
-    alt: "Puertas de diseño",
+    alt: "Branding de seguridad premium",
     year: "2024",
     link: "/clientes/puertas-jack"
   },
-  {
-    title: "Case Rossi",
-    description: "Solución integral de comercio electrónico para arquitectura y diseño.",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2070&auto=format&fit=crop",
-    alt: "Arquitectura moderna",
-    year: "2024",
-    link: "/clientes/case-rossi"
+   {
+    title: "Clinically",
+    description: "SaaS HealthTech & Eficiencia. Digitalización de agenda y pacientes que reduce el ausentismo y maximiza la rentabilidad por hora del consultorio médico.",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop",
+    alt: "Plataforma médica digital",
+    year: "2025",
+    link: "/clientes/clinically"
   },
   {
+    title: "Case Rossi",
+    description: "Experiencia de Compra Inmersiva. Una web diseñada para vender 'estilo de vida', justificando precios altos y facilitando la decisión de compra en mobiliario de lujo.",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2070&auto=format&fit=crop",
+    alt: "E-commerce de mobiliario de diseño",
+    year: "2025",
+    link: "/clientes/case-rossi"
+  },
+  
+  {
     title: "Atérmicos Pinamar",
-    description: "Digitalización completa para empresa de construcción especializada.",
+    description: "Dominio de Mercado Local. Estrategia SEO y Web que captura el 100% de la demanda digital de su zona, convirtiendo búsquedas en presupuestos cerrados.",
     image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2070&auto=format&fit=crop",
-    alt: "Construcción moderna",
-    year: "2023",
+    alt: "Sitio web construcción premium",
+    year: "2025",
     link: "/clientes/atermicos-pinamar"
   },
   {
     title: "Selecta",
-    description: "Desarrollo web y app para gestión comercial integral.",
+    description: "Centralización Operativa (ERP). Eliminamos ineficiencias y errores humanos digitalizando flujos de gestión complejos. Control total del negocio en un solo dashboard.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
-    alt: "Dashboard empresarial",
+    alt: "Dashboard de gestión empresarial",
     year: "2024",
     link: "/clientes/selecta"
   },
-  {
-    title: "Clinically",
-    description: "Plataforma de gestión clínica y telemedicina de nueva generación.",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop",
-    alt: "Tecnología médica",
-    year: "2024",
-    link: "/clientes/clinically"
-  },
+  
   {
     title: "Intertenis",
-    description: "E-commerce especializado en equipamiento deportivo premium.",
+    description: "E-commerce de Nicho & Conversión. Optimizamos el funnel de ventas para equipamiento técnico, aumentando drásticamente la tasa de conversión y el valor de vida del cliente (LTV).",
     image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2070&auto=format&fit=crop",
-    alt: "Tienda deportiva",
-    year: "2023",
+    alt: "E-commerce deportivo",
+    year: "2025",
     link: "/clientes/intertenis"
-  }
+  },
+ 
+  
 ];
 ---
 
@@ -67,10 +73,9 @@ const projects = [
     <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 reveal">
       <div class="space-y-2 text-center md:text-left">
         <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">Casos de Éxito</h2>
-        <p class="text-white/40 text-lg">Resultados reales para visionarios.</p>
+        <p class="text-white/40 text-lg">Resultados medibles. Negocios escalables.</p>
       </div>
       
-      <!-- Navigation Buttons -->
       <div class="hidden md:flex gap-4">
         <button id="prev-btn" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" aria-label="Previous slide">
           <span class="material-symbols-outlined">arrow_back</span>
@@ -102,15 +107,15 @@ const projects = [
                       <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                     </div>
                   </div>
-                  <div class="flex justify-between items-start">
-                    <div>
-                      <h3 class="text-2xl font-bold mb-2 flex items-center gap-2">
+                  <div class="flex flex-col items-start">
+                    <div class="flex justify-between items-center w-full mb-3">
+                      <h3 class="text-2xl font-bold flex items-center gap-2">
                         {project.title}
                         <span class="material-symbols-outlined text-white/40 text-sm group-hover:text-white group-hover:translate-x-1 transition-all">arrow_outward</span>
                       </h3>
-                      <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
+                      <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
                     </div>
-                    <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
+                    <p class="text-base text-white/60 leading-relaxed max-w-lg group-hover:text-white/80 transition-colors">{project.description}</p>
                   </div>
                 </a>
               ) : (
@@ -129,12 +134,12 @@ const projects = [
                       <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                     </div>
                   </div>
-                  <div class="flex justify-between items-start">
-                    <div>
-                      <h3 class="text-2xl font-bold mb-2">{project.title}</h3>
-                      <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
+                  <div class="flex flex-col items-start">
+                    <div class="flex justify-between items-center w-full mb-3">
+                      <h3 class="text-2xl font-bold">{project.title}</h3>
+                      <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
                     </div>
-                    <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
+                    <p class="text-base text-white/60 leading-relaxed max-w-lg">{project.description}</p>
                   </div>
                 </div>
               )}
@@ -162,7 +167,7 @@ const projects = [
     const nextBtn = document.getElementById('next-btn');
     const prevBtnMobile = document.getElementById('prev-btn-mobile');
     const nextBtnMobile = document.getElementById('next-btn-mobile');
-    
+
     if (!track || !container) return;
     const items = track.children;
     const totalSlides = items.length;
@@ -177,7 +182,7 @@ const projects = [
     let animationID;
     
     const getVisibleSlides = () => window.innerWidth >= 768 ? 2 : 1;
-    
+
     const getMaxIndex = () => {
       const visible = getVisibleSlides();
       return totalSlides - visible; 
@@ -186,11 +191,11 @@ const projects = [
     const updateCarousel = (index) => {
       const visible = getVisibleSlides();
       const maxIndex = getMaxIndex();
-      
+
       let targetIndex = index;
       if (targetIndex < 0) targetIndex = 0;
       if (targetIndex > maxIndex) targetIndex = maxIndex;
-      
+
       currentIndex = targetIndex;
       
       const percentage = (100 / visible) * currentIndex;
@@ -236,7 +241,6 @@ const projects = [
 
     const touchEnd = () => {
       if (!isDragging) return;
-      
       const clickDuration = Date.now() - clickStartTime;
       
       isDragging = false;
@@ -269,7 +273,7 @@ const projects = [
 
         // If moving more vertically than horizontally, let the browser handle scrolling
         if (Math.abs(diffY) > Math.abs(diffX)) {
-           return; 
+           return;
         }
 
         // Mark as moved if there's significant horizontal movement
@@ -356,7 +360,7 @@ const projects = [
         updateCarousel(currentIndex);
       }, 100);
     });
-    
+
     // Prevent context menu on right click during drag
     window.oncontextmenu = function(event) {
       if (isDragging) {
@@ -369,7 +373,7 @@ const projects = [
 
   // Run on load
   setupCarousel();
-  
+
   // Run on view transitions if enabled
   document.addEventListener('astro:page-load', setupCarousel);
 </script>
