@@ -10,22 +10,22 @@ const description = "Digitalización total de club de tenis: App de torneos, ran
 <Layout title={title} description={description}>
   <Header />
   
-  <main class="bg-white text-black selection:bg-orange-200">
+  <main class="bg-white text-black selection:bg-gray-200">
     <section class="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
       <div class="max-w-7xl mx-auto relative z-10">
         <div class="flex flex-col md:flex-row gap-12 items-center">
           <div class="flex-1 space-y-8">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
-              <span class="w-2 h-2 rounded-full bg-orange-500"></span>
-              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito: App Móvil & Gestión</span>
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito</span>
             </div>
             
-            <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-black mb-8">
-              Digitalización total: <span class="text-gray-500">App de torneos y rankings en vivo.</span>
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-tight text-black mb-8">
+              +800 socios digitalizados.
             </h1>
             
             <p class="text-xl text-gray-500 max-w-xl leading-relaxed mb-8">
-              Transformamos la gestión en papel y Excel de un club con +800 socios en una experiencia digital completa con App para jugadores y panel para organizadores.
+              Digitalización completa del club: web-app para armar partidos, anotar jugadores y pasar reportes. Más tiempo para el club y más gente anotándose.
             </p>
 
             <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
@@ -35,7 +35,7 @@ const description = "Digitalización total de club de tenis: App de torneos, ran
               </a>
 
               <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
-                <span class="text-orange-600 font-bold">+800</span>
+                <span class="text-green-600 font-bold">+800</span>
                 <span class="text-sm text-gray-600 font-medium">Socios Digitalizados</span>
               </div>
             </div>
@@ -58,7 +58,7 @@ const description = "Digitalización total de club de tenis: App de torneos, ran
     <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
       <div class="max-w-4xl mx-auto text-center space-y-8">
         <blockquote class="text-2xl md:text-4xl font-medium text-black leading-tight max-w-5xl mx-auto">
-          "Gestionamos los torneos en papel y Excel. Los jugadores no saben cuándo juegan ni su ranking actual. Necesitamos digitalizar todo el club y mejorar la experiencia del socio."
+          "Gestionamos todo en papel y Excel. Necesitamos digitalizar el club para ahorrar tiempo y que los jugadores puedan ver todo desde la web."
         </blockquote>
         <p class="text-gray-400 mt-6 font-medium">— El Desafío & Expectativa</p>
       </div>
@@ -67,38 +67,52 @@ const description = "Digitalización total de club de tenis: App de torneos, ran
     <section class="py-32 px-6 md:px-12 bg-white">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-20">
-          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-black">Hoja de Ruta: 4 Meses</h2>
-          <p class="text-gray-500 text-lg">De la gestión manual a un ecosistema digital automatizado.</p>
+          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-black">Lo que hicimos</h2>
+          <p class="text-gray-500 text-lg">Digitalización completa que ahorra tiempo y atrae más socios.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Card 1 -->
           <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
             <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
               <span class="material-symbols-outlined text-black">developer_mode</span>
             </div>
-            <h3 class="text-xl font-bold text-black mb-3">Mes 1-2: Desarrollo</h3>
+            <h3 class="text-xl font-bold text-black mb-3">App Móvil (PWA)</h3>
             <p class="text-gray-500 text-sm leading-relaxed">
-              Diseño y desarrollo de App Móvil (PWA) para jugadores (perfiles, partidos, rankings) y Panel de Administración Web para organizadores.
+              Desarrollo de App para jugadores con perfiles, partidos y rankings actualizados en tiempo real.
             </p>
           </div>
 
+          <!-- Card 2 -->
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">desktop_windows</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Panel de Administración</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Sistema web para organizadores que permite gestionar torneos, partidos y calcular rankings automáticamente.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
           <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
             <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
               <span class="material-symbols-outlined text-black">database</span>
             </div>
-            <h3 class="text-xl font-bold text-black mb-3">Mes 3: Migración</h3>
+            <h3 class="text-xl font-bold text-black mb-3">Migración de Datos</h3>
             <p class="text-gray-500 text-sm leading-relaxed">
-              Digitalización de la base de datos histórica de jugadores y configuración de los algoritmos matemáticos para el cálculo automático de rankings.
+              Digitalización de la base histórica de jugadores y algoritmos para cálculo automático de rankings.
             </p>
           </div>
 
+          <!-- Card 4 -->
           <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
             <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
               <span class="material-symbols-outlined text-black">rocket_launch</span>
             </div>
-            <h3 class="text-xl font-bold text-black mb-3">Mes 4: Lanzamiento</h3>
+            <h3 class="text-xl font-bold text-black mb-3">Lanzamiento</h3>
             <p class="text-gray-500 text-sm leading-relaxed">
-              Implementación oficial durante el Torneo Apertura. Onboarding masivo y registro de los más de 800 socios en la nueva plataforma.
+              Implementación oficial durante el Torneo Apertura con onboarding masivo de más de 800 socios.
             </p>
           </div>
         </div>
@@ -109,48 +123,47 @@ const description = "Digitalización total de club de tenis: App de torneos, ran
       <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div class="space-y-8">
-            <h2 class="text-3xl md:text-5xl font-bold text-black">El Cambio Real</h2>
+            <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
             <p class="text-gray-500 text-lg">
-              Primero digitalizamos la casa. Con la base tecnológica lista y probada, ahora estamos lanzando campañas para escalar masivamente el club.
+              Todo se maneja desde la web. Ahorraron mucho tiempo en la gestión y más gente empieza a anotarse al ver el sistema.
             </p>
             
             <div class="space-y-6">
               <div class="p-6 rounded-2xl bg-white border border-green-500 shadow-sm relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-green-500 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold uppercase">Completada</div>
-                <p class="text-xs text-green-600 uppercase mb-2 font-bold tracking-wider">Fase 1</p>
+                <div class="absolute top-0 right-0 bg-green-500 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold uppercase">Completado</div>
+                <p class="text-xs text-green-600 uppercase mb-2 font-bold tracking-wider">Logro</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-3xl font-bold text-black">Gestión 100% Digital</span>
+                  <span class="text-3xl font-bold text-black">Todo Digital</span>
                 </div>
                 <p class="text-gray-400 mt-2 text-sm">
-                  De Excel/Papel a plataforma automatizada.
+                  Web-app para armar partidos, anotar jugadores y reportes.
                 </p>
               </div>
               
-              <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-lg relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-orange-500 text-white text-[10px] px-2 py-1 rounded-bl-lg font-bold uppercase">En Curso</div>
-                <p class="text-xs text-orange-500 uppercase mb-2 font-bold tracking-wider">Fase 2</p>
+              <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Beneficio</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-3xl font-bold text-black">Escalar Jugadores</span>
+                  <span class="text-3xl font-bold text-black">Más Anotaciones</span>
                 </div>
-                <p class="text-gray-500 font-medium mt-2 text-sm flex items-center gap-1">
+                <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
                   <span class="material-symbols-outlined text-[18px]">trending_up</span>
-                  Objetivo: +50% Socios Activos
+                  Gente ve el sistema y se anota
                 </p>
               </div>
             </div>
             
             <div class="pt-4">
-              <p class="text-5xl font-bold text-black tracking-tighter">
-                Modernización
+              <p class="text-7xl font-bold text-black tracking-tighter">
+                Ahorro de Tiempo
               </p>
-              <p class="text-gray-500 mt-2 text-xl font-medium">Club listo para crecer sin límites técnicos</p>
+              <p class="text-gray-500 mt-2 text-xl font-medium">Gestión automática y más inscripciones</p>
             </div>
           </div>
           
           <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
             <div class="absolute top-8 left-8">
-              <h3 class="text-xl font-bold text-black">Digitalización de Socios</h3>
-              <p class="text-gray-400 text-sm">Progreso de Onboarding (Mes 4 - Lanzamiento)</p>
+              <h3 class="text-xl font-bold text-black">Impacto Digital</h3>
+              <p class="text-gray-400 text-sm">Adopción del Sistema</p>
             </div>
             
             <div class="flex items-end justify-between gap-4 h-[200px] w-full px-2">
@@ -164,7 +177,7 @@ const description = "Digitalización total de club de tenis: App de torneos, ran
                  <div class="absolute -top-8 text-xs font-bold text-orange-600">Torneo</div>
                  <div class="absolute -bottom-6 text-xs text-gray-500 font-bold">Sem 3</div>
               </div>
-              <div class="w-full bg-orange-500 rounded-t-lg h-[95%] relative group flex justify-center">
+              <div class="w-full bg-black rounded-t-lg h-[95%] relative group flex justify-center">
                  <div class="absolute -top-8 text-xs font-bold text-black">100%</div>
                  <div class="absolute -bottom-6 text-xs text-black font-bold">Sem 4</div>
               </div>
