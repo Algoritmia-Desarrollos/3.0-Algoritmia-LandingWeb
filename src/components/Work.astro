@@ -17,6 +17,20 @@ const projects = [
     year: "2024",
     image: workEcomoda,
     alt: "Close up of fashion apparel texture and design sketches"
+  },
+  {
+    title: "Revolución FinTech II",
+    description: "Escalando una startup Serie B de cero a $10M ARR mediante rebranding estratégico.",
+    year: "2023",
+    image: workFintech,
+    alt: "Modern office meeting room with charts on glass walls showing growth"
+  },
+  {
+    title: "Eco-Moda II",
+    description: "Transformación digital completa para una marca de moda sostenible global.",
+    year: "2024",
+    image: workEcomoda,
+    alt: "Close up of fashion apparel texture and design sketches"
   }
 ];
 ---
@@ -28,42 +42,139 @@ const projects = [
         <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">Casos de Éxito</h2>
         <p class="text-white/40 text-lg">Resultados reales para visionarios.</p>
       </div>
-      <a class="hidden md:inline-flex items-center gap-2 text-white text-sm font-medium hover:text-white/70 transition-colors" href="#">
-        Ver todos los proyectos <span class="material-symbols-outlined text-sm">arrow_forward</span>
-      </a>
+      
+      <!-- Navigation Buttons -->
+      <div class="hidden md:flex gap-4">
+        <button id="prev-btn" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" aria-label="Previous slide">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <button id="next-btn" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" aria-label="Next slide">
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 reveal">
-      {projects.map(project => (
-        <div class="group cursor-pointer">
-          <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
-            <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
-              <Image 
-                src={project.image} 
-                alt={project.alt}
-                class="w-full h-full object-cover"
-                width={800}
-                height={600}
-                decoding="async"
-              />
-              <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+    <div class="relative group/carousel">
+      <div class="overflow-hidden" id="carousel-container">
+        <div class="flex transition-transform duration-500 ease-out" id="carousel-track">
+          {projects.map(project => (
+            <div class="w-full md:w-1/2 flex-shrink-0 px-6">
+              <div class="group cursor-pointer">
+                <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
+                  <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
+                    <Image 
+                      src={project.image} 
+                      alt={project.alt}
+                      class="w-full h-full object-cover"
+                      width={800}
+                      height={600}
+                      decoding="async"
+                    />
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                  </div>
+                </div>
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="text-2xl font-bold mb-2">{project.title}</h3>
+                    <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
+                  </div>
+                  <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="flex justify-between items-start">
-            <div>
-              <h3 class="text-2xl font-bold mb-2">{project.title}</h3>
-              <p class="text-sm text-white/50 leading-relaxed max-w-sm">{project.description}</p>
-            </div>
-            <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
-          </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
     
-    <div class="mt-12 md:hidden text-center">
-      <a class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-white/70 transition-colors border-b border-white/20 pb-0.5" href="#">
-        Ver más <span class="material-symbols-outlined text-sm">arrow_forward</span>
-      </a>
+    <!-- Mobile Navigation (optional, or keep hidden/use swipe in future) -->
+    <div class="mt-8 flex justify-center gap-4 md:hidden">
+       <button id="prev-btn-mobile" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" aria-label="Previous slide">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <button id="next-btn-mobile" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed" aria-label="Next slide">
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
     </div>
   </div>
 </section>
+
+<script>
+  function setupCarousel() {
+    const track = document.getElementById('carousel-track');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtnMobile = document.getElementById('prev-btn-mobile');
+    const nextBtnMobile = document.getElementById('next-btn-mobile');
+    
+    // Get all project items to count them
+    // We can't use dots anymore to count.
+    // The track has children.
+    if (!track) return;
+    const items = track.children;
+    const totalSlides = items.length;
+
+    let currentIndex = 0;
+    
+    const getVisibleSlides = () => window.innerWidth >= 768 ? 2 : 1;
+    
+    const getMaxIndex = () => {
+      const visible = getVisibleSlides();
+      return totalSlides - visible; 
+    };
+
+    const updateCarousel = (index) => {
+      const visible = getVisibleSlides();
+      const maxIndex = getMaxIndex();
+      
+      let targetIndex = index;
+      if (targetIndex < 0) targetIndex = 0;
+      if (targetIndex > maxIndex) targetIndex = maxIndex;
+      
+      currentIndex = targetIndex;
+      
+      const percentage = (100 / visible) * currentIndex;
+      track.style.transform = `translateX(-${percentage}%)`;
+      
+      // Update buttons state
+      const updateButtons = (prev, next) => {
+        if (prev) prev.disabled = currentIndex === 0;
+        if (next) next.disabled = currentIndex === maxIndex;
+      };
+
+      updateButtons(prevBtn, nextBtn);
+      updateButtons(prevBtnMobile, nextBtnMobile);
+    };
+
+    const handlePrev = () => {
+      updateCarousel(currentIndex - 1);
+    };
+
+    const handleNext = () => {
+      updateCarousel(currentIndex + 1);
+    };
+
+    if (prevBtn) prevBtn.addEventListener('click', handlePrev);
+    if (nextBtn) nextBtn.addEventListener('click', handleNext);
+    if (prevBtnMobile) prevBtnMobile.addEventListener('click', handlePrev);
+    if (nextBtnMobile) nextBtnMobile.addEventListener('click', handleNext);
+
+    // Initial update
+    updateCarousel(0);
+
+    // Handle resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        updateCarousel(currentIndex);
+      }, 100);
+    });
+  }
+
+  // Run on load
+  setupCarousel();
+  
+  // Run on view transitions if enabled
+  document.addEventListener('astro:page-load', setupCarousel);
+</script>
