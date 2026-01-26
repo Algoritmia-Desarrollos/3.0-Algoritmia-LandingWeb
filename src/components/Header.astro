@@ -107,6 +107,33 @@
     }
   }, { passive: true });
 
+  // Handle all links with hashes for smooth scrolling
+  document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      const targetId = href.includes('#') ? href.split('#')[1] : null;
+      
+      if (targetId) {
+        const targetElement = document.getElementById(targetId);
+        
+        // Only prevent default if target exists on current page
+        if (targetElement) {
+          e.preventDefault();
+          
+          // Close menu if open
+          if (isOpen) closeMenu();
+          
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+          
+          // Update URL without jump
+          history.pushState(null, null, `#${targetId}`);
+        }
+      }
+    });
+  });
+
   // Home links click handler (Logo + Inicio)
   const homeLinks = document.querySelectorAll('.home-link');
   homeLinks.forEach(link => {
@@ -117,6 +144,9 @@
         
         // Close mobile menu if open
         if (isOpen) closeMenu();
+        
+        // Update URL to root
+        history.pushState(null, null, '/');
       }
     });
   });
