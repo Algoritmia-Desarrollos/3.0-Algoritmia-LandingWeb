@@ -55,17 +55,17 @@ const projects = [
     </div>
     
     <div class="relative group/carousel">
-      <div class="overflow-hidden" id="carousel-container">
-        <div class="flex transition-transform duration-500 ease-out" id="carousel-track">
+      <div class="overflow-hidden cursor-grab active:cursor-grabbing" id="carousel-container">
+        <div class="flex transition-transform duration-500 ease-out select-none" id="carousel-track">
           {projects.map(project => (
-            <div class="w-full md:w-1/2 flex-shrink-0 px-6">
-              <div class="group cursor-pointer">
+            <div class="w-full md:w-1/2 flex-shrink-0 px-6 pointer-events-none md:pointer-events-auto">
+              <div class="group cursor-pointer pointer-events-auto">
                 <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
                   <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
                     <Image 
                       src={project.image} 
                       alt={project.alt}
-                      class="w-full h-full object-cover"
+                      class="w-full h-full object-cover pointer-events-none"
                       width={800}
                       height={600}
                       decoding="async"
@@ -101,20 +101,23 @@ const projects = [
 
 <script>
   function setupCarousel() {
+    const container = document.getElementById('carousel-container');
     const track = document.getElementById('carousel-track');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const prevBtnMobile = document.getElementById('prev-btn-mobile');
     const nextBtnMobile = document.getElementById('next-btn-mobile');
     
-    // Get all project items to count them
-    // We can't use dots anymore to count.
-    // The track has children.
-    if (!track) return;
+    if (!track || !container) return;
     const items = track.children;
     const totalSlides = items.length;
 
     let currentIndex = 0;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let isDragging = false;
+    let animationID;
     
     const getVisibleSlides = () => window.innerWidth >= 768 ? 2 : 1;
     
@@ -134,7 +137,10 @@ const projects = [
       currentIndex = targetIndex;
       
       const percentage = (100 / visible) * currentIndex;
-      track.style.transform = `translateX(-${percentage}%)`;
+      currentTranslate = -percentage;
+      prevTranslate = currentTranslate;
+      
+      track.style.transform = `translateX(${percentage * -1}%)`;
       
       // Update buttons state
       const updateButtons = (prev, next) => {
@@ -154,6 +160,96 @@ const projects = [
       updateCarousel(currentIndex + 1);
     };
 
+    // Drag Events
+    const touchStart = (index) => {
+      return function(event) {
+        isDragging = true;
+        startX = getPositionX(event);
+        animationID = requestAnimationFrame(animation);
+        container.classList.add('grabbing');
+        track.style.transition = 'none'; // Disable transition during drag
+      }
+    }
+
+    const touchEnd = () => {
+      isDragging = false;
+      cancelAnimationFrame(animationID);
+      container.classList.remove('grabbing');
+      track.style.transition = 'transform 0.5s ease-out'; // Re-enable transition
+
+      const movedBy = currentTranslate - prevTranslate;
+      
+      // Threshold to change slide (e.g., 5% of width)
+      // Since translate is in percentage, let's say 5% move is enough?
+      // Or better, check pixel distance relative to container width.
+      // But we are working with percentages in transform.
+      
+      // Let's use a simple logic: if moved significantly, snap to next/prev.
+      // But user said "maximo 1".
+      
+      // Calculate effective index change
+      // currentTranslate is negative percentage.
+      // Each slide is (100 / visible)% width.
+      
+      const visible = getVisibleSlides();
+      const slideWidthPercent = 100 / visible;
+      
+      // Determine direction
+      // If movedBy > 0, we moved right (dragged right), so we want PREV slide.
+      // If movedBy < 0, we moved left (dragged left), so we want NEXT slide.
+      
+      // Threshold: let's say 10% of slide width
+      const threshold = slideWidthPercent / 4;
+      
+      if (movedBy < -threshold) {
+        // Dragged left -> Next
+        updateCarousel(currentIndex + 1);
+      } else if (movedBy > threshold) {
+        // Dragged right -> Prev
+        updateCarousel(currentIndex - 1);
+      } else {
+        // Snap back
+        updateCarousel(currentIndex);
+      }
+    }
+
+    const touchMove = (event) => {
+      if (isDragging) {
+        const currentPosition = getPositionX(event);
+        const currentRef = startX;
+        const diff = currentPosition - currentRef;
+        
+        // Convert pixel diff to percentage
+        const containerWidth = container.offsetWidth;
+        const diffPercent = (diff / containerWidth) * 100;
+        
+        currentTranslate = prevTranslate + diffPercent;
+      }
+    }
+
+    const getPositionX = (event) => {
+      return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    }
+
+    const animation = () => {
+      if(isDragging) {
+        track.style.transform = `translateX(${currentTranslate}%)`;
+        requestAnimationFrame(animation);
+      }
+    }
+
+    // Event Listeners
+    container.addEventListener('mousedown', touchStart(currentIndex));
+    container.addEventListener('touchstart', touchStart(currentIndex), {passive: true});
+
+    container.addEventListener('mouseup', touchEnd);
+    container.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
+    container.addEventListener('touchend', touchEnd);
+
+    container.addEventListener('mousemove', touchMove);
+    container.addEventListener('touchmove', touchMove, {passive: true});
+
+    // Button Listeners
     if (prevBtn) prevBtn.addEventListener('click', handlePrev);
     if (nextBtn) nextBtn.addEventListener('click', handleNext);
     if (prevBtnMobile) prevBtnMobile.addEventListener('click', handlePrev);
@@ -170,6 +266,15 @@ const projects = [
         updateCarousel(currentIndex);
       }, 100);
     });
+    
+    // Prevent context menu on right click during drag
+    window.oncontextmenu = function(event) {
+      if (isDragging) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      }
+    };
   }
 
   // Run on load
