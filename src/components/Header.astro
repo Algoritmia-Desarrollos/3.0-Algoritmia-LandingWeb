@@ -133,7 +133,11 @@
             // @ts-ignore
             if (window.lenis) {
                 // @ts-ignore
-                window.lenis.scrollTo(targetElement, { offset: 0 });
+                window.lenis.scrollTo(targetElement, { 
+                    offset: 0, 
+                    duration: 1.0, // Un pelín más lento solo al hacer click en menú
+                    immediate: false 
+                });
             } else {
                 targetElement.scrollIntoView({ behavior: 'smooth' });
             }

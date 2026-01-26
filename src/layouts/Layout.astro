@@ -33,8 +33,6 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
         
-        <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-        
 		<ClientRouter />
 	</head>
 	<body class="antialiased text-gray-900 bg-white">
@@ -52,99 +50,82 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 	html {
 		font-family: 'Inter Variable', sans-serif;
 		background: #13151a;
-		scroll-behavior: auto; /* IMPORTANTE: Lenis controla el scroll */
+        
+        /* CORRECCIÓN CLAVE: */
+		scroll-behavior: auto !important; /* Forzamos apagado del scroll nativo */
+        
         width: 100%;
         overflow-x: hidden;
+        /* Evita rebotes raros en Mac/iOS */
+        overscroll-behavior: none; 
 	}
 
-    /* --- SISTEMA DE ANIMACIONES --- */
-    
-    /* Estado inicial: invisible y desplazado hacia abajo */
+    /* SISTEMA DE ANIMACIONES (Se mantiene igual) */
     .reveal {
         opacity: 0;
-        transform: translateY(50px);
-        transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); /* Curva de animación premium */
-        filter: blur(5px); /* Pequeño blur para efecto elegante */
+        transform: translateY(30px); /* Reduje un poco la distancia para que sea más sutil */
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        filter: blur(5px);
     }
-
-    /* Estado activo: visible y en su lugar */
     .reveal.active {
         opacity: 1;
         transform: translateY(0);
         filter: blur(0);
     }
-
-    /* Clases para retrasar la animación (efecto escalera) */
     .delay-100 { transition-delay: 0.1s; }
     .delay-200 { transition-delay: 0.2s; }
     .delay-300 { transition-delay: 0.3s; }
 </style>
 
 <script>
-    // Wrapper para asegurar que el código se ejecute
-    const startApp = () => {
-        // 1. Configuración de Lenis (Scroll Suave)
-        try {
-            // @ts-ignore
-            if (typeof Lenis !== 'undefined') {
-                // @ts-ignore
-                const lenis = new Lenis({
-                    duration: 0.8, // Reduced from 1.2 for snappier feel
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Efecto "Out Quart"
-                    smoothWheel: true
-                });
+    // @ts-ignore
+    import Lenis from 'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm';
 
-                // Hacerlo global para que el Header lo pueda usar
-                // @ts-ignore
-                window.lenis = lenis;
+    // CONFIGURACIÓN "NADA LOCO"
+    // Hacemos que se sienta más como un scroll normal pero premium
+    const lenis = new Lenis({
+        duration: 0.8, // Bajamos de 1.2 a 0.8 (más rápido/natural)
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+        smoothWheel: true,
+        wheelMultiplier: 1, // Velocidad estándar (1 a 1)
+        touchMultiplier: 2, // Mejor sensibilidad en móvil
+    });
 
-                function raf(time) {
-                    lenis.raf(time);
-                    requestAnimationFrame(raf);
-                }
-                requestAnimationFrame(raf);
-            } else {
-                console.warn('Lenis no está definido. Scroll suave desactivado.');
-            }
-        } catch (e) {
-            console.error('Error inicializando Lenis:', e);
-        }
-
-        // 2. Configuración del Observer (Animaciones)
-        // Separado en un bloque try-catch para asegurar que siempre corra
-        try {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0 // Cambiado a 0 para asegurar que se active apenas entre
-            };
-            
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target); 
-                    }
-                });
-            }, observerOptions);
-
-            const revealElements = document.querySelectorAll('.reveal');
-            revealElements.forEach(el => observer.observe(el));
-            
-        } catch (e) {
-            console.error('Error en animaciones:', e);
-            // Fallback de emergencia: mostrar todo si falla el observer
-            document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-        }
-    };
-
-    // Ejecutar en carga inicial y navegación
-    document.addEventListener('astro:page-load', startApp);
-    
-    // Fallback por si astro:page-load no dispara (ej: primera carga sin View Transitions)
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', startApp);
-    } else {
-        startApp();
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
     }
+    requestAnimationFrame(raf);
+
+    // Guardamos lenis en window para usarlo en el Header
+    // @ts-ignore
+    window.lenis = lenis;
+
+    // ANIMACIONES
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); 
+            }
+        });
+    }, observerOptions);
+
+    function initAnimations() {
+        // Reiniciar scroll si es necesario
+        // @ts-ignore
+        if(window.lenis) window.lenis.scrollTo(0, { immediate: true });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        revealElements.forEach(el => observer.observe(el));
+    }
+
+    document.addEventListener('astro:page-load', initAnimations);
+    document.addEventListener('DOMContentLoaded', initAnimations);
 </script>
