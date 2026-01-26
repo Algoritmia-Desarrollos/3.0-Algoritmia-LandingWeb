@@ -69,57 +69,6 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 	html {
 		font-family: 'Inter Variable', sans-serif;
 		background: #13151a;
-		background-size: 224px;
-		scroll-behavior: smooth;
-		text-rendering: optimizeLegibility;
-		scrollbar-gutter: stable; /* Prevent layout shift when scrollbar disappears */
-	}
-	
-	/* Preloader */
-	#preloader {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #ffffff; /* White background as requested */
-		z-index: 9999; /* High z-index to cover everything */
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		transition: opacity 0.5s ease-out;
-	}
-
-	#status {
-		width: 200px;
-		height: 200px;
-		background-image: url(https://raw.githubusercontent.com/niklausgerber/PreLoadMe/master/img/status.gif);
-		background-repeat: no-repeat;
-		background-position: center;
-	}
-
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-	
-	/* Scroll Reveal Animation */
-	.reveal {
-		opacity: 0;
-		transform: translateY(30px);
-		transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-	}
-	
-	.reveal.active {
-		opacity: 1;
-		transform: translateY(0);
 	}
 </style>
 

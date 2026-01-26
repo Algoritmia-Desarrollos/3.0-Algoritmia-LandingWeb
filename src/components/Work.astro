@@ -189,11 +189,15 @@ const projects = [
       updateCarousel(currentIndex + 1);
     };
 
+    // Touch State
+    let startY = 0;
+
     // Drag Events
     const touchStart = (index) => {
       return function(event) {
         isDragging = true;
         startX = getPositionX(event);
+        startY = getPositionY(event); // Capture start Y
         animationID = requestAnimationFrame(animation);
         container.classList.add('grabbing');
         track.style.transition = 'none'; // Disable transition during drag
@@ -208,49 +212,40 @@ const projects = [
 
       const movedBy = currentTranslate - prevTranslate;
       
-      // Threshold to change slide (e.g., 5% of width)
-      // Since translate is in percentage, let's say 5% move is enough?
-      // Or better, check pixel distance relative to container width.
-      // But we are working with percentages in transform.
-      
-      // Let's use a simple logic: if moved significantly, snap to next/prev.
-      // But user said "maximo 1".
-      
-      // Calculate effective index change
-      // currentTranslate is negative percentage.
-      // Each slide is (100 / visible)% width.
-      
       const visible = getVisibleSlides();
       const slideWidthPercent = 100 / visible;
-      
-      // Determine direction
-      // If movedBy > 0, we moved right (dragged right), so we want PREV slide.
-      // If movedBy < 0, we moved left (dragged left), so we want NEXT slide.
-      
-      // Threshold: let's say 10% of slide width
       const threshold = slideWidthPercent / 4;
       
       if (movedBy < -threshold) {
-        // Dragged left -> Next
         updateCarousel(currentIndex + 1);
       } else if (movedBy > threshold) {
-        // Dragged right -> Prev
         updateCarousel(currentIndex - 1);
       } else {
-        // Snap back
         updateCarousel(currentIndex);
       }
     }
 
     const touchMove = (event) => {
       if (isDragging) {
-        const currentPosition = getPositionX(event);
-        const currentRef = startX;
-        const diff = currentPosition - currentRef;
+        const currentPositionX = getPositionX(event);
+        const currentPositionY = getPositionY(event);
         
-        // Convert pixel diff to percentage
+        const diffX = currentPositionX - startX;
+        const diffY = currentPositionY - startY;
+
+        // If moving more vertically than horizontally, let the browser handle scrolling
+        // and ignore the carousel drag
+        if (Math.abs(diffY) > Math.abs(diffX)) {
+           return; 
+        }
+
+        // Otherwise, it's a horizontal swipe, so prevent default scrolling
+        if (event.cancelable) {
+           event.preventDefault();
+        }
+        
         const containerWidth = container.offsetWidth;
-        const diffPercent = (diff / containerWidth) * 100;
+        const diffPercent = (diffX / containerWidth) * 100;
         
         currentTranslate = prevTranslate + diffPercent;
       }
@@ -258,6 +253,10 @@ const projects = [
 
     const getPositionX = (event) => {
       return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    }
+    
+    const getPositionY = (event) => {
+      return event.type.includes('mouse') ? event.pageY : event.touches[0].clientY;
     }
 
     const animation = () => {
@@ -269,14 +268,16 @@ const projects = [
 
     // Event Listeners
     container.addEventListener('mousedown', touchStart(currentIndex));
-    container.addEventListener('touchstart', touchStart(currentIndex), {passive: true});
+    // Passive: false is crucial for preventDefault to work
+    container.addEventListener('touchstart', touchStart(currentIndex), {passive: false});
 
     container.addEventListener('mouseup', touchEnd);
     container.addEventListener('mouseleave', () => { if(isDragging) touchEnd() });
     container.addEventListener('touchend', touchEnd);
 
     container.addEventListener('mousemove', touchMove);
-    container.addEventListener('touchmove', touchMove, {passive: true});
+    // Passive: false is crucial for preventDefault to work
+    container.addEventListener('touchmove', touchMove, {passive: false});
 
     // Button Listeners
     if (prevBtn) prevBtn.addEventListener('click', handlePrev);

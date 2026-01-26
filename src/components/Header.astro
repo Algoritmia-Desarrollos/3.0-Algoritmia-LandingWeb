@@ -54,58 +54,64 @@
 </style>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const navbar = document.getElementById('navbar');
-  const menuItems = document.getElementById('mobile-menu-items');
-  const menuIcon = document.getElementById('menu-icon');
-  let isOpen = false;
+  function setupNavbar() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const navbar = document.getElementById('navbar');
+    const menuItems = document.getElementById('mobile-menu-items');
+    const menuIcon = document.getElementById('menu-icon');
+    let isOpen = false;
 
-  function openMenu() {
-    isOpen = true;
-    navbar?.classList.remove('max-h-[64px]');
-    navbar?.classList.add('max-h-[400px]', 'bg-white'); // Expand and solidify bg
-    menuItems?.classList.remove('opacity-0');
-    if (menuIcon) menuIcon.textContent = 'close';
-  }
-
-  function closeMenu() {
-    isOpen = false;
-    navbar?.classList.add('max-h-[64px]');
-    navbar?.classList.remove('max-h-[400px]', 'bg-white');
-    menuItems?.classList.add('opacity-0');
-    if (menuIcon) menuIcon.textContent = 'menu';
-  }
-
-  btn?.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevent immediate closing from document click
-    if (isOpen) {
-      closeMenu();
-    } else {
-      openMenu();
+    function openMenu() {
+      isOpen = true;
+      navbar?.classList.remove('max-h-[64px]');
+      navbar?.classList.add('max-h-[400px]', 'bg-white'); // Expand and solidify bg
+      menuItems?.classList.remove('opacity-0');
+      if (menuIcon) menuIcon.textContent = 'close';
     }
-  });
 
-  // Close menu when clicking a link
-  const mobileLinks = menuItems?.querySelectorAll('a');
-  mobileLinks?.forEach(link => {
-    link.addEventListener('click', () => {
-      closeMenu();
+    function closeMenu() {
+      isOpen = false;
+      navbar?.classList.add('max-h-[64px]');
+      navbar?.classList.remove('max-h-[400px]', 'bg-white');
+      menuItems?.classList.add('opacity-0');
+      if (menuIcon) menuIcon.textContent = 'menu';
+    }
+
+    // Remove existing listeners to prevent duplication if elements persist (though usually they are replaced)
+    // A simpler approach is to clone and replace, or just add new ones if we are sure elements are new.
+    // With View Transitions, body content is replaced, so elements are new.
+
+    btn?.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent immediate closing from document click
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
-  });
 
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    if (isOpen && navbar && !navbar.contains(e.target as Node) && !btn?.contains(e.target as Node)) {
-      closeMenu();
-    }
-  });
+    // Close menu when clicking a link
+    const mobileLinks = menuItems?.querySelectorAll('a');
+    mobileLinks?.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
 
-  // Close menu on scroll
-  window.addEventListener('scroll', () => {
-    if (isOpen) {
-      closeMenu();
-    }
-  }, { passive: true });
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (isOpen && navbar && !navbar.contains(e.target as Node) && !btn?.contains(e.target as Node)) {
+        closeMenu();
+      }
+    });
+
+    // Close menu on scroll
+    window.addEventListener('scroll', () => {
+      if (isOpen) {
+        closeMenu();
+      }
+    }, { passive: true });
+  }
 
   // Handle all links with hashes for smooth scrolling
   function setupSmoothScroll() {
@@ -122,8 +128,14 @@
             e.preventDefault();
             e.stopImmediatePropagation(); // Prevent other listeners (like Astro router)
             
-            // Close menu if open
-            if (isOpen) closeMenu();
+            // Close menu if open (we need to access the closeMenu from setupNavbar scope? 
+            // Actually setupNavbar defines local variables. We should probably merge these or make closeMenu global/accessible.
+            // For simplicity, let's just re-implement closure or trigger a click on body/outside to close it?
+            // Or better, just let setupNavbar handle the menu logic and this handle scroll.
+            // But we need to close menu here.
+            
+            // Let's dispatch a custom event or just click the body?
+            document.body.click();
             
             // Calculate position to scroll to (exact top of the element)
             const elementPosition = targetElement.getBoundingClientRect().top;
@@ -151,8 +163,7 @@
           
           window.scrollTo({ top: 0, behavior: 'smooth' });
           
-          // Close mobile menu if open
-          if (isOpen) closeMenu();
+          document.body.click(); // Close menu
           
           // Update URL to root
           history.pushState(null, null, '/');
@@ -162,8 +173,12 @@
   }
 
   // Run on initial load
+  setupNavbar();
   setupSmoothScroll();
 
   // Run on view transitions
-  document.addEventListener('astro:page-load', setupSmoothScroll);
+  document.addEventListener('astro:page-load', () => {
+    setupNavbar();
+    setupSmoothScroll();
+  });
 </script>
