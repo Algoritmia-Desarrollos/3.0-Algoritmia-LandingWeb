@@ -9,43 +9,192 @@ import Button from './UI/Button.astro';
         <h2 class="text-3xl font-semibold mb-3 tracking-tight">Comienza tu Viaje</h2>
         <p class="text-sm text-primary/50">Cuéntanos sobre tu proyecto y te contactaremos en 24h.</p>
       </div>
-      <form class="space-y-8">
+      
+      <!-- Success Message -->
+      <div id="success-message" class="hidden mb-8 p-4 bg-green-50 border border-green-200 rounded-xl text-center">
+        <p class="text-green-700 font-medium">¡Mensaje enviado con éxito!</p>
+        <p class="text-green-600 text-sm mt-1">Te contactaremos pronto.</p>
+      </div>
+
+      <!-- Error Message -->
+      <div id="error-message" class="hidden mb-8 p-4 bg-red-50 border border-red-200 rounded-xl text-center">
+        <p class="text-red-700 font-medium">Hubo un error al enviar el mensaje</p>
+        <p class="text-red-600 text-sm mt-1">Por favor intenta nuevamente.</p>
+      </div>
+
+      <form id="contact-form" class="space-y-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div class="relative group reveal delay-100">
-            <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="name" placeholder="Nombre" type="text"/>
-            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary" for="name">
+            <input 
+              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+              id="name" 
+              name="from_name"
+              placeholder="Nombre" 
+              type="text"
+              required
+            />
+            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="name">
               Nombre
             </label>
           </div>
           <div class="relative group reveal delay-100">
-            <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="email" placeholder="Email" type="email"/>
-            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary" for="email">
+            <input 
+              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+              id="email" 
+              name="from_email"
+              placeholder="Email" 
+              type="email"
+              required
+            />
+            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="email">
               Email
             </label>
           </div>
         </div>
+        
         <div class="relative group reveal delay-200">
-          <select class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary focus:border-primary focus:ring-0 transition-colors appearance-none bg-none cursor-pointer" id="budget">
-            <option class="text-gray-400" disabled="" selected="" value="">Selecciona Presupuesto</option>
-            <option value="10-50k">$10k - $50k</option>
-            <option value="50-100k">$50k - $100k</option>
-            <option value="100k+">$100k+</option>
-          </select>
-          <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-focus:text-primary" for="budget">Presupuesto</label>
-          <span class="material-symbols-outlined absolute right-0 top-3 pointer-events-none text-primary/30 text-xl">expand_more</span>
+          <label class="block text-base text-primary/40 mb-3">¿Qué estás buscando?</label>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="flex items-center gap-2 cursor-pointer group/checkbox">
+              <input type="checkbox" name="services" value="Página web" class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary focus:ring-offset-0">
+              <span class="text-sm text-primary group-hover/checkbox:text-primary/80 transition-colors">Página web</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer group/checkbox">
+              <input type="checkbox" name="services" value="Marketing" class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary focus:ring-offset-0">
+              <span class="text-sm text-primary group-hover/checkbox:text-primary/80 transition-colors">Marketing</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer group/checkbox">
+              <input type="checkbox" name="services" value="Contenido para redes" class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary focus:ring-offset-0">
+              <span class="text-sm text-primary group-hover/checkbox:text-primary/80 transition-colors">Contenido para redes</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer group/checkbox">
+              <input type="checkbox" name="services" value="Branding" class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary focus:ring-offset-0">
+              <span class="text-sm text-primary group-hover/checkbox:text-primary/80 transition-colors">Branding</span>
+            </label>
+          </div>
         </div>
+
         <div class="relative group reveal delay-300">
-          <textarea class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none" id="message" placeholder="Detalles del Proyecto" rows="2"></textarea>
-          <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary" for="message">
+          <textarea 
+            class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none overflow-hidden" 
+            id="message" 
+            name="message"
+            placeholder="Detalles del Proyecto" 
+            rows="1"
+            required
+          ></textarea>
+          <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="message">
             Detalles del Proyecto
           </label>
         </div>
+        
         <div class="pt-6 reveal delay-300">
-          <Button type="submit" class="w-full">
-            Aplicar para trabajar juntos
-          </Button>
+          <button 
+            type="submit" 
+            id="submit-btn"
+            class="w-full bg-primary text-white py-4 px-8 rounded-full font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span id="btn-text">Aplicar para trabajar juntos</span>
+            <span id="btn-loading" class="hidden">Enviando...</span>
+          </button>
         </div>
       </form>
     </div>
   </div>
 </section>
+
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+  function initContactForm() {
+    // Initialize EmailJS
+    emailjs.init("veUMyXHA-8TBOkGAL"); // Reemplaza con tu Public Key de EmailJS
+
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoading = document.getElementById('btn-loading');
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+    const messageTextarea = document.getElementById('message');
+
+    if (!form) return;
+
+    // Auto-resize textarea
+    if (messageTextarea) {
+      const autoResize = () => {
+        messageTextarea.style.height = 'auto';
+        messageTextarea.style.height = messageTextarea.scrollHeight + 'px';
+      };
+
+      messageTextarea.addEventListener('input', autoResize);
+      // Initial resize in case there's pre-filled content
+      autoResize();
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Hide previous messages
+      successMessage.classList.add('hidden');
+      errorMessage.classList.add('hidden');
+
+      // Show loading state
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      // Get selected services
+      const servicesCheckboxes = form.querySelectorAll('input[name="services"]:checked');
+      const selectedServices = Array.from(servicesCheckboxes).map(cb => cb.value).join(', ');
+
+      // Prepare template params
+      const templateParams = {
+        from_name: form.querySelector('#name').value,
+        from_email: form.querySelector('#email').value,
+        services: selectedServices || 'No especificado',
+        message: form.querySelector('#message').value
+      };
+
+      // Send email via EmailJS
+      emailjs.send('service_jm0kq2j', 'template_xxpx1qq', templateParams)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          
+          // Show success message
+          successMessage.classList.remove('hidden');
+          
+          // Reset form
+          form.reset();
+          
+          // Reset button state
+          submitBtn.disabled = false;
+          btnText.classList.remove('hidden');
+          btnLoading.classList.add('hidden');
+
+          // Scroll to success message
+          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, function(error) {
+          console.log('FAILED...', error);
+          
+          // Show error message
+          errorMessage.classList.remove('hidden');
+          
+          // Reset button state
+          submitBtn.disabled = false;
+          btnText.classList.remove('hidden');
+          btnLoading.classList.add('hidden');
+
+          // Scroll to error message
+          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    });
+  }
+
+  // Run on load
+  initContactForm();
+
+  // Run on view transitions if enabled
+  document.addEventListener('astro:page-load', initContactForm);
+</script>
