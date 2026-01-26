@@ -129,18 +129,9 @@
             // Cerrar menú móvil
             document.body.click(); 
 
-            // Scroll con Lenis
-            // @ts-ignore
-            if (window.lenis) {
-                // @ts-ignore
-                window.lenis.scrollTo(targetElement, { 
-                    offset: 0, 
-                    duration: 1.0, // Un pelín más lento solo al hacer click en menú
-                    immediate: false 
-                });
-            } else {
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
+            // Scroll nativo
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+            
             history.pushState(null, null, `#${targetId}`);
           }
         }
@@ -155,10 +146,7 @@
           e.preventDefault();
           e.stopImmediatePropagation();
           
-          // Scroll al tope con Lenis
-          // @ts-ignore
-          if (window.lenis) window.lenis.scrollTo(0);
-          else window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
           
           document.body.click(); 
           history.pushState(null, null, '/');
