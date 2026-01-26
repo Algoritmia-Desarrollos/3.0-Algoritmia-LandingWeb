@@ -1,0 +1,206 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = "Selecta - Caso de Éxito | Algoritmia";
+const description = "Digitalización completa: App de torneos y sistema de gestión de CVs que posicionó a Selecta como líder regional.";
+---
+
+<Layout title={title} description={description}>
+  <Header />
+  
+  <main class="bg-white text-black selection:bg-gray-200">
+    <section class="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1 space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
+              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito: Desarrollo Web & App</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-black mb-8">
+              Digitalización completa: <span class="text-gray-500">App de torneos y sistema de gestión de CVs.</span>
+            </h1>
+            
+            <p class="text-xl text-gray-500 max-w-xl leading-relaxed mb-8">
+              Transformamos la gestión manual de cientos de CVs en una plataforma digital automatizada, posicionando a Selecta como la solución tecnológica líder en RRHH de la región.
+            </p>
+
+            <div class="flex flex-col md:flex-row gap-6 items-start md:items-center">
+              <a href="https://selectaargentina.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
+                Ver sitio web
+                <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+              </a>
+
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-blue-600 font-bold">Líder Regional</span>
+                <span class="text-sm text-gray-600 font-medium">Posicionamiento RRHH</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex-1 w-full">
+            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xl shadow-gray-200/50 group">
+              <img 
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" 
+                alt="Selecta Dashboard Platform" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
+      <div class="max-w-4xl mx-auto text-center space-y-8">
+        <blockquote class="text-2xl md:text-4xl font-medium text-black leading-tight max-w-5xl mx-auto">
+          "Recibimos cientos de CVs por email y es un caos organizarlos. Necesitamos un sistema que automatice la recepción y filtrado de candidatos, y posicionarnos como líderes en RRHH en 6 meses."
+        </blockquote>
+        <p class="text-gray-400 mt-6 font-medium">— El Desafío & Expectativa</p>
+      </div>
+    </section>
+
+    <section class="py-32 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-black">Hoja de Ruta: 6 Meses</h2>
+          <p class="text-gray-500 text-lg">Un plan estratégico ejecutado con precisión para pasar del caos a la autoridad digital.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">code</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Mes 1-2: Desarrollo</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Creación de plataforma web a medida para carga y gestión de CVs con filtros inteligentes, eliminando el uso de Excel.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">rocket_launch</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Mes 3-4: Lanzamiento</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Campaña de posicionamiento agresiva en LinkedIn y Google Ads para atraer tanto a empresas grandes como a candidatos calificados.
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">tune</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Mes 5: Optimización</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Mejora continua del UX/UI basada en el feedback real de los primeros usuarios (empresas del agro y sector industrial).
+            </p>
+          </div>
+
+          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
+            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-black">verified</span>
+            </div>
+            <h3 class="text-xl font-bold text-black mb-3">Mes 6: Autoridad</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">
+              Consolidación de la marca Selecta como la solución tecnológica #1 para selección de personal en toda la región.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-32 px-6 md:px-12 bg-gray-50">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div class="space-y-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-black">El Cambio Real</h2>
+            <p class="text-gray-500 text-lg">
+              Gracias a la digitalización y publicidad, Selecta comenzó a trabajar con grandes empresas del agro, aumentando su rentabilidad por el mayor volumen de trabajo.
+            </p>
+            
+            <div class="space-y-6">
+              <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Situación Inicial</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-2xl font-bold text-gray-400">Gestión Manual</span>
+                  <span class="text-sm text-gray-400 mb-1">(Excel y Emails)</span>
+                </div>
+              </div>
+              
+              <div class="p-6 rounded-2xl bg-white border border-blue-600 shadow-lg">
+                <p class="text-xs text-blue-600 uppercase mb-2 font-bold tracking-wider">Resultado Final</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-3xl font-bold text-black">Expansión Regional</span>
+                </div>
+                <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                  Clientes Agro/Industria
+                </p>
+              </div>
+            </div>
+            
+            <div class="pt-4">
+              <p class="text-5xl font-bold text-black tracking-tighter">
+                Rentabilidad
+              </p>
+              <p class="text-gray-500 mt-2 text-xl font-medium">Mayor volumen y autoridad en la zona</p>
+            </div>
+          </div>
+          
+          <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
+            <div class="absolute top-8 left-8">
+              <h3 class="text-xl font-bold text-black">Usuarios Registrados</h3>
+              <p class="text-gray-400 text-sm">Crecimiento de la Plataforma (6 Meses)</p>
+            </div>
+            
+            <div class="flex items-end justify-between gap-4 h-[200px] w-full px-4">
+              <div class="w-full bg-gray-100 rounded-t-lg h-[15%] relative group flex justify-center">
+                 <div class="absolute -bottom-6 text-xs text-gray-400">M1</div>
+              </div>
+              <div class="w-full bg-gray-100 rounded-t-lg h-[20%] relative group flex justify-center">
+                 <div class="absolute -bottom-6 text-xs text-gray-400">M2</div>
+              </div>
+              <div class="w-full bg-blue-100 rounded-t-lg h-[40%] relative group flex justify-center">
+                 <div class="absolute -top-8 text-xs font-bold text-blue-600">Lanzamiento</div>
+                 <div class="absolute -bottom-6 text-xs text-gray-500 font-bold">M3</div>
+              </div>
+              <div class="w-full bg-blue-200 rounded-t-lg h-[60%] relative group flex justify-center">
+                 <div class="absolute -bottom-6 text-xs text-gray-400">M4</div>
+              </div>
+              <div class="w-full bg-blue-400 rounded-t-lg h-[80%] relative group flex justify-center">
+                 <div class="absolute -bottom-6 text-xs text-gray-400">M5</div>
+              </div>
+              <div class="w-full bg-blue-600 rounded-t-lg h-[100%] relative group flex justify-center">
+                 <div class="absolute -top-8 text-xs font-bold text-black">Líder Regional</div>
+                 <div class="absolute -bottom-6 text-xs text-black font-bold">M6</div>
+              </div>
+            </div>
+            
+            <div class="w-full h-px bg-gray-200 mt-6"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24 text-center bg-black text-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-6">¿Tu empresa necesita escalar?</h2>
+        <p class="text-white/60 text-lg mb-10">
+          Desarrollamos la tecnología que necesitas para liderar tu sector.
+        </p>
+        <a href="/#contact" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-medium text-sm hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl">
+          Solicitar Consultoría
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

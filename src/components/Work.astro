@@ -6,34 +6,58 @@ const projects = [
   {
     title: "Librería Mayorista Leo",
     description: "Automatización de ventas mayoristas y escalado estacional.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=2070&auto=format&fit=crop",
-    alt: "Dashboard de ventas",
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=2070&auto=format&fit=crop",
+    alt: "Librería mayorista",
     year: "2024",
-    link: "/cases/libreria-leo"
+    link: "/clientes/libreria-leo"
   },
   {
-    title: "Eco-Moda",
-    description: "Transformación digital completa para una marca de moda sostenible global.",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop",
-    alt: "E-commerce de moda",
-    year: "2023",
-    link: null
-  },
-  {
-    title: "Revolución FinTech II",
-    description: "Escalando una startup Serie B de cero a $10M ARR mediante rebranding estratégico.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
-    alt: "App financiera",
+    title: "Puertas Jack",
+    description: "Transformación digital para empresa de puertas de alta gama.",
+    image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=2070&auto=format&fit=crop",
+    alt: "Puertas de diseño",
     year: "2024",
-    link: null
+    link: "/clientes/puertas-jack"
   },
   {
-    title: "Eco-Moda II",
-    description: "Transformación digital completa para una marca de moda sostenible global.",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop",
-    alt: "E-commerce de moda",
+    title: "Case Rossi",
+    description: "Solución integral de comercio electrónico para arquitectura y diseño.",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2070&auto=format&fit=crop",
+    alt: "Arquitectura moderna",
+    year: "2024",
+    link: "/clientes/case-rossi"
+  },
+  {
+    title: "Atérmicos Pinamar",
+    description: "Digitalización completa para empresa de construcción especializada.",
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2070&auto=format&fit=crop",
+    alt: "Construcción moderna",
     year: "2023",
-    link: null
+    link: "/clientes/atermicos-pinamar"
+  },
+  {
+    title: "Selecta",
+    description: "Desarrollo web y app para gestión comercial integral.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
+    alt: "Dashboard empresarial",
+    year: "2024",
+    link: "/clientes/selecta"
+  },
+  {
+    title: "Clinically",
+    description: "Plataforma de gestión clínica y telemedicina de nueva generación.",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop",
+    alt: "Tecnología médica",
+    year: "2024",
+    link: "/clientes/clinically"
+  },
+  {
+    title: "Intertenis",
+    description: "E-commerce especializado en equipamiento deportivo premium.",
+    image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2070&auto=format&fit=crop",
+    alt: "Tienda deportiva",
+    year: "2023",
+    link: "/clientes/intertenis"
   }
 ];
 ---
@@ -73,6 +97,7 @@ const projects = [
                         width={800}
                         height={600}
                         decoding="async"
+                        draggable="false"
                       />
                       <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                     </div>
@@ -99,6 +124,7 @@ const projects = [
                         width={800}
                         height={600}
                         decoding="async"
+                        draggable="false"
                       />
                       <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                     </div>
@@ -146,6 +172,8 @@ const projects = [
     let currentTranslate = 0;
     let prevTranslate = 0;
     let isDragging = false;
+    let hasMoved = false;
+    let clickStartTime = 0;
     let animationID;
     
     const getVisibleSlides = () => window.innerWidth >= 768 ? 2 : 1;
@@ -196,19 +224,25 @@ const projects = [
     const touchStart = (index) => {
       return function(event) {
         isDragging = true;
+        hasMoved = false;
+        clickStartTime = Date.now();
         startX = getPositionX(event);
-        startY = getPositionY(event); // Capture start Y
+        startY = getPositionY(event);
         animationID = requestAnimationFrame(animation);
         container.classList.add('grabbing');
-        track.style.transition = 'none'; // Disable transition during drag
+        track.style.transition = 'none';
       }
     }
 
     const touchEnd = () => {
+      if (!isDragging) return;
+      
+      const clickDuration = Date.now() - clickStartTime;
+      
       isDragging = false;
       cancelAnimationFrame(animationID);
       container.classList.remove('grabbing');
-      track.style.transition = 'transform 0.5s ease-out'; // Re-enable transition
+      track.style.transition = 'transform 0.5s ease-out';
 
       const movedBy = currentTranslate - prevTranslate;
       
@@ -234,12 +268,16 @@ const projects = [
         const diffY = currentPositionY - startY;
 
         // If moving more vertically than horizontally, let the browser handle scrolling
-        // and ignore the carousel drag
         if (Math.abs(diffY) > Math.abs(diffX)) {
            return; 
         }
 
-        // Otherwise, it's a horizontal swipe, so prevent default scrolling
+        // Mark as moved if there's significant horizontal movement
+        if (Math.abs(diffX) > 5) {
+          hasMoved = true;
+        }
+
+        // Prevent default scrolling for horizontal swipes
         if (event.cancelable) {
            event.preventDefault();
         }
@@ -266,9 +304,28 @@ const projects = [
       }
     }
 
-    // Event Listeners
+    // Prevent clicks on links when dragging or long press
+    const preventClickIfNotQuick = (e) => {
+      const clickDuration = Date.now() - clickStartTime;
+      const isQuickClick = clickDuration < 200 && !hasMoved;
+      
+      if (!isQuickClick) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    };
+
+    // Add click prevention to all links in the carousel
+    const links = container.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', preventClickIfNotQuick, true);
+      // Prevent default drag behavior on links
+      link.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+
+    // Event Listeners on container
     container.addEventListener('mousedown', touchStart(currentIndex));
-    // Passive: false is crucial for preventDefault to work
     container.addEventListener('touchstart', touchStart(currentIndex), {passive: false});
 
     container.addEventListener('mouseup', touchEnd);
@@ -276,8 +333,11 @@ const projects = [
     container.addEventListener('touchend', touchEnd);
 
     container.addEventListener('mousemove', touchMove);
-    // Passive: false is crucial for preventDefault to work
     container.addEventListener('touchmove', touchMove, {passive: false});
+
+    // Global listeners to ensure touchEnd is always called
+    document.addEventListener('mouseup', () => { if(isDragging) touchEnd() });
+    document.addEventListener('touchend', () => { if(isDragging) touchEnd() });
 
     // Button Listeners
     if (prevBtn) prevBtn.addEventListener('click', handlePrev);
