@@ -61,7 +61,7 @@ const projects = [
       <div class="overflow-hidden cursor-grab active:cursor-grabbing" id="carousel-container">
         <div class="flex transition-transform duration-500 ease-out select-none" id="carousel-track">
           {projects.map(project => (
-            <div class="w-full md:w-1/2 flex-shrink-0 px-6 pointer-events-none md:pointer-events-auto">
+            <div class="w-full md:w-1/2 flex-shrink-0 px-6 pointer-events-none md:pointer-events-auto reveal">
               {project.link ? (
                 <a href={project.link} class="block group cursor-pointer pointer-events-auto">
                   <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">

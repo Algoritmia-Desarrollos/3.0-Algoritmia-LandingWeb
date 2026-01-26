@@ -113,7 +113,6 @@
     }, { passive: true });
   }
 
-  // Handle all links with hashes for smooth scrolling
   function setupSmoothScroll() {
     document.querySelectorAll('a[href^="/#"], a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -127,30 +126,23 @@
             e.preventDefault();
             e.stopImmediatePropagation();
             
-            // Cerrar menú si está abierto (simulamos clic fuera)
-            document.body.click();
+            // Cerrar menú móvil
+            document.body.click(); 
 
-            // Usar LENIS para el scroll si existe
+            // Scroll con Lenis
             // @ts-ignore
             if (window.lenis) {
                 // @ts-ignore
-                window.lenis.scrollTo(targetElement, {
-                    offset: 0, 
-                    duration: 1.2, // Ajusta la duración a tu gusto
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Efecto exponencial suave
-                });
+                window.lenis.scrollTo(targetElement, { offset: 0 });
             } else {
-                // Fallback por si acaso
                 targetElement.scrollIntoView({ behavior: 'smooth' });
             }
-
-            // Actualizar URL
             history.pushState(null, null, `#${targetId}`);
           }
         }
       });
     });
-
+    
     // Lógica para el logo (Home link)
     const homeLinks = document.querySelectorAll('.home-link');
     homeLinks.forEach(link => {
