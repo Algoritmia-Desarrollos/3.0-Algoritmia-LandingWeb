@@ -15,7 +15,7 @@ const description = "Cómo automatizamos las ventas mayoristas y escalamos un ne
     <section class="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
       <div class="max-w-7xl mx-auto relative z-10">
         <div class="flex flex-col md:flex-row gap-12 items-center">
-          <div class="flex-1 space-y-8">
+          <div class="flex-1 space-y-8 w-full">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
               <span class="w-2 h-2 rounded-full bg-green-500"></span>
               <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito</span>
@@ -28,6 +28,19 @@ const description = "Cómo automatizamos las ventas mayoristas y escalamos un ne
             <p class="text-xl text-gray-500 max-w-xl leading-relaxed">
               Nos encargamos de toda su parte digital para que solo se ocupen de despachar.
             </p>
+            
+            <!-- Buttons for Desktop - shown here -->
+            <div class="hidden md:flex flex-col md:flex-row gap-4 items-start md:items-center">
+              <a href="https://libreriamayoristaleo.com.ar/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
+                Ver sitio web
+                <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+              </a>
+
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">+400%</span>
+                <span class="text-sm text-gray-600 font-medium">Crecimiento en ventas</span>
+              </div>
+            </div>
           </div>
           
           <div class="flex-1 w-full space-y-6">
@@ -44,7 +57,8 @@ const description = "Cómo automatizamos las ventas mayoristas y escalamos un ne
               </video>
             </div>
             
-            <div class="flex flex-col md:flex-row gap-4 items-start md:items-center">
+            <!-- Buttons for Mobile - shown here -->
+            <div class="flex md:hidden flex-col gap-4 items-start">
               <a href="https://libreriamayoristaleo.com.ar/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
                 Ver sitio web
                 <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
