@@ -15,73 +15,63 @@ import portadaIntertenis from '../assets/img-portada/portada-intertenis.webp';
 const projects = [
   {
     title: "Librería Mayorista Leo",
-    description: "E-commerce B2B de Alto Volumen. Automatizamos la toma de pedidos de +2.000 productos, permitiendo facturar 24/7 sin depender de vendedores presenciales.",
+    description: "De tomar pedidos por WhatsApp a un <strong class='text-white'>E-commerce B2B 100% automatizado</strong>. Ahora facturan <strong class='text-white'>24/7</strong> sin depender de vendedores.",
     image: portadaLeo,
     alt: "E-commerce B2B Mayorista",
-    year: "2024",
     link: "/clientes/libreria-leo"
   },
   {
     title: "Psicóloga Rocío",
-    description: "Publicidad Geolocalizada. Llenamos su agenda con campañas digitales estratégicas, logrando 10-15 consultas semanales adicionales desde el primer mes.",
+    description: "De agenda vacía a <strong class='text-white'>10-15 nuevos pacientes por semana</strong>. Implementamos un sistema de captación que llenó su consultorio en <strong class='text-white'>menos de 30 días</strong>.",
     image: portadaRocio,
     alt: "Consultorio de psicología",
-    year: "2025",
     link: "/clientes/psicologa-rocio"
   },
   {
     title: "Puertas Jack",
-    description: "Posicionamiento High-End. Dejamos de competir por precio para competir por valor. Elevamos la percepción de marca para atraer clientes dispuestos a pagar un ticket premium.",
+    description: "Dejaron de competir por precio para liderar el mercado <strong class='text-white'>High-End</strong>. Elevamos el valor de marca para atraer clientes de <strong class='text-white'>ticket premium</strong>.",
     image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=2070&auto=format&fit=crop",
     alt: "Branding de seguridad premium",
-    year: "2024",
     link: "/clientes/puertas-jack"
   },
    
    {
     title: "Clinically",
-    description: "SaaS HealthTech & Eficiencia. Digitalización de agenda y pacientes que reduce el ausentismo y maximiza la rentabilidad por hora del consultorio médico.",
+    description: "Transformación digital total. Redujimos el ausentismo y <strong class='text-white'>maximizamos la rentabilidad</strong> por hora mediante una plataforma de gestión inteligente.",
     image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop",
     alt: "Plataforma médica digital",
-    year: "2025",
     link: "/clientes/clinically"
   },
   {
     title: "Case Rossi",
-    description: "Experiencia de Compra Inmersiva. Una web diseñada para vender 'estilo de vida', justificando precios altos y facilitando la decisión de compra en mobiliario de lujo.",
+    description: "No vendemos muebles, vendemos <strong class='text-white'>estilo de vida</strong>. Una experiencia inmersiva que justifica <strong class='text-white'>precios altos</strong> y acelera la decisión de compra.",
     image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2070&auto=format&fit=crop",
     alt: "E-commerce de mobiliario de diseño",
-    year: "2025",
     link: "/clientes/case-rossi"
   },
   
   {
     title: "Atérmicos Pinamar",
-    description: "Dominio de Mercado Local. Estrategia SEO y Web que captura el 100% de la demanda digital de su zona, convirtiendo búsquedas en presupuestos cerrados.",
+    description: "Capturamos el <strong class='text-white'>100% de la demanda local</strong>. Quien busca en su zona, los encuentra a ellos. Convertimos búsquedas en <strong class='text-white'>presupuestos cerrados</strong>.",
     image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=2070&auto=format&fit=crop",
     alt: "Sitio web construcción premium",
-    year: "2025",
     link: "/clientes/atermicos-pinamar"
   },
   {
     title: "Selecta",
-    description: "Centralización Operativa (ERP). Eliminamos ineficiencias y errores humanos digitalizando flujos de gestión complejos. Control total del negocio en un solo dashboard.",
+    description: "Adiós al caos operativo. Centralizamos toda la gestión en un <strong class='text-white'>único dashboard</strong>, eliminando errores humanos y recuperando el <strong class='text-white'>control total</strong>.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
     alt: "Dashboard de gestión empresarial",
-    year: "2024",
     link: "/clientes/selecta"
   },
   
   {
     title: "Intertenis",
-    description: "E-commerce de Nicho & Conversión. Optimizamos el funnel de ventas para equipamiento técnico, aumentando drásticamente la tasa de conversión y el valor de vida del cliente (LTV).",
+    description: "Optimizamos el funnel para <strong class='text-white'>maximizar conversiones</strong>. Una tienda diseñada para vender equipamiento técnico y aumentar el <strong class='text-white'>valor de vida del cliente</strong>.",
     image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=2070&auto=format&fit=crop",
     alt: "E-commerce deportivo",
-    year: "2025",
     link: "/clientes/intertenis"
   },
- 
-  
 ];
 ---
 
@@ -130,9 +120,8 @@ const projects = [
                         {project.title}
                         <span class="material-symbols-outlined text-white/40 text-sm group-hover:text-white group-hover:translate-x-1 transition-all">arrow_outward</span>
                       </h3>
-                      <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
                     </div>
-                    <p class="text-base text-white/60 leading-relaxed max-w-lg group-hover:text-white/80 transition-colors">{project.description}</p>
+                    <p class="text-base text-white/60 leading-relaxed max-w-lg group-hover:text-white/80 transition-colors" set:html={project.description}></p>
                   </div>
                 </a>
               ) : (
@@ -154,9 +143,8 @@ const projects = [
                   <div class="flex flex-col items-start">
                     <div class="flex justify-between items-center w-full mb-3">
                       <h3 class="text-2xl font-bold">{project.title}</h3>
-                      <span class="text-xs font-semibold border border-white/20 px-3 py-1 rounded-full text-white/60">{project.year}</span>
                     </div>
-                    <p class="text-base text-white/60 leading-relaxed max-w-lg">{project.description}</p>
+                    <p class="text-base text-white/60 leading-relaxed max-w-lg" set:html={project.description}></p>
                   </div>
                 </div>
               )}
