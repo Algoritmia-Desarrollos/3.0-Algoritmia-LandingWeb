@@ -3,12 +3,13 @@ import { Image } from 'astro:assets';
 // Asegúrate de que las rutas de las imágenes sean correctas
 import workFintech from '../assets/work-fintech.jpg';
 import workEcomoda from '../assets/work-ecomoda.jpg';
+import portadaLeo from '../assets/img-portada/portadaleo.webp';
 
 const projects = [
   {
     title: "Librería Mayorista Leo",
     description: "E-commerce B2B de Alto Volumen. Automatizamos la toma de pedidos de +2.000 productos, permitiendo facturar 24/7 sin depender de vendedores presenciales.",
-    image: "https://res.cloudinary.com/dfixkx6yi/image/upload/v1769515827/Captura_de_pantalla_2026-01-27_090954_grc7ru.webp",
+    image: portadaLeo,
     alt: "E-commerce B2B Mayorista",
     year: "2024",
     link: "/clientes/libreria-leo"
@@ -106,7 +107,7 @@ const projects = [
                       <Image 
                         src={project.image} 
                         alt={project.alt}
-                        class="w-full h-full object-contain pointer-events-none"
+                        class="w-full h-full object-cover pointer-events-none"
                         width={800}
                         height={600}
                         decoding="async"
