@@ -43,12 +43,17 @@ const description = "Cómo automatizamos las ventas mayoristas y escalamos un ne
           </div>
           
           <div class="flex-1 w-full">
-            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xl shadow-gray-200/50 group">
-              <img 
-                src="https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=2070&auto=format&fit=crop" 
-                alt="Librería Leo Dashboard" 
-                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale hover:grayscale-0"
-              />
+            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-black shadow-2xl shadow-gray-200/50 group">
+              <!-- Testimonial Video -->
+              <video 
+                id="hero-testimonial-video"
+                class="w-full h-full object-contain"
+                controls
+                poster=""
+              >
+                <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1769514777/Testimonio%20Libreri%20leo.mp4" type="video/mp4">
+                Tu navegador no soporta videos HTML5.
+              </video>
             </div>
           </div>
         </div>
@@ -231,4 +236,30 @@ const description = "Cómo automatizamos las ventas mayoristas y escalamos un ne
   </main>
   
   <Footer />
+  
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      // Check if we should autoplay the video (coming from home page modal)
+      const urlParams = new URLSearchParams(window.location.search);
+      const shouldAutoplay = urlParams.get('autoplay') === 'true';
+      
+      const video = document.getElementById('hero-testimonial-video') as HTMLVideoElement | null;
+      
+      if (video && shouldAutoplay) {
+        // Scroll to the video
+        video.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Play the video after a short delay to ensure smooth scroll
+        setTimeout(() => {
+          video.play().catch(err => console.log('Video autoplay error:', err));
+        }, 500);
+        
+        // Clean up URL (remove query parameter)
+        if (window.history.replaceState) {
+          const cleanUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+      }
+    });
+  </script>
 </Layout>
