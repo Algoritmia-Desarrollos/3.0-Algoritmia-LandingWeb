@@ -15,7 +15,7 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="icon" type="image/webp" href="/logoAlgoritmia.webp" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -96,4 +96,22 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 
     document.addEventListener('astro:page-load', initAnimations);
     document.addEventListener('DOMContentLoaded', initAnimations);
+
+    // PREVENT ZOOM
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (
+            e.key === '+' || 
+            e.key === '-' || 
+            e.key === '=' || 
+            e.key === '0'
+        )) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    document.addEventListener('wheel', function(e) {
+        if (e.ctrlKey) {
+            e.preventDefault();
+        }
+    }, { passive: false });
 </script>
