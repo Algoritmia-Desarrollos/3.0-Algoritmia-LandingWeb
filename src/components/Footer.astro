@@ -1,12 +1,14 @@
 ---
 const currentYear = new Date().getFullYear();
+import { Image } from 'astro:assets';
+import logo from '../assets/logoAlgoritmia.webp';
 ---
 
 <footer class="bg-white text-primary py-16 px-6 md:px-12 border-t border-primary/5">
   <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-start gap-12 text-left">
     <div class="flex flex-col items-start">
       <div class="flex items-center gap-2 mb-4">
-        <span class="material-symbols-outlined text-[20px]">token</span>
+        <Image src={logo} alt="Algoritmia Logo" class="w-8 h-8 object-contain" />
         <span class="text-base font-bold tracking-tight">Algoritmia</span>
       </div>
       <p class="text-primary/50 text-sm max-w-xs leading-relaxed">
