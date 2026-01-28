@@ -5,11 +5,11 @@ import logoEscrito from '../assets/logoescrito2.webp';
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-2 md:pt-4 px-4 pointer-events-none">
-  <div id="navbar" class="pointer-events-auto glass-nav border border-white/20 shadow-lg shadow-black/5 rounded-[2rem] px-6 md:px-8 py-2 flex flex-col md:flex-row items-center gap-0 md:gap-24 transition-all duration-300 ring-1 ring-black/5 w-[95%] md:w-auto overflow-hidden max-h-[76px] md:max-h-none">
+  <div id="navbar" class="pointer-events-auto glass-nav border border-white/20 shadow-lg shadow-black/5 rounded-[2rem] px-6 md:px-8 py-[0.4rem] flex flex-col md:flex-row items-center gap-0 md:gap-16 transition-all duration-300 ring-1 ring-black/5 w-[95%] md:w-auto overflow-hidden max-h-[76px] md:max-h-none">
     
-    <div class="flex items-center justify-between w-full md:w-auto relative">
+    <div class="flex items-center justify-between w-full md:w-[120px] md:justify-center relative">
       <a href="/" id="logo-link" class="home-link flex items-center text-primary hover:opacity-80 transition-opacity">
-        <Image src={logo} alt="Algoritmia Logo" class="w-14 h-14 md:w-20  object-contain" />
+        <Image src={logo} alt="Algoritmia Logo" class="w-14 h-14 object-contain" />
       </a>
 
       <div class="flex items-center gap-4 md:hidden">
@@ -26,7 +26,7 @@ import logoEscrito from '../assets/logoescrito2.webp';
       <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5" href="/#philosophy">Filosofía</a>
     </nav>
 
-    <div class="hidden md:flex items-center gap-4 pl-2">
+    <div class="hidden md:flex items-center justify-center gap-4 w-[120px]">
       <a class="bg-primary text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-black/90 transition-all shadow-md shadow-primary/10" href="/#contact">
         Contacto
       </a>
