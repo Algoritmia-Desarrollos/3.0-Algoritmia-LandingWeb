@@ -4,6 +4,9 @@ export default {
 	darkMode: "class",
 	theme: {
 		extend: {
+			screens: {
+				'lg': '1040px',
+			},
 			colors: {
 				"primary": "#1d1d1f", // Apple-like dark gray/black
 				"background-light": "#ffffff",
