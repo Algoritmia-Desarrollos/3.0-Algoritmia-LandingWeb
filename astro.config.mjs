@@ -7,7 +7,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://algoritmia.io',
+  site: 'https://algoritmiadesarrollos.com.ar',
   output: "static",
   adapter: vercel({
     webAnalytics: {

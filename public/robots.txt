@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://algoritmia.io/sitemap-index.xml
+Sitemap: https://algoritmiadesarrollos.com.ar/sitemap-index.xml
