@@ -66,6 +66,7 @@ import Button from './UI/Button.astro';
             class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder:text-primary/40 focus:border-primary focus:ring-0 transition-colors"
             placeholder="Teléfono"
             required
+            autocomplete="tel"
           />
           <span id="valid-msg" class="hidden text-green-600 text-xs mt-1">✓ Válido</span>
           <span id="error-msg" class="hidden text-red-600 text-xs mt-1"></span>
@@ -128,9 +129,7 @@ import Button from './UI/Button.astro';
   </div>
 </section>
 
-<!-- Intl Tel Input CSS & JS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
-<script is:inline src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
 
 <style is:global>
   /* Override intl-tel-input styles to match design */
@@ -158,8 +157,6 @@ import Button from './UI/Button.astro';
 
   /* Make the input look like the other inputs (border-bottom only) */
   #telefono {
-    /* Allow library to calculate padding-left, or set a safe minimum if it fails */
-    /* padding-left is dynamically added by script usually, but we need to ensure it's not overridden by specific styles if we had any */
     border: none;
     border-bottom: 1px solid #e5e7eb; /* gray-200 */
     border-radius: 0;
@@ -178,7 +175,7 @@ import Button from './UI/Button.astro';
   .iti__country-list {
     z-index: 100;
     background-color: white;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e5e7eb; /* gray-200 */
     border-radius: 0.75rem; /* rounded-xl */
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     font-size: 0.875rem; /* text-sm */
@@ -220,7 +217,10 @@ import Button from './UI/Button.astro';
   }
 </style>
 
-<script is:inline>
+<script>
+  import intlTelInput from 'intl-tel-input';
+  import 'intl-tel-input/build/css/intlTelInput.css';
+
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
   const successMessage = document.getElementById('success-message');
@@ -236,9 +236,8 @@ import Button from './UI/Button.astro';
 
   if (input) {
     // Initialize intl-tel-input
-    // @ts-ignore
-    iti = window.intlTelInput(input, {
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+    iti = intlTelInput(input, {
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js", // Keep utils from CDN for lazy loading or better yet, if we could bundle it. For now, this is async.
       // Restrict to specific countries
       onlyCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
       // Force this exact order by making them all "preferred" (appears at top, in order)
@@ -267,7 +266,9 @@ import Button from './UI/Button.astro';
       otherOption.classList.add('iti__country', 'iti__standard');
       otherOption.setAttribute('role', 'option');
       otherOption.innerHTML = `
-        
+        <div class="iti__flag-box"><div class="iti__flag iti__globe"></div></div>
+        <span class="iti__country-name">Otro</span>
+        <span class="iti__dial-code">+</span>
       `;
       
       otherOption.addEventListener('click', () => {
@@ -275,13 +276,6 @@ import Button from './UI/Button.astro';
         iti.setCountry(''); // Clear country selection
         input.value = '+'; // helper for user
         input.focus();
-        
-        // Update selected flag to globe manually since library overrides it
-        const selectedFlag = document.querySelector('.iti__selected-flag');
-        if (selectedFlag) {
-           // We might need to fight the library's update cycle, but setting country to '' 
-           // usually shows the globe/default icon or nothing.
-        }
       });
       
       countryList.appendChild(otherOption);
@@ -338,18 +332,21 @@ import Button from './UI/Button.astro';
         const errorCode = iti.getValidationError();
         errorMsg.innerHTML = errorMap[errorCode] || "Número inválido";
         errorMsg.classList.remove("hidden");
-        input.focus();
+        // Ensure input exists before focusing
+        if (input) input.focus();
         return;
       }
 
       // Ocultar mensajes previos
-      successMessage.classList.add('hidden');
-      errorMessage.classList.add('hidden');
+      if (successMessage) successMessage.classList.add('hidden');
+      if (errorMessage) errorMessage.classList.add('hidden');
 
       // Estado de loading
       const originalBtnText = submitBtn.innerText;
-      submitBtn.innerText = 'Enviando...';
-      submitBtn.disabled = true;
+      if (submitBtn) {
+          submitBtn.innerText = 'Enviando...';
+          submitBtn.disabled = true;
+      }
 
       const formData = new FormData(form);
       
@@ -377,17 +374,19 @@ import Button from './UI/Button.astro';
         if (response.ok) {
           // ÉXITO
           form.classList.add('hidden');
-          successMessage.classList.remove('hidden'); 
+          if (successMessage) successMessage.classList.remove('hidden'); 
           form.reset();
         } else {
           throw new Error('Error en el servidor');
         }
       } catch (error) {
         console.error(error);
-        errorMessage.classList.remove('hidden');
+        if (errorMessage) errorMessage.classList.remove('hidden');
       } finally {
-        submitBtn.innerText = originalBtnText;
-        submitBtn.disabled = false;
+        if (submitBtn) {
+            submitBtn.innerText = originalBtnText;
+            submitBtn.disabled = false;
+        }
       }
     });
   }
