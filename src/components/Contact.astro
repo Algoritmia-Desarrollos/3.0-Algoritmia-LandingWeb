@@ -63,7 +63,7 @@ import Button from './UI/Button.astro';
             type="tel" 
             id="telefono" 
             name="telefono" 
-            class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors"
+            class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder:text-primary/40 focus:border-primary focus:ring-0 transition-colors"
             placeholder="Teléfono"
             required
           />
@@ -165,6 +165,7 @@ import Button from './UI/Button.astro';
     border-radius: 0;
     box-shadow: none;
     width: 100%;
+    text-indent: 5px;
   }
 
   #telefono:focus {
@@ -250,6 +251,7 @@ import Button from './UI/Button.astro';
       },
       separateDialCode: true,
       initialCountry: "auto",
+      autoPlaceholder: "off",
       geoIpLookup: function(callback) {
         fetch("https://get.geojs.io/v1/ip/country.json")
           .then(function(res) { return res.json(); })
