@@ -220,6 +220,7 @@ import Button from './UI/Button.astro';
 <script>
   import intlTelInput from 'intl-tel-input';
   import 'intl-tel-input/build/css/intlTelInput.css';
+  import utils from 'intl-tel-input/build/js/utils.js?url';
 
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -237,7 +238,7 @@ import Button from './UI/Button.astro';
   if (input) {
     // Initialize intl-tel-input
     iti = intlTelInput(input, {
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js", // Keep utils from CDN for lazy loading or better yet, if we could bundle it. For now, this is async.
+      utilsScript: utils,
       // Restrict to specific countries
       onlyCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
       // Force this exact order by making them all "preferred" (appears at top, in order)
@@ -257,6 +258,7 @@ import Button from './UI/Button.astro';
           .then(function(data) { callback(data.country); })
           .catch(function() { callback("ar"); });
       },
+      strictMode: true, // v26 recommends this for better validation
     });
 
     // Custom "Other" option logic
