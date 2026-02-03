@@ -292,7 +292,8 @@ import Button from './UI/Button.astro';
     input.addEventListener('blur', () => {
       reset();
       if (input.value.trim()) {
-        if (iti.isValidNumber()) {
+        // CAMBIO: Aceptamos si la librería dice OK O si tiene más de 6 caracteres
+        if (iti.isValidNumber() || input.value.trim().length > 6) {
            validMsg.classList.remove("hidden");
         } else {
            // If "Other" (no country data), validation fails. 
@@ -327,12 +328,12 @@ import Button from './UI/Button.astro';
       const countryData = iti ? iti.getSelectedCountryData() : {};
       
       // Basic validation check before submit
-      // Skip strict validation if "Other" (no iso2)
-      if (iti && countryData.iso2 && !iti.isValidNumber()) {
-        const errorCode = iti.getValidationError();
-        errorMsg.innerHTML = errorMap[errorCode] || "Número inválido";
+      // CAMBIO: Solo bloqueamos si el número es evidentemente muy corto (menos de 6 números)
+      // Ignoramos !iti.isValidNumber() para permitir formatos "imperfectos" de Argentina
+      if (iti && countryData.iso2 && input.value.trim().length < 6) {
+        // Mostramos error genérico
+        errorMsg.innerHTML = "Número demasiado corto";
         errorMsg.classList.remove("hidden");
-        // Ensure input exists before focusing
         if (input) input.focus();
         return;
       }
