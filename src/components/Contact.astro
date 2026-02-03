@@ -57,98 +57,18 @@ import Button from './UI/Button.astro';
           </div>
         </div>
         
-        <!-- Field for phone (optional, matching backend) -->
+        <!-- Phone Input with intl-tel-input -->
         <div class="relative group reveal delay-100 z-20">
-             <div class="flex items-end gap-4">
-               <div class="relative w-32" id="customCountrySelector">
-                  <input type="hidden" id="countryCode" name="countryCode" value="+54">
-                  <button type="button" id="countryBtn" class="w-full flex items-center justify-between border-0 border-b border-gray-200 py-3 px-1 text-sm text-primary transition-colors focus:border-primary bg-transparent text-left gap-2">
-                      <div class="flex items-center gap-2 truncate">
-                        <img id="selectedFlag" src="https://flagcdn.com/w40/ar.png" alt="Argentina" class="w-6 h-auto object-cover rounded-sm border border-gray-100/50">
-                        <span id="selectedCode">+54</span>
-                      </div>
-                      <svg class="w-4 h-4 text-primary/50 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                  </button>
-                  
-                  <!-- Dropdown List -->
-                  <ul id="countryList" class="hidden absolute z-50 top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 mt-1 max-h-60 overflow-y-auto py-1">
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+54" data-flag="ar" data-country="Argentina">
-                          <img src="https://flagcdn.com/w40/ar.png" alt="Argentina" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>Argentina (+54)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+598" data-flag="uy" data-country="Uruguay">
-                          <img src="https://flagcdn.com/w40/uy.png" alt="Uruguay" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>Uruguay (+598)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+595" data-flag="py" data-country="Paraguay">
-                          <img src="https://flagcdn.com/w40/py.png" alt="Paraguay" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>Paraguay (+595)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+56" data-flag="cl" data-country="Chile">
-                          <img src="https://flagcdn.com/w40/cl.png" alt="Chile" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>Chile (+56)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+57" data-flag="co" data-country="Colombia">
-                          <img src="https://flagcdn.com/w40/co.png" alt="Colombia" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>Colombia (+57)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+51" data-flag="pe" data-country="Perú">
-                          <img src="https://flagcdn.com/w40/pe.png" alt="Perú" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>Perú (+51)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+52" data-flag="mx" data-country="México">
-                          <img src="https://flagcdn.com/w40/mx.png" alt="México" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>México (+52)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+34" data-flag="es" data-country="España">
-                          <img src="https://flagcdn.com/w40/es.png" alt="España" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>España (+34)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="+1" data-flag="us" data-country="USA">
-                          <img src="https://flagcdn.com/w40/us.png" alt="USA" class="w-5 h-auto object-cover rounded-sm border border-gray-100 group-hover:border-gray-300 transition-colors">
-                          <span>USA (+1)</span>
-                        </button>
-                      </li>
-                      <li>
-                        <button type="button" class="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm flex gap-3 items-center text-primary group" data-value="" data-flag="other" data-country="Otro">
-                          <span class="w-5 h-auto flex items-center justify-center text-base">🌐</span>
-                          <span>Otro</span>
-                        </button>
-                      </li>
-                  </ul>
-               </div>
-               <div class="relative flex-1">
-                 <input 
-                   class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
-                   id="telefono" 
-                   name="telefono"
-                   placeholder="Teléfono" 
-                   type="tel"
-                   autocomplete="tel"
-                   required
-                 />
-                 <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="telefono">
-                   Teléfono
-                 </label>
-               </div>
-             </div>
+          <input 
+            type="tel" 
+            id="telefono" 
+            name="telefono" 
+            class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors"
+            placeholder="Teléfono"
+            required
+          />
+          <span id="valid-msg" class="hidden text-green-600 text-xs mt-1">✓ Válido</span>
+          <span id="error-msg" class="hidden text-red-600 text-xs mt-1"></span>
         </div>
 
         <div class="relative group reveal delay-200">
@@ -194,7 +114,7 @@ import Button from './UI/Button.astro';
           </label>
         </div>
         
-        <div class="pt-6 reveal delay-300">
+        <div class="reveal delay-300">
           <button 
             type="submit" 
             id="submitBtn"
@@ -208,126 +128,217 @@ import Button from './UI/Button.astro';
   </div>
 </section>
 
-<script>
+<!-- Intl Tel Input CSS & JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+<script is:inline src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
+<style is:global>
+  /* Override intl-tel-input styles to match design */
+  .iti {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .iti__flag-container {
+    border: none;
+    background: transparent;
+  }
+
+  .iti__selected-flag {
+    background: transparent !important;
+    padding: 0 0px 0 0 !important;
+  }
+  
+  /* Ensure the text color in the selected flag container (dial code) is visible and primary */
+  .iti__selected-dial-code {
+    color: var(--color-primary, #1e293b);
+    font-size: 0.875rem;
+  }
+
+  /* Make the input look like the other inputs (border-bottom only) */
+  #telefono {
+    /* Allow library to calculate padding-left, or set a safe minimum if it fails */
+    /* padding-left is dynamically added by script usually, but we need to ensure it's not overridden by specific styles if we had any */
+    border: none;
+    border-bottom: 1px solid #e5e7eb; /* gray-200 */
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+  }
+
+  #telefono:focus {
+    border-bottom-color: var(--color-primary, #1e293b);
+    box-shadow: none;
+    outline: none;
+  }
+
+  /* Dropdown Styling */
+  .iti__country-list {
+    z-index: 100;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    font-size: 0.875rem; /* text-sm */
+    max-height: 200px;
+    margin-top: 4px;
+    overflow-y: auto;
+    /* Force specific width and position to prevent "opening everywhere" */
+    width: 250px !important;
+    white-space: normal;
+    left: 0 !important;
+    
+    /* Force dropdown to open downwards */
+    top: 100% !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+
+  /* Hide the standard list and dividers to avoid duplicates with preferred countries */
+  .iti__divider, .iti__country.iti__standard {
+    display: none;
+  }
+
+  .iti__country {
+    padding: 8px 12px;
+    outline: none;
+  }
+
+  .iti__country:hover, .iti__country.iti__highlight {
+    background-color: #f3f4f6; /* gray-50 */
+  }
+
+  .iti__country-name {
+    color: #374151; /* gray-700 */
+    margin-right: 6px;
+  }
+  
+  .iti__dial-code {
+    color: #9ca3af; /* gray-400 */
+  }
+</style>
+
+<script is:inline>
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
   const successMessage = document.getElementById('success-message');
   const errorMessage = document.getElementById('error-message');
+  const input = document.querySelector("#telefono");
+  const errorMsg = document.querySelector("#error-msg");
+  const validMsg = document.querySelector("#valid-msg");
 
-  // Custom Dropdown Logic
-  const countryBtn = document.getElementById('countryBtn');
-  const countryList = document.getElementById('countryList');
-  const countryInput = document.getElementById('countryCode'); // Hidden input
-  const selectedCode = document.getElementById('selectedCode');
-  const selectedFlag = document.getElementById('selectedFlag');
-  const dropdownOptions = document.querySelectorAll('#countryList button');
+  // Error Map
+  const errorMap = ["Número inválido", "Código de país inválido", "Demasiado corto", "Demasiado largo", "Número inválido"];
 
-  // Toggle Dropdown
-  if (countryBtn && countryList) {
-    countryBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      countryList.classList.toggle('hidden');
+  let iti;
+
+  if (input) {
+    // Initialize intl-tel-input
+    // @ts-ignore
+    iti = window.intlTelInput(input, {
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+      // Restrict to specific countries
+      onlyCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
+      // Force this exact order by making them all "preferred" (appears at top, in order)
+      preferredCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
+      localizedCountries: {
+        'pe': 'Perú',
+        'mx': 'México',
+        'es': 'España',
+        'us': 'USA' 
+      },
+      separateDialCode: true,
+      initialCountry: "auto",
+      geoIpLookup: function(callback) {
+        fetch("https://get.geojs.io/v1/ip/country.json")
+          .then(function(res) { return res.json(); })
+          .then(function(data) { callback(data.country); })
+          .catch(function() { callback("ar"); });
+      },
     });
 
-    // Close on click outside
-    document.addEventListener('click', (e) => {
-      if (!countryBtn.contains(e.target) && !countryList.contains(e.target)) {
-        countryList.classList.add('hidden');
-      }
-    });
-
-    // Handle Selection
-    dropdownOptions.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const target = e.currentTarget;
-        const val = target.getAttribute('data-value');
-        const flag = target.getAttribute('data-flag');
-        const countryName = target.getAttribute('data-country');
-
-        if (countryInput) countryInput.value = val || '';
+    // Custom "Other" option logic
+    const countryList = document.querySelector('.iti__country-list');
+    if (countryList) {
+      const otherOption = document.createElement('li');
+      otherOption.classList.add('iti__country', 'iti__standard');
+      otherOption.setAttribute('role', 'option');
+      otherOption.innerHTML = `
         
-        // Update UI
-        if (selectedCode) selectedCode.textContent = val || '';
+      `;
+      
+      otherOption.addEventListener('click', () => {
+        // Reset to generic or clear
+        iti.setCountry(''); // Clear country selection
+        input.value = '+'; // helper for user
+        input.focus();
+        
+        // Update selected flag to globe manually since library overrides it
+        const selectedFlag = document.querySelector('.iti__selected-flag');
         if (selectedFlag) {
-            if (flag && flag !== 'other') {
-                selectedFlag.src = `https://flagcdn.com/w40/${flag}.png`;
-                selectedFlag.alt = countryName || '';
-                selectedFlag.classList.remove('hidden');
-            } else {
-                // For "Other", maybe show a globe or hide image
-                 selectedFlag.src = ''; // Or a default placeholder
-                 selectedFlag.classList.add('hidden'); // Hide if no flag
-            }
+           // We might need to fight the library's update cycle, but setting country to '' 
+           // usually shows the globe/default icon or nothing.
         }
-        
-        countryList.classList.add('hidden');
       });
-    });
-  }
+      
+      countryList.appendChild(otherOption);
+    }
 
-  // Smart Phone Input Logic
-  const phoneInput = document.getElementById('telefono');
-  if (phoneInput && dropdownOptions.length > 0) {
-      const handlePhoneInput = () => {
-          const val = phoneInput.value.trim();
-          if (val.startsWith('+')) {
-              // Sort by length desc to match +598 before +59 (if valid)
-              const match = Array.from(dropdownOptions)
-                  .map(btn => ({ btn, code: btn.getAttribute('data-value') }))
-                  .sort((a, b) => (b.code ? b.code.length : 0) - (a.code ? a.code.length : 0))
-                  .find(({ code }) => code && val.startsWith(code));
+    const reset = () => {
+      input.classList.remove("error");
+      errorMsg.innerHTML = "";
+      errorMsg.classList.add("hidden");
+      validMsg.classList.add("hidden");
+    };
 
-              if (match) {
-                  // Trigger selection
-                  match.btn.click();
-                  // Strip code from input
-                  phoneInput.value = val.slice(match.code.length).trim();
-              }
-          }
-      };
-
-      phoneInput.addEventListener('input', handlePhoneInput);
-      phoneInput.addEventListener('change', handlePhoneInput); 
-  }
-
-  // Auto-detect country code
-  fetch('https://ipapi.co/json/')
-    .then(res => res.json())
-    .then(data => {
-      if (data.country_code) {
-        const code = data.country_calling_code; 
-        const flagCode = data.country_code.toLowerCase();
-
-        // Update custom dropdown
-        // Try to match by flag code first (more robust)
-        let matchingBtn = Array.from(dropdownOptions).find(btn => btn.getAttribute('data-flag') === flagCode);
-        
-        // Fallback to calling code match if flag not found (e.g. rare countries)
-        if (!matchingBtn) {
-            matchingBtn = Array.from(dropdownOptions).find(btn => btn.getAttribute('data-value') === code);
-        }
-
-        if (matchingBtn) {
-           const val = matchingBtn.getAttribute('data-value');
-           const flag = matchingBtn.getAttribute('data-flag');
-           const countryName = matchingBtn.getAttribute('data-country');
-
-           if (countryInput) countryInput.value = val;
-           if (selectedCode) selectedCode.textContent = val;
-           if (selectedFlag && flag && flag !== 'other') {
-               selectedFlag.src = `https://flagcdn.com/w40/${flag}.png`;
-               selectedFlag.alt = countryName;
-               selectedFlag.classList.remove('hidden');
+    // Validate on blur
+    input.addEventListener('blur', () => {
+      reset();
+      if (input.value.trim()) {
+        if (iti.isValidNumber()) {
+           validMsg.classList.remove("hidden");
+        } else {
+           // If "Other" (no country data), validation fails. 
+           // We can check if selected country data is empty
+           const countryData = iti.getSelectedCountryData();
+           
+           if (!countryData.iso2) {
+             // "Other" case - lenient validation (just check regex or length?)
+             if(input.value.trim().length > 6) {
+                validMsg.classList.remove("hidden");
+             }
+           } else {
+             input.classList.add("error");
+             const errorCode = iti.getValidationError();
+             errorMsg.innerHTML = errorMap[errorCode] || "Número inválido";
+             errorMsg.classList.remove("hidden");
            }
         }
       }
-    })
-    .catch(() => {});
+    });
+
+    // Reset on change/keyup
+    input.addEventListener('change', reset);
+    input.addEventListener('keyup', reset);
+  }
 
   // Form Submission
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const countryData = iti ? iti.getSelectedCountryData() : {};
+      
+      // Basic validation check before submit
+      // Skip strict validation if "Other" (no iso2)
+      if (iti && countryData.iso2 && !iti.isValidNumber()) {
+        const errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode] || "Número inválido";
+        errorMsg.classList.remove("hidden");
+        input.focus();
+        return;
+      }
 
       // Ocultar mensajes previos
       successMessage.classList.add('hidden');
@@ -340,10 +351,8 @@ import Button from './UI/Button.astro';
 
       const formData = new FormData(form);
       
-      // Combinar código de país con teléfono
-      const currentCode = countryInput ? countryInput.value : '';
-      const phoneNumber = formData.get('telefono');
-      const fullPhone = phoneNumber ? `${currentCode} ${phoneNumber}` : '';
+      // Get full number from intl-tel-input
+      const fullPhone = iti ? iti.getNumber() : formData.get('telefono');
 
       // Capturar servicios seleccionados
       const servicios = formData.getAll('services[]');
@@ -351,7 +360,7 @@ import Button from './UI/Button.astro';
       const data = {
         nombre: formData.get('nombre'),
         email: formData.get('email'),
-        telefono: fullPhone.trim(),
+        telefono: fullPhone,
         servicios: servicios,
         mensaje: formData.get('mensaje')
       };
@@ -364,21 +373,16 @@ import Button from './UI/Button.astro';
         });
 
         if (response.ok) {
-          // ÉXITO: 
-          // 1. Ocultamos el formulario
+          // ÉXITO
           form.classList.add('hidden');
-          // 2. Mostramos mensaje de éxito en su lugar (sin scroll)
           successMessage.classList.remove('hidden'); 
-          
           form.reset();
         } else {
           throw new Error('Error en el servidor');
         }
       } catch (error) {
         console.error(error);
-        // ERROR: Mostramos el div rojo en lugar de alert
         errorMessage.classList.remove('hidden');
-        // Opcional: mostrar de nuevo el form si estaba oculto (aunque aquí no se ocultó antes de error)
       } finally {
         submitBtn.innerText = originalBtnText;
         submitBtn.disabled = false;
