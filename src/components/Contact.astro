@@ -27,7 +27,7 @@ import Button from './UI/Button.astro';
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div class="relative group reveal delay-100">
             <input 
-              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
               id="nombre" 
               name="nombre"
               placeholder="Nombre" 
@@ -41,7 +41,7 @@ import Button from './UI/Button.astro';
           </div>
           <div class="relative group reveal delay-100">
             <input 
-              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
               id="email" 
               name="email"
               placeholder="Email" 
@@ -57,17 +57,39 @@ import Button from './UI/Button.astro';
         
         <!-- Field for phone (optional, matching backend) -->
         <div class="relative group reveal delay-100">
-             <input 
-               class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
-               id="telefono" 
-               name="telefono"
-               placeholder="Teléfono (Opcional)" 
-               type="tel"
-               autocomplete="tel"
-             />
-             <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="telefono">
-               Teléfono (Opcional)
-             </label>
+             <div class="flex items-end gap-4">
+               <div class="w-24">
+                  <label for="countryCode" class="sr-only">País</label>
+                  <select 
+                    id="countryCode" 
+                    name="countryCode" 
+                    class="w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors cursor-pointer appearance-none"
+                  >
+                    <option value="+54">🇦🇷 +54</option>
+                    <option value="+1">🇺🇸 +1</option>
+                    <option value="+34">🇪🇸 +34</option>
+                    <option value="+52">🇲🇽 +52</option>
+                    <option value="+57">🇨🇴 +57</option>
+                    <option value="+56">🇨🇱 +56</option>
+                    <option value="+598">🇺🇾 +598</option>
+                    <option value="+51">🇵🇪 +51</option>
+                    <option value="">Otro</option>
+                  </select>
+               </div>
+               <div class="relative flex-1">
+                 <input 
+                   class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+                   id="telefono" 
+                   name="telefono"
+                   placeholder="Teléfono (Opcional)" 
+                   type="tel"
+                   autocomplete="tel"
+                 />
+                 <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="telefono">
+                   Teléfono (Opcional)
+                 </label>
+               </div>
+             </div>
         </div>
 
         <div class="relative group reveal delay-200">
@@ -102,7 +124,7 @@ import Button from './UI/Button.astro';
 
         <div class="relative group reveal delay-300">
           <textarea 
-            class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none overflow-hidden" 
+            class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none overflow-hidden" 
             id="mensaje" 
             name="mensaje"
             placeholder="Detalles del Proyecto (Opcional)" 
@@ -148,10 +170,20 @@ import Button from './UI/Button.astro';
       submitBtn.disabled = true;
 
       const formData = new FormData(form);
+      
+      // Combinar código de país con teléfono
+      const countryCode = document.getElementById('countryCode').value;
+      const phoneNumber = formData.get('telefono');
+      const fullPhone = phoneNumber ? `${countryCode} ${phoneNumber}` : '';
+
+      // Capturar servicios seleccionados
+      const servicios = formData.getAll('services[]');
+
       const data = {
         nombre: formData.get('nombre'),
         email: formData.get('email'),
-        telefono: formData.get('telefono'),
+        telefono: fullPhone.trim(),
+        servicios: servicios,
         mensaje: formData.get('mensaje')
       };
 

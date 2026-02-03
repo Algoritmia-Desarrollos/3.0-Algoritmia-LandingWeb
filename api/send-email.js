@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { nombre, email, telefono, mensaje } = req.body;
+  const { nombre, email, telefono, servicios, mensaje } = req.body;
 
   // Credenciales de Hostinger (Usando variables de entorno o directas si es prueba local)
   const transporter = nodemailer.createTransport({
@@ -45,6 +45,15 @@ export default async function handler(req, res) {
           <p><strong>Nombre:</strong> ${nombre}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Teléfono:</strong> ${telefono || 'No especificado'}</p>
+          
+          <p><strong>¿Qué está buscando?</strong></p>
+          <ul style="background: #f0edfa; padding: 10px 20px; border-radius: 5px;">
+            ${servicios && servicios.length > 0 
+              ? servicios.map(s => `<li>${s}</li>`).join('') 
+              : '<li>No especificó servicios</li>'
+            }
+          </ul>
+
           <p><strong>Mensaje:</strong></p>
           <blockquote style="background: #f9f9f9; padding: 10px; border-left: 3px solid #6d28d9;">
             ${mensaje || 'El usuario no agregó detalles adicionales.'}
