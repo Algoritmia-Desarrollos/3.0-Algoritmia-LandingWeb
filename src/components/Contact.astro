@@ -32,6 +32,7 @@ import Button from './UI/Button.astro';
               name="nombre"
               placeholder="Nombre" 
               type="text"
+              autocomplete="name"
               required
             />
             <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="nombre">
@@ -45,6 +46,7 @@ import Button from './UI/Button.astro';
               name="email"
               placeholder="Email" 
               type="email"
+              autocomplete="email"
               required
             />
             <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="email">
@@ -61,6 +63,7 @@ import Button from './UI/Button.astro';
                name="telefono"
                placeholder="Teléfono (Opcional)" 
                type="tel"
+               autocomplete="tel"
              />
              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="telefono">
                Teléfono (Opcional)
@@ -102,12 +105,11 @@ import Button from './UI/Button.astro';
             class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none overflow-hidden" 
             id="mensaje" 
             name="mensaje"
-            placeholder="Detalles del Proyecto" 
+            placeholder="Detalles del Proyecto (Opcional)" 
             rows="2"
-            required
           ></textarea>
           <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="mensaje">
-            Detalles del Proyecto
+            Detalles del Proyecto (Opcional)
           </label>
         </div>
         
@@ -126,20 +128,25 @@ import Button from './UI/Button.astro';
 </section>
 
 <script>
-  // Esta lógica corre en el navegador del cliente
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
+  // Referencias a los mensajes de éxito y error que ya existen en tu HTML
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
 
   if (form) {
     form.addEventListener('submit', async (e) => {
-      e.preventDefault(); // Evita que la página se recargue
+      e.preventDefault();
+
+      // Resetear estados visuales (ocultar mensajes previos)
+      successMessage.classList.add('hidden');
+      errorMessage.classList.add('hidden');
 
       // Estado de "Cargando"
       const originalBtnText = submitBtn.innerText;
       submitBtn.innerText = 'Enviando...';
       submitBtn.disabled = true;
 
-      // Capturar datos
       const formData = new FormData(form);
       const data = {
         nombre: formData.get('nombre'),
@@ -156,16 +163,20 @@ import Button from './UI/Button.astro';
         });
 
         if (response.ok) {
-          alert('¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.');
-          form.reset(); // Limpiar formulario
+          // ÉXITO: Mostramos el div verde "Premium" en lugar de alert
+          successMessage.classList.remove('hidden'); 
+          form.reset();
+          
+          // Opcional: Hacer scroll hacia el mensaje para asegurar que lo vean
+          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
           throw new Error('Error en el servidor');
         }
       } catch (error) {
         console.error(error);
-        alert('Hubo un error al enviar el mensaje. Por favor intenta nuevamente o escribinos por WhatsApp.');
+        // ERROR: Mostramos el div rojo en lugar de alert
+        errorMessage.classList.remove('hidden');
       } finally {
-        // Restaurar botón
         submitBtn.innerText = originalBtnText;
         submitBtn.disabled = false;
       }

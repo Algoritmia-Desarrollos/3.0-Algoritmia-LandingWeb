@@ -46,7 +46,9 @@ export default async function handler(req, res) {
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Teléfono:</strong> ${telefono || 'No especificado'}</p>
           <p><strong>Mensaje:</strong></p>
-          <blockquote style="background: #f9f9f9; padding: 10px; border-left: 3px solid #6d28d9;">${mensaje}</blockquote>
+          <blockquote style="background: #f9f9f9; padding: 10px; border-left: 3px solid #6d28d9;">
+            ${mensaje || 'El usuario no agregó detalles adicionales.'}
+          </blockquote>
         </div>
       `,
     });
