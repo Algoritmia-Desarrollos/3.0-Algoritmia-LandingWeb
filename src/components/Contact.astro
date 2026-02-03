@@ -22,21 +22,19 @@ import Button from './UI/Button.astro';
         <p class="text-red-600 text-sm mt-1">Por favor intenta nuevamente.</p>
       </div>
 
-      <form id="contact-form" class="space-y-8">
-        <!-- Hidden field for Web3Forms access key -->
-        <input type="hidden" name="access_key" value="392a0797-bcaa-4eb1-8b30-1b03db06d3ec">
+      <form id="contactForm" class="space-y-8">
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div class="relative group reveal delay-100">
             <input 
               class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
-              id="name" 
-              name="name"
+              id="nombre" 
+              name="nombre"
               placeholder="Nombre" 
               type="text"
               required
             />
-            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="name">
+            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="nombre">
               Nombre
             </label>
           </div>
@@ -55,6 +53,20 @@ import Button from './UI/Button.astro';
           </div>
         </div>
         
+        <!-- Field for phone (optional, matching backend) -->
+        <div class="relative group reveal delay-100">
+             <input 
+               class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+               id="telefono" 
+               name="telefono"
+               placeholder="Teléfono (Opcional)" 
+               type="tel"
+             />
+             <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="telefono">
+               Teléfono (Opcional)
+             </label>
+        </div>
+
         <div class="relative group reveal delay-200">
           <label class="block text-base text-primary/40 mb-3">¿Qué estás buscando?</label>
           <div class="grid grid-cols-2 gap-3">
@@ -88,13 +100,13 @@ import Button from './UI/Button.astro';
         <div class="relative group reveal delay-300">
           <textarea 
             class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-base text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none overflow-hidden" 
-            id="message" 
-            name="message"
+            id="mensaje" 
+            name="mensaje"
             placeholder="Detalles del Proyecto" 
             rows="2"
             required
           ></textarea>
-          <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="message">
+          <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="mensaje">
             Detalles del Proyecto
           </label>
         </div>
@@ -102,11 +114,10 @@ import Button from './UI/Button.astro';
         <div class="pt-6 reveal delay-300">
           <button 
             type="submit" 
-            id="submit-btn"
+            id="submitBtn"
             class="w-full bg-primary text-white py-4 px-8 rounded-full font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span id="btn-text">Enviar Solicitud</span>
-            <span id="btn-loading" class="hidden">Enviando...</span>
           </button>
         </div>
       </form>
@@ -115,92 +126,49 @@ import Button from './UI/Button.astro';
 </section>
 
 <script>
-  function initContactForm() {
-    const form = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const btnText = document.getElementById('btn-text');
-    const btnLoading = document.getElementById('btn-loading');
-    const successMessage = document.getElementById('success-message');
-    const errorMessage = document.getElementById('error-message');
-    const messageTextarea = document.getElementById('message');
+  // Esta lógica corre en el navegador del cliente
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
 
-    if (!form) return;
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Evita que la página se recargue
 
-    // Auto-resize textarea
-    if (messageTextarea) {
-      const autoResize = () => {
-        messageTextarea.style.height = 'auto';
-        messageTextarea.style.height = messageTextarea.scrollHeight + 'px';
+      // Estado de "Cargando"
+      const originalBtnText = submitBtn.innerText;
+      submitBtn.innerText = 'Enviando...';
+      submitBtn.disabled = true;
+
+      // Capturar datos
+      const formData = new FormData(form);
+      const data = {
+        nombre: formData.get('nombre'),
+        email: formData.get('email'),
+        telefono: formData.get('telefono'),
+        mensaje: formData.get('mensaje')
       };
 
-      messageTextarea.addEventListener('input', autoResize);
-      // Initial resize in case there's pre-filled content
-      autoResize();
-    }
-
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      // Hide previous messages
-      successMessage.classList.add('hidden');
-      errorMessage.classList.add('hidden');
-
-      // Show loading state
-      submitBtn.disabled = true;
-      btnText.classList.add('hidden');
-      btnLoading.classList.remove('hidden');
-
       try {
-        const formData = new FormData(form);
-        
-        const response = await fetch('https://api.web3forms.com/submit', {
+        const response = await fetch('/api/send-email', {
           method: 'POST',
-          body: formData
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
         });
 
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          // Show success message
-          successMessage.classList.remove('hidden');
-          
-          // Reset form
-          form.reset();
-          
-          // Reset textarea height
-          if (messageTextarea) {
-            messageTextarea.style.height = 'auto';
-          }
-
-          // Scroll to success message
-          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (response.ok) {
+          alert('¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.');
+          form.reset(); // Limpiar formulario
         } else {
-          // Show error message
-          errorMessage.classList.remove('hidden');
-          
-          // Scroll to error message
-          errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          throw new Error('Error en el servidor');
         }
       } catch (error) {
-        console.error('Error submitting form:', error);
-        
-        // Show error message
-        errorMessage.classList.remove('hidden');
-        
-        // Scroll to error message
-        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        console.error(error);
+        alert('Hubo un error al enviar el mensaje. Por favor intenta nuevamente o escribinos por WhatsApp.');
       } finally {
-        // Reset button state
+        // Restaurar botón
+        submitBtn.innerText = originalBtnText;
         submitBtn.disabled = false;
-        btnText.classList.remove('hidden');
-        btnLoading.classList.add('hidden');
       }
     });
   }
-
-  // Run on load
-  initContactForm();
-
-  // Run on view transitions if enabled
-  document.addEventListener('astro:page-load', initContactForm);
 </script>
