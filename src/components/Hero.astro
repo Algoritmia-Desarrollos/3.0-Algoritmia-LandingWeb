@@ -72,194 +72,153 @@ import heroBg from '../assets/img-portada/portadahero.webp';
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    const ghostElement = document.getElementById('ghost-text');
-    const targetElement = document.getElementById('typewriter-text');
-    
-    if (ghostElement && targetElement) {
-      const text = ghostElement.textContent?.trim() || '';
-      targetElement.textContent = '';
-      
-      let i = 0;
-      const typeWriter = () => {
-        if (i < text.length) {
-          targetElement.textContent += text.charAt(i);
-          i++;
-          setTimeout(typeWriter, 40); // Slower speed (40ms)
-        }
-      };
-      
-      // Start animation with a slight delay
-      setTimeout(typeWriter, 500);
-    }
-
-    // Video Modal Logic
     const videoBtn = document.getElementById('video-btn');
     const videoModal = document.getElementById('video-modal');
     const closeVideo = document.getElementById('close-video');
     const videoContainer = document.getElementById('video-container');
+    const heroVideo = document.getElementById('hero-feature-video') as HTMLVideoElement | null;
+    const testimonialVideo = document.getElementById('testimonial-video') as HTMLVideoElement | null;
 
-    if (videoBtn && videoModal && closeVideo) {
-      // Remove existing listeners to avoid duplicates on re-render
-      const newVideoBtn = videoBtn.cloneNode(true);
-      videoBtn.parentNode?.replaceChild(newVideoBtn, videoBtn);
-      
-      const newCloseVideo = closeVideo.cloneNode(true);
-      closeVideo.parentNode?.replaceChild(newCloseVideo, closeVideo);
+    if (videoBtn && videoModal && closeVideo && videoContainer && testimonialVideo) {
+        let hasOpenedOnce = false;
 
-      // Re-select elements after replacement
-      const currentVideoBtn = document.getElementById('video-btn');
-      const currentCloseVideo = document.getElementById('close-video');
-      const currentVideoWrapper = document.getElementById('video-wrapper');
-      const currentVideo = document.getElementById('testimonial-video') as HTMLVideoElement | null;
-      const heroVideo = document.getElementById('hero-feature-video') as HTMLVideoElement | null;
-
-        // Abstracted Sync Logic
         const syncToInline = () => {
-            if (heroVideo && currentVideo) {
-                heroVideo.currentTime = currentVideo.currentTime;
+            if (heroVideo && testimonialVideo) {
+                heroVideo.currentTime = testimonialVideo.currentTime;
                 heroVideo.muted = false;
                 heroVideo.volume = 1;
-                heroVideo.controls = true; // Show controls on inline
-                heroVideo.play().catch(e => console.log('Inline play error', e));
+                heroVideo.controls = true; 
+                heroVideo.play().catch(console.error);
              }
-        }
-
-        const openModal = () => {
-          videoModal.classList.remove('opacity-0', 'pointer-events-none');
-          videoContainer?.classList.remove('scale-95');
-          videoContainer?.classList.add('scale-100');
-          
-          if (currentVideo) {
-             // Sync time from inline video if available
-             if (heroVideo) {
-                 currentVideo.currentTime = heroVideo.currentTime;
-                 heroVideo.pause(); // Prevent audio overlap
-             } else {
-                 currentVideo.currentTime = 0;
-             }
-             
-             currentVideo.muted = false;
-             currentVideo.volume = 1;
-
-             // Request Fullscreen on the VIDEO element ONLY on mobile/tablet (< 1024px)
-             if (window.innerWidth < 1024) {
-                 if ((currentVideo as any).webkitEnterFullscreen) {
-                    (currentVideo as any).webkitEnterFullscreen(); // iOS Native Player
-                 } else if (currentVideo.requestFullscreen) {
-                   currentVideo.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
-                 } else if ((currentVideo as any).webkitRequestFullscreen) {
-                   (currentVideo as any).webkitRequestFullscreen();
-                 } else if ((currentVideo as any).msRequestFullscreen) {
-                   (currentVideo as any).msRequestFullscreen();
-                 }
-             }
-
-             currentVideo.play().catch(err => console.log('Modal video play error:', err));
-          }
         };
 
-        // Handle External "Open" triggers
-        currentVideoBtn?.addEventListener('click', openModal);
+        const closeModalLogic = () => {
+            videoModal.classList.add('opacity-0', 'pointer-events-none');
+            videoContainer.classList.add('scale-95');
+            videoContainer.classList.remove('scale-100');
+            testimonialVideo.pause();
+        };
 
-        // Hero Video Logic
-        if (heroVideo) {
-          // Deferred autoplay
-          setTimeout(() => {
-            const videoSrc = heroVideo.getAttribute('data-src');
-            if (videoSrc) {
-              heroVideo.src = videoSrc;
-              heroVideo.load();
-              heroVideo.play().catch(err => console.log('Autoplay prevented:', err));
-            }
-          }, 800);
-
-          // Loop logic: when ended, reset to muted preview
-          heroVideo.addEventListener('ended', () => {
-             heroVideo.currentTime = 0;
-             heroVideo.muted = true;
-             heroVideo.controls = false; // Hide controls to look like initial preview
-             heroVideo.play().catch(e => console.log('Loop play error', e));
-          });
-
-          heroVideo.addEventListener('click', (e) => {
-            if (heroVideo.controls) return;
+        const openModal = () => {
+            videoModal.classList.remove('opacity-0', 'pointer-events-none');
+            videoContainer.classList.remove('scale-95');
+            videoContainer.classList.add('scale-100');
             
-            e.preventDefault();
-            openModal();
-          });
-        }
-        
-        // ... handlers ...
+            // Sync time logic
+            if (heroVideo) {
+                if (!hasOpenedOnce) {
+                    testimonialVideo.currentTime = 0;
+                    hasOpenedOnce = true;
+                } else {
+                    testimonialVideo.currentTime = heroVideo.currentTime;
+                }
+                heroVideo.pause(); 
+            } else {
+                testimonialVideo.currentTime = 0;
+            }
+            
+            testimonialVideo.muted = false;
+            testimonialVideo.volume = 1;
 
-        // ... heroVideo logic ...
+            // Using a short timeout to ensure UI updates before requesting fullscreen/play
+            setTimeout(() => {
+                const isMobile = window.innerWidth < 1024;
+                
+                testimonialVideo.play().catch(e => console.error('Play error:', e));
+
+                if (isMobile) {
+                    if ((testimonialVideo as any).webkitEnterFullscreen) {
+                        (testimonialVideo as any).webkitEnterFullscreen();
+                    } else if (testimonialVideo.requestFullscreen) {
+                        testimonialVideo.requestFullscreen();
+                    } else if ((testimonialVideo as any).webkitRequestFullscreen) {
+                        (testimonialVideo as any).webkitRequestFullscreen();
+                    } else if ((testimonialVideo as any).msRequestFullscreen) {
+                        (testimonialVideo as any).msRequestFullscreen();
+                    }
+                }
+            }, 10);
+        };
+
+        const closeModal = () => {
+            if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
+                 if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(console.error);
+                 } else if ((document as any).webkitExitFullscreen) {
+                    (document as any).webkitExitFullscreen();
+                 }
+            } else {
+                syncToInline();
+                closeModalLogic();
+            }
+        };
+
+        // Event Listeners (using cleaner approach than cloning)
+        // Store references to remove old listeners if needed (not strict requirement here given page-load event)
+        // But to be safe against double-firing:
+        const newVideoBtn = videoBtn.cloneNode(true);
+        videoBtn.parentNode?.replaceChild(newVideoBtn, videoBtn);
+        newVideoBtn.addEventListener('click', openModal);
         
-        // Fullscreen Exit / Shrink Logic setup
+        const newCloseVideo = closeVideo.cloneNode(true);
+        closeVideo.parentNode?.replaceChild(newCloseVideo, closeVideo);
+        newCloseVideo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeModal();
+        });
+
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Fullscreen Change Handlers
         const handleFullscreenChange = () => {
              const isFullscreen = document.fullscreenElement || (document as any).webkitFullscreenElement;
-             
-             // If exiting fullscreen...
-             if (!isFullscreen) {
-                // If the modal is currently open, we treat this as a "Shrink" action
-                if (!videoModal.classList.contains('pointer-events-none')) {
-                    syncToInline();
-                    closeModalLogic();
-                }
+             if (!isFullscreen && !videoModal.classList.contains('pointer-events-none')) {
+                syncToInline();
+                closeModalLogic();
              }
         };
 
         const handleIOSFullscreenExit = () => {
-            // iOS native player "Done" button triggers this
              if (!videoModal.classList.contains('pointer-events-none')) {
                 syncToInline();
                 closeModalLogic();
             }
         };
 
-        if (currentVideo) {
-            currentVideo.addEventListener('webkitendfullscreen', handleIOSFullscreenExit);
+        testimonialVideo.addEventListener('fullscreenchange', handleFullscreenChange);
+        testimonialVideo.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        testimonialVideo.addEventListener('webkitendfullscreen', handleIOSFullscreenExit); // iOS specific
+
+        // Hero Video Init
+        if (heroVideo) {
+          setTimeout(() => {
+            const videoSrc = heroVideo.getAttribute('data-src');
+            if (videoSrc) {
+              heroVideo.src = videoSrc;
+              heroVideo.load();
+              heroVideo.play().catch(console.error);
+            }
+          }, 800);
+
+          heroVideo.addEventListener('ended', () => {
+             heroVideo.currentTime = 0;
+             heroVideo.muted = true;
+             heroVideo.controls = false;
+             heroVideo.play().catch(console.error);
+          });
+
+          heroVideo.addEventListener('click', (e) => {
+            if (heroVideo.controls) return;
+            e.preventDefault();
+            openModal();
+          });
         }
-
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-
-        const closeModalLogic = () => {
-            videoModal.classList.add('opacity-0', 'pointer-events-none');
-            videoContainer?.classList.add('scale-95');
-            videoContainer?.classList.remove('scale-100');
-            
-            if (currentVideo) {
-              currentVideo.pause();
-            }
-        };
-
-        const closeModal = () => {
-            // If in fullscreen, exit it first (this will trigger handleFullscreenChange -> closeModalLogic)
-            if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
-                 if (document.exitFullscreen) {
-                    document.exitFullscreen().catch(err => console.log(err));
-                 } else if ((document as any).webkitExitFullscreen) {
-                    (document as any).webkitExitFullscreen();
-                 }
-            } else {
-                // Not in fullscreen, manual close (Desktop)
-                // We MUST sync state back to inline here too, as requested "shrink" behavior
-                syncToInline();
-                closeModalLogic();
-            }
-        };
-
-        currentCloseVideo?.addEventListener('click', (e) => {
-          e.stopPropagation();
-          closeModal();
-        });
-        
-        videoModal.addEventListener('click', (e) => {
-          if (e.target === videoModal) closeModal();
-        });
-        
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') closeModal();
-        });
     }
   });
 </script>
