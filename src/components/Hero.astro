@@ -37,11 +37,12 @@ import heroBg from '../assets/hero-bg.jpg';
     <video 
       class="w-full h-full object-cover cursor-pointer"
       poster={heroBg.src}
+      id="hero-feature-video"
       preload="none"
+      muted
       playsinline
-      controls
+      data-src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov"
     >
-      <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov" type="video/mp4">
       Tu navegador no soporta videos HTML5.
     </video>
   </div>
@@ -123,12 +124,35 @@ import heroBg from '../assets/hero-bg.jpg';
         }
       });
       
-      // Hero Video Click Logic
-      const heroVideo = document.querySelector('video[src*="PRESENTACION_1_ej0uok.mov"]') as HTMLVideoElement | null;
+      // Hero Video Logic
+      const heroVideo = document.getElementById('hero-feature-video') as HTMLVideoElement | null;
+      
       if (heroVideo) {
+        // Deferred autoplay
+        setTimeout(() => {
+          const videoSrc = heroVideo.getAttribute('data-src');
+          if (videoSrc) {
+            heroVideo.src = videoSrc;
+            heroVideo.load();
+            heroVideo.play().catch(err => console.log('Autoplay prevented:', err));
+          }
+        }, 800); // 800ms delay to prioritize page load
+
+        // Click to open modal
         heroVideo.addEventListener('click', (e) => {
-          if (heroVideo.paused) {
-            heroVideo.play().catch(err => console.log('Video play error:', err));
+          e.preventDefault();
+          
+          // Open Modal
+          videoModal.classList.remove('opacity-0', 'pointer-events-none');
+          videoContainer?.classList.remove('scale-95');
+          videoContainer?.classList.add('scale-100');
+          
+          // Play Modal Video
+          if (currentVideo) {
+             currentVideo.currentTime = 0;
+             currentVideo.muted = false;
+             currentVideo.volume = 1;
+             currentVideo.play().catch(err => console.log('Modal video play error:', err));
           }
         });
       }
