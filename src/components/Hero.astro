@@ -27,14 +27,14 @@ import Button from './UI/Button.astro';
       </Button>
       <button id="video-btn" class="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-primary border border-primary/10 hover:bg-surface transition-all duration-300">
         <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">play_circle</span>
-        <span class="font-medium">Ver Testimonio</span>
+        <span class="font-medium">Ver Video</span>
       </button>
     </div>
   </div>
   
   <div class="mt-10 md:mt-12 w-full max-w-[1200px] mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative group bg-black">
     <video 
-      class="w-full h-full object-cover"
+      class="w-full h-full object-cover cursor-pointer"
       autoplay
       muted
       loop
@@ -58,28 +58,11 @@ import Button from './UI/Button.astro';
           id="testimonial-video"
           class="w-full h-full object-contain"
           poster=""
-          muted
-          loop
+          controls
         >
-          <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1769514777/Testimonio%20Libreri%20leo.mp4" type="video/mp4">
+          <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov" type="video/mp4">
           Tu navegador no soporta videos HTML5.
         </video>
-        
-        <!-- Overlay with Librería Leo info -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="w-2 h-2 rounded-full bg-green-500"></span>
-              <span class="text-xs font-medium uppercase tracking-wide">Caso de Éxito</span>
-            </div>
-            <h3 class="text-2xl md:text-3xl font-bold mb-2">Librería Mayorista Leo</h3>
-            <p class="text-sm text-white/80 mb-4">De 3 a 15 pedidos diarios. +400% de crecimiento.</p>
-            <div class="flex items-center gap-2 text-sm">
-              <span>Click para ver el caso completo</span>
-              <span class="material-symbols-outlined text-base">arrow_forward</span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -139,6 +122,21 @@ import Button from './UI/Button.astro';
           currentVideo.play().catch(err => console.log('Video play error:', err));
         }
       });
+      
+      // Hero Video Click Logic
+      const heroVideo = document.querySelector('video[src*="PRESENTACION_1_ej0uok.mov"]') as HTMLVideoElement | null;
+      if (heroVideo) {
+        heroVideo.addEventListener('click', (e) => {
+          // Check if video is muted
+          if (heroVideo.muted) {
+            e.preventDefault();
+            heroVideo.currentTime = 0;
+            heroVideo.muted = false;
+            heroVideo.volume = 1;
+            heroVideo.play().catch(err => console.log('Video play error:', err));
+          }
+        });
+      }
 
       const closeModal = () => {
         videoModal.classList.add('opacity-0', 'pointer-events-none');
@@ -161,10 +159,6 @@ import Button from './UI/Button.astro';
         if (e.target === videoModal) closeModal();
       });
       
-      // Click on video wrapper to navigate to Librería Leo page
-      currentVideoWrapper?.addEventListener('click', () => {
-        window.location.href = '/clientes/libreria-leo?autoplay=true';
-      });
       
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
