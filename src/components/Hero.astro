@@ -1,9 +1,9 @@
 ---
 import Button from './UI/Button.astro';
-import heroBg from '../assets/hero-bg.jpg';
+import heroBg from '../assets/img-portada/portadahero.webp';
 ---
 
-<section class="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
+<section class="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
   <div class="max-w-4xl w-full text-center space-y-4 md:space-y-4">
     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface text-[11px] font-semibold tracking-wide mb-2 text-primary animate-fade-in-up">
       <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></span>
@@ -13,7 +13,6 @@ import heroBg from '../assets/hero-bg.jpg';
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.05] text-primary">
         Escalamos Tu Negocio
       </h1>
-    
     </div>
     <div class="relative max-w-xl md:max-w-3xl mx-auto">
       <p id="ghost-text" class="text-base md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2 invisible" aria-hidden="true" style="visibility: hidden;">
@@ -50,8 +49,8 @@ import heroBg from '../assets/hero-bg.jpg';
   <!-- Video Modal -->
   <div id="video-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
     <div class="relative w-full max-w-7xl aspect-video mx-4 md:mx-12 bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 transform scale-95 transition-transform duration-500" id="video-container">
-      <button id="close-video" class="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-colors">
-        <span class="material-symbols-outlined">close</span>
+      <button id="close-video" class="absolute top-6 right-6 z-[60] w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/80 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 border border-white/20 shadow-lg group">
+        <span class="material-symbols-outlined text-2xl md:text-3xl group-hover:scale-110 transition-transform">close</span>
       </button>
       <div class="w-full h-full relative group cursor-pointer bg-black" id="video-wrapper">
         <!-- Testimonial Video -->
@@ -59,7 +58,9 @@ import heroBg from '../assets/hero-bg.jpg';
           id="testimonial-video"
           class="w-full h-full object-contain"
           poster=""
+          playsinline
           controls
+          controlsList="nofullscreen"
         >
           <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov" type="video/mp4">
           Tu navegador no soporta videos HTML5.
@@ -96,8 +97,6 @@ import heroBg from '../assets/hero-bg.jpg';
     const videoModal = document.getElementById('video-modal');
     const closeVideo = document.getElementById('close-video');
     const videoContainer = document.getElementById('video-container');
-    const testimonialVideo = document.getElementById('testimonial-video') as HTMLVideoElement | null;
-    const videoWrapper = document.getElementById('video-wrapper');
 
     if (videoBtn && videoModal && closeVideo) {
       // Remove existing listeners to avoid duplicates on re-render
@@ -112,76 +111,130 @@ import heroBg from '../assets/hero-bg.jpg';
       const currentCloseVideo = document.getElementById('close-video');
       const currentVideoWrapper = document.getElementById('video-wrapper');
       const currentVideo = document.getElementById('testimonial-video') as HTMLVideoElement | null;
-
-      currentVideoBtn?.addEventListener('click', () => {
-        videoModal.classList.remove('opacity-0', 'pointer-events-none');
-        videoContainer?.classList.remove('scale-95');
-        videoContainer?.classList.add('scale-100');
-        
-        // Start playing the video when modal opens
-        if (currentVideo) {
-          currentVideo.play().catch(err => console.log('Video play error:', err));
-        }
-      });
-      
-      // Hero Video Logic
       const heroVideo = document.getElementById('hero-feature-video') as HTMLVideoElement | null;
-      
-      if (heroVideo) {
-        // Deferred autoplay
-        setTimeout(() => {
-          const videoSrc = heroVideo.getAttribute('data-src');
-          if (videoSrc) {
-            heroVideo.src = videoSrc;
-            heroVideo.load();
-            heroVideo.play().catch(err => console.log('Autoplay prevented:', err));
-          }
-        }, 800); // 800ms delay to prioritize page load
 
-        // Click to open modal
-        heroVideo.addEventListener('click', (e) => {
-          e.preventDefault();
-          
-          // Open Modal
+        // Abstracted Sync Logic
+        const syncToInline = () => {
+            if (heroVideo && currentVideo) {
+                heroVideo.currentTime = currentVideo.currentTime;
+                heroVideo.muted = false;
+                heroVideo.volume = 1;
+                heroVideo.controls = true; // Show controls on inline
+                heroVideo.play().catch(e => console.log('Inline play error', e));
+             }
+        }
+
+        const openModal = () => {
           videoModal.classList.remove('opacity-0', 'pointer-events-none');
           videoContainer?.classList.remove('scale-95');
           videoContainer?.classList.add('scale-100');
           
-          // Play Modal Video
           if (currentVideo) {
              currentVideo.currentTime = 0;
              currentVideo.muted = false;
              currentVideo.volume = 1;
+
+             // Request Fullscreen on the VIDEO element ONLY on mobile/tablet (< 1024px)
+             if (window.innerWidth < 1024) {
+                 if (currentVideo.requestFullscreen) {
+                   currentVideo.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
+                 } else if ((currentVideo as any).webkitRequestFullscreen) {
+                   (currentVideo as any).webkitRequestFullscreen();
+                 } else if ((currentVideo as any).msRequestFullscreen) {
+                   (currentVideo as any).msRequestFullscreen();
+                 }
+             }
+
              currentVideo.play().catch(err => console.log('Modal video play error:', err));
           }
-        });
-      }
+        };
 
-      const closeModal = () => {
-        videoModal.classList.add('opacity-0', 'pointer-events-none');
-        videoContainer?.classList.add('scale-95');
-        videoContainer?.classList.remove('scale-100');
-        
-        // Pause and reset video when modal closes
-        if (currentVideo) {
-          currentVideo.pause();
-          currentVideo.currentTime = 0;
+        // Handle External "Open" triggers
+        currentVideoBtn?.addEventListener('click', openModal);
+
+        // Hero Video Logic
+        if (heroVideo) {
+          // Deferred autoplay
+          setTimeout(() => {
+            const videoSrc = heroVideo.getAttribute('data-src');
+            if (videoSrc) {
+              heroVideo.src = videoSrc;
+              heroVideo.load();
+              heroVideo.play().catch(err => console.log('Autoplay prevented:', err));
+            }
+          }, 800);
+
+          // Loop logic: when ended, reset to muted preview
+          heroVideo.addEventListener('ended', () => {
+             heroVideo.currentTime = 0;
+             heroVideo.muted = true;
+             heroVideo.controls = false; // Hide controls to look like initial preview
+             heroVideo.play().catch(e => console.log('Loop play error', e));
+          });
+
+          heroVideo.addEventListener('click', (e) => {
+            if (heroVideo.controls) return;
+            
+            e.preventDefault();
+            openModal();
+          });
         }
-      };
+        
+        // Fullscreen Exit / Shrink Logic setup
+        const handleFullscreenChange = () => {
+             const isFullscreen = document.fullscreenElement || (document as any).webkitFullscreenElement;
+             
+             // If exiting fullscreen...
+             if (!isFullscreen) {
+                // If the modal is currently open, we treat this as a "Shrink" action
+                if (!videoModal.classList.contains('pointer-events-none')) {
+                    syncToInline();
+                    closeModalLogic();
+                }
+             }
+        };
 
-      currentCloseVideo?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeModal();
-      });
-      
-      videoModal.addEventListener('click', (e) => {
-        if (e.target === videoModal) closeModal();
-      });
-      
-      
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-      });
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+        const closeModalLogic = () => {
+            videoModal.classList.add('opacity-0', 'pointer-events-none');
+            videoContainer?.classList.add('scale-95');
+            videoContainer?.classList.remove('scale-100');
+            
+            if (currentVideo) {
+              currentVideo.pause();
+            }
+        };
+
+        const closeModal = () => {
+            // If in fullscreen, exit it first (this will trigger handleFullscreenChange -> closeModalLogic)
+            if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
+                 if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(err => console.log(err));
+                 } else if ((document as any).webkitExitFullscreen) {
+                    (document as any).webkitExitFullscreen();
+                 }
+            } else {
+                // Not in fullscreen, manual close (Desktop)
+                // We MUST sync state back to inline here too, as requested "shrink" behavior
+                syncToInline();
+                closeModalLogic();
+            }
+        };
+
+        currentCloseVideo?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeModal();
+        });
+        
+        videoModal.addEventListener('click', (e) => {
+          if (e.target === videoModal) closeModal();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeModal();
+        });
     }
   });
 </script>
