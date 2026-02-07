@@ -72,6 +72,25 @@ import heroBg from '../assets/img-portada/portadahero.webp';
 
 <script>
   document.addEventListener('astro:page-load', () => {
+    const ghostElement = document.getElementById('ghost-text');
+    const targetElement = document.getElementById('typewriter-text');
+    
+    if (ghostElement && targetElement) {
+      const text = ghostElement.textContent?.trim() || '';
+      targetElement.textContent = '';
+      
+      let i = 0;
+      const typeWriter = () => {
+        if (i < text.length) {
+          targetElement.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 40); // Slower speed (40ms)
+        }
+      };
+      
+      // Start animation with a slight delay
+      setTimeout(typeWriter, 500);
+    }
     const videoBtn = document.getElementById('video-btn');
     const videoModal = document.getElementById('video-modal');
     const closeVideo = document.getElementById('close-video');
