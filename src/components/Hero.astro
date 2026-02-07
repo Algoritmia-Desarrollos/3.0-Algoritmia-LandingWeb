@@ -1,5 +1,6 @@
 ---
 import Button from './UI/Button.astro';
+import heroBg from '../assets/hero-bg.jpg';
 ---
 
 <section class="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
@@ -35,9 +36,8 @@ import Button from './UI/Button.astro';
   <div class="mt-10 md:mt-12 w-full max-w-[1200px] mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative group bg-black">
     <video 
       class="w-full h-full object-cover cursor-pointer"
-      autoplay
-      muted
-      loop
+      poster={heroBg.src}
+      preload="none"
       playsinline
       controls
     >
@@ -127,12 +127,7 @@ import Button from './UI/Button.astro';
       const heroVideo = document.querySelector('video[src*="PRESENTACION_1_ej0uok.mov"]') as HTMLVideoElement | null;
       if (heroVideo) {
         heroVideo.addEventListener('click', (e) => {
-          // Check if video is muted
-          if (heroVideo.muted) {
-            e.preventDefault();
-            heroVideo.currentTime = 0;
-            heroVideo.muted = false;
-            heroVideo.volume = 1;
+          if (heroVideo.paused) {
             heroVideo.play().catch(err => console.log('Video play error:', err));
           }
         });
