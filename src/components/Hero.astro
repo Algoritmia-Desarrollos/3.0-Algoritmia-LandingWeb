@@ -130,13 +130,22 @@ import heroBg from '../assets/img-portada/portadahero.webp';
           videoContainer?.classList.add('scale-100');
           
           if (currentVideo) {
-             currentVideo.currentTime = 0;
+             // Sync time from inline video if available
+             if (heroVideo) {
+                 currentVideo.currentTime = heroVideo.currentTime;
+                 heroVideo.pause(); // Prevent audio overlap
+             } else {
+                 currentVideo.currentTime = 0;
+             }
+             
              currentVideo.muted = false;
              currentVideo.volume = 1;
 
              // Request Fullscreen on the VIDEO element ONLY on mobile/tablet (< 1024px)
              if (window.innerWidth < 1024) {
-                 if (currentVideo.requestFullscreen) {
+                 if ((currentVideo as any).webkitEnterFullscreen) {
+                    (currentVideo as any).webkitEnterFullscreen(); // iOS Native Player
+                 } else if (currentVideo.requestFullscreen) {
                    currentVideo.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
                  } else if ((currentVideo as any).webkitRequestFullscreen) {
                    (currentVideo as any).webkitRequestFullscreen();
@@ -180,6 +189,10 @@ import heroBg from '../assets/img-portada/portadahero.webp';
           });
         }
         
+        // ... handlers ...
+
+        // ... heroVideo logic ...
+        
         // Fullscreen Exit / Shrink Logic setup
         const handleFullscreenChange = () => {
              const isFullscreen = document.fullscreenElement || (document as any).webkitFullscreenElement;
@@ -193,6 +206,18 @@ import heroBg from '../assets/img-portada/portadahero.webp';
                 }
              }
         };
+
+        const handleIOSFullscreenExit = () => {
+            // iOS native player "Done" button triggers this
+             if (!videoModal.classList.contains('pointer-events-none')) {
+                syncToInline();
+                closeModalLogic();
+            }
+        };
+
+        if (currentVideo) {
+            currentVideo.addEventListener('webkitendfullscreen', handleIOSFullscreenExit);
+        }
 
         document.addEventListener('fullscreenchange', handleFullscreenChange);
         document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
