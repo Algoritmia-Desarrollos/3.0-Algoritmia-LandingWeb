@@ -139,24 +139,21 @@ import heroBg from '../assets/img-portada/portadahero.webp';
             testimonialVideo.muted = false;
             testimonialVideo.volume = 1;
 
-            // Using a short timeout to ensure UI updates before requesting fullscreen/play
-            setTimeout(() => {
-                const isMobile = window.innerWidth < 1024;
-                
-                testimonialVideo.play().catch(e => console.error('Play error:', e));
+            const isMobile = window.innerWidth < 1024;
+            
+            testimonialVideo.play().catch(e => console.error('Play error:', e));
 
-                if (isMobile) {
-                    if ((testimonialVideo as any).webkitEnterFullscreen) {
-                        (testimonialVideo as any).webkitEnterFullscreen();
-                    } else if (testimonialVideo.requestFullscreen) {
-                        testimonialVideo.requestFullscreen();
-                    } else if ((testimonialVideo as any).webkitRequestFullscreen) {
-                        (testimonialVideo as any).webkitRequestFullscreen();
-                    } else if ((testimonialVideo as any).msRequestFullscreen) {
-                        (testimonialVideo as any).msRequestFullscreen();
-                    }
+            if (isMobile) {
+                if ((testimonialVideo as any).webkitEnterFullscreen) {
+                    (testimonialVideo as any).webkitEnterFullscreen();
+                } else if (testimonialVideo.requestFullscreen) {
+                    testimonialVideo.requestFullscreen();
+                } else if ((testimonialVideo as any).webkitRequestFullscreen) {
+                    (testimonialVideo as any).webkitRequestFullscreen();
+                } else if ((testimonialVideo as any).msRequestFullscreen) {
+                    (testimonialVideo as any).msRequestFullscreen();
                 }
-            }, 10);
+            }
         };
 
         const closeModal = () => {
