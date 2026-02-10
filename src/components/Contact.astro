@@ -217,14 +217,12 @@ import Button from './UI/Button.astro';
 </style>
 
 <script>
-  import intlTelInput from 'intl-tel-input';
-  import 'intl-tel-input/build/css/intlTelInput.css';
-
+  // Move imports to dynamic import inside the observer
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
   const successMessage = document.getElementById('success-message');
   const errorMessage = document.getElementById('error-message');
-  const input = document.querySelector("#telefono");
+  const input = document.querySelector("#telefono") as HTMLInputElement;
   const errorMsg = document.querySelector("#error-msg");
   const validMsg = document.querySelector("#valid-msg");
 
@@ -233,90 +231,118 @@ import Button from './UI/Button.astro';
 
   let iti;
 
-  if (input) {
-    // Initialize intl-tel-input
-    iti = intlTelInput(input, {
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@26.1.0/build/js/utils.js",
-      // Restrict to specific countries
-      onlyCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
-      // Force this exact order by making them all "preferred" (appears at top, in order)
-      preferredCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
-      localizedCountries: {
-        'pe': 'Perú',
-        'mx': 'México',
-        'es': 'España',
-        'us': 'USA' 
-      },
-      separateDialCode: true,
-      initialCountry: "auto",
-      autoPlaceholder: "off",
-      geoIpLookup: function(callback) {
-        fetch("https://get.geojs.io/v1/ip/country.json")
-          .then(function(res) { return res.json(); })
-          .then(function(data) { callback(data.country); })
-          .catch(function() { callback("ar"); });
-      },
-    });
-
-    // Custom "Other" option logic
-    const countryList = document.querySelector('.iti__country-list');
-    if (countryList) {
-      const otherOption = document.createElement('li');
-      otherOption.classList.add('iti__country', 'iti__standard');
-      otherOption.setAttribute('role', 'option');
-      otherOption.innerHTML = `
-        <div class="iti__flag-box"><div class="iti__flag iti__globe"></div></div>
-        <span class="iti__country-name">Otro</span>
-        <span class="iti__dial-code">+</span>
-      `;
+  // Lazy load function
+  const loadIntlTelInput = async () => {
+    if (!input || window.intlTelInputLoaded) return;
+    
+    try {
+      // Dynamic imports
+      const intlTelInputModule = await import('intl-tel-input');
+      const intlTelInput = intlTelInputModule.default;
+      await import('intl-tel-input/build/css/intlTelInput.css');
       
-      otherOption.addEventListener('click', () => {
-        // Reset to generic or clear
-        iti.setCountry(''); // Clear country selection
-        input.value = '+'; // helper for user
-        input.focus();
+      window.intlTelInputLoaded = true;
+
+      // Initialize intl-tel-input
+      iti = intlTelInput(input, {
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@26.1.0/build/js/utils.js",
+        onlyCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
+        preferredCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
+        localizedCountries: {
+          'pe': 'Perú',
+          'mx': 'México',
+          'es': 'España',
+          'us': 'USA' 
+        },
+        separateDialCode: true,
+        initialCountry: "auto",
+        autoPlaceholder: "off",
+        geoIpLookup: function(callback) {
+          fetch("https://get.geojs.io/v1/ip/country.json")
+            .then(function(res) { return res.json(); })
+            .then(function(data) { callback(data.country); })
+            .catch(function() { callback("ar"); });
+        },
       });
-      
-      countryList.appendChild(otherOption);
-    }
 
+      // Custom "Other" option logic
+      const countryList = document.querySelector('.iti__country-list');
+      if (countryList) {
+        const otherOption = document.createElement('li');
+        otherOption.classList.add('iti__country', 'iti__standard');
+        otherOption.setAttribute('role', 'option');
+        otherOption.innerHTML = `
+          <div class="iti__flag-box"><div class="iti__flag iti__globe"></div></div>
+          <span class="iti__country-name">Otro</span>
+          <span class="iti__dial-code">+</span>
+        `;
+        
+        otherOption.addEventListener('click', () => {
+          iti.setCountry('');
+          input.value = '+';
+          input.focus();
+        });
+        
+        countryList.appendChild(otherOption);
+      }
+
+      setupValidation();
+      
+    } catch (error) {
+      console.error('Error loading intl-tel-input:', error);
+    }
+  };
+
+  const setupValidation = () => {
     const reset = () => {
       input.classList.remove("error");
-      errorMsg.innerHTML = "";
-      errorMsg.classList.add("hidden");
-      validMsg.classList.add("hidden");
+      if (errorMsg) {
+          errorMsg.innerHTML = "";
+          errorMsg.classList.add("hidden");
+      }
+      if (validMsg) validMsg.classList.add("hidden");
     };
 
-    // Validate on blur
     input.addEventListener('blur', () => {
       reset();
       if (input.value.trim()) {
-        // CAMBIO: Aceptamos si la librería dice OK O si tiene más de 6 caracteres
         if (iti.isValidNumber() || input.value.trim().length > 6) {
-           validMsg.classList.remove("hidden");
+           if (validMsg) validMsg.classList.remove("hidden");
         } else {
-           // If "Other" (no country data), validation fails. 
-           // We can check if selected country data is empty
            const countryData = iti.getSelectedCountryData();
            
            if (!countryData.iso2) {
-             // "Other" case - lenient validation (just check regex or length?)
              if(input.value.trim().length > 6) {
-                validMsg.classList.remove("hidden");
+                if (validMsg) validMsg.classList.remove("hidden");
              }
            } else {
              input.classList.add("error");
              const errorCode = iti.getValidationError();
-             errorMsg.innerHTML = errorMap[errorCode] || "Número inválido";
-             errorMsg.classList.remove("hidden");
+             if (errorMsg) {
+                 errorMsg.innerHTML = errorMap[errorCode] || "Número inválido";
+                 errorMsg.classList.remove("hidden");
+             }
            }
         }
       }
     });
 
-    // Reset on change/keyup
     input.addEventListener('change', reset);
     input.addEventListener('keyup', reset);
+  };
+
+  // Intersection Observer to trigger load
+  if (input) {
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  loadIntlTelInput();
+                  observer.disconnect();
+              }
+          });
+      }, { rootMargin: "100px" });
+      
+      observer.observe(document.getElementById('contact') || input);
   }
 
   // Form Submission
@@ -324,24 +350,21 @@ import Button from './UI/Button.astro';
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      // Ensure iti is loaded or handle fallback
       const countryData = iti ? iti.getSelectedCountryData() : {};
       
-      // Basic validation check before submit
-      // CAMBIO: Solo bloqueamos si el número es evidentemente muy corto (menos de 6 números)
-      // Ignoramos !iti.isValidNumber() para permitir formatos "imperfectos" de Argentina
       if (iti && countryData.iso2 && input.value.trim().length < 6) {
-        // Mostramos error genérico
-        errorMsg.innerHTML = "Número demasiado corto";
-        errorMsg.classList.remove("hidden");
+        if (errorMsg) {
+            errorMsg.innerHTML = "Número demasiado corto";
+            errorMsg.classList.remove("hidden");
+        }
         if (input) input.focus();
         return;
       }
 
-      // Ocultar mensajes previos
       if (successMessage) successMessage.classList.add('hidden');
       if (errorMessage) errorMessage.classList.add('hidden');
 
-      // Estado de loading
       const originalBtnText = submitBtn.innerText;
       if (submitBtn) {
           submitBtn.innerText = 'Enviando...';
@@ -349,11 +372,7 @@ import Button from './UI/Button.astro';
       }
 
       const formData = new FormData(form);
-      
-      // Get full number from intl-tel-input
       const fullPhone = iti ? iti.getNumber() : formData.get('telefono');
-
-      // Capturar servicios seleccionados
       const servicios = formData.getAll('services[]');
 
       const data = {
@@ -372,7 +391,6 @@ import Button from './UI/Button.astro';
         });
 
         if (response.ok) {
-          // ÉXITO
           form.classList.add('hidden');
           if (successMessage) successMessage.classList.remove('hidden'); 
           form.reset();
