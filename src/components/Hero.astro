@@ -1,6 +1,6 @@
 ---
 import Button from './UI/Button.astro';
-import heroBg from '../assets/img-portada/portadahero.webp';
+
 ---
 
 <section class="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
@@ -25,17 +25,16 @@ import heroBg from '../assets/img-portada/portadahero.webp';
       <Button variant="primary" href="#contact">
         Trabajemos Juntos
       </Button>
-      <button id="video-btn" class="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-primary border border-primary/10 hover:bg-surface transition-all duration-300">
+      <a href="#work" class="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-primary border border-primary/10 hover:bg-surface transition-all duration-300">
         <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">play_circle</span>
-        <span class="font-medium">Ver Video</span>
-      </button>
+        <span class="font-medium">Ver Casos de Éxito</span>
+      </a>
     </div>
   </div>
   
   <div class="mt-10 md:mt-12 w-full max-w-[1200px] mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative group bg-black">
     <video 
       class="w-full h-full object-cover cursor-pointer"
-      poster={heroBg.src}
       id="hero-feature-video"
       preload="none"
       muted
@@ -44,7 +43,24 @@ import heroBg from '../assets/img-portada/portadahero.webp';
     >
       Tu navegador no soporta videos HTML5.
     </video>
+    
+    <!-- Play Button Overlay -->
+    <button id="hero-play-btn" class="absolute inset-0 z-10 w-full h-full flex items-center justify-center group cursor-pointer focus:outline-none bg-black/0 hover:bg-black/10 transition-colors duration-300" aria-label="Reproducir video">
+      <div class="w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg border border-white/30 animate-subtle-pulse">
+        <span class="material-symbols-outlined text-black text-5xl md:text-7xl ml-1 md:ml-2">play_arrow</span>
+      </div>
+    </button>
   </div>
+
+<style>
+  @keyframes subtle-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1); }
+  }
+  .animate-subtle-pulse {
+    animation: subtle-pulse 2s infinite ease-in-out;
+  }
+</style>
 
   <!-- Video Modal -->
   <div id="video-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500">
@@ -91,128 +107,10 @@ import heroBg from '../assets/img-portada/portadahero.webp';
       // Start animation with a slight delay
       setTimeout(typeWriter, 500);
     }
-    const videoBtn = document.getElementById('video-btn');
-    const videoModal = document.getElementById('video-modal');
-    const closeVideo = document.getElementById('close-video');
-    const videoContainer = document.getElementById('video-container');
     const heroVideo = document.getElementById('hero-feature-video') as HTMLVideoElement | null;
-    const testimonialVideo = document.getElementById('testimonial-video') as HTMLVideoElement | null;
+    const heroPlayBtn = document.getElementById('hero-play-btn');
 
-    if (videoBtn && videoModal && closeVideo && videoContainer && testimonialVideo) {
-        let hasOpenedOnce = false;
-
-        const syncToInline = () => {
-            if (heroVideo && testimonialVideo) {
-                heroVideo.currentTime = testimonialVideo.currentTime;
-                heroVideo.muted = false;
-                heroVideo.volume = 1;
-                heroVideo.controls = true; 
-                heroVideo.play().catch(console.error);
-             }
-        };
-
-        const closeModalLogic = () => {
-            videoModal.classList.add('opacity-0', 'pointer-events-none');
-            videoContainer.classList.add('scale-95');
-            videoContainer.classList.remove('scale-100');
-            testimonialVideo.pause();
-        };
-
-        const openModal = () => {
-            videoModal.classList.remove('opacity-0', 'pointer-events-none');
-            videoContainer.classList.remove('scale-95');
-            videoContainer.classList.add('scale-100');
-            
-            // Sync time logic
-            if (heroVideo) {
-                if (!hasOpenedOnce) {
-                    testimonialVideo.currentTime = 0;
-                    hasOpenedOnce = true;
-                } else {
-                    testimonialVideo.currentTime = heroVideo.currentTime;
-                }
-                heroVideo.pause(); 
-            } else {
-                testimonialVideo.currentTime = 0;
-            }
-            
-            testimonialVideo.muted = false;
-            testimonialVideo.volume = 1;
-
-            const isMobile = window.innerWidth < 1024;
-            
-            testimonialVideo.play().catch(e => console.error('Play error:', e));
-
-            if (isMobile) {
-                if ((testimonialVideo as any).webkitEnterFullscreen) {
-                    (testimonialVideo as any).webkitEnterFullscreen();
-                } else if (testimonialVideo.requestFullscreen) {
-                    testimonialVideo.requestFullscreen();
-                } else if ((testimonialVideo as any).webkitRequestFullscreen) {
-                    (testimonialVideo as any).webkitRequestFullscreen();
-                } else if ((testimonialVideo as any).msRequestFullscreen) {
-                    (testimonialVideo as any).msRequestFullscreen();
-                }
-            }
-        };
-
-        const closeModal = () => {
-            if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
-                 if (document.exitFullscreen) {
-                    document.exitFullscreen().catch(console.error);
-                 } else if ((document as any).webkitExitFullscreen) {
-                    (document as any).webkitExitFullscreen();
-                 }
-            } else {
-                syncToInline();
-                closeModalLogic();
-            }
-        };
-
-        // Event Listeners (using cleaner approach than cloning)
-        // Store references to remove old listeners if needed (not strict requirement here given page-load event)
-        // But to be safe against double-firing:
-        const newVideoBtn = videoBtn.cloneNode(true);
-        videoBtn.parentNode?.replaceChild(newVideoBtn, videoBtn);
-        newVideoBtn.addEventListener('click', openModal);
-        
-        const newCloseVideo = closeVideo.cloneNode(true);
-        closeVideo.parentNode?.replaceChild(newCloseVideo, closeVideo);
-        newCloseVideo.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeModal();
-        });
-
-        videoModal.addEventListener('click', (e) => {
-            if (e.target === videoModal) closeModal();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // Fullscreen Change Handlers
-        const handleFullscreenChange = () => {
-             const isFullscreen = document.fullscreenElement || (document as any).webkitFullscreenElement;
-             if (!isFullscreen && !videoModal.classList.contains('pointer-events-none')) {
-                syncToInline();
-                closeModalLogic();
-             }
-        };
-
-        const handleIOSFullscreenExit = () => {
-             if (!videoModal.classList.contains('pointer-events-none')) {
-                syncToInline();
-                closeModalLogic();
-            }
-        };
-
-        testimonialVideo.addEventListener('fullscreenchange', handleFullscreenChange);
-        testimonialVideo.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-        testimonialVideo.addEventListener('webkitendfullscreen', handleIOSFullscreenExit); // iOS specific
-
-        // Hero Video Init
-        if (heroVideo) {
+    if (heroVideo) {
           setTimeout(() => {
             const videoSrc = heroVideo.getAttribute('data-src');
             if (videoSrc) {
@@ -222,19 +120,37 @@ import heroBg from '../assets/img-portada/portadahero.webp';
             }
           }, 800);
 
-          heroVideo.addEventListener('ended', () => {
+          const playInline = () => {
              heroVideo.currentTime = 0;
-             heroVideo.muted = true;
-             heroVideo.controls = false;
+             heroVideo.muted = false;
+             heroVideo.volume = 1;
+             heroVideo.controls = true;
+             if (heroPlayBtn) {
+                 heroPlayBtn.style.display = 'none';
+             }
              heroVideo.play().catch(console.error);
+          };
+
+          heroVideo.addEventListener('ended', () => {
+             if (heroVideo.muted) {
+                 heroVideo.currentTime = 0;
+                 heroVideo.play().catch(console.error);
+             }
           });
 
           heroVideo.addEventListener('click', (e) => {
-            if (heroVideo.controls) return;
+            if (heroVideo.controls) return; // Allow default controls interaction
             e.preventDefault();
-            openModal();
+            playInline();
           });
-        }
+
+
+          if (heroPlayBtn) {
+            heroPlayBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              playInline();
+            });
+          }
     }
   });
 </script>
