@@ -32,7 +32,7 @@ import Button from './UI/Button.astro';
     </div>
   </div>
   
-  <div class="mt-10 md:mt-12 w-full max-w-[1200px] mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative group bg-black">
+  <div class="mt-10 md:mt-12 w-full max-w-[1200px] mx-auto aspect-video rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-primary/5 relative group bg-black opacity-0 animate-fade-in-up" style="animation-delay: 0.5s; animation-fill-mode: forwards;">
     <video 
       class="w-full h-full object-cover cursor-pointer"
       id="hero-feature-video"
@@ -118,7 +118,7 @@ import Button from './UI/Button.astro';
               heroVideo.load();
               heroVideo.play().catch(console.error);
             }
-          }, 800);
+          }, 2000);
 
           const playInline = () => {
              heroVideo.currentTime = 0;
