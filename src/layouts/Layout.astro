@@ -40,7 +40,27 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 		<ClientRouter />
 	</head>
 	<body class="antialiased text-gray-900 bg-white">
-		<slot />
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[999] bg-white flex items-center justify-center transition-opacity duration-500">
+        <div class="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+    </div>
+
+    <slot />
+
+    <script>
+      // Preloader Logic
+      window.addEventListener('load', () => {
+        document.fonts.ready.then(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.remove();
+                }, 500);
+            }
+        });
+      });
+    </script>
 	</body>
 </html>
 
