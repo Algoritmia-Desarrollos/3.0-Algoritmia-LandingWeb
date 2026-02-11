@@ -3,7 +3,7 @@ import Button from '../UI/Button.astro';
 ---
 
 <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
-  <div class="max-w-4xl w-full text-center space-y-6 md:space-y-8">
+  <div class="max-w-4xl w-full text-center space-y-4 md:space-y-4">
     
     <!-- Tag -->
     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface text-[11px] font-semibold tracking-wide mb-2 text-primary animate-fade-in-up">
@@ -12,18 +12,23 @@ import Button from '../UI/Button.astro';
     </div>
 
    <!-- Main Headline -->
-    <div class="space-y-4 animate-fade-in-up">
+    <div class="space-y-2 animate-fade-in-up">
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.05] text-primary">
         Gestión de Meta Ads + <br class="hidden md:block" /> Estrategia Creativa
       </h1>
-      <p class="text-xl md:text-2xl text-primary/80 font-medium max-w-2xl mx-auto leading-relaxed">
+    </div>
+    
+    <div class="relative max-w-xl md:max-w-3xl mx-auto">
+      <p id="ghost-text" class="text-base md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2 invisible" aria-hidden="true" style="visibility: hidden;">
         Para negocios que ya invierten en publicidad<br class="hidden md:block" />
         pero no logran escalar de forma predecible.
+      </p>
+      <p id="typewriter-text" class="absolute top-0 left-0 w-full h-full text-base md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2">
       </p>
     </div>
 
     <!-- CTAs -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6 md:pt-8 animate-fade-in-up delay-200">
+    <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-2 animate-fade-in-up delay-200">
       <Button variant="primary" href="#qualify">
         Ver si calificás
         <span class="material-symbols-outlined text-lg">check_circle</span>
@@ -37,7 +42,7 @@ import Button from '../UI/Button.astro';
   </div>
   
    <!-- Embedded Video -->
-  <div class="mt-16 md:mt-20 w-full max-w-[1000px] mx-auto opacity-0 animate-fade-in-up delay-300 fill-mode-forwards" style="animation-fill-mode: forwards;">
+  <div class="mt-10 md:mt-12 w-full max-w-[1000px] mx-auto opacity-0 animate-fade-in-up delay-300 fill-mode-forwards" style="animation-fill-mode: forwards;">
       <div class="aspect-video rounded-3xl overflow-hidden bg-gray-900 shadow-2xl shadow-primary/10 border border-primary/5 relative group">
          <video 
            class="w-full h-full object-cover cursor-pointer"
@@ -56,7 +61,7 @@ import Button from '../UI/Button.astro';
 
          <!-- Play Button Overlay -->
         <button id="hero-play-btn" class="absolute inset-0 z-10 w-full h-full flex items-center justify-center group cursor-pointer focus:outline-none bg-black/0 hover:bg-black/10 transition-colors duration-300" aria-label="Reproducir video">
-          <div class="w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg border border-white/30 animate-subtle-pulse">
+          <div class="w-16 h-16 md:w-24 md:h-24 bg-white backdrop-blur-md rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] border border-white/50 animate-subtle-pulse">
             <span class="material-symbols-outlined text-black text-5xl md:text-7xl ml-1 md:ml-2">play_arrow</span>
           </div>
         </button>
@@ -81,6 +86,61 @@ import Button from '../UI/Button.astro';
 
 <script>
   document.addEventListener('astro:page-load', () => {
+    // Typewriter Logic
+    const ghostElement = document.getElementById('ghost-text');
+    const targetElement = document.getElementById('typewriter-text');
+    
+    if (ghostElement && targetElement) {
+      const text = ghostElement.textContent?.trim().replace(/\s+/g, ' ') || '';
+      targetElement.textContent = '';
+      
+      const fullText = ghostElement.innerText; // Use innerText to respect line breaks if possible, or just textContent
+      // Hero.astro used textContent trim. Let's stick to what worked there.
+      // Actually Hero.astro uses: text = ghostElement.textContent?.trim() || '';
+      // and then charAt(i). 
+      // But we have <br> in the ghost text. TextContent will ignore <br> and just give text.
+      // This means the visual <br> won't be typed as a newline?
+      // In Hero.astro the ghost text has no <br>. Here we have <br class="hidden md:block"/>.
+      // Let's use innerText to capture the newline if rendered?
+      // If we strict copy Hero.astro logic:
+      
+       const type = () => {
+         const rawText = ghostElement.textContent?.trim().replace(/\s+/g, ' ') || '';
+         // This flattens the text. The <br> visual effect is lost in the typed text if we just use textContent.
+         // However, the ghost text is invisible but takes up space.
+         // If we type into absolute positioned div, we need it to wrap exactly same way.
+         // Since we can't easily animate HTML tags with vanilla char-by-char, 
+         // let's try to just render the full text at once? No, user wants structure.
+         
+         // Let's rely on the fact that if we just type the text, it might wrap naturally if the container width is constrained same as ghost?
+         // Yes, they share the parent container width.
+         
+         targetElement.textContent = '';
+         let i = 0;
+         const timer = setInterval(() => {
+           if (i < rawText.length) {
+             targetElement.textContent += rawText.charAt(i);
+             i++;
+           } else {
+             clearInterval(timer);
+           }
+         }, 30);
+       };
+       // Re-implementing Hero.astro script logic exactly below
+       
+       const textToType = ghostElement.textContent?.trim().replace(/\s+/g, ' ') || '';
+       targetElement.textContent = '';
+       let i = 0;
+       const typeWriter = () => {
+         if (i < textToType.length) {
+           targetElement.textContent += textToType.charAt(i);
+           i++;
+           setTimeout(typeWriter, 40); 
+         }
+       };
+       setTimeout(typeWriter, 500);
+    }
+  
     const heroVideo = document.getElementById('hero-feature-video') as HTMLVideoElement | null;
     const heroPlayBtn = document.getElementById('hero-play-btn');
 
