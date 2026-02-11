@@ -2,7 +2,7 @@
 import Button from '../UI/Button.astro';
 ---
 
-<section class="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
+<section id="hero" class="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
   <div class="max-w-4xl w-full text-center space-y-6 md:space-y-8">
     
     <!-- Tag -->
@@ -11,7 +11,7 @@ import Button from '../UI/Button.astro';
       Meta Ads Specialist
     </div>
 
-    <!-- Main Headline -->
+   <!-- Main Headline -->
     <div class="space-y-4 animate-fade-in-up">
       <h1 class="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.05] text-primary">
         Gestión de Meta Ads + <br class="hidden md:block" /> Estrategia Creativa
@@ -36,16 +36,16 @@ import Button from '../UI/Button.astro';
 
   </div>
   
-  <!-- Embedded Video -->
+   <!-- Embedded Video -->
   <div class="mt-16 md:mt-20 w-full max-w-[1000px] mx-auto opacity-0 animate-fade-in-up delay-300 fill-mode-forwards" style="animation-fill-mode: forwards;">
       <div class="aspect-video rounded-3xl overflow-hidden bg-gray-900 shadow-2xl shadow-primary/10 border border-primary/5 relative group">
          <video 
-           class="w-full h-full object-cover"
-           autoplay
+           class="w-full h-full object-cover cursor-pointer"
+           id="hero-feature-video"
+           preload="none"
            muted
-           loop
            playsinline
-           poster="/video-poster.jpg" 
+           data-src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov"
          >
            <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov" type="video/mp4">
            Tu navegador no soporta videos HTML5.
@@ -53,6 +53,13 @@ import Button from '../UI/Button.astro';
          
          <!-- Gradient Overlay -->
          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+
+         <!-- Play Button Overlay -->
+        <button id="hero-play-btn" class="absolute inset-0 z-10 w-full h-full flex items-center justify-center group cursor-pointer focus:outline-none bg-black/0 hover:bg-black/10 transition-colors duration-300" aria-label="Reproducir video">
+          <div class="w-16 h-16 md:w-24 md:h-24 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg border border-white/30 animate-subtle-pulse">
+            <span class="material-symbols-outlined text-black text-5xl md:text-7xl ml-1 md:ml-2">play_arrow</span>
+          </div>
+        </button>
       </div>
   </div>
 
@@ -62,4 +69,62 @@ import Button from '../UI/Button.astro';
     .delay-200 { animation-delay: 200ms; }
     .delay-300 { animation-delay: 300ms; }
     .fill-mode-forwards { animation-fill-mode: forwards; }
+    
+    @keyframes subtle-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1); }
+  }
+  .animate-subtle-pulse {
+    animation: subtle-pulse 2s infinite ease-in-out;
+  }
 </style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const heroVideo = document.getElementById('hero-feature-video') as HTMLVideoElement | null;
+    const heroPlayBtn = document.getElementById('hero-play-btn');
+
+    if (heroVideo) {
+          setTimeout(() => {
+            const videoSrc = heroVideo.getAttribute('data-src');
+            if (videoSrc) {
+              heroVideo.src = videoSrc;
+              heroVideo.load();
+              heroVideo.play().catch(console.error);
+            }
+          }, 2000);
+
+          const playInline = () => {
+             heroVideo.currentTime = 0;
+             heroVideo.muted = false;
+             heroVideo.volume = 1;
+             heroVideo.controls = true;
+             if (heroPlayBtn) {
+                 heroPlayBtn.style.display = 'none';
+             }
+             heroVideo.play().catch(console.error);
+          };
+
+          heroVideo.addEventListener('ended', () => {
+             if (heroVideo.muted) {
+                 heroVideo.currentTime = 0;
+                 heroVideo.play().catch(console.error);
+             }
+          });
+
+          heroVideo.addEventListener('click', (e) => {
+            if (heroVideo.controls) return; // Allow default controls interaction
+            e.preventDefault();
+            playInline();
+          });
+
+
+          if (heroPlayBtn) {
+            heroPlayBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              playInline();
+            });
+          }
+    }
+  });
+</script>
