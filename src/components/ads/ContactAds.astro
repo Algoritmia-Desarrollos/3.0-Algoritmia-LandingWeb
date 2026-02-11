@@ -1,0 +1,428 @@
+---
+---
+<section class="py-24 px-6 md:px-12 bg-surface" id="contact">
+  <div class="max-w-2xl mx-auto reveal">
+    <div class="bg-white p-8 md:p-14 rounded-3xl shadow-apple hover:shadow-apple-hover transition-shadow duration-300 border border-white">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-semibold mb-3 tracking-tight">Postulate para escalar</h2>
+        <p class="text-sm text-primary/50">Completa el formulario para ver si tu negocio califica.</p>
+      </div>
+      
+      <!-- Success Message -->
+      <div id="success-message" class="hidden mb-8 p-6 bg-green-50 border border-green-200 rounded-xl text-center animate-fade-in-up">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+          <span class="material-symbols-outlined text-2xl text-green-600">check_circle</span>
+        </div>
+        <p class="text-green-800 font-bold text-lg">¡Solicitud Enviada!</p>
+        <p class="text-green-600 text-sm mt-1">Tu perfil ha sido pre-aprobado. Te contactaremos en 24hs.</p>
+      </div>
+
+       <!-- Disqualified Message -->
+      <div id="disqualified-message" class="hidden mb-8 p-6 bg-gray-50 border border-gray-200 rounded-xl text-center animate-fade-in-up">
+        <p class="text-gray-800 font-bold">Gracias por tu interés</p>
+        <p class="text-gray-600 text-sm mt-1">Actualmente trabajamos con negocios en otra etapa de facturación/inversión. Te avisaremos cuando abramos nuevos cupos.</p>
+      </div>
+
+      <!-- Error Message -->
+      <div id="error-message" class="hidden mb-8 p-4 bg-red-50 border border-red-200 rounded-xl text-center">
+        <p class="text-red-700 font-medium">Hubo un error al enviar</p>
+        <a href="https://wa.me/5493476245523" target="_blank" class="text-red-600 text-sm mt-1 hover:underline">
+          Contáctanos por WhatsApp
+        </a>
+      </div>
+
+      <form id="contactForm" class="space-y-8">
+        
+        <!-- Contact Info -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="relative group">
+            <input 
+              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+              id="nombre" 
+              name="nombre"
+              placeholder="Nombre" 
+              type="text"
+              required
+            />
+            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="nombre">
+              Nombre Completo
+            </label>
+          </div>
+
+          <div class="relative group z-30">
+             <input 
+              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+              id="telefono" 
+              name="telefono"
+              type="tel"
+              required
+            />
+             <span id="valid-msg" class="hidden text-green-600 text-xs mt-1">✓ Válido</span>
+            <span id="error-msg" class="hidden text-red-600 text-xs mt-1"></span>
+          </div>
+
+          <div class="relative group md:col-span-2">
+            <input 
+              class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" 
+              id="email" 
+              name="email"
+              placeholder="Email" 
+              type="email"
+              required
+            />
+             <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="email">
+              Email Profesional
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+             <!-- Business Type -->
+            <div class="relative group">
+                <select name="businessType" required class="custom-select w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors appearance-none">
+                    <option value="" disabled selected>Tipo de Negocio</option>
+                    <option value="Ecommerce">Ecommerce</option>
+                    <option value="Servicios B2B">Servicios / Agencia</option>
+                    <option value="Infoproductos">Infoproductos</option>
+                    <option value="Software">Software / SaaS</option>
+                    <option value="Local">Negocio Local</option>
+                </select>
+                 <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
+            </div>
+
+            <!-- Revenue -->
+            <div class="relative group">
+                <select name="revenue" id="revenue" required class="custom-select w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors appearance-none">
+                    <option value="" disabled selected>Facturación Mensual</option>
+                    <option value="less_3k">- $3.000 USD</option>
+                    <option value="3k_5k">$3.000 - $5.000 USD</option>
+                    <option value="5k_10k">$5.000 - $10.000 USD</option>
+                    <option value="10k_30k">$10.000 - $30.000 USD</option>
+                    <option value="plus_30k">+ $30.000 USD</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+             <!-- Ad Spend -->
+            <div class="relative group">
+                <select name="adSpend" id="adSpend" required class="custom-select w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors appearance-none">
+                    <option value="" disabled selected>Inversión en Ads</option>
+                    <option value="none">No invierto aún</option>
+                    <option value="less_300">- $300 USD</option>
+                    <option value="300_500">$300 - $500 USD</option>
+                    <option value="500_1k">$500 - $1.000 USD</option>
+                    <option value="1k_3k">$1.000 - $3.000 USD</option>
+                    <option value="plus_3k">+ $3.000 USD</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
+            </div>
+
+            <!-- Obstacle -->
+             <div class="relative group">
+                <select name="obstacle" required class="custom-select w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors appearance-none">
+                    <option value="" disabled selected>Principal Obstáculo</option>
+                    <option value="scaling">No logro escalar</option>
+                    <option value="creative">Falta de creativos</option>
+                    <option value="tracking">Medición / Tracking</option>
+                    <option value="time">Falta de tiempo</option>
+                    <option value="other">Otro</option>
+                </select>
+                <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
+            </div>
+        </div>
+
+        <div class="relative group">
+          <textarea 
+            class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none overflow-hidden" 
+            id="comments" 
+            name="comments"
+            placeholder="Comentarios Adicionales" 
+            rows="2"
+          ></textarea>
+          <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="comments">
+            Comentarios Adicionales (Opcional)
+          </label>
+        </div>
+        
+        <div>
+          <button 
+            type="submit" 
+            id="submitBtn"
+            class="w-full bg-primary text-white py-4 px-8 rounded-full font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span id="btn-text">Enviar Solicitud</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* Custom Select - Force hide native arrow */
+  .custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none !important;
+  }
+
+  /* Override intl-tel-input styles to match design */
+  .iti {
+    display: block;
+    width: 100%;
+  }
+  
+  .iti__flag-container {
+    border: none;
+    background: transparent;
+  }
+
+  .iti__selected-flag {
+    background: transparent !important;
+    padding: 0 0px 0 0 !important;
+  }
+  
+  .iti__selected-dial-code {
+    color: var(--color-primary, #1e293b);
+    font-size: 0.875rem;
+  }
+
+  #telefono {
+    border: none;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    text-indent: 5px;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  #telefono:focus {
+    border-bottom-color: var(--color-primary, #1e293b);
+    box-shadow: none;
+    outline: none;
+  }
+
+  /* Dropdown Styling */
+  .iti__country-list {
+    z-index: 100;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    font-size: 0.875rem;
+    max-height: 200px;
+    margin-top: 4px;
+    overflow-y: auto;
+    white-space: normal;
+    left: 0 !important;
+    top: 100% !important;
+  }
+
+  .iti__divider, .iti__country.iti__standard {
+    display: none;
+  }
+
+  .iti__country {
+    padding: 8px 12px;
+    outline: none;
+  }
+
+  .iti__country:hover, .iti__country.iti__highlight {
+    background-color: #f3f4f6;
+  }
+
+  .iti__country-name {
+    color: #374151;
+    margin-right: 6px;
+  }
+  
+  .iti__dial-code {
+    color: #9ca3af;
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+      const form = document.getElementById('contactForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const textBtn = document.getElementById('btn-text');
+      const successMessage = document.getElementById('success-message');
+      const disqualifiedMessage = document.getElementById('disqualified-message');
+      const errorMessage = document.getElementById('error-message');
+      
+      const input = document.querySelector("#telefono") as HTMLInputElement;
+      const errorMsg = document.querySelector("#error-msg");
+      const validMsg = document.querySelector("#valid-msg");
+      const errorMap = ["Número inválido", "Código de país inválido", "Demasiado corto", "Demasiado largo", "Número inválido"];
+      let iti; // Instance of intl-tel-input
+
+      // --- Phone Input Logic ---
+       const loadIntlTelInput = async () => {
+        if (!input || (window as any).intlTelInputLoadedForAds) return;
+        
+        try {
+          const intlTelInputModule = await import('intl-tel-input');
+          const intlTelInput = intlTelInputModule.default;
+          await import('intl-tel-input/build/css/intlTelInput.css');
+          
+          (window as any).intlTelInputLoadedForAds = true;
+
+          iti = intlTelInput(input, {
+             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@26.1.0/build/js/utils.js",
+             onlyCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
+             preferredCountries: ['ar', 'uy', 'py', 'cl', 'co', 'pe', 'mx', 'es', 'us'],
+             localizedCountries: { 'pe': 'Perú', 'mx': 'México', 'es': 'España', 'us': 'USA' },
+             separateDialCode: true,
+             initialCountry: "auto",
+             autoPlaceholder: "off",
+             geoIpLookup: function(callback) {
+              fetch("https://get.geojs.io/v1/ip/country.json")
+                .then(res => res.json())
+                .then(data => callback(data.country))
+                .catch(() => callback("ar"));
+             },
+          });
+
+          // Custom "Other" option
+          const countryList = document.querySelector('.iti__country-list');
+          if (countryList) {
+            const otherOption = document.createElement('li');
+            otherOption.classList.add('iti__country', 'iti__standard');
+            otherOption.setAttribute('role', 'option');
+            otherOption.innerHTML = `<div class="iti__flag-box"><div class="iti__flag iti__globe"></div></div><span class="iti__country-name">Otro</span><span class="iti__dial-code">+</span>`;
+            otherOption.addEventListener('click', () => {
+              iti.setCountry('');
+              input.value = '+';
+              input.focus();
+            });
+            countryList.appendChild(otherOption);
+          }
+          
+          setupValidation();
+
+        } catch (error) {
+          console.error('Error loading intl-tel-input:', error);
+        }
+      };
+
+      const setupValidation = () => {
+        const reset = () => {
+          input.classList.remove("error");
+          if (errorMsg) { errorMsg.innerHTML = ""; errorMsg.classList.add("hidden"); }
+          if (validMsg) validMsg.classList.add("hidden");
+        };
+
+        input.addEventListener('blur', () => {
+          reset();
+          if (input.value.trim()) {
+             if (iti.isValidNumber() || input.value.trim().length > 6) {
+                if (validMsg) validMsg.classList.remove("hidden");
+             } else {
+                const countryData = iti.getSelectedCountryData();
+                if (!countryData.iso2 && input.value.trim().length > 6) {
+                   if (validMsg) validMsg.classList.remove("hidden");
+                } else {
+                   input.classList.add("error");
+                   const errorCode = iti.getValidationError();
+                   if (errorMsg) {
+                       errorMsg.innerHTML = errorMap[errorCode] || "Número inválido";
+                       errorMsg.classList.remove("hidden");
+                   }
+                }
+             }
+          }
+        });
+
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);
+      };
+
+      // Load on interaction/intersection
+       if (input) {
+          const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                  if (entry.isIntersecting) {
+                      loadIntlTelInput();
+                      observer.disconnect();
+                  }
+              });
+          }, { rootMargin: "100px" });
+          observer.observe(document.getElementById('contact') || input);
+      }
+
+
+      // --- Form Logic ---
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Validation for Phone (if loaded)
+        if (iti) {
+             const countryData = iti.getSelectedCountryData();
+             if (countryData.iso2 && input.value.trim().length < 6) {
+                 if (errorMsg) {
+                     errorMsg.innerHTML = "Número demasiado corto";
+                     errorMsg.classList.remove("hidden");
+                 }
+                 input.focus();
+                 return;
+             }
+        }
+
+        // Reset UI
+        successMessage.classList.add('hidden');
+        disqualifiedMessage.classList.add('hidden');
+        errorMessage.classList.add('hidden');
+        
+        const formData = new FormData(form as HTMLFormElement);
+        // Get full phone number
+        const fullPhone = iti ? iti.getNumber() : formData.get('telefono');
+
+        // Logic check
+        const revenue = formData.get('revenue');
+        const adSpend = formData.get('adSpend');
+        const isLowRevenue = (revenue === 'less_3k');
+        const isNoSpend = (adSpend === 'none' || adSpend === 'less_300');
+
+        if (isLowRevenue || isNoSpend) {
+            form.classList.add('hidden');
+            disqualifiedMessage.classList.remove('hidden');
+            return;
+        }
+
+        // Send
+        if(submitBtn) (submitBtn as HTMLButtonElement).disabled = true;
+        if(textBtn) textBtn.textContent = 'Enviando...';
+        
+        const data = Object.fromEntries(formData.entries());
+        data.telefono = fullPhone; // Update phone with full format
+
+        try {
+            const response = await fetch('/api/qualify-lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                form.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                (form as HTMLFormElement).reset();
+            } else {
+                 throw new Error('Server error');
+            }
+        } catch (error) {
+             console.error(error);
+             errorMessage.classList.remove('hidden');
+             if(submitBtn) (submitBtn as HTMLButtonElement).disabled = false;
+             if(textBtn) textBtn.textContent = 'Enviar Solicitud';
+        }
+      });
+  });
+</script>

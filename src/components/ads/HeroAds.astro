@@ -1,0 +1,65 @@
+---
+import Button from '../UI/Button.astro';
+---
+
+<section class="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-12 py-20 pt-32 md:py-20 md:pt-36">
+  <div class="max-w-4xl w-full text-center space-y-6 md:space-y-8">
+    
+    <!-- Tag -->
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface text-[11px] font-semibold tracking-wide mb-2 text-primary animate-fade-in-up">
+      <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]"></span>
+      Meta Ads Specialist
+    </div>
+
+    <!-- Main Headline -->
+    <div class="space-y-4 animate-fade-in-up">
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.05] text-primary">
+        Gestión de Meta Ads + <br class="hidden md:block" /> Estrategia Creativa
+      </h1>
+      <p class="text-xl md:text-2xl text-primary/80 font-medium max-w-2xl mx-auto leading-relaxed">
+        Para negocios que ya invierten en publicidad<br class="hidden md:block" />
+        pero no logran escalar de forma predecible.
+      </p>
+    </div>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6 md:pt-8 animate-fade-in-up delay-200">
+      <Button variant="primary" href="#qualify">
+        Ver si calificás
+        <span class="material-symbols-outlined text-lg">check_circle</span>
+      </Button>
+      <a href="#work" class="group inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full bg-white text-primary text-sm font-medium border border-primary/10 hover:bg-surface transition-all duration-300">
+        Casos reales
+        <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_downward</span>
+      </a>
+    </div>
+
+  </div>
+  
+  <!-- Embedded Video -->
+  <div class="mt-16 md:mt-20 w-full max-w-[1000px] mx-auto opacity-0 animate-fade-in-up delay-300 fill-mode-forwards" style="animation-fill-mode: forwards;">
+      <div class="aspect-video rounded-3xl overflow-hidden bg-gray-900 shadow-2xl shadow-primary/10 border border-primary/5 relative group">
+         <video 
+           class="w-full h-full object-cover"
+           autoplay
+           muted
+           loop
+           playsinline
+           poster="/video-poster.jpg" 
+         >
+           <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov" type="video/mp4">
+           Tu navegador no soporta videos HTML5.
+         </video>
+         
+         <!-- Gradient Overlay -->
+         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+      </div>
+  </div>
+
+</section>
+
+<style>
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .fill-mode-forwards { animation-fill-mode: forwards; }
+</style>

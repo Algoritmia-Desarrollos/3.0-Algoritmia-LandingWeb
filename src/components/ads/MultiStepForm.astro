@@ -1,0 +1,292 @@
+---
+---
+
+<section id="qualify" class="py-24 px-6 md:px-12 bg-white scroll-mt-20">
+  <div class="max-w-2xl mx-auto rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+    
+    <div class="bg-primary p-8 text-center">
+      <h2 class="text-2xl font-bold text-white mb-2">¿Tu negocio está listo para escalar?</h2>
+      <p class="text-white/60 text-sm">Responde unas preguntas para ver si podemos ayudarte.</p>
+    </div>
+
+    <div class="p-8 md:p-12 bg-white relative">
+      
+      <!-- Loading State -->
+      <div id="form-loading" class="hidden absolute inset-0 z-50 bg-white/80 backdrop-blur-sm flex items-center justify-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+
+      <!-- Success State -->
+      <div id="form-success" class="hidden text-center py-12 animate-fade-in-up">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <span class="material-symbols-outlined text-4xl text-green-600">check_circle</span>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">¡Solicitud Recibida!</h3>
+        <p class="text-gray-600 mb-8">
+          Tu perfil califica para nuestro programa de escala. Te hemos enviado un correo de confirmación y te contactaremos por WhatsApp en las próximas 24-48hs.
+        </p>
+        <button onclick="window.location.reload()" class="text-primary font-medium hover:underline">Volver al inicio</button>
+      </div>
+
+       <!-- Disqualified State -->
+       <div id="form-disqualified" class="hidden text-center py-12 animate-fade-in-up">
+         <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+           <span class="material-symbols-outlined text-3xl text-gray-500">info</span>
+         </div>
+         <h3 class="text-xl font-bold text-gray-900 mb-4" id="disqualified-title">Gracias por tu interés</h3>
+         <p class="text-gray-600 mb-8" id="disqualified-message">
+           Actualmente trabajamos con negocios que ya invierten en publicidad. Te avisaremos cuando abramos cupos para nuevos anunciantes.
+         </p>
+         <div class="bg-blue-50 p-4 rounded-xl text-left border border-blue-100">
+             <p class="text-sm text-blue-800 font-medium mb-1">💡 Recomendación:</p>
+             <p class="text-sm text-blue-600">
+                 Te recomendamos seguir nuestro contenido en Instagram donde compartimos tips gratuitos para llegar a esa facturación.
+             </p>
+         </div>
+       </div>
+
+      <form id="qualifyForm" class="space-y-6">
+        
+        <!-- Step 1: Contact Info -->
+        <div class="form-step" data-step="1">
+          <div class="mb-6 flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-900">1. Datos Básicos</h3>
+            <span class="text-xs font-mono text-gray-400">Paso 1 de 3</span>
+          </div>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+              <input type="text" name="nombre" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400" placeholder="Ej: Juan Pérez">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Email Profesional</label>
+              <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400" placeholder="juan@tunegocio.com">
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
+              <input type="tel" name="telefono" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400" placeholder="+54 9 11 1234 5678">
+            </div>
+            
+            <button type="button" class="w-full bg-primary text-white py-3 rounded-xl font-medium hover:bg-primary/90 transition-transform active:scale-[0.98] next-step-btn">
+              Siguiente
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Business Info & Qualification Logic -->
+        <div class="form-step hidden" data-step="2">
+           <div class="mb-6 flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-900">2. Información del Negocio</h3>
+            <span class="text-xs font-mono text-gray-400">Paso 2 de 3</span>
+          </div>
+
+          <div class="space-y-4">
+             <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Negocio</label>
+              <select name="businessType" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all bg-white">
+                <option value="" disabled selected>Seleccioná una opción</option>
+                <option value="Ecommerce">Ecommerce (Productos Físicos)</option>
+                <option value="Servicios B2B">Servicios B2B / Agencia</option>
+                <option value="Infoproductos">Infoproductos / Cursos</option>
+                <option value="Software">SaaS / App</option>
+                <option value="Local">Negocio Local (Físico)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Facturación Mensual Promedio</label>
+              <select name="revenue" id="revenue" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all bg-white">
+                <option value="" disabled selected>Seleccioná una opción</option>
+                <option value="less_3k">Menos de $3.000 USD</option>
+                <option value="3k_5k">$3.000 - $5.000 USD</option>
+                <option value="5k_10k">$5.000 - $10.000 USD</option>
+                <option value="10k_30k">$10.000 - $30.000 USD</option>
+                <option value="plus_30k">Más de $30.000 USD</option>
+              </select>
+            </div>
+
+            <button type="button" class="w-full bg-primary text-white py-3 rounded-xl font-medium hover:bg-primary/90 transition-transform active:scale-[0.98] next-step-btn">
+              Siguiente
+            </button>
+            <button type="button" class="w-full text-gray-500 py-3 text-sm hover:underline prev-step-btn">
+              Atrás
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Ads Context & Submit -->
+        <div class="form-step hidden" data-step="3">
+           <div class="mb-6 flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-900">3. Situación Publicitaria</h3>
+            <span class="text-xs font-mono text-gray-400">Paso 3 de 3</span>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Inversión Mensual en Ads</label>
+              <select name="adSpend" id="adSpend" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all bg-white">
+                <option value="" disabled selected>Seleccioná una opción</option>
+                <option value="none">No invierto aún</option>
+                <option value="less_300">Menos de $300 USD</option>
+                <option value="300_500">$300 - $500 USD</option>
+                <option value="500_1k">$500 - $1.000 USD</option>
+                <option value="1k_3k">$1.000 - $3.000 USD</option>
+                <option value="plus_3k">Más de $3.000 USD</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Principal Obstáculo</label>
+              <select name="obstacle" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all bg-white">
+                <option value="" disabled selected>Seleccioná una opción</option>
+                <option value="scaling">No logro escalar (CPA sube)</option>
+                <option value="creative">Me faltan creativos / anuncios</option>
+                <option value="tracking">No sé qué estoy midiendo</option>
+                <option value="time">No tengo tiempo para gestionar</option>
+                <option value="other">Otro</option>
+              </select>
+            </div>
+
+             <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Comentarios Adicionales (Opcional)</label>
+              <textarea name="comments" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-400 resize-none"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-primary text-white py-3 rounded-xl font-medium hover:bg-primary/90 transition-transform active:scale-[0.98]">
+              Enviar Solicitud
+            </button>
+            <button type="button" class="w-full text-gray-500 py-3 text-sm hover:underline prev-step-btn">
+              Atrás
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('qualifyForm');
+    if(!form) return;
+
+    // --- Logic for Steps ---
+    const steps = Array.from(document.querySelectorAll('.form-step'));
+    const nextBtns = document.querySelectorAll('.next-step-btn');
+    const prevBtns = document.querySelectorAll('.prev-step-btn');
+    let currentStep = 0;
+
+    const showStep = (index) => {
+        steps.forEach((step, i) => {
+            if(i === index) {
+                step.classList.remove('hidden');
+                // Simple animation
+                step.animate([
+                    { opacity: 0, transform: 'translateY(10px)' },
+                    { opacity: 1, transform: 'translateY(0)' }
+                ], { duration: 300, easing: 'ease-out' });
+            } else {
+                step.classList.add('hidden');
+            }
+        });
+    };
+
+    nextBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+             // Validate current step fields
+             const inputs = steps[currentStep].querySelectorAll('input, select');
+             let isValid = true;
+             inputs.forEach(input => {
+                 if(!(input as HTMLInputElement).checkValidity()) {
+                     (input as HTMLInputElement).reportValidity();
+                     isValid = false;
+                 }
+             });
+
+             if(isValid) {
+                 currentStep++;
+                 showStep(currentStep);
+             }
+        });
+    });
+
+    prevBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentStep--;
+            showStep(currentStep);
+        });
+    });
+
+
+    // --- Logic for Submission & Qualification ---
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const loading = document.getElementById('form-loading');
+        loading.classList.remove('hidden');
+
+        try {
+            const formData = new FormData(form as HTMLFormElement);
+            const data = Object.fromEntries(formData);
+            
+            // Client-side quick check (Backend should confirm this)
+            const revenue = data.revenue;
+            const adSpend = data.adSpend;
+
+            // Define "Disqualified" criteria
+            const lowRevenue = (revenue === 'less_3k'); 
+            const noSpend = (adSpend === 'none' || adSpend === 'less_300');
+
+            // Simulate API delay
+            await new Promise(r => setTimeout(r, 1000));
+
+            loading.classList.add('hidden');
+            form.classList.add('hidden');
+
+            // Handle UI based on criteria
+            if (lowRevenue) {
+                 const dqTitle = document.getElementById('disqualified-title');
+                 const dqMsg = document.getElementById('disqualified-message');
+                 if(dqTitle) dqTitle.innerText = "Momentáneamente no podemos ayudarte";
+                 if(dqMsg) dqMsg.innerText = "Para garantizar resultados, trabajamos con negocios que facturan mínimo $3.000-$5.000 USD mensuales. Te recomendamos escalar orgánicamente primero.";
+                 
+                 document.getElementById('form-disqualified').classList.remove('hidden');
+                 return; // Stop here, don't send email (or send as 'rejected' if you want metrics)
+            }
+
+            if (noSpend) {
+                 const dqTitle = document.getElementById('disqualified-title');
+                 const dqMsg = document.getElementById('disqualified-message');
+                 if(dqTitle) dqTitle.innerText = "Gracias por tu interés";
+                 if(dqMsg) dqMsg.innerText = "Actualmente trabajamos con negocios que ya invierten mínimo $400 USD/mes en Ads. Te avisaremos cuando abramos cupos para nuevos anunciantes.";
+                 
+                 document.getElementById('form-disqualified').classList.remove('hidden');
+                 return;
+            }
+
+            // If Qualified, send to API
+            const response = await fetch('/api/qualify-lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if(response.ok) {
+                 document.getElementById('form-success').classList.remove('hidden');
+            } else {
+                 alert("Hubo un error. Por favor escribinos por WhatsApp.");
+                 form.classList.remove('hidden');
+            }
+
+        } catch (error) {
+            console.error(error);
+            loading.classList.add('hidden');
+            alert("Hubo un error desconocido.");
+        }
+    });
+  });
+</script>

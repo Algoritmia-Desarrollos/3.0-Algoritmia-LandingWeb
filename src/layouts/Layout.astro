@@ -49,8 +49,9 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 
     <script>
       // Preloader Logic
-      window.addEventListener('load', () => {
-        document.fonts.ready.then(() => {
+      document.addEventListener('astro:page-load', () => {
+        // Short timeout to ensure smooth transition
+        setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
                 preloader.style.opacity = '0';
@@ -58,7 +59,7 @@ const { title, description = "Astro high performance starter" } = Astro.props;
                     preloader.remove();
                 }, 500);
             }
-        });
+        }, 100);
       });
     </script>
 	</body>

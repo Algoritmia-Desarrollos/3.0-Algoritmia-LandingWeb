@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-
     "@astrojs/react": "^4.1.2",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.4",
@@ -28,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/forms": "^0.5.11"
+    "@tailwindcss/forms": "^0.5.11",
+    "@types/nodemailer": "^7.0.9"
   }
 }

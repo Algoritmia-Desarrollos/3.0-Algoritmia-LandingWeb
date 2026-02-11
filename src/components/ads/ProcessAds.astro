@@ -1,0 +1,51 @@
+---
+const steps = [
+  {
+    number: "01",
+    title: "Estrategia & Setup",
+    description: "Definimos audiencias, objetivos y presupuesto óptimo. Configuramos conversiones, píxeles, eventos y tracking. Nos aseguramos de que la medición sea precisa antes de lanzar cualquier campaña."
+  },
+  {
+    number: "02",
+    title: "Lanzamiento & Testing",
+    description: "Creamos estructuras personalizadas para Meta Ads. Probamos diferentes mensajes, formatos y segmentaciones para detectar las combinaciones más rentables."
+  },
+  {
+    number: "03",
+    title: "Optimización continua",
+    description: "Analizamos datos y tomamos decisiones en función de métricas reales: CTR, CPA, ROAS, frecuencia y conversiones. Ajustamos presupuesto, pujas y audiencias semana a semana para maximizar el retorno."
+  },
+  {
+    number: "04",
+    title: "Reportes & Roadmap",
+    description: "Presentamos reportes mensuales claros y visuales con métricas clave, aprendizajes y próximos pasos. En el plan Premium, realizamos reuniones estratégicas de optimización y escalamiento."
+  }
+];
+---
+
+<section class="py-32 px-6 md:px-12 max-w-[1440px] mx-auto bg-white" id="process">
+  <div class="mb-20 text-center reveal">
+    <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-6 text-primary">Nuestro Método</h2>
+    <p class="text-primary/60 text-lg max-w-2xl mx-auto">
+      Un sistema probado para escalar sin depender de la suerte.
+    </p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+    
+    <!-- Connection Line (Desktop) -->
+    <div class="hidden lg:block absolute top-12 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-primary/5 via-primary/20 to-primary/5 z-0"></div>
+
+    {steps.map((step, index) => (
+      <div class="group relative bg-surface p-8 rounded-3xl border border-primary/5 hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg reveal z-10" style={`transition-delay: ${index * 100}ms`}>
+        <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-primary/10 flex items-center justify-center mb-6 text-xl font-bold text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+          {step.number}
+        </div>
+        <h3 class="text-xl font-bold tracking-tight mb-4 text-primary">{step.title}</h3>
+        <p class="text-base text-primary/70 leading-relaxed">
+          {step.description}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>

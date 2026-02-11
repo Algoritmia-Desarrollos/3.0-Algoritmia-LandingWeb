@@ -1,24 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import LogoTicker from '../components/LogoTicker.astro';
-import Services from '../components/Services.astro';
+import HeaderAds from '../components/ads/HeaderAds.astro';
+import HeroAds from '../components/ads/HeroAds.astro';
+import ProcessAds from '../components/ads/ProcessAds.astro';
+import Qualification from '../components/ads/Qualification.astro';
+import ContactAds from '../components/ads/ContactAds.astro';
+import FooterAds from '../components/ads/FooterAds.astro';
 import Work from '../components/Work.astro';
-import Philosophy from '../components/Philosophy.astro';
-import Contact from '../components/Contact.astro';
-import Footer from '../components/Footer.astro';
+
+// We reuse Work component as requested ("quiero que en casos de extiso lo dejes como esta exacto en la otra pagina")
+// We use HeaderAds for the centered navbar with logo.
 ---
 
-<Layout title="Algoritmia | Escalamos Tu Negocio" description="En Algoritmia somos tu socio digital para llevarte de donde estás, a donde mereces estar. Expertos en Desarrollo Web, Marketing y Estrategia para escalar negocios online.">
-  <Header />
+<Layout title="Algoritmia Ads | Escalamos Tu Negocio" description="Gestión de Meta Ads y Estrategia Creativa para negocios que quieren escalar. Resultados predecibles.">
+  
+  <HeaderAds />
+
   <main>
-    <Hero />
-    <LogoTicker />
-    <Services />
-    <Work />
-    <Philosophy />
-    <Contact />
+    <HeroAds />
+    <ProcessAds />
+    <Work /> 
+    <Qualification />
+    <ContactAds />
   </main>
-  <Footer />
+  
+  <FooterAds />
 </Layout>

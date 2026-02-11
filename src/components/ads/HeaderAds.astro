@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/logoAlgoritmia1.webp';
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-2 md:pt-4 px-4 pointer-events-none">
+  <div id="navbar" class="pointer-events-auto glass-nav border border-white/20 shadow-lg shadow-black/5 rounded-[2rem] px-6 md:px-8 py-2 flex flex-col md:flex-row items-center gap-0 md:gap-16 transition-all duration-300 ring-1 ring-black/5 w-[95%] md:w-auto overflow-hidden max-h-[54px] md:max-h-none">
+    
+    <div class="flex items-center justify-between w-full md:w-[120px] md:justify-center relative">
+      <a href="/" id="logo-link" class="home-link flex items-center text-primary hover:opacity-80 transition-opacity">
+        <Image src={logo} alt="Algoritmia Logo" class="w-8 h-8 md:w-10 md:h-10 object-contain" />
+      </a>
+
+      <div class="flex items-center gap-4 md:hidden">
+        <button id="mobile-menu-btn" class="text-primary p-1 rounded-full hover:bg-black/5 transition-colors flex items-center justify-center">
+          <span class="material-symbols-outlined text-[24px] transition-transform duration-300" id="menu-icon">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-1">
+      <a class="home-link text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center" href="#">Inicio</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center" href="#process">Proceso</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center" href="#work">Casos</a>
+      <a class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center" href="#qualify">Calificar</a>
+    </nav>
+
+    <div class="hidden md:flex items-center justify-center gap-4 w-[120px]">
+      <a class="bg-primary text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-[#2c2c2e] transition-all shadow-md shadow-primary/10" href="#contact">
+        Agendar
+      </a>
+    </div>
+
+    <!-- Mobile Menu Items -->
+    <div class="md:hidden flex flex-col gap-6 pt-10 pb-4 w-full opacity-0 transition-opacity duration-300 delay-100" id="mobile-menu-items">
+      <nav class="flex flex-col gap-4">
+        <a class="home-link text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="#">Inicio</a>
+        <a class="text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="#process">Proceso</a>
+        <a class="text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="#work">Casos</a>
+        <a class="text-lg font-medium text-primary/80 hover:text-primary transition-colors border-b border-black/5 pb-2" href="#qualify">Calificar</a>
+      </nav>
+      <a class="bg-primary text-white px-5 py-3 rounded-xl text-center text-sm font-medium hover:bg-black/90 transition-all shadow-md shadow-primary/10 w-full" href="#contact">
+        Agendar
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+</style>
+
+<script>
+  function setupNavbar() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const navbar = document.getElementById('navbar');
+    const menuItems = document.getElementById('mobile-menu-items');
+    const menuIcon = document.getElementById('menu-icon');
+    let isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      navbar?.classList.remove('max-h-[54px]');
+      navbar?.classList.add('max-h-[400px]', 'bg-white'); 
+      menuItems?.classList.remove('opacity-0');
+      if (menuIcon) menuIcon.textContent = 'close';
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      navbar?.classList.add('max-h-[54px]');
+      navbar?.classList.remove('max-h-[400px]', 'bg-white');
+      menuItems?.classList.add('opacity-0');
+      if (menuIcon) menuIcon.textContent = 'menu';
+    }
+
+    btn?.addEventListener('click', (e) => {
+      e.stopPropagation(); 
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    const mobileLinks = menuItems?.querySelectorAll('a');
+    mobileLinks?.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMenu();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (isOpen && navbar && !navbar.contains(e.target as Node) && !btn?.contains(e.target as Node)) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+      if (isOpen) {
+        closeMenu();
+      }
+    }, { passive: true });
+  }
+
+  function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        const targetId = href.substring(1);
+        
+        if (targetId) {
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            
+            document.body.click(); 
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+            history.pushState(null, null, `#${targetId}`);
+          }
+        }
+      });
+    });
+  }
+
+  setupNavbar();
+  setupSmoothScroll();
+  document.addEventListener('astro:page-load', () => {
+    setupNavbar();
+    setupSmoothScroll();
+  });
+</script>

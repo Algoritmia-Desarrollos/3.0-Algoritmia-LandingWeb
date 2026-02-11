@@ -1,0 +1,169 @@
+---
+import { Image } from 'astro:assets';
+
+// Placeholder images - You should replace these with actual client logos if available.
+// For now using simple divs with text if no logo image is available.
+
+const cases = [
+  {
+    client: "E-Commerce Deportivo",
+    industry: "Indumentaria & Accesorios",
+    description: "Marca estancada en ventas orgánicas. Necesitaba previsibilidad.",
+    video: "https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov", // Placeholder video
+    before: {
+      spend: "$600/mes",
+      cpa: "$52",
+      creatives: "1 solo creative",
+      sales: "$4.200/mes"
+    },
+    after: {
+      spend: "$1.100/mes",
+      cpa: "$34",
+      creatives: "4 creatives",
+      sales: "$8.900/mes"
+    }
+  },
+  {
+    client: "Servicios B2B",
+    industry: "Consultoría IT",
+    description: "Dependían 100% de referidos. Sin sistema de captación.",
+    video: "", 
+    before: {
+      spend: "$0/mes",
+      cpa: "N/A",
+      creatives: "0",
+      sales: "Inestable"
+    },
+    after: {
+      spend: "$1.500/mes",
+      cpa: "$45/lead",
+      creatives: "Funnel VSL",
+      sales: "+$15k en 60 días"
+    }
+  }
+];
+---
+
+<section class="py-32 bg-black text-white" id="cases">
+  <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+    <div class="mb-20 text-center reveal">
+      <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-6">Casos de Éxito</h2>
+      <p class="text-white/60 text-lg max-w-2xl mx-auto">
+        No prometemos, mostramos. Resultados reales de negocios reales.
+      </p>
+    </div>
+
+    <div class="space-y-24">
+      {cases.map((project, index) => (
+        <div class={`flex flex-col lg:flex-row gap-12 items-center reveal ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`} style={`transition-delay: ${index * 100}ms`}>
+          
+          <!-- Case Description & Metrics -->
+          <div class="flex-1 w-full">
+            <div class="mb-8">
+              <span class="inline-block py-1 px-3 rounded-md bg-white/10 text-xs font-semibold tracking-wide text-white/80 mb-4 border border-white/10">
+                {project.industry}
+              </span>
+              <h3 class="text-3xl md:text-4xl font-bold mb-4">{project.client}</h3>
+              <p class="text-white/60 text-lg leading-relaxed">{project.description}</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 lg:gap-8">
+              <!-- Before -->
+              <div class="p-6 rounded-2xl bg-white/5 border border-white/10 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-2 bg-red-500/10 text-red-400 text-xs font-bold uppercase tracking-wider rounded-bl-xl border-l border-b border-red-500/20">
+                  Antes
+                </div>
+                <div class="space-y-3 pt-2">
+                    <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                        <span class="text-white/40">Inversión</span>
+                        <span class="text-white/80 font-mono">{project.before.spend}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                        <span class="text-white/40">CPA</span>
+                        <span class="text-white/80 font-mono">{project.before.cpa}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                        <span class="text-white/40">Creatives</span>
+                        <span class="text-white/80 font-mono">{project.before.creatives}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm pt-1">
+                        <span class="text-white/40">Ventas</span>
+                        <span class="text-white/80 font-mono">{project.before.sales}</span>
+                    </div>
+                </div>
+              </div>
+
+              <!-- After -->
+              <div class="p-6 rounded-2xl bg-green-500/10 border border-green-500/20 relative overflow-hidden group">
+                 <div class="absolute top-0 right-0 p-2 bg-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wider rounded-bl-xl border-l border-b border-green-500/20">
+                  Después (90 días)
+                </div>
+                <div class="space-y-3 pt-2">
+                    <div class="flex justify-between items-center text-sm border-b border-green-500/20 pb-2">
+                        <span class="text-green-100/60">Inversión</span>
+                        <span class="text-green-50 font-mono font-bold">{project.after.spend}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm border-b border-green-500/20 pb-2">
+                        <span class="text-green-100/60">CPA</span>
+                        <span class="text-green-50 font-mono font-bold">{project.after.cpa}</span>
+                    </div>
+                     <div class="flex justify-between items-center text-sm border-b border-green-500/20 pb-2">
+                        <span class="text-green-100/60">Creatives</span>
+                        <span class="text-green-50 font-mono font-bold">{project.after.creatives}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm pt-1">
+                        <span class="text-green-100/60">Ventas</span>
+                        <span class="text-green-50 font-mono font-bold">{project.after.sales}</span>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Creative / Result Visual -->
+          <div class="flex-1 w-full">
+            {project.video ? (
+               <div class="relative aspect-video rounded-3xl overflow-hidden bg-gray-900 border border-white/10 shadow-2xl group cursor-pointer video-trigger">
+                 <video 
+                    class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    preload="metadata"
+                    muted
+                    loop
+                    playsinline
+                 >
+                   <source src={project.video} type="video/mp4" />
+                 </video>
+                 <div class="absolute inset-0 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                        <span class="material-symbols-outlined text-4xl">play_arrow</span>
+                    </div>
+                 </div>
+               </div>
+            ) : (
+                <div class="relative aspect-video rounded-3xl overflow-hidden bg-gray-900 border border-white/10 shadow-2xl flex items-center justify-center">
+                    <p class="text-white/40">Video Confidencial</p>
+                </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+    // Simple video hover effect
+    document.addEventListener('astro:page-load', () => {
+        const triggers = document.querySelectorAll('.video-trigger');
+        triggers.forEach(trigger => {
+            const video = trigger.querySelector('video');
+            if(video) {
+                trigger.addEventListener('mouseenter', () => video.play().catch(() => {}));
+                trigger.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+            }
+        });
+    });
+</script>
