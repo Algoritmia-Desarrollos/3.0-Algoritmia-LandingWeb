@@ -3,7 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/ads/HeaderAds.astro';
 import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
-import roasResults from '../../assets/clients/case-rossi/Roas Case Rossi ultimos 30 dias.png';
+import comprasResults from '../../assets/clients/case-rossi/Compras de Casse Rossi ultimos 30 dias.webp';
+import roasResults from '../../assets/clients/case-rossi/Roas Case Rossi ultimos 30 dias.webp';
 
 const title = "Case Rossi Informática - Caso de Éxito | Algoritmia";
 const description = "Cómo ayudamos a Case Rossi Informática a recuperar y multiplicar sus ventas con estrategia digital integral.";
@@ -135,41 +136,51 @@ const description = "Cómo ayudamos a Case Rossi Informática a recuperar y mult
           <div class="space-y-8">
             <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
             <p class="text-gray-500 text-lg">
-              Los números no mienten.
+              Rentabilidad extrema. Optimizamos cada centavo para maximizar el retorno de inversión y escalar ventas.
             </p>
             
             <div class="space-y-6">
               <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
-                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Antes</p>
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">ROAS (Retorno)</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-4xl font-bold text-gray-300">En Caída</span>
+                  <span class="text-4xl font-bold text-black">76,70</span>
+                  <span class="text-sm text-gray-500 mb-2">x1 Inversión</span>
                 </div>
-                <p class="text-gray-400 text-sm mt-2">Pérdida constante de clientes</p>
+                <p class="text-gray-400 text-sm mt-2"><b>Por cada $1 invertido, facturamos $76,70.</b> Una rentabilidad excepcional.</p>
               </div>
               
               <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
-                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Ahora</p>
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Eficiencia</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-5xl font-bold text-black">10-15</span>
-                  <span class="text-sm text-gray-500 mb-2">Clientes/semana</span>
+                  <span class="text-5xl font-bold text-black">+108,3%</span>
+                  <span class="text-sm text-gray-500 mb-2">Mejora</span>
                 </div>
                 <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
                   <span class="material-symbols-outlined text-[18px]">trending_up</span>
-                  Recuperación total
+                  Mejoramos el rendimiento de los anuncios, bajando el costo por compra.
                 </p>
               </div>
             </div>
             
-            <div class="p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
-              <p class="text-xs text-green-700 uppercase mb-2 font-bold tracking-wider">El Cambio</p>
-              <p class="text-green-900 font-medium text-lg">
-                Recuperamos el flujo de clientes y logramos un crecimiento sostenido mes a mes.
+            <div class="pt-4">
+              <p class="text-7xl font-bold text-black tracking-tighter">
+                76x
               </p>
+              <p class="text-gray-500 mt-2 text-xl font-medium">Retorno de Inversión (ROAS)</p>
             </div>
           </div>
+
           
           <!-- Results Images -->
           <div class="flex flex-col gap-6 w-full">
+            <div class="rounded-3xl overflow-hidden border border-gray-200 shadow-xl shadow-gray-200/50">
+              <Image 
+                src={comprasResults} 
+                alt="Compras Case Rossi Enero-Febrero 2026 - Resultados Meta Ads" 
+                class="w-full h-auto object-cover border-b border-gray-200"
+              />
+            </div>
+            
             <div class="rounded-3xl overflow-hidden border border-gray-200 shadow-xl shadow-gray-200/50">
               <Image 
                 src={roasResults} 
