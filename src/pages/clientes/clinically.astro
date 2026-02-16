@@ -1,7 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
+import Header from '../../components/ads/HeaderAds.astro';
 import Footer from '../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import adsResults from '../../assets/clients/clinically/CLINICALLY ADS RESULTADOS FRIOS.png';
 
 const title = "Clinically - Caso de Éxito | Algoritmia";
 const description = "Cómo lanzamos Clinically desde cero y logramos 10-20 pacientes diarios en 3 meses.";
@@ -181,35 +183,14 @@ const description = "Cómo lanzamos Clinically desde cero y logramos 10-20 pacie
             </div>
           </div>
           
-          <!-- Graph Visualization -->
-          <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
-            <div class="absolute top-8 left-8">
-              <h3 class="text-xl font-bold text-black">Crecimiento de Pacientes</h3>
-              <p class="text-gray-400 text-sm">Pacientes diarios</p>
-            </div>
-            
-            <!-- Simple CSS Chart -->
-            <div class="flex items-end justify-between gap-2 h-[200px] w-full">
-              <!-- Launch phase -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[10%]"></div>
-              <div class="w-full bg-gray-200 rounded-t-sm h-[15%]"></div>
-              <div class="w-full bg-gray-200 rounded-t-sm h-[25%] relative group">
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-600">Inicio</div>
-              </div>
-              <div class="w-full bg-green-200 rounded-t-sm h-[45%]"></div>
-              <div class="w-full bg-green-300 rounded-t-sm h-[65%]"></div>
-              <div class="w-full bg-green-400 rounded-t-sm h-[85%]"></div>
-              <div class="w-full bg-green-500 rounded-t-sm h-[95%]"></div>
-              <div class="w-full bg-black rounded-t-sm h-[100%] relative group">
-                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-black">Hoy</div>
-              </div>
-            </div>
-            
-            <!-- Axis Line -->
-            <div class="w-full h-px bg-gray-200 mt-0"></div>
-            <div class="flex justify-between text-xs text-gray-400 mt-2">
-              <span>Lanzamiento</span>
-              <span>Consolidación</span>
+          <!-- Results Images -->
+          <div class="flex flex-col gap-6 w-full">
+            <div class="rounded-3xl overflow-hidden border border-gray-200 shadow-xl shadow-gray-200/50">
+              <Image 
+                src={adsResults} 
+                alt="Resultados Ads Clinically" 
+                class="w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>

@@ -1,7 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
+import Header from '../../components/ads/HeaderAds.astro';
 import Footer from '../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import adsResults from '../../assets/clients/libreria-leo/ADS RESULTADOS LIBRERIA MAYORISTA LEO .png';
+import roasResults from '../../assets/clients/libreria-leo/Roas de 52 en Diciembre y Enero.png';
 
 const title = "Librería Mayorista Leo - Caso de Éxito | Algoritmia";
 const description = "Cómo automatizamos las ventas mayoristas y escalamos un negocio estacional un 400%.";
@@ -147,27 +150,28 @@ const description = "Cómo automatizamos las ventas mayoristas y escalamos un ne
           <div class="space-y-8">
             <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
             <p class="text-gray-500 text-lg">
-              Los números no mienten.
+              Estos son los resultados reales de nuestras campañas de Meta Ads. Cada peso invertido se multiplicó exponencialmente.
             </p>
             
             <div class="space-y-6">
               <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
-                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Antes</p>
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">ROAS Promedio</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-4xl font-bold text-gray-300">2-3</span>
-                  <span class="text-sm text-gray-400 mb-2">Pedidos/día</span>
+                  <span class="text-4xl font-bold text-black">43.91</span>
+                  <span class="text-sm text-gray-500 mb-2">Por cada $1</span>
                 </div>
+                <p class="text-gray-400 text-sm mt-2">Cada peso invertido retorna $43.91</p>
               </div>
               
               <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
-                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Ahora</p>
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Conversiones</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-5xl font-bold text-black">15+</span>
-                  <span class="text-sm text-gray-500 mb-2">Pedidos/día</span>
+                  <span class="text-5xl font-bold text-black">743</span>
+                  <span class="text-sm text-gray-500 mb-2">Compras</span>
                 </div>
                 <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[18px]">trending_up</span>
-                  Objetivo superado
+                  <span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                  Generadas por Meta Ads
                 </p>
               </div>
             </div>
@@ -181,53 +185,21 @@ const description = "Cómo automatizamos las ventas mayoristas y escalamos un ne
           </div>
           
           <!-- Graph Visualization -->
-          <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
-            <div class="absolute top-8 left-8">
-              <h3 class="text-xl font-bold text-black">Curva de Crecimiento</h3>
-              <p class="text-gray-400 text-sm">Ventas Online (12 Meses)</p>
+          <!-- Results Images -->
+          <div class="flex flex-col gap-6">
+            <div class="rounded-3xl overflow-hidden border border-gray-200 shadow-xl shadow-gray-200/50">
+              <Image 
+                src={adsResults} 
+                alt="Gráfico de resultados de anuncios para Librería Leo" 
+                class="w-full h-auto object-cover"
+              />
             </div>
-            
-            <!-- Simple CSS Chart -->
-            <div class="flex items-end justify-between gap-2 h-[200px] w-full">
-              <!-- Dec (Start) -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[20%] relative group">
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">Dic</div>
-              </div>
-              <!-- Jan -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[30%]"></div>
-              <!-- Feb (Peak School) -->
-              <div class="w-full bg-gray-300 rounded-t-sm h-[80%] relative group">
-                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-black w-max">Inicio Clases</div>
-              </div>
-              <!-- Mar -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[60%]"></div>
-              <!-- Apr -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[40%]"></div>
-              <!-- May -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[35%]"></div>
-              <!-- Jun (Low) -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[30%]"></div>
-              <!-- Jul -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[35%]"></div>
-              <!-- Aug -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[40%]"></div>
-              <!-- Sep -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[50%]"></div>
-              <!-- Oct -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[65%]"></div>
-              <!-- Nov -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[80%]"></div>
-              <!-- Dec (Peak Holidays) -->
-              <div class="w-full bg-black rounded-t-sm h-[100%] relative group">
-                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-black">Fiestas</div>
-              </div>
-            </div>
-            
-            <!-- Axis Line -->
-            <div class="w-full h-px bg-gray-200 mt-0"></div>
-            <div class="flex justify-between text-xs text-gray-400 mt-2">
-              <span>Inicio</span>
-              <span>1 Año</span>
+            <div class="rounded-3xl overflow-hidden border border-gray-200 shadow-xl shadow-gray-200/50">
+              <Image 
+                src={roasResults} 
+                alt="Gráfico de ROAS de 52 en Diciembre y Enero" 
+                class="w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>

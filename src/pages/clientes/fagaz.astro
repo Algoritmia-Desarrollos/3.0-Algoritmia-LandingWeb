@@ -3,10 +3,11 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/ads/HeaderAds.astro';
 import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
-import roasResults from '../../assets/clients/case-rossi/Roas Case Rossi ultimos 30 dias.png';
+import coverImage from '../../assets/imgwebs/FagazSa.webp';
+import resultsImage from '../../assets/clients/selecta/resultados Selecta Ads.webp';
 
-const title = "Case Rossi Informática - Caso de Éxito | Algoritmia";
-const description = "Cómo ayudamos a Case Rossi Informática a recuperar y multiplicar sus ventas con estrategia digital integral.";
+const title = "Fagaz SA - Caso de Éxito | Algoritmia";
+const description = "Cómo ayudamos a Fagaz SA a consolidar sus 3 unidades de negocio y posicionarse como líder regional en servicios industriales.";
 ---
 
 <Layout title={title} description={description}>
@@ -23,39 +24,35 @@ const description = "Cómo ayudamos a Case Rossi Informática a recuperar y mult
               <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito</span>
             </div>
             
-            <h1 class="text-4xl md:text-6xl lg:text-5xl font-bold tracking-tight leading-tight text-black mb-8">
-              De perder clientes a crecer sostenidamente.
+            <h1 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight text-black mb-8">
+              Líderes en Servicios Industriales Integrales.
             </h1>
             
             <p class="text-xl text-gray-500 max-w-xl leading-relaxed mb-8">
-              Recuperamos una tienda de informática en declive con estrategia digital integral y posicionamiento online.
+              Posicionamiento de marca y captación de clientes potenciales para sus unidades de Limpieza, Fumigación y Recursos Humanos mediante Meta Ads.
             </p>
 
             <div class="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
-              <a href="https://caserossiinformatica.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
+              <a href="https://fagazsa.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-black text-white font-medium hover:bg-gray-800 transition-colors">
                 Ver sitio web
                 <span class="material-symbols-outlined text-[18px]">arrow_outward</span>
               </a>
 
               <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
-                <span class="text-green-600 font-bold">10-15</span>
-                <span class="text-sm text-gray-600 font-medium">Clientes/semana</span>
+                <span class="text-green-600 font-bold">Meta Ads</span>
+                <span class="text-sm text-gray-600 font-medium">Estrategia Industrial</span>
               </div>
             </div>
           </div>
           
           <div class="flex-1 w-full">
-            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-black shadow-2xl shadow-gray-200/50 group">
-              <!-- Testimonial Video -->
-              <video 
-                id="hero-testimonial-video"
-                class="w-full h-full object-contain"
-                controls
-                poster=""
-              >
-                <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770321715/CASE_ROSSI_qtmny8.mov" type="video/mp4">
-                Tu navegador no soporta videos HTML5.
-              </video>
+            <div class="relative aspect-[4/3] rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xl shadow-gray-200/50 group">
+               <Image 
+                src={coverImage} 
+                alt="Fagaz SA Industrial Services" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
           </div>
         </div>
@@ -66,9 +63,9 @@ const description = "Cómo ayudamos a Case Rossi Informática a recuperar y mult
     <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
       <div class="max-w-4xl mx-auto text-center space-y-8">
         <blockquote class="text-2xl md:text-4xl font-medium text-black leading-tight max-w-5xl mx-auto">
-          "El negocio está cayendo, perdemos clientes todos los meses. Necesitamos recuperar las ventas y volver a crecer."
+          "Somos muy buenos en lo que hacemos, pero nos falta visibilidad. Necesitamos que las grandes industrias nos conozcan y nos consideren para sus licitaciones."
         </blockquote>
-        <p class="text-gray-400 mt-6 font-medium">— El Problema Inicial</p>
+        <p class="text-gray-400 mt-6 font-medium">— El Desafío</p>
       </div>
     </section>
 
@@ -77,51 +74,40 @@ const description = "Cómo ayudamos a Case Rossi Informática a recuperar y mult
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-20">
           <h2 class="text-3xl md:text-5xl font-bold mb-6 text-black">Lo que hicimos</h2>
-          <p class="text-gray-500 text-lg">Estrategia digital integral para recuperar ventas y captar nuevos clientes en el sector tecnológico.</p>
+          <p class="text-gray-500 text-lg">Estrategia de Meta Ads enfocada en Reconocimiento de Marca y Generación de Leads.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Card 1 -->
           <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
             <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
-              <span class="material-symbols-outlined text-black">desktop_windows</span>
+              <span class="material-symbols-outlined text-black">visibility</span>
             </div>
-            <h3 class="text-xl font-bold text-black mb-3">E-commerce Optimizado</h3>
+            <h3 class="text-xl font-bold text-black mb-3">Reconocimiento de Marca</h3>
             <p class="text-gray-500 text-sm leading-relaxed">
-              Tienda online moderna con catálogo completo de productos informáticos, búsqueda rápida y proceso de compra simplificado.
+              Ejecutamos campañas de alcance masivo en la región para posicionar a Fagaz SA como la autoridad indiscutida en servicios industriales.
             </p>
           </div>
 
           <!-- Card 2 -->
           <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
             <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
-              <span class="material-symbols-outlined text-black">photo_camera</span>
+              <span class="material-symbols-outlined text-black">filter_alt</span>
             </div>
-            <h3 class="text-xl font-bold text-black mb-3">Contenido de Producto</h3>
+            <h3 class="text-xl font-bold text-black mb-3">Segmentación Industrial</h3>
             <p class="text-gray-500 text-sm leading-relaxed">
-              Fichas de producto optimizadas con especificaciones técnicas claras y fotografías de calidad para facilitar la decisión de compra.
+              Dirigimos los anuncios específicamente a gerentes de planta, encargados de mantenimiento y responsables de RRHH en la zona portuaria e industrial.
             </p>
           </div>
 
           <!-- Card 3 -->
           <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
             <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
-              <span class="material-symbols-outlined text-black">trending_up</span>
+              <span class="material-symbols-outlined text-black">ads_click</span>
             </div>
-            <h3 class="text-xl font-bold text-black mb-3">Posicionamiento SEO</h3>
+            <h3 class="text-xl font-bold text-black mb-3">Generación de Leads</h3>
             <p class="text-gray-500 text-sm leading-relaxed">
-              Optimización para aparecer cuando buscan insumos de oficina, periféricos y productos informáticos en Rosario.
-            </p>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 hover:border-gray-300 transition-colors group">
-            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 border border-gray-200 group-hover:scale-110 transition-transform">
-              <span class="material-symbols-outlined text-black">campaign</span>
-            </div>
-            <h3 class="text-xl font-bold text-black mb-3">Publicidad Digital</h3>
-            <p class="text-gray-500 text-sm leading-relaxed">
-              Campañas en Meta Ads para captar empresas y particulares que necesitan productos tecnológicos.
+              Implementamos formularios nativos en Facebook e Instagram para captar solicitudes de presupuesto calificadas de empresas interesadas.
             </p>
           </div>
         </div>
@@ -135,36 +121,35 @@ const description = "Cómo ayudamos a Case Rossi Informática a recuperar y mult
           <div class="space-y-8">
             <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
             <p class="text-gray-500 text-lg">
-              Los números no mienten.
+              Consolidación de marca y posicionamiento como referente regional en servicios industriales.
             </p>
             
             <div class="space-y-6">
               <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
                 <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Antes</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-4xl font-bold text-gray-300">En Caída</span>
+                  <span class="text-xl font-bold text-gray-400">Dependencia de Referidos</span>
                 </div>
-                <p class="text-gray-400 text-sm mt-2">Pérdida constante de clientes</p>
+                <p class="text-gray-400 text-sm mt-2">Crecimiento limitado al boca a boca</p>
               </div>
               
               <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
                 <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Ahora</p>
                 <div class="flex items-end gap-4">
-                  <span class="text-5xl font-bold text-black">10-15</span>
-                  <span class="text-sm text-gray-500 mb-2">Clientes/semana</span>
+                  <span class="text-3xl lg:text-4xl font-bold text-black">Flujo de Consultas B2B</span>
                 </div>
                 <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[18px]">trending_up</span>
-                  Recuperación total
+                  <span class="material-symbols-outlined text-[18px]">verified</span>
+                  Solicitudes de presupuesto constantes
                 </p>
               </div>
             </div>
             
-            <div class="p-6 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 border border-green-200">
-              <p class="text-xs text-green-700 uppercase mb-2 font-bold tracking-wider">El Cambio</p>
-              <p class="text-green-900 font-medium text-lg">
-                Recuperamos el flujo de clientes y logramos un crecimiento sostenido mes a mes.
+            <div class="pt-4">
+              <p class="text-5xl lg:text-6xl font-bold text-black tracking-tighter">
+                Referente
               </p>
+              <p class="text-gray-500 mt-2 text-xl font-medium">Autoridad Digital en el Cordón Industrial</p>
             </div>
           </div>
           
@@ -172,8 +157,8 @@ const description = "Cómo ayudamos a Case Rossi Informática a recuperar y mult
           <div class="flex flex-col gap-6 w-full">
             <div class="rounded-3xl overflow-hidden border border-gray-200 shadow-xl shadow-gray-200/50">
               <Image 
-                src={roasResults} 
-                alt="ROAS Case Rossi últimos 30 días" 
+                src={resultsImage} 
+                alt="Fagaz SA Resultados Industriales" 
                 class="w-full h-auto object-cover"
               />
             </div>
@@ -185,12 +170,12 @@ const description = "Cómo ayudamos a Case Rossi Informática a recuperar y mult
     <!-- CTA -->
     <section class="py-24 text-center bg-black text-white">
       <div class="max-w-3xl mx-auto px-6">
-        <h2 class="text-4xl font-bold mb-6">¿Listo para escalar?</h2>
+        <h2 class="text-4xl font-bold mb-6">¿Necesitas soluciones industriales?</h2>
         <p class="text-white/60 text-lg mb-10">
-          Llevamos tu negocio al siguiente nivel.
+          Estamos listos para atender sus necesidades con los más altos estándares.
         </p>
         <a href="/#contact" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-medium text-sm hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl">
-          Solicitar Consultoría
+          Contactar Ahora
           <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
         </a>
       </div>

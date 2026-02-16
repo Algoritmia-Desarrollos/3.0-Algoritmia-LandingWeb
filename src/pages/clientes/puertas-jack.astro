@@ -1,7 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
+import Header from '../../components/ads/HeaderAds.astro';
 import Footer from '../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import salesResults from '../../assets/clients/puertas-jack/Cantidad de Leads Calificados En 3 meses Puertas Blindadas.png';
 
 const title = "Puertas Jack - Caso de Éxito | Algoritmia";
 const description = "Cómo escalamos las ventas de puertas de alta seguridad de 3 a 12 unidades mensuales con Google Ads.";
@@ -129,8 +131,8 @@ const description = "Cómo escalamos las ventas de puertas de alta seguridad de 
     <!-- Results Section -->
     <section class="py-32 px-6 md:px-12 bg-gray-50">
       <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div class="space-y-8">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 items-center">
+          <div class="space-y-8 lg:col-span-2">
             <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
             <p class="text-gray-500 text-lg">
               Los números no mienten.
@@ -166,34 +168,14 @@ const description = "Cómo escalamos las ventas de puertas de alta seguridad de 
             </div>
           </div>
           
-          <!-- Graph Visualization -->
-          <div class="relative h-[400px] bg-white rounded-3xl border border-gray-200 shadow-xl shadow-gray-200/50 p-8 flex flex-col justify-end overflow-hidden">
-            <div class="absolute top-8 left-8">
-              <h3 class="text-xl font-bold text-black">Evolución de Ventas</h3>
-              <p class="text-gray-400 text-sm">Puertas vendidas por mes</p>
-            </div>
-            
-            <!-- Simple CSS Chart -->
-            <div class="flex items-end justify-between gap-2 h-[200px] w-full">
-              <!-- Initial months -->
-              <div class="w-full bg-gray-100 rounded-t-sm h-[20%]"></div>
-              <div class="w-full bg-gray-100 rounded-t-sm h-[25%]"></div>
-              <div class="w-full bg-gray-200 rounded-t-sm h-[35%]"></div>
-              <div class="w-full bg-gray-200 rounded-t-sm h-[45%]"></div>
-              <div class="w-full bg-gray-300 rounded-t-sm h-[55%]"></div>
-              <div class="w-full bg-gray-300 rounded-t-sm h-[70%]"></div>
-              <div class="w-full bg-gray-400 rounded-t-sm h-[80%]"></div>
-              <div class="w-full bg-gray-400 rounded-t-sm h-[90%]"></div>
-              <div class="w-full bg-black rounded-t-sm h-[100%] relative group">
-                 <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-black">Pico</div>
-              </div>
-            </div>
-            
-            <!-- Axis Line -->
-            <div class="w-full h-px bg-gray-200 mt-0"></div>
-            <div class="flex justify-between text-xs text-gray-400 mt-2">
-              <span>Inicio</span>
-              <span>12 Meses</span>
+          <!-- Results Images -->
+          <div class="flex flex-col gap-6 w-full lg:col-span-3">
+            <div class="rounded-3xl overflow-hidden border border-gray-200 shadow-xl shadow-gray-200/50">
+              <Image 
+                src={salesResults} 
+                alt="Cantidad de leads calificados en 3 meses" 
+                class="w-full h-auto object-cover"
+              />
             </div>
           </div>
         </div>
