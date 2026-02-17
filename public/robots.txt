@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Disallow: /clientes/intertenis/
+Disallow: /clientes/fagaz/
+Disallow: /legal/
+Disallow: /desarrollos/
+Disallow: /404/
 
 Sitemap: https://algoritmiadesarrollos.com.ar/sitemap-index.xml

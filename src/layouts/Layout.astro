@@ -5,9 +5,10 @@ import '@fontsource-variable/inter';
 interface Props {
 	title: string;
 	description?: string;
+    noindex?: boolean;
 }
 
-const { title, description = "Astro high performance starter" } = Astro.props;
+const { title, description = "Astro high performance starter", noindex = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -25,7 +26,7 @@ const { title, description = "Astro high performance starter" } = Astro.props;
 		<title>{title}</title>
 		
 		<link rel="canonical" href="https://algoritmiadesarrollos.com.ar/" />
-		<meta name="robots" content="index, follow" />
+		<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 		<meta name="author" content="Algoritmia" />
 		
 		<meta property="og:type" content="website" />
