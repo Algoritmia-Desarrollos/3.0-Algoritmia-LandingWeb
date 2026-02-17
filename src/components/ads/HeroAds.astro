@@ -43,28 +43,8 @@ import Button from '../UI/Button.astro';
   
    <!-- Embedded Video -->
   <div class="mt-10 md:mt-12 w-full max-w-[1000px] mx-auto opacity-0 animate-fade-in-up delay-300 fill-mode-forwards" style="animation-fill-mode: forwards;">
-      <div class="aspect-video rounded-3xl overflow-hidden bg-gray-900 shadow-2xl shadow-primary/10 border border-primary/5 relative group">
-         <video 
-           class="w-full h-full object-cover cursor-pointer"
-           id="hero-feature-video"
-           preload="none"
-           muted
-           playsinline
-           data-src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov"
-         >
-           <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov" type="video/mp4">
-           Tu navegador no soporta videos HTML5.
-         </video>
-         
-         <!-- Gradient Overlay -->
-         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
-
-         <!-- Play Button Overlay -->
-        <button id="hero-play-btn" class="absolute inset-0 z-10 w-full h-full flex items-center justify-center group cursor-pointer focus:outline-none bg-black/0 hover:bg-black/10 transition-colors duration-300" aria-label="Reproducir video">
-          <div class="w-16 h-16 md:w-24 md:h-24 bg-white backdrop-blur-md rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] border border-white/50 animate-subtle-pulse">
-            <span class="material-symbols-outlined text-black text-5xl md:text-7xl ml-1 md:ml-2">play_arrow</span>
-          </div>
-        </button>
+      <div class="rounded-3xl overflow-hidden bg-gray-900 shadow-2xl shadow-primary/10 border border-primary/5 relative group">
+        <script src="https://fast.wistia.com/player.js" async></script><script src="https://fast.wistia.com/embed/jvwwmc587t.js" async type="module"></script><style>wistia-player[media-id='jvwwmc587t']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/jvwwmc587t/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style> <wistia-player media-id="jvwwmc587t" aspect="1.7777777777777777"></wistia-player>
       </div>
   </div>
 
