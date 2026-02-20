@@ -393,6 +393,13 @@
         if (isLowRevenue || isNoSpend) {
             form.classList.add('hidden');
             disqualifiedMessage.classList.remove('hidden');
+            // META PIXEL: Lead (siempre que envíen el formulario)
+            if ((window as any).fbq) {
+              (window as any).fbq('track', 'Lead', {
+                content_name: 'Formulario Contacto - No Calificado',
+                content_category: 'Lead'
+              });
+            }
             return;
         }
 
@@ -414,6 +421,13 @@
                 form.classList.add('hidden');
                 successMessage.classList.remove('hidden');
                 (form as HTMLFormElement).reset();
+                // META PIXEL: Lead calificado enviado
+                if ((window as any).fbq) {
+                  (window as any).fbq('track', 'Lead', {
+                    content_name: 'Formulario Contacto - Calificado',
+                    content_category: 'Lead'
+                  });
+                }
             } else {
                  throw new Error('Server error');
             }

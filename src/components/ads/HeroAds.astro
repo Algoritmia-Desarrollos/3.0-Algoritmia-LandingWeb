@@ -30,7 +30,7 @@ import Button from '../UI/Button.astro';
 
     <!-- CTAs -->
     <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-2 animate-fade-in-up delay-200">
-      <Button variant="primary" href="#contact">
+      <Button variant="primary" href="#contact" id="hero-cta-btn">
         Comencemos
         <span class="material-symbols-outlined text-lg">arrow_forward</span>
       </Button>
@@ -66,6 +66,27 @@ import Button from '../UI/Button.astro';
 
 <script>
   document.addEventListener('astro:page-load', () => {
+    // META PIXEL: ViewContent — usuario ve la propuesta de valor principal
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', {
+        content_name: 'Expertos en Meta Ads',
+        content_category: 'Hero'
+      });
+    }
+
+    // META PIXEL: InitiateCheckout — click en CTA "Comencemos"
+    const heroCta = document.getElementById('hero-cta-btn');
+    if (heroCta) {
+      heroCta.addEventListener('click', () => {
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'InitiateCheckout', {
+            content_name: 'CTA Hero - Comencemos',
+            content_category: 'Lead Funnel'
+          });
+        }
+      });
+    }
+
     // Typewriter Logic
     const ghostElement = document.getElementById('ghost-text');
     const targetElement = document.getElementById('typewriter-text');

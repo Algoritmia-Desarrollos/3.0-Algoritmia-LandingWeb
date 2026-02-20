@@ -210,6 +210,22 @@
              if(isValid) {
                  currentStep++;
                  showStep(currentStep);
+                 // META PIXEL: eventos por paso
+                 if ((window as any).fbq) {
+                   if (currentStep === 1) {
+                     // Paso 1 -> 2: inicio del proceso de calificación
+                     (window as any).fbq('track', 'InitiateCheckout', {
+                       content_name: 'MultiStep Form - Paso 2',
+                       content_category: 'Lead Funnel'
+                     });
+                   } else if (currentStep === 2) {
+                     // Paso 2 -> 3: completó info de negocio
+                     (window as any).fbq('track', 'AddPaymentInfo', {
+                       content_name: 'MultiStep Form - Paso 3',
+                       content_category: 'Lead Funnel'
+                     });
+                   }
+                 }
              }
         });
     });
@@ -255,7 +271,14 @@
                  if(dqMsg) dqMsg.innerText = "Para garantizar resultados, trabajamos con negocios que facturan mínimo $3.000-$5.000 USD mensuales. Te recomendamos escalar orgánicamente primero.";
                  
                  document.getElementById('form-disqualified').classList.remove('hidden');
-                 return; // Stop here, don't send email (or send as 'rejected' if you want metrics)
+                 // META PIXEL: Lead (siempre que envíen el formulario)
+                 if ((window as any).fbq) {
+                   (window as any).fbq('track', 'Lead', {
+                     content_name: 'MultiStep Form - No Calificado (Revenue)',
+                     content_category: 'Lead'
+                   });
+                 }
+                 return;
             }
 
             if (noSpend) {
@@ -265,6 +288,13 @@
                  if(dqMsg) dqMsg.innerText = "Actualmente trabajamos con negocios que ya invierten mínimo $400 USD/mes en Ads. Te avisaremos cuando abramos cupos para nuevos anunciantes.";
                  
                  document.getElementById('form-disqualified').classList.remove('hidden');
+                 // META PIXEL: Lead (siempre que envíen el formulario)
+                 if ((window as any).fbq) {
+                   (window as any).fbq('track', 'Lead', {
+                     content_name: 'MultiStep Form - No Calificado (Ad Spend)',
+                     content_category: 'Lead'
+                   });
+                 }
                  return;
             }
 
@@ -277,6 +307,13 @@
 
             if(response.ok) {
                  document.getElementById('form-success').classList.remove('hidden');
+                 // META PIXEL: Lead calificado enviado
+                 if ((window as any).fbq) {
+                   (window as any).fbq('track', 'Lead', {
+                     content_name: 'MultiStep Form - Calificado',
+                     content_category: 'Lead'
+                   });
+                 }
             } else {
                  alert("Hubo un error. Por favor escribinos por WhatsApp.");
                  form.classList.remove('hidden');
