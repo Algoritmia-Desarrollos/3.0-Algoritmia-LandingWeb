@@ -10,17 +10,17 @@ import Button from '../UI/Button.astro';
    <!-- Main Headline -->
     <div class="space-y-2 animate-fade-in-up">
       <h1 class="text-[32px] md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.05] text-primary">
-        Expertos en Meta Ads<br class="hidden md:block" /> que escalan negocios.
+        Expertos en Meta Ads<br /> que escalan negocios.
 
       </h1>
     </div>
     
     <div class="relative max-w-xl md:max-w-3xl mx-auto">
-      <p id="ghost-text" class="text-xs md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2 invisible" aria-hidden="true" style="visibility: hidden;">
-        Llevamos tu negocio de donde está<br class="hidden md:block" />
+      <p id="ghost-text" class="text-[14px] md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2 invisible" aria-hidden="true" style="visibility: hidden;">
+        Llevamos tu negocio de donde está<br class="block md:hidden" />
         a donde merece estar.
       </p>
-      <p id="typewriter-text" class="absolute top-0 left-0 w-full h-full text-xs md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2">
+      <p id="typewriter-text" class="absolute top-0 left-0 w-full h-full text-[14px] md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2" style="white-space: pre-line;">
       </p>
     </div>
 
@@ -128,7 +128,10 @@ import Button from '../UI/Button.astro';
        };
        // Re-implementing Hero.astro script logic exactly below
        
-       const textToType = ghostElement.textContent?.trim().replace(/\s+/g, ' ') || '';
+       const isMobile = window.innerWidth < 768;
+       const textToType = isMobile
+         ? "Llevamos tu negocio de donde est\u00e1\na donde merece estar."
+         : (ghostElement.textContent?.trim().replace(/\s+/g, ' ') || '');
        targetElement.textContent = '';
        let i = 0;
        const typeWriter = () => {
