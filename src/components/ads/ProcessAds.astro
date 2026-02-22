@@ -42,8 +42,8 @@ const steps = [
 
     {steps.map((step, index) => (
       <div class="group relative bg-surface p-8 rounded-3xl border border-primary/5 hover:border-primary/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg reveal z-10" style={`transition-delay: ${index * 100}ms`}>
-        <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-primary/10 flex items-center justify-center mb-6 text-xl font-bold text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-          {step.number}
+        <div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform duration-300">
+          <span class="text-2xl font-black text-white tracking-tight">{step.number}</span>
         </div>
         <h3 class="text-xl font-bold tracking-tight mb-4 text-primary">{step.title}</h3>
         

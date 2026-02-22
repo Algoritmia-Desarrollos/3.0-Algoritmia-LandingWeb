@@ -90,22 +90,7 @@
                  <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
             </div>
 
-            <!-- Revenue -->
-            <div class="relative group">
-                <select name="revenue" id="revenue" required class="custom-select w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors appearance-none">
-                    <option value="" disabled selected>Facturación Mensual</option>
-                    <option value="less_3k">- $3.000 USD</option>
-                    <option value="3k_5k">$3.000 - $5.000 USD</option>
-                    <option value="5k_10k">$5.000 - $10.000 USD</option>
-                    <option value="10k_30k">$10.000 - $30.000 USD</option>
-                    <option value="plus_30k">+ $30.000 USD</option>
-                </select>
-                <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-             <!-- Ad Spend -->
+            <!-- Ad Spend -->
             <div class="relative group">
                 <select name="adSpend" id="adSpend" required class="custom-select w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors appearance-none">
                     <option value="" disabled selected>Inversión en Ads</option>
@@ -115,19 +100,6 @@
                     <option value="500_1k">$500 - $1.000 USD</option>
                     <option value="1k_3k">$1.000 - $3.000 USD</option>
                     <option value="plus_3k">+ $3.000 USD</option>
-                </select>
-                <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
-            </div>
-
-            <!-- Obstacle -->
-             <div class="relative group">
-                <select name="obstacle" required class="custom-select w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary focus:border-primary focus:ring-0 transition-colors appearance-none">
-                    <option value="" disabled selected>Principal Obstáculo</option>
-                    <option value="scaling">No logro escalar</option>
-                    <option value="creative">Falta de creativos</option>
-                    <option value="tracking">Medición / Tracking</option>
-                    <option value="time">Falta de tiempo</option>
-                    <option value="other">Otro</option>
                 </select>
                 <span class="material-symbols-outlined absolute right-0 top-3 text-gray-400 pointer-events-none">expand_more</span>
             </div>
@@ -385,12 +357,10 @@
         const fullPhone = iti ? iti.getNumber() : formData.get('telefono');
 
         // Logic check
-        const revenue = formData.get('revenue');
         const adSpend = formData.get('adSpend');
-        const isLowRevenue = (revenue === 'less_3k');
         const isNoSpend = (adSpend === 'none' || adSpend === 'less_300');
 
-        if (isLowRevenue || isNoSpend) {
+        if (isNoSpend) {
             form.classList.add('hidden');
             disqualifiedMessage.classList.remove('hidden');
             // META PIXEL: Lead (siempre que envíen el formulario)
