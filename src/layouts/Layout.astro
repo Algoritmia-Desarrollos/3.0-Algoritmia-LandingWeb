@@ -68,6 +68,15 @@ const { title, description = "Astro high performance starter", noindex = false }
     <slot />
 
     <script>
+      // Fix Instagram IAB viewport height bug:
+      // Capturamos el --vh UNA SOLA VEZ al cargar la página.
+      // Así, cuando Instagram muestra su barra inferior al hacer scroll up,
+      // el viewport cambia pero los elementos que usan --vh no se recalculan.
+      (function() {
+        var vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', vh + 'px');
+      })();
+
       // Preloader Logic
       document.addEventListener('astro:page-load', () => {
         // Short timeout to ensure smooth transition
@@ -99,6 +108,14 @@ const { title, description = "Astro high performance starter", noindex = false }
         width: 100%;
         overflow-x: hidden;
 	}
+
+    /* Fix para Instagram IAB y Safari: usa --vh fija para evitar el salto
+       cuando aparece/desaparece la barra de navegación inferior */
+    .min-h-screen-fix {
+        min-height: 100vh; /* fallback */
+        min-height: calc(var(--vh, 1vh) * 100);
+        min-height: 100dvh; /* browsers modernos - mejor opción */
+    }
 
     /* SISTEMA DE ANIMACIONES */
     .reveal {
