@@ -118,11 +118,12 @@ const { title, description = "Astro high performance starter", noindex = false }
     }
 
     /* Fix para Instagram IAB y Safari: usa --vh fija para evitar el salto
-       cuando aparece/desaparece la barra de navegación inferior */
+       cuando aparece/desaparece la barra de navegación inferior.
+       IMPORTANTE: calc(var(--vh)*100) debe ir ÚLTIMO para ganar el cascade.
+       --vh se setea UNA SOLA VEZ al cargar, por eso no salta. */
     .min-h-screen-fix {
-        min-height: 100vh; /* fallback */
-        min-height: calc(var(--vh, 1vh) * 100);
-        min-height: 100dvh; /* browsers modernos - mejor opción */
+        min-height: 100dvh;                    /* fallback para browsers viejos */
+        min-height: calc(var(--vh, 1vh) * 100); /* gana en browsers modernos - valor ESTÁTICO */
     }
 
     /* SISTEMA DE ANIMACIONES */

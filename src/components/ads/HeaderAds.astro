@@ -52,6 +52,13 @@ import logo from '../../assets/logoAlgoritmia1.webp';
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
+
+  /* GPU layer para el header fijo: evita reflow cuando el viewport cambia
+     (ej: toolbar de Instagram aparece/desaparece al hacer scroll) */
+  header {
+    will-change: transform;
+    transform: translateZ(0);
+  }
 </style>
 
 <script>
