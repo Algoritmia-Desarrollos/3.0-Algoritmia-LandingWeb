@@ -104,10 +104,18 @@ const { title, description = "Astro high performance starter", noindex = false }
 	html {
 		font-family: 'Inter Variable', sans-serif;
 		background: #13151a;
-		scroll-behavior: smooth;
+		scroll-behavior: auto; /* Se activa via JS solo cuando NO hay resize */
         width: 100%;
         overflow-x: hidden;
+        overscroll-behavior-y: none; /* Evita el bounce/jump en Safari e Instagram */
 	}
+
+    /* Solo activar smooth scroll en desktop o cuando no hay movimiento reducido */
+    @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+        html {
+            scroll-behavior: smooth;
+        }
+    }
 
     /* Fix para Instagram IAB y Safari: usa --vh fija para evitar el salto
        cuando aparece/desaparece la barra de navegación inferior */
