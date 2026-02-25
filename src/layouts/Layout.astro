@@ -58,6 +58,18 @@ const { title, description = "Astro high performance starter", noindex = false }
 			src="https://www.facebook.com/tr?id=558246843661902&ev=PageView&noscript=1"/>
 		</noscript>
 		<!-- End Meta Pixel Code -->
+
+		<!-- Meta Pixel: Re-fire PageView on Astro View Transitions -->
+		<script>
+			// Astro View Transitions triggers 'astro:page-load' on every navigation.
+			// We re-fire PageView so Meta Pixel tracks all virtual page changes.
+			document.addEventListener('astro:page-load', () => {
+				if ((window as any).fbq) {
+					(window as any).fbq('track', 'PageView');
+				}
+			});
+		</script>
+		<!-- End Meta Pixel View Transitions -->
 	</head>
 	<body class="antialiased text-gray-900 bg-white">
     <!-- Preloader -->

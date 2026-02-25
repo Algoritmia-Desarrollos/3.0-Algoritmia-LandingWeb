@@ -394,6 +394,13 @@ import Button from './UI/Button.astro';
           form.classList.add('hidden');
           if (successMessage) successMessage.classList.remove('hidden'); 
           form.reset();
+          // META PIXEL: Lead por envío de formulario de contacto
+          if ((window as any).fbq) {
+            (window as any).fbq('track', 'Lead', {
+              content_name: 'Contact Form Submission',
+              content_category: 'Lead'
+            });
+          }
         } else {
           throw new Error('Error en el servidor');
         }

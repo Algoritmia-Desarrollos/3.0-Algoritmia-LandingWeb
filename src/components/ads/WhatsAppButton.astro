@@ -69,3 +69,19 @@ const waUrl = `https://wa.me/${phone}?text=${message}`;
     height: 26px;
   }
 </style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const waBtn = document.getElementById('whatsapp-float');
+    if (!waBtn) return;
+
+    waBtn.addEventListener('click', () => {
+      if ((window as any).fbq) {
+        (window as any).fbq('track', 'Lead', {
+          content_name: 'WhatsApp Button Click',
+          content_category: 'Lead'
+        });
+      }
+    });
+  });
+</script>
