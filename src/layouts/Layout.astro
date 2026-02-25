@@ -41,7 +41,7 @@ const { title, description = "Astro high performance starter", noindex = false }
 		<ClientRouter />
 
 		<!-- Meta Pixel Code -->
-		<script>
+		<script is:inline>
 			!function(f,b,e,v,n,t,s)
 			{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 			n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -60,12 +60,12 @@ const { title, description = "Astro high performance starter", noindex = false }
 		<!-- End Meta Pixel Code -->
 
 		<!-- Meta Pixel: Re-fire PageView on Astro View Transitions -->
-		<script>
+		<script is:inline>
 			// Astro View Transitions triggers 'astro:page-load' on every navigation.
 			// We re-fire PageView so Meta Pixel tracks all virtual page changes.
-			document.addEventListener('astro:page-load', () => {
-				if ((window as any).fbq) {
-					(window as any).fbq('track', 'PageView');
+			document.addEventListener('astro:page-load', function() {
+				if (window.fbq) {
+					window.fbq('track', 'PageView');
 				}
 			});
 		</script>
