@@ -24,18 +24,18 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Configuración de Nodemailer
     const transporter = nodemailer.createTransport({
-      host: 'smtp.hostinger.com',
+      host: import.meta.env.SMTP_HOST || 'smtp.hostinger.com',
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EMAIL_USER || 'info@algoritmiadesarrollos.com.ar', 
-        pass: process.env.EMAIL_PASS || 'Qpzm123Qpzm-' 
+        user: import.meta.env.EMAIL_USER, 
+        pass: import.meta.env.EMAIL_PASS
       },
     });
 
     // Email Layout
     const mailOptions = {
-      from: `"Lead Algoritmia Ads" <${process.env.EMAIL_USER || 'info@algoritmiadesarrollos.com.ar'}>`,
+      from: `"Lead Algoritmia Ads" <${import.meta.env.EMAIL_USER}>`,
       to: 'algoritmiadesarrollos@gmail.com, info@algoritmiadesarrollos.com.ar', 
       replyTo: email,
       subject: `🔥 NUEVO LEAD ADS: ${nombre} (${businessType})`,

@@ -6,14 +6,22 @@ export const POST: APIRoute = async ({ request }) => {
     const data = await request.json();
     const { nombre, email, telefono, servicios, mensaje } = data;
 
-    // Configuración de Nodemailer
+    // Validación básica
+    if (!nombre || !email) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: "Faltan campos requeridos" 
+      }), { status: 400 });
+    }
+
+    // Configuración de Nodemailer usando import.meta.env
     const transporter = nodemailer.createTransport({
-      host: 'smtp.hostinger.com',
+      host: import.meta.env.SMTP_HOST || 'smtp.hostinger.com',
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EMAIL_USER || 'info@algoritmiadesarrollos.com.ar', 
-        pass: process.env.EMAIL_PASS || 'Qpzm123Qpzm-' 
+        user: import.meta.env.EMAIL_USER, 
+        pass: import.meta.env.EMAIL_PASS 
       },
     });
 
@@ -22,9 +30,9 @@ export const POST: APIRoute = async ({ request }) => {
       ? servicios.join(', ') 
       : 'Ninguno especificado';
 
-    // Email Layout
+    // Opciones del correo
     const mailOptions = {
-      from: `"Contacto Algoritmia Web" <${process.env.EMAIL_USER || 'info@algoritmiadesarrollos.com.ar'}>`,
+      from: `"Contacto Algoritmia Web" <${import.meta.env.EMAIL_USER}>`,
       to: 'algoritmiadesarrollos@gmail.com, info@algoritmiadesarrollos.com.ar', 
       replyTo: email,
       subject: `🔥 NUEVO CONTACTO WEB: ${nombre}`,
@@ -35,11 +43,11 @@ export const POST: APIRoute = async ({ request }) => {
           <table style="width: 100%; border-collapse: collapse;">
             <tr style="background: #f9fafb;">
                 <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Nombre:</strong></td>
-                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${nombre || 'No especificado'}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${nombre}</td>
             </tr>
             <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Email:</strong></td>
-                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${email || 'No especificado'}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${email}</td>
             </tr>
             <tr style="background: #f9fafb;">
                 <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Teléfono:</strong></td>
