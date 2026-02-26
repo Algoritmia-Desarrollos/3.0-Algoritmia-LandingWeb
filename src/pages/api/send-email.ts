@@ -67,7 +67,9 @@ export const POST: APIRoute = async ({ request }) => {
     }), { status: 200 });
 
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('--- START EMAIL ERROR ---');
+    console.error(error);
+    console.error('--- END EMAIL ERROR ---');
     return new Response(JSON.stringify({ 
         success: false, 
         error: error instanceof Error ? error.message : 'Unknown error' 
