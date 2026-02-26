@@ -25,7 +25,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Email Layout
     const mailOptions = {
       from: `"Contacto Algoritmia Web" <${process.env.EMAIL_USER || 'info@algoritmiadesarrollos.com.ar'}>`,
-      to: 'algoritmiadesarrollos@gmail.com', 
+      to: 'algoritmiadesarrollos@gmail.com, info@algoritmiadesarrollos.com.ar', 
       replyTo: email,
       subject: `🔥 NUEVO CONTACTO WEB: ${nombre}`,
       html: `
