@@ -354,7 +354,10 @@
         
         const formData = new FormData(form as HTMLFormElement);
         // Get full phone number
-        const fullPhone = iti ? iti.getNumber() : formData.get('telefono');
+        let fullPhone = iti ? iti.getNumber() : '';
+        if (!fullPhone) {
+           fullPhone = input.value || formData.get('telefono') as string;
+        }
 
         // Logic check
         const adSpend = formData.get('adSpend');

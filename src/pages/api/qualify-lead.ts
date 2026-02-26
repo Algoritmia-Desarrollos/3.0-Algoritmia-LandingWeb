@@ -33,6 +33,37 @@ export const POST: APIRoute = async ({ request }) => {
       },
     });
 
+    // Mapeo amigable de valores
+    const labels = {
+      revenue: {
+        'less_3k': 'Menos de $3.000 USD',
+        '3k_5k': '$3.000 - $5.000 USD',
+        '5k_10k': '$5.000 - $10.000 USD',
+        '10k_30k': '$10.000 - $30.000 USD',
+        'plus_30k': 'Más de $30.000 USD'
+      },
+      adSpend: {
+        'none': 'No invierto aún',
+        'less_300': 'Menos de $300 USD',
+        '300_500': '$300 - $500 USD',
+        '500_1k': '$500 - $1.000 USD',
+        '1k_3k': '$1.000 - $3.000 USD',
+        'plus_3k': 'Más de $3.000 USD'
+      },
+      obstacle: {
+        'scaling': 'No logro escalar (CPA sube)',
+        'creative': 'Me faltan creativos / anuncios',
+        'tracking': 'No sé qué estoy midiendo',
+        'time': 'No tengo tiempo para gestionar',
+        'other': 'Otro'
+      }
+    };
+
+    const getLabel = (category: string, value: string) => {
+      // @ts-ignore
+      return (value && labels[category] && labels[category][value]) ? labels[category][value] : (value || 'No especificado');
+    };
+
     // Email Layout
     const mailOptions = {
       from: `"Lead Algoritmia Ads" <${import.meta.env.EMAIL_USER}>`,
@@ -46,32 +77,32 @@ export const POST: APIRoute = async ({ request }) => {
           <table style="width: 100%; border-collapse: collapse;">
             <tr style="background: #f9fafb;">
                 <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Nombre:</strong></td>
-                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${nombre}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${nombre || 'No especificado'}</td>
             </tr>
             <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Email:</strong></td>
-                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${email}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${email || 'No especificado'}</td>
             </tr>
             <tr style="background: #f9fafb;">
                 <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>WhatsApp:</strong></td>
-                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${telefono}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${telefono || 'No especificado'}</td>
             </tr>
              <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;"><strong>Negocio:</strong></td>
-                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${businessType}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #e5e7eb;">${businessType || 'No especificado'}</td>
             </tr>
           </table>
 
           <div style="margin-top: 20px; padding: 15px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;">
             <h3 style="margin: 0 0 10px 0; color: #166534; font-size: 16px;">Datos de Calificación</h3>
-            <p style="margin: 5px 0;"><strong>Facturación:</strong> <span style="font-size: 1.1em; font-weight: bold;">${revenue}</span></p>
-            <p style="margin: 5px 0;"><strong>Inversión Ads:</strong> <span style="font-size: 1.1em; font-weight: bold;">${adSpend}</span></p>
-            <p style="margin: 5px 0;"><strong>Problema:</strong> ${obstacle}</p>
+            ${revenue ? `<p style="margin: 5px 0;"><strong>Facturación:</strong> <span style="font-size: 1.1em; font-weight: bold;">${getLabel('revenue', revenue)}</span></p>` : ''}
+            <p style="margin: 5px 0;"><strong>Inversión Ads:</strong> <span style="font-size: 1.1em; font-weight: bold;">${getLabel('adSpend', adSpend)}</span></p>
+            ${obstacle ? `<p style="margin: 5px 0;"><strong>Problema:</strong> ${getLabel('obstacle', obstacle)}</p>` : ''}
           </div>
 
           <div style="margin-top: 20px;">
             <p><strong>Comentarios:</strong></p>
-            <p style="background: #f3f4f6; padding: 10px; border-radius: 5px;">${comments || 'Sin comentarios'}</p>
+            <p style="background: #f3f4f6; padding: 10px; border-radius: 5px;">${comments || 'Sin comentarios adicionales'}</p>
           </div>
         </div>
       `

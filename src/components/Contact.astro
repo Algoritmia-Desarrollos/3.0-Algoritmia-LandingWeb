@@ -372,7 +372,10 @@ import Button from './UI/Button.astro';
       }
 
       const formData = new FormData(form);
-      const fullPhone = iti ? iti.getNumber() : formData.get('telefono');
+      let fullPhone = iti ? iti.getNumber() : '';
+      if (!fullPhone) {
+         fullPhone = input.value || formData.get('telefono') as string;
+      }
       const servicios = formData.getAll('services[]');
 
       const data = {
