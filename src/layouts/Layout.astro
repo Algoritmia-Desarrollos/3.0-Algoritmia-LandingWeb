@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { title, description = "Algoritmia: agencia experta en Meta Ads para negocios establecidos en Argentina. Escalamos ventas con método probado. ROAS 43–70. Casos reales. Consulta gratuita.", noindex = false } = Astro.props;
+const canonicalURL = Astro.url.href;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -60,9 +61,14 @@ const jsonLd = {
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
-		<link rel="canonical" href="https://algoritmiadesarrollos.com.ar/" />
+		<link rel="canonical" href={canonicalURL} />
 		<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 		<meta name="author" content="Algoritmia" />
+
+		<!-- Preconnect hints -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://connect.facebook.net" />
 
 		<!-- Open Graph -->
 		<meta property="og:title" content="Algoritmia | Expertos en Meta Ads" />
@@ -79,7 +85,9 @@ const jsonLd = {
 		<!-- JSON-LD Structured Data -->
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+		<!-- Material Symbols — async (non render-blocking) -->
+		<link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" /></noscript>
         
 		<ClientRouter />
 
