@@ -17,7 +17,7 @@ import Button from '../UI/Button.astro';
     
     <div class="relative max-w-xl md:max-w-3xl mx-auto">
       <p id="ghost-text" class="text-xs md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2 invisible" aria-hidden="true" style="visibility: hidden;">
-        Llevamos tu negocio de donde está a donde merece estar.
+        Llevamos tu negocio en Argentina de donde está a donde merece estar.
       </p>
       <p id="typewriter-text" class="absolute top-0 left-0 w-full h-full text-xs md:text-lg text-primary/60 font-normal leading-relaxed md:pt-2">
       </p>
@@ -129,7 +129,7 @@ import Button from '../UI/Button.astro';
        
        const isMobile = window.innerWidth < 768;
        const textToType = isMobile
-         ? "Llevamos tu negocio de donde est\u00e1\na donde merece estar."
+         ? "Llevamos tu negocio en Argentina de donde est\u00e1\na donde merece estar."
          : (ghostElement.textContent?.trim().replace(/\s+/g, ' ') || '');
        targetElement.textContent = '';
        let i = 0;

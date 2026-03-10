@@ -8,7 +8,42 @@ interface Props {
     noindex?: boolean;
 }
 
-const { title, description = "Astro high performance starter", noindex = false } = Astro.props;
+const { title, description = "Algoritmia: agencia experta en Meta Ads para negocios establecidos en Argentina. Escalamos ventas con método probado. ROAS 43–70. Casos reales. Consulta gratuita.", noindex = false } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Algoritmia",
+      "url": "https://algoritmiadesarrollos.com.ar",
+      "logo": "https://algoritmiadesarrollos.com.ar/logoAlgoritmia.webp",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+54-9-3476-24-5523",
+        "email": "algoritmiadesarrollos@gmail.com",
+        "contactType": "customer service"
+      },
+      "sameAs": [
+        "https://www.instagram.com/algoritmia.ads"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "name": "Algoritmia",
+      "description": "Agencia experta en Meta Ads para negocios establecidos en Argentina y Latinoamérica. Escalamos ventas con método probado. ROAS 43–70.",
+      "url": "https://algoritmiadesarrollos.com.ar",
+      "telephone": "+54-9-3476-24-5523",
+      "email": "algoritmiadesarrollos@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "AR",
+        "addressRegion": "Buenos Aires"
+      },
+      "priceRange": "$$$"
+    }
+  ]
+};
 ---
 
 <!doctype html>
@@ -24,17 +59,25 @@ const { title, description = "Astro high performance starter", noindex = false }
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		
+
 		<link rel="canonical" href="https://algoritmiadesarrollos.com.ar/" />
 		<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 		<meta name="author" content="Algoritmia" />
-		
+
+		<!-- Open Graph -->
+		<meta property="og:title" content="Algoritmia | Expertos en Meta Ads" />
+		<meta property="og:description" content="Escalamos negocios establecidos con Meta Ads. ROAS 43–70. Método probado. Casos reales." />
+		<meta property="og:url" content="https://algoritmiadesarrollos.com.ar" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content="https://algoritmiadesarrollos.com.ar/logoAlgoritmia.webp" />
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:title" content={title} />
+		<meta property="og:locale" content="es_AR" />
+		<meta property="og:image" content="https://algoritmiadesarrollos.com.ar/og-image.jpg" />
+		<!-- Twitter Cards -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Algoritmia | Expertos en Meta Ads" />
+		<meta name="twitter:description" content="Escalamos negocios establecidos con Meta Ads. ROAS 43–70. Método probado." />
+
+		<!-- JSON-LD Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
 		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
         
