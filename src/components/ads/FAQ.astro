@@ -1,0 +1,86 @@
+---
+const faqs = [
+  {
+    q: "¿Cuánto cuesta trabajar con Algoritmia?",
+    a: "Nuestros servicios están diseñados para negocios con presupuesto publicitario mínimo de USD 300/mes. Los honorarios varían según el volumen y la complejidad. Hablamos de números en la llamada de diagnóstico."
+  },
+  {
+    q: "¿Cuánto tiempo tarda en verse resultados?",
+    a: "La mayoría de nuestros clientes ve mejoras medibles en las primeras 4-6 semanas. La escala real ocurre entre el mes 2 y mes 4, cuando los algoritmos de Meta tienen suficientes datos optimizados."
+  },
+  {
+    q: "¿Qué tipo de negocios atienden?",
+    a: "Trabajamos con negocios establecidos que ya venden, tienen un mercado validado y quieren escalar. E-commerce, servicios profesionales, salud, educación y negocios B2B con ticket alto."
+  },
+  {
+    q: "¿Qué diferencia a Algoritmia de otras agencias?",
+    a: "No somos una agencia de \"boost de posteos\". Aplicamos el Método Algoritmia: auditoría, estructura estratégica, lanzamiento y ajuste continuo. Nuestros casos hablan solos: ROAS de 43 a 70 en clientes reales."
+  },
+  {
+    q: "¿Tienen certificación Meta?",
+    a: "Operamos con estándares de Meta Business Partner y seguimos las mejores prácticas actualizadas de la plataforma."
+  },
+  {
+    q: "¿Puedo pausar o cancelar en cualquier momento?",
+    a: "Sí. No trabajamos con contratos forzosos. Creemos que los resultados son el mejor motivo para quedarse."
+  }
+];
+---
+
+<section class="py-32 px-6 md:px-12 bg-surface" id="faq">
+  <div class="max-w-[860px] mx-auto">
+    <div class="text-center mb-16 reveal">
+      <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-4 text-primary">Preguntas frecuentes</h2>
+      <p class="text-primary/60 text-lg">Todo lo que necesitás saber antes de arrancar.</p>
+    </div>
+
+    <div class="space-y-3 reveal delay-100">
+      {faqs.map((item, i) => (
+        <div class="faq-item border border-primary/10 rounded-2xl overflow-hidden bg-white">
+          <button
+            class="faq-trigger w-full text-left flex items-center justify-between gap-4 px-6 py-5 text-primary font-semibold text-base hover:bg-surface transition-colors duration-200"
+            aria-expanded="false"
+            data-index={i}
+          >
+            <span>{item.q}</span>
+            <span class="faq-icon material-symbols-outlined text-xl text-primary/40 flex-shrink-0 transition-transform duration-300">add</span>
+          </button>
+          <div class="faq-body max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+            <p class="px-6 pb-5 text-primary/70 text-base leading-relaxed">{item.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const triggers = document.querySelectorAll('.faq-trigger');
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item') as HTMLElement;
+        const body = item?.querySelector('.faq-body') as HTMLElement;
+        const icon = trigger.querySelector('.faq-icon') as HTMLElement;
+        const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(el => {
+          const b = el.querySelector('.faq-body') as HTMLElement;
+          const t = el.querySelector('.faq-trigger');
+          const ic = el.querySelector('.faq-icon') as HTMLElement;
+          if (b) b.style.maxHeight = '0px';
+          if (t) t.setAttribute('aria-expanded', 'false');
+          if (ic) { ic.textContent = 'add'; ic.style.transform = 'rotate(0deg)'; }
+        });
+
+        // Open clicked if it was closed
+        if (!isOpen && body) {
+          body.style.maxHeight = body.scrollHeight + 'px';
+          trigger.setAttribute('aria-expanded', 'true');
+          if (icon) { icon.textContent = 'remove'; icon.style.transform = 'rotate(0deg)'; }
+        }
+      });
+    });
+  });
+</script>

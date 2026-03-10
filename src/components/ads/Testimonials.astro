@@ -1,0 +1,53 @@
+---
+const testimonials = [
+  {
+    quote: "El equipo de Algoritmia transformó nuestras campañas. Pasamos de gastar plata sin resultados a tener un sistema predecible que escala.",
+    name: "[NOMBRE CLIENTE]",
+    company: "[EMPRESA]",
+    role: "Dueño"
+  },
+  {
+    quote: "Lo que más valoro es que no te prometen magia. Te explican el proceso, te muestran los números y cumplen. Nuestro ROAS superó todas las expectativas.",
+    name: "[NOMBRE CLIENTE]",
+    company: "[EMPRESA]",
+    role: "Fundador"
+  },
+  {
+    quote: "Trabajamos con otras agencias antes y la diferencia es abismal. Algoritmia entiende el negocio, no solo las campañas.",
+    name: "[NOMBRE CLIENTE]",
+    company: "[EMPRESA]",
+    role: "CEO"
+  }
+];
+---
+
+<section class="py-32 px-6 md:px-12 bg-white" id="testimonials">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-block text-xs font-semibold uppercase tracking-widest text-primary/40 mb-4">Lo que dicen nuestros clientes</span>
+      <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary">Resultados que hablan solos</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {testimonials.map((t, i) => (
+        <div class={`reveal p-8 bg-surface rounded-3xl border border-primary/5 flex flex-col gap-6${i > 0 ? ` delay-${i * 100}` : ''}`}>
+          <div class="flex gap-1">
+            {[...Array(5)].map(() => (
+              <span class="material-symbols-outlined text-yellow-400 text-base" style="font-variation-settings: 'FILL' 1">star</span>
+            ))}
+          </div>
+          <p class="text-primary/80 text-base leading-relaxed flex-1">"{t.quote}"</p>
+          <div class="flex items-center gap-3 pt-2 border-t border-primary/5">
+            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary/40 text-lg">person</span>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-primary">{t.name}</p>
+              <p class="text-xs text-primary/50">{t.role} · {t.company}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
