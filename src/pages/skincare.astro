@@ -1,602 +1,520 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logoAlgoritmia1.webp';
 ---
 
 <Layout
   title="Sistema CAR para Skincare — Algoritmia"
-  description="Duplicamos la facturación de marcas de skincare en Argentina con el sistema CAR: Captación, Atención e Inteligencia Artificial y Retención automatizada."
+  description="Duplicamos la facturación de marcas de skincare en Argentina con el Sistema CAR: Meta Ads + IA por WhatsApp + Retención automatizada."
   noindex={true}
 >
 
-<style>
-  /* ── Variables ── */
-  :root {
-    --green: #34d399;
-    --purple: #818cf8;
-    --pink: #f472b6;
-    --gold: #fbbf24;
-    --bg: #080c12;
-    --bg-card: #0f1623;
-    --border: rgba(255,255,255,0.07);
-    --muted: #64748b;
-    --sub: #94a3b8;
-  }
-
-  /* ── Reset & Base ── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: #f1f5f9; font-family: 'Inter Variable', sans-serif; }
-
-  /* ── Layout helpers ── */
-  .lp-container { max-width: 920px; margin: 0 auto; padding: 0 20px; }
-  .lp-section { padding: 80px 0; }
-  .lp-section-sm { padding: 48px 0; }
-
-  /* ── Label pill ── */
-  .label-pill {
-    display: inline-block; font-size: 11px; font-weight: 800;
-    text-transform: uppercase; letter-spacing: 0.12em;
-    padding: 4px 14px; border-radius: 100px; margin-bottom: 16px;
-  }
-  .label-green  { background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
-  .label-purple { background: rgba(129,140,248,0.12); color: var(--purple); border: 1px solid rgba(129,140,248,0.3); }
-  .label-pink   { background: rgba(244,114,182,0.12); color: var(--pink); border: 1px solid rgba(244,114,182,0.3); }
-  .label-gold   { background: rgba(251,191,36,0.12); color: var(--gold); border: 1px solid rgba(251,191,36,0.3); }
-  .label-white  { background: rgba(255,255,255,0.06); color: #94a3b8; border: 1px solid rgba(255,255,255,0.12); }
-
-  /* ── Headings ── */
-  .h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
-  .h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
-  .h3 { font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
-  .gradient-text {
-    background: linear-gradient(135deg, #fff 30%, #94a3b8 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .gradient-green {
-    background: linear-gradient(135deg, var(--green), #6ee7b7);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-
-  /* ── Cards ── */
-  .card {
-    background: var(--bg-card); border: 1px solid var(--border);
-    border-radius: 20px; padding: 28px;
-  }
-  .card-green  { border-color: rgba(52,211,153,0.25); }
-  .card-purple { border-color: rgba(129,140,248,0.25); }
-  .card-pink   { border-color: rgba(244,114,182,0.25); }
-  .card-gold   { border-color: rgba(251,191,36,0.25); }
-
-  /* ── Divider ── */
-  .divider { height: 1px; background: var(--border); margin: 0; }
-
-  /* ── Warn box ── */
-  .warn-box {
-    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-    border-radius: 14px; padding: 16px 20px; font-size: 0.88rem;
-    color: var(--sub); line-height: 1.6;
-  }
-  .warn-green  { border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.04); }
-  .warn-gold   { border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.04); }
-  .warn-purple { border-color: rgba(129,140,248,0.3); background: rgba(129,140,248,0.04); }
-
-  /* ── Icon circle ── */
-  .icon-circle {
-    width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center;
-    justify-content: center; font-size: 1.3rem; flex-shrink: 0;
-  }
-
-  /* ── CAR pills ── */
-  .car-letter {
-    width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center;
-    justify-content: center; font-size: 0.78rem; font-weight: 900; flex-shrink: 0;
-  }
-
-  /* ── CTA button ── */
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--green); color: #000; font-weight: 800; font-size: 1rem;
-    padding: 16px 36px; border-radius: 100px; text-decoration: none;
-    transition: all 0.2s; border: none; cursor: pointer;
-  }
-  .btn-primary:hover { background: #6ee7b7; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(52,211,153,0.25); }
-  .btn-ghost {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: transparent; color: #fff; font-weight: 600; font-size: 0.95rem;
-    padding: 16px 32px; border-radius: 100px; text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.15); transition: all 0.2s; cursor: pointer;
-  }
-  .btn-ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.3); }
-
-  /* ── Grid ── */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-  @media (max-width: 700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
-
-  /* ── Pain point item ── */
-  .pain-item {
-    display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px;
-    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
-  }
-
-  /* ── Step ── */
-  .step {
-    display: flex; gap: 20px; align-items: flex-start; padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .step:last-child { border-bottom: none; }
-  .step-num {
-    width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center;
-    justify-content: center; font-size: 1rem; font-weight: 800; color: #fff;
-    flex-shrink: 0; font-family: 'Inter Variable', sans-serif;
-  }
-
-  /* ── Tier row ── */
-  .tier-row {
-    display: grid; grid-template-columns: 1fr auto; align-items: center;
-    gap: 16px; padding: 18px 24px; border-radius: 14px;
-    background: var(--bg-card); border: 1px solid var(--border);
-  }
-
-  /* ── Form ── */
-  .lp-input {
-    width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 12px; padding: 14px 18px; color: #fff; font-size: 0.95rem;
-    font-family: inherit; outline: none; transition: border-color 0.2s;
-  }
-  .lp-input::placeholder { color: var(--muted); }
-  .lp-input:focus { border-color: rgba(52,211,153,0.5); }
-
-  /* ── Sticky header ── */
-  .lp-header {
-    position: sticky; top: 0; z-index: 50; background: rgba(8,12,18,0.85);
-    backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
-    padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
-  }
-
-  /* ── Stat number ── */
-  .stat-num { font-size: 2.4rem; font-weight: 800; font-family: 'Inter Variable', sans-serif; line-height: 1; }
-
-  /* ── Reveal animation ── */
-  .fade-up {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-  }
-  .fade-up.visible { opacity: 1; transform: none; }
-  .delay-1 { transition-delay: 0.1s; }
-  .delay-2 { transition-delay: 0.2s; }
-  .delay-3 { transition-delay: 0.3s; }
-  .delay-4 { transition-delay: 0.4s; }
-</style>
-
-<!-- ════════════════════ HEADER ════════════════════ -->
-<header class="lp-header">
-  <div style="display:flex; align-items:center; gap:10px;">
-    <img src="/logoSinFondo.png" alt="Algoritmia" style="height:28px; width:auto;" />
-    <span style="font-size:13px; font-weight:700; color:#fff; letter-spacing:0.02em;">Algoritmia</span>
+<!-- ════════════ NAV ════════════ -->
+<header class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-2 md:pt-4 px-4 pointer-events-none">
+  <!-- Mobile: full width, logo left + button right -->
+  <div class="md:hidden pointer-events-auto glass-nav border border-white/20 shadow-lg shadow-black/5 rounded-[2rem] px-4 py-2 flex items-center justify-between transition-all duration-300 ring-1 ring-black/5 w-full">
+    <a href="#hero" class="flex items-center hover:opacity-80 transition-opacity">
+      <Image src={logo} alt="Algoritmia" class="w-8 h-8 object-contain" />
+    </a>
+    <a href="#contacto" class="bg-primary text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-[#2c2c2e] transition-all shadow-md shadow-primary/10">
+      Quiero aplicar
+    </a>
   </div>
-  <a href="#contacto" class="btn-primary" style="padding:10px 22px; font-size:0.85rem;">
-    Quiero saber más
-  </a>
+  <!-- Desktop: mismo estilo que HeaderAds (auto width, 3 columnas, gap-16) -->
+  <div class="hidden md:flex pointer-events-auto glass-nav border border-white/20 shadow-lg shadow-black/5 rounded-[2rem] px-6 md:px-8 py-2 flex-row items-center gap-16 transition-all duration-300 ring-1 ring-black/5">
+    <div class="flex items-center justify-center w-[120px]">
+      <a href="#hero" class="flex items-center text-primary hover:opacity-80 transition-opacity">
+        <Image src={logo} alt="Algoritmia" class="w-10 h-10 object-contain" />
+      </a>
+    </div>
+    <nav class="flex items-center gap-1">
+      <a href="#sistema" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">Sistema</a>
+      <a href="#precios" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">Inversión</a>
+      <a href="#contacto" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">Contacto</a>
+    </nav>
+    <div class="flex items-center justify-center">
+      <a href="#contacto" class="bg-primary text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-[#2c2c2e] transition-all shadow-md shadow-primary/10 whitespace-nowrap">
+        Quiero aplicar
+      </a>
+    </div>
+  </div>
 </header>
 
-<!-- ════════════════════ HERO ════════════════════ -->
-<section style="padding: 72px 0 80px; text-align: center;">
-  <div class="lp-container">
+<main class="bg-white">
 
-    <div class="label-pill label-green fade-up">Sistema CAR — Skincare Argentina</div>
+  <!-- ════════════ HERO ════════════ -->
+  <section id="hero" class="pt-32 md:pt-44 pb-20 px-6 md:px-12 text-center">
+    <div class="max-w-4xl mx-auto">
 
-    <h1 class="h1 gradient-text fade-up delay-1" style="margin-bottom:20px;">
-      Duplicamos la facturación<br>de marcas de skincare
-    </h1>
+      <div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold px-4 py-2 rounded-full mb-6 reveal">
+        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+        C.A.R para Cosméticas
+      </div>
 
-    <p class="fade-up delay-2" style="font-size:1.1rem; color:var(--sub); max-width:580px; margin:0 auto 36px; line-height:1.7;">
-      Captación con Meta Ads + Atención con IA por WhatsApp + Retención automatizada. Un sistema, tres palancas, un resultado medible.
-    </p>
+      <h1 class="text-[38px] md:text-6xl lg:text-7xl font-semibold tracking-tighter leading-[1.05] text-primary mb-6 reveal delay-100">
+        Duplicamos la facturación<br class="hidden md:block" /> de marcas de skincare
+      </h1>
 
-    <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;" class="fade-up delay-3">
-      <a href="#contacto" class="btn-primary">
-        Quiero aplicar al sistema
-        <span style="font-size:1.1rem;">→</span>
-      </a>
-      <a href="#sistema" class="btn-ghost">Ver cómo funciona</a>
-    </div>
-
-    <!-- VIDEO -->
-    <div class="fade-up delay-4" style="margin-top:56px;">
-      <p style="font-size:12px; color:var(--muted); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.1em; font-weight:700;">
-        👇 Mirá este video antes de seguir
+      <p class="text-base md:text-lg text-primary/50 mb-10 reveal delay-200">
+        Captación con Meta Ads <span class="mx-1">+</span> Atención con IA <span class="mx-1">+</span> Retención Automatizada
       </p>
-      <div style="border-radius:20px; overflow:hidden; background:#0f1623; border:1px solid var(--border); position:relative; aspect-ratio:16/9; max-width:800px; margin:0 auto; box-shadow: 0 32px 80px rgba(0,0,0,0.5);">
-        <!--
-          REEMPLAZÁ ESTO con tu embed de video.
-          Opciones:
-          Wistia: <script src="..."></script><wistia-player media-id="TU_ID"></wistia-player>
-          YouTube: <iframe src="https://www.youtube.com/embed/TU_ID?rel=0" ...></iframe>
-          Video local: <video src="/tu-video.mp4" controls ...></video>
-        -->
-        <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
-          <div style="width:72px; height:72px; background:rgba(52,211,153,0.15); border:1px solid rgba(52,211,153,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center;">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="var(--green)"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <p style="color:var(--muted); font-size:0.85rem;">Tu video va acá — reemplazá este bloque con el embed</p>
-        </div>
-      </div>
-    </div>
 
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════ PROBLEMA ════════════════════ -->
-<section class="lp-section">
-  <div class="lp-container">
-
-    <div class="label-pill label-white fade-up">El problema</div>
-    <h2 class="h2 gradient-text fade-up delay-1" style="margin-bottom:12px;">
-      Lo que le pasa a la mayoría<br>de las marcas de skincare
-    </h2>
-    <p style="color:var(--sub); font-size:0.95rem; max-width:560px; margin-bottom:36px; line-height:1.7;" class="fade-up delay-2">
-      Invierten en publicidad, generan ventas, pero el negocio no escala. El problema no es el producto — es el sistema.
-    </p>
-
-    <div class="grid-2 fade-up delay-2" style="gap:12px;">
-
-      <div class="pain-item">
-        <div class="icon-circle" style="background:rgba(244,114,182,0.1); border:1px solid rgba(244,114,182,0.2);">😤</div>
-        <div>
-          <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:4px;">Ads que no escalan</div>
-          <div style="font-size:0.82rem; color:var(--muted); line-height:1.6;">Suben el presupuesto y el ROAS se rompe. No saben qué cambiar ni cuándo. Cada mes es improvisar.</div>
-        </div>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center reveal delay-300">
+        <a href="#contacto" class="h-12 px-8 bg-primary text-white rounded-full text-sm font-medium hover:bg-[#2c2c2e] transition-all shadow-xl shadow-primary/10 flex items-center justify-center gap-2">
+          Quiero aplicar al sistema
+          <span class="material-symbols-outlined text-lg">arrow_forward</span>
+        </a>
+        <a href="#video" class="h-12 px-8 bg-white border border-primary/10 text-primary rounded-full text-sm font-medium hover:bg-surface transition-all flex items-center justify-center">
+          Ver cómo funciona
+        </a>
       </div>
 
-      <div class="pain-item">
-        <div class="icon-circle" style="background:rgba(244,114,182,0.1); border:1px solid rgba(244,114,182,0.2);">💬</div>
-        <div>
-          <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:4px;">Atención manual que no escala</div>
-          <div style="font-size:0.82rem; color:var(--muted); line-height:1.6;">El equipo responde WhatsApp todo el día. Consultas básicas que se pierden o se responden tarde. Ventas que se caen por falta de respuesta.</div>
-        </div>
-      </div>
-
-      <div class="pain-item">
-        <div class="icon-circle" style="background:rgba(244,114,182,0.1); border:1px solid rgba(244,114,182,0.2);">📦</div>
-        <div>
-          <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:4px;">Clientes que compran una vez</div>
-          <div style="font-size:0.82rem; color:var(--muted); line-height:1.6;">Gastan en adquirir un cliente nuevo para cada venta. Sin sistema de recompra, el negocio depende 100% de publicidad siempre.</div>
-        </div>
-      </div>
-
-      <div class="pain-item">
-        <div class="icon-circle" style="background:rgba(244,114,182,0.1); border:1px solid rgba(244,114,182,0.2);">🔍</div>
-        <div>
-          <div style="font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:4px;">Sin visibilidad real</div>
-          <div style="font-size:0.82rem; color:var(--muted); line-height:1.6;">No saben qué campañas generan revenue real, qué parte de la IA está respondiendo bien ni cuántos clientes están a punto de recomprar.</div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="warn-box warn-gold" style="margin-top:24px;" class="fade-up delay-3">
-      <strong style="color:var(--gold);">La raíz del problema:</strong> No es el producto, no es la marca, no es el mercado. Es que están corriendo tres sistemas separados (ads, atención, retención) sin que ninguno hable con el otro.
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════ SISTEMA CAR ════════════════════ -->
-<section class="lp-section" id="sistema">
-  <div class="lp-container">
-
-    <div class="label-pill label-green fade-up">La solución</div>
-    <h2 class="h2 fade-up delay-1" style="margin-bottom:8px;">
-      <span class="gradient-green">El Sistema CAR</span>
-    </h2>
-    <p style="color:var(--sub); font-size:0.95rem; max-width:580px; margin-bottom:48px; line-height:1.7;" class="fade-up delay-2">
-      Tres palancas integradas que trabajan juntas. No son servicios sueltos — es un sistema donde cada parte alimenta a la siguiente.
-    </p>
-
-    <!-- C -->
-    <div class="card card-green fade-up" style="margin-bottom:16px;">
-      <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
-        <div class="car-letter" style="background:rgba(52,211,153,0.15); border:1px solid rgba(52,211,153,0.3); color:var(--green);">C</div>
-        <div>
-          <div style="font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:var(--green); margin-bottom:2px;">Captación</div>
-          <div style="font-size:1.1rem; font-weight:700; color:#fff;">Meta Ads que convierten</div>
-        </div>
-      </div>
-      <p style="font-size:0.88rem; color:var(--sub); line-height:1.7; margin-bottom:16px;">
-        Campañas estructuradas por audiencia y pain point. Creativos (UGC, estático, reels) por nivel de consciencia. Sin intereses manuales — broad targeting para que el algoritmo encuentre a quien compra.
-      </p>
-      <div style="display:flex; flex-wrap:wrap; gap:8px;">
-        {['1 campaña por audiencia','Conjuntos por pain point','6+ creativos/mes','Escalado +5–10% cada 1.5 días'].map(t => (
-          <span style="font-size:11px; font-weight:600; padding:4px 12px; border-radius:100px; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.2); color:var(--green);">{t}</span>
-        ))}
-      </div>
-    </div>
-
-    <!-- A -->
-    <div class="card card-purple fade-up delay-1" style="margin-bottom:16px;">
-      <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
-        <div class="car-letter" style="background:rgba(129,140,248,0.15); border:1px solid rgba(129,140,248,0.3); color:var(--purple);">A</div>
-        <div>
-          <div style="font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:var(--purple); margin-bottom:2px;">Atención</div>
-          <div style="font-size:1.1rem; font-weight:700; color:#fff;">WhatsApp con IA — 24 hs</div>
-        </div>
-      </div>
-      <p style="font-size:0.88rem; color:var(--sub); line-height:1.7; margin-bottom:16px;">
-        La IA responde consultas de producto, cierra ventas y hace seguimiento post-compra. Si la consulta es compleja, transfiere al humano sin fricción. El cliente ve cada conversación en tiempo real desde su portal.
-      </p>
-      <div style="display:flex; flex-wrap:wrap; gap:8px;">
-        {['Consultas de producto','Cierre de venta','Post-compra','Transferencia a humano','Chatwoot inbox'].map(t => (
-          <span style="font-size:11px; font-weight:600; padding:4px 12px; border-radius:100px; background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.2); color:var(--purple);">{t}</span>
-        ))}
-      </div>
-    </div>
-
-    <!-- R -->
-    <div class="card card-pink fade-up delay-2">
-      <div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
-        <div class="car-letter" style="background:rgba(244,114,182,0.12); border:1px solid rgba(244,114,182,0.3); color:var(--pink);">R</div>
-        <div>
-          <div style="font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:var(--pink); margin-bottom:2px;">Retención</div>
-          <div style="font-size:1.1rem; font-weight:700; color:#fff;">Recompra automática</div>
-        </div>
-      </div>
-      <p style="font-size:0.88rem; color:var(--sub); line-height:1.7; margin-bottom:16px;">
-        Tres flujos automáticos por WhatsApp que activan solos según el historial de compra. El cliente que compró una vez recibe el mensaje justo cuando el producto se está por terminar. Sin trabajo manual.
-      </p>
-      <div style="display:flex; flex-wrap:wrap; gap:8px;">
-        {['Bienvenida — día 0','Recompra — día 45','Reactivación — día 90+'].map(t => (
-          <span style="font-size:11px; font-weight:600; padding:4px 12px; border-radius:100px; background:rgba(244,114,182,0.08); border:1px solid rgba(244,114,182,0.2); color:var(--pink);">{t}</span>
-        ))}
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════ PORTAL ════════════════════ -->
-<section class="lp-section-sm">
-  <div class="lp-container">
-    <div class="card card-gold fade-up" style="display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center;">
-      <div>
-        <div class="label-pill label-gold" style="margin-bottom:12px;">Portal del Cliente</div>
-        <h3 class="h3" style="color:#fff; margin-bottom:12px; font-size:1.3rem;">Visibilidad total<br>de tu negocio</h3>
-        <p style="font-size:0.87rem; color:var(--sub); line-height:1.7; margin-bottom:16px;">
-          Cada cliente tiene acceso a un panel propio donde puede ver los anuncios corriendo, los chats de la IA con sus clientes, y activar o pausar el sistema cuando quiera. Sin tener que hablar con nosotros para nada.
+      <!-- VIDEO -->
+      <div id="video" class="mt-8 md:mt-12 reveal delay-300">
+        <p class="text-xs md:text-sm text-primary/40 mb-5 font-medium">
+          👇 Mirá este video para que veas cómo funciona
         </p>
-        <a href="#contacto" class="btn-primary" style="font-size:0.88rem; padding:12px 24px;">Quiero acceder →</a>
+        <div class="rounded-3xl overflow-hidden bg-gray-900 shadow-2xl shadow-primary/10 border border-primary/5 relative">
+          <!--
+            REEMPLAZÁ este bloque con tu embed de video:
+            Wistia:  <script src="...player.js" async></script><wistia-player media-id="TU_ID"></wistia-player>
+            YouTube: <iframe src="https://www.youtube.com/embed/TU_ID?rel=0" class="w-full aspect-video" allowfullscreen></iframe>
+          -->
+          <div class="aspect-video flex flex-col items-center justify-center gap-4 bg-gray-50 border border-primary/5 rounded-3xl">
+            <div class="w-16 h-16 bg-primary/5 border border-primary/10 rounded-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-3xl text-primary/30">play_circle</span>
+            </div>
+            <p class="text-sm text-primary/30">Tu video va acá — reemplazá este bloque con el embed</p>
+          </div>
+        </div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:10px;">
+
+    </div>
+  </section>
+
+  <!-- ════════════ PROBLEMA ════════════ -->
+  <section class="py-24 px-6 md:px-12 bg-surface">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-14 reveal">
+        <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-3">El problema</p>
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-4">
+          Lo que le pasa a la mayoría<br class="hidden md:block" /> de las marcas de skincare
+        </h2>
+        <p class="text-primary/60 text-base md:text-lg max-w-xl mx-auto">
+          No es el producto. Es el sistema.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 reveal delay-100">
         {[
-          { icon: '📊', title: 'Métricas de Meta Ads', desc: 'ROAS, gasto, conversiones — en tiempo real, sin entrar al Administrador.' },
-          { icon: '💬', title: 'Inbox de Chatwoot', desc: 'Todos los chats de la IA con tus clientes, visibles en tiempo real.' },
-          { icon: '🤖', title: 'Toggle de IA', desc: 'Activás o pausás la IA con un click. Control total siempre.' },
-          { icon: '✨', title: 'Siempre mejorando', desc: 'Nuevas funciones sin costo extra para clientes activos.' },
-        ].map(item => (
-          <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 16px; background:rgba(251,191,36,0.04); border:1px solid rgba(251,191,36,0.15); border-radius:12px;">
-            <span style="font-size:1.1rem; flex-shrink:0;">{item.icon}</span>
+          {
+            letter: 'C',
+            color: 'emerald',
+            title: 'Sin sistema de captación seguro',
+            desc: 'No tienen una máquina predecible que traiga clientes nuevos cada mes. Dependen del orgánico, del boca en boca, o de ads que a veces funcionan y a veces no. Sin consistencia, no hay crecimiento.',
+          },
+          {
+            letter: 'A',
+            color: 'violet',
+            title: 'Atención que pierde ventas',
+            desc: 'Cada consulta por WhatsApp requiere a alguien que responda. Las preguntas básicas llegan tarde, los interesados se enfrían. Ventas que podrían cerrarse solas se pierden por demora.',
+          },
+          {
+            letter: 'R',
+            color: 'pink',
+            title: 'Clientes que compran solo una vez',
+            desc: 'El costo de conseguir un cliente nuevo es cada vez más alto. Sin un sistema que haga volver a quien ya compró, el negocio depende del 100% de publicidad para sobrevivir.',
+          },
+        ].map((item, i) => (
+          <div class={`bg-white p-7 rounded-3xl border border-primary/5 hover:border-primary/10 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300 reveal delay-${(i+1)*100}`}>
+            <div class={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-${item.color}-50 border border-${item.color}-100`}>
+              <span class={`text-sm font-black text-${item.color}-600`}>{item.letter}</span>
+            </div>
+            <h3 class="text-base font-bold text-primary mb-2">{item.title}</h3>
+            <p class="text-sm text-primary/60 leading-relaxed">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-6 bg-primary rounded-2xl p-6 text-white leading-relaxed reveal delay-200">
+        <p class="text-base font-semibold mb-1">El Sistema CAR resuelve los tres a la vez.</p>
+        <p class="text-sm text-white/60">Captación predecible con Meta Ads + Atención que cierra con IA + Retención automática. No son servicios sueltos — es un sistema que trabaja junto para que el negocio crezca.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════ SISTEMA CAR ════════════ -->
+  <section class="py-24 px-6 md:px-12 bg-white" id="sistema">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-14 reveal">
+        <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-3">La solución</p>
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-4">El Sistema CAR</h2>
+        <p class="text-primary/60 text-base md:text-lg max-w-xl mx-auto">
+          Tres palancas integradas. No son servicios sueltos — cada parte alimenta a la siguiente.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-4">
+
+        <!-- C -->
+        <div class="bg-surface p-8 rounded-3xl border border-primary/5 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 reveal">
+          <div class="flex items-start gap-6">
+            <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <span class="text-xl font-black text-emerald-700">C</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-1">Captación</p>
+              <h3 class="text-xl font-bold text-primary mb-3">Meta Ads que convierten</h3>
+              <p class="text-primary/60 text-sm leading-relaxed mb-5">
+                Anuncios que llevan a la gente correcta a tu tienda, en el momento justo. El sistema aprende qué convierte y escala lo que funciona — sin quemar presupuesto en pruebas. Más clientes nuevos, más predecible, mes a mes.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                {['Escalado seguro', 'Anuncios probados que funcionan', 'Creativos frescos cada mes', 'Sin quemar presupuesto'].map(t => (
+                  <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700">{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- A -->
+        <div class="bg-surface p-8 rounded-3xl border border-primary/5 hover:border-violet-200 hover:shadow-lg transition-all duration-300 reveal delay-100">
+          <div class="flex items-start gap-6">
+            <div class="w-14 h-14 bg-violet-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <span class="text-xl font-black text-violet-700">A</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-xs font-semibold uppercase tracking-widest text-violet-600 mb-1">Atención</p>
+              <h3 class="text-xl font-bold text-primary mb-3">WhatsApp con IA — 24 hs</h3>
+              <p class="text-primary/60 text-sm leading-relaxed mb-5">
+                La IA responde consultas de producto, cierra ventas y hace seguimiento post-compra. Si la consulta es compleja, transfiere al equipo humano sin fricción. El cliente puede leer todos los chats en tiempo real desde su portal.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                {['Consultas de producto', 'Cierre de venta', 'Post-compra', 'Transferencia a humano'].map(t => (
+                  <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-violet-50 border border-violet-200 text-violet-700">{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- R -->
+        <div class="bg-surface p-8 rounded-3xl border border-primary/5 hover:border-pink-200 hover:shadow-lg transition-all duration-300 reveal delay-200">
+          <div class="flex items-start gap-6">
+            <div class="w-14 h-14 bg-pink-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <span class="text-xl font-black text-pink-700">R</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-xs font-semibold uppercase tracking-widest text-pink-600 mb-1">Retención</p>
+              <h3 class="text-xl font-bold text-primary mb-3">Recompra automática</h3>
+              <p class="text-primary/60 text-sm leading-relaxed mb-5">
+                El cliente que compró una vez ya es tu mejor oportunidad. El sistema detecta cuándo está listo para volver a comprar y le escribe solo. Más ingresos sin gastar un peso extra en publicidad.
+              </p>
+              <div class="flex flex-wrap gap-2">
+                {['Más ventas sin más ads', 'Clientes que vuelven solos', 'LTV más alto', 'Sin trabajo manual'].map(t => (
+                  <span class="text-xs font-semibold px-3 py-1.5 rounded-full bg-pink-50 border border-pink-200 text-pink-700">{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════ PORTAL ════════════ -->
+  <section class="py-24 px-6 md:px-12 bg-surface">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-12 reveal">
+        <div class="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold px-4 py-2 rounded-full mb-5">
+          ✦ Portal del Cliente
+        </div>
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-3">Tu negocio, en tiempo real</h2>
+        <p class="text-primary/50 text-base max-w-sm mx-auto">Sin pedirle reportes a nadie. Sin entrar al Administrador de Meta.</p>
+      </div>
+
+      <!-- Mock dashboard -->
+      <div class="bg-[#0f0f11] rounded-3xl overflow-hidden shadow-2xl shadow-primary/20 border border-white/5 reveal delay-100">
+
+        <!-- Top bar -->
+        <div class="flex items-center gap-2 px-5 py-4 border-b border-white/5">
+          <div class="w-3 h-3 rounded-full bg-red-500/70"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+          <div class="w-3 h-3 rounded-full bg-emerald-500/70"></div>
+          <div class="ml-4 flex-1 h-6 rounded-full bg-white/5 max-w-xs"></div>
+        </div>
+
+        <div class="p-6 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          <!-- Metric cards -->
+          <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
+            <p class="text-xs text-white/30 font-medium mb-2">ROAS</p>
+            <p class="text-3xl font-bold text-white mb-1">4.8x</p>
+            <p class="text-xs text-emerald-400 font-semibold">↑ +12% esta semana</p>
+            <div class="mt-4 flex items-end gap-1 h-10">
+              {[40,55,48,70,65,80,90].map(h => (
+                <div class="flex-1 rounded-sm bg-emerald-500/40" style={`height:${h}%`}></div>
+              ))}
+            </div>
+          </div>
+
+          <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
+            <p class="text-xs text-white/30 font-medium mb-2">Inversión del mes</p>
+            <p class="text-3xl font-bold text-white mb-1">$1.240</p>
+            <p class="text-xs text-white/30 font-semibold">USD · Meta Ads</p>
+            <div class="mt-4 flex items-end gap-1 h-10">
+              {[30,45,40,60,55,70,65].map(h => (
+                <div class="flex-1 rounded-sm bg-violet-500/40" style={`height:${h}%`}></div>
+              ))}
+            </div>
+          </div>
+
+          <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
+            <p class="text-xs text-white/30 font-medium mb-2">IA — Estado</p>
+            <div class="flex items-center gap-2 mt-1 mb-3">
+              <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
+              <p class="text-sm font-semibold text-white">Activa</p>
+            </div>
+            <div class="flex flex-col gap-2 mt-2">
+              <div class="h-7 rounded-xl bg-white/5 border border-white/5 px-3 flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full bg-violet-500/50 flex-shrink-0"></div>
+                <div class="h-2 rounded-full bg-white/10 flex-1"></div>
+              </div>
+              <div class="h-7 rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-3 flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full bg-emerald-500/50 flex-shrink-0"></div>
+                <div class="h-2 rounded-full bg-white/10 w-3/4"></div>
+              </div>
+              <div class="h-7 rounded-xl bg-white/5 border border-white/5 px-3 flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full bg-violet-500/50 flex-shrink-0"></div>
+                <div class="h-2 rounded-full bg-white/10 w-1/2"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Feature chips below dashboard -->
+      <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 reveal delay-200">
+        {[
+          { icon: 'bar_chart', label: 'Métricas en tiempo real' },
+          { icon: 'chat', label: 'Inbox de la IA' },
+          { icon: 'toggle_on', label: 'Pausá la IA con un click' },
+          { icon: 'auto_awesome', label: 'Mejoras sin costo extra' },
+        ].map(f => (
+          <div class="bg-white border border-primary/5 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-sm">
+            <span class="material-symbols-outlined text-lg text-amber-500">{f.icon}</span>
+            <p class="text-xs font-semibold text-primary leading-tight">{f.label}</p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════ PRICING ════════════ -->
+  <section class="py-24 px-6 md:px-12 bg-surface" id="precios">
+    <div class="max-w-2xl mx-auto">
+
+      <div class="text-center mb-10 reveal">
+        <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-3">Inversión</p>
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-4">La mensualidad sube<br />con tu facturación</h2>
+        <p class="text-primary/60 text-base max-w-md mx-auto leading-relaxed">
+          Según tu facturación.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-primary/5 shadow-apple overflow-hidden reveal delay-100">
+
+        <!-- Setup -->
+        <div class="p-7 flex items-center justify-between gap-6 border-b border-primary/5">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-1">Pago único al inicio</p>
+            <p class="text-sm text-primary font-semibold">Setup, instalación del Sistema CAR + onboarding</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <p class="text-3xl font-bold text-primary tracking-tight">USD 600</p>
+            <p class="text-xs text-primary/40">setup único</p>
+          </div>
+        </div>
+
+        <!-- Label -->
+        <div class="px-7 pt-6 pb-2">
+          <p class="text-xs font-semibold uppercase tracking-widest text-primary/40">Mensualidad — según facturación</p>
+        </div>
+
+        <!-- Tiers -->
+        {[
+          { label: 'Tier 1 — Arranque', range: 'Hasta USD 20.000 / mes facturado', price: 'USD 600', note: 'Mientras el sistema toma velocidad.', accent: 'text-primary/50' },
+          { label: 'Tier 2 — Crecimiento', range: 'USD 20.000 – 50.000 / mes', price: 'USD 1.200', note: 'Sistema con datos y creativos optimizados.', accent: 'text-emerald-600' },
+          { label: 'Tier 3 — Escala', range: 'USD 50.000 – 100.000 / mes', price: 'USD 2.000', note: 'Operación de alto volumen.', accent: 'text-violet-600' },
+          { label: 'Tier 4 — Alto impacto', range: 'USD 100.000+ / mes', price: 'USD 3.000', note: 'Máxima expresión del Sistema CAR.', accent: 'text-amber-600' },
+        ].map((t, i) => (
+          <div class={`px-7 py-5 flex items-center justify-between gap-4 ${i < 3 ? 'border-b border-primary/5' : ''}`}>
             <div>
-              <div style="font-size:0.83rem; font-weight:700; color:#fff; margin-bottom:2px;">{item.title}</div>
-              <div style="font-size:0.77rem; color:var(--muted); line-height:1.5;">{item.desc}</div>
+              <p class={`text-xs font-bold uppercase tracking-wider mb-1 ${t.accent}`}>{t.label}</p>
+              <p class="text-sm font-semibold text-primary">{t.range}</p>
+              <p class="text-xs text-primary/40 mt-0.5">{t.note}</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <p class="text-2xl font-bold text-primary tracking-tight">{t.price}</p>
+              <p class="text-xs text-primary/40">/mes</p>
             </div>
           </div>
         ))}
+
+        <!-- Footer note -->
+        <div class="px-7 py-5 bg-surface border-t border-primary/5 flex items-center gap-2">
+          <span class="material-symbols-outlined text-sm text-primary/50">info</span>
+          <p class="text-xs text-primary/60">La inversión en publicidad va aparte — mínimo recomendado USD 800/mes en Meta Ads.</p>
+        </div>
+
       </div>
-    </div>
-  </div>
-</section>
 
-<div class="divider"></div>
-
-<!-- ════════════════════ CÓMO FUNCIONA ════════════════════ -->
-<section class="lp-section">
-  <div class="lp-container">
-
-    <div class="label-pill label-white fade-up">El proceso</div>
-    <h2 class="h2 gradient-text fade-up delay-1" style="margin-bottom:12px;">Cómo arranca el sistema</h2>
-    <p style="color:var(--sub); font-size:0.95rem; max-width:520px; margin-bottom:40px; line-height:1.7;" class="fade-up delay-2">
-      Del primer contacto al sistema funcionando en 30 días.
-    </p>
-
-    <div class="card fade-up delay-2" style="padding:0; overflow:hidden;">
-      {[
-        { n:'01', color:'var(--green)', bg:'rgba(52,211,153,0.12)', title:'Diagnóstico gratuito', desc:'Analizamos tu negocio: qué corrés en Meta Ads, cómo atendés por WhatsApp, y cuántos clientes no volvieron a comprar. Identificamos el mayor punto de palanca.' },
-        { n:'02', color:'var(--purple)', bg:'rgba(129,140,248,0.12)', title:'Setup del sistema', desc:'Configuramos las campañas, instalamos la IA con el conocimiento de tu marca, armamos los flujos de retención y te damos acceso al portal. 7–10 días.' },
-        { n:'03', color:'var(--pink)', bg:'rgba(244,114,182,0.12)', title:'Lanzamiento y aprendizaje', desc:'El sistema empieza a correr. Los primeros 30 días son de aprendizaje — el algoritmo se calibra, la IA aprende a responder, los flujos se activan. No tocamos nada sin datos.' },
-        { n:'04', color:'var(--gold)', bg:'rgba(251,191,36,0.12)', title:'Optimización continua', desc:'Cada mes: rotamos creativos, ajustamos copy, refinamos la IA, revisamos métricas. Llamada mensual para revisar resultados y definir el siguiente movimiento.' },
-      ].map(s => (
-        <div class="step">
-          <div class="step-num" style={`background:${s.bg}; color:${s.color};`}>{s.n}</div>
-          <div>
-            <div style="font-size:0.95rem; font-weight:700; color:#fff; margin-bottom:6px;">{s.title}</div>
-            <div style="font-size:0.85rem; color:var(--muted); line-height:1.65;">{s.desc}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════ PRICING ════════════════════ -->
-<section class="lp-section" id="pricing">
-  <div class="lp-container">
-
-    <div class="label-pill label-green fade-up">Inversión</div>
-    <h2 class="h2 gradient-text fade-up delay-1" style="margin-bottom:12px;">El retainer sube<br>con tu resultado</h2>
-    <p style="color:var(--sub); font-size:0.95rem; max-width:560px; margin-bottom:36px; line-height:1.7;" class="fade-up delay-2">
-      Setup fijo. Retainer mensual escalonado según la facturación — cuanto más crece tu negocio, más crece el fee. Alineamos incentivos desde el día uno.
-    </p>
-
-    <!-- Setup -->
-    <div class="card card-green fade-up delay-2" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:12px;">
-      <div>
-        <div style="font-size:0.65rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:var(--green); margin-bottom:4px;">Pago único al inicio</div>
-        <div style="font-size:0.95rem; color:var(--sub);">Setup, instalación del sistema CAR + onboarding completo</div>
-      </div>
-      <div style="text-align:right;">
-        <div class="stat-num" style="color:#fff;">USD 600</div>
-        <div style="font-size:0.75rem; color:var(--muted);">setup único</div>
-      </div>
-    </div>
-
-    <!-- Tiers -->
-    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:16px;" class="fade-up delay-3">
-      {[
-        { label:'Tier 1 — Arranque', range:'Hasta USD 20.000 / mes facturado', desc:'Mientras el sistema toma velocidad.', price:'USD 600', color:'var(--muted)' },
-        { label:'Tier 2 — Crecimiento', range:'USD 20.000 – 50.000 / mes facturado', desc:'Sistema con datos y creativos optimizados.', price:'USD 1.200', color:'var(--green)' },
-        { label:'Tier 3 — Escala', range:'USD 50.000 – 100.000 / mes facturado', desc:'Operación de alto volumen. Más seguimiento.', price:'USD 2.000', color:'var(--purple)' },
-        { label:'Tier 4 — Alto impacto', range:'USD 100.000+ / mes facturado', desc:'Operación CAR completa en su máxima expresión.', price:'USD 3.000', color:'var(--gold)' },
-      ].map(t => (
-        <div class="tier-row">
-          <div>
-            <div style={`font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:${t.color}; margin-bottom:4px;`}>{t.label}</div>
-            <div style="font-size:0.95rem; font-weight:700; color:#fff; margin-bottom:2px;">{t.range}</div>
-            <div style="font-size:0.78rem; color:var(--muted);">{t.desc}</div>
-          </div>
-          <div style="text-align:right; flex-shrink:0;">
-            <div style={`font-size:1.7rem; font-weight:800; color:${t.color}; line-height:1;`}>{t.price}</div>
-            <div style="font-size:0.72rem; color:var(--muted);">/mes</div>
-          </div>
-        </div>
-      ))}
-    </div>
-
-    <div class="warn-box warn-green fade-up delay-4">
-      <strong style="color:var(--green);">El argumento de ROI:</strong> Si el sistema lleva al cliente de USD 20K a USD 50K/mes, el fee pasa de USD 600 a USD 1.200. El cliente facturó USD 30K más — el aumento del fee es el 4% de esa ganancia incremental.
-      <br><span style="font-size:0.78rem; color:var(--muted); margin-top:6px; display:block;">* Ad spend siempre aparte — mínimo recomendado USD 800/mes en Meta Ads. Facturación medida con integración a TiendaNube / Shopify.</span>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════ CONTACTO ════════════════════ -->
-<section class="lp-section" id="contacto">
-  <div class="lp-container">
-
-    <div style="max-width:600px; margin:0 auto; text-align:center;">
-      <div class="label-pill label-green fade-up">Siguiente paso</div>
-      <h2 class="h2 gradient-text fade-up delay-1" style="margin-bottom:12px;">¿Tu marca califica?</h2>
-      <p style="color:var(--sub); font-size:0.95rem; line-height:1.7; margin-bottom:36px;" class="fade-up delay-2">
-        Trabajamos con marcas de skincare que facturan USD 20K+/mes y tienen ganas de escalar. Si es tu caso, hablemos.
-      </p>
-    </div>
-
-    <div class="card fade-up delay-2" style="max-width:560px; margin:0 auto;">
-      <form id="lp-form" style="display:flex; flex-direction:column; gap:14px;">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:var(--sub); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:6px;">Nombre</label>
-            <input class="lp-input" type="text" name="nombre" placeholder="Tu nombre" required />
-          </div>
-          <div>
-            <label style="font-size:0.75rem; font-weight:700; color:var(--sub); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:6px;">Marca</label>
-            <input class="lp-input" type="text" name="marca" placeholder="Nombre de tu marca" required />
-          </div>
-        </div>
-        <div>
-          <label style="font-size:0.75rem; font-weight:700; color:var(--sub); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:6px;">WhatsApp</label>
-          <input class="lp-input" type="tel" name="whatsapp" placeholder="+54 9 11 1234-5678" required />
-        </div>
-        <div>
-          <label style="font-size:0.75rem; font-weight:700; color:var(--sub); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:6px;">Facturación mensual aprox.</label>
-          <select class="lp-input" name="facturacion" required style="cursor:pointer;">
-            <option value="" disabled selected>Seleccioná un rango</option>
-            <option>USD 10.000 – 20.000 / mes</option>
-            <option>USD 20.000 – 50.000 / mes</option>
-            <option>USD 50.000 – 100.000 / mes</option>
-            <option>USD 100.000+ / mes</option>
-          </select>
-        </div>
-        <div>
-          <label style="font-size:0.75rem; font-weight:700; color:var(--sub); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:6px;">¿Qué querés resolver? <span style="color:var(--muted); font-weight:400; text-transform:none;">(opcional)</span></label>
-          <textarea class="lp-input" name="mensaje" placeholder="Ads que no escalan, atención manual, clientes que no vuelven..." rows="3" style="resize:vertical;"></textarea>
-        </div>
-        <button type="submit" class="btn-primary" style="width:100%; justify-content:center; font-size:1rem;">
-          Quiero aplicar al sistema →
-        </button>
-        <p style="font-size:0.75rem; color:var(--muted); text-align:center;">
-          Te respondemos por WhatsApp en menos de 24 hs. Sin compromiso.
+      <div class="mt-5 bg-primary rounded-2xl p-6 text-white reveal delay-200">
+        <p class="text-sm font-semibold mb-2">¿Cómo funciona el precio?</p>
+        <p class="text-sm text-white/70 leading-relaxed">
+          La mensualidad se ajusta automáticamente según lo que factures. Si facturás menos de USD 20.000, pagás el tier más bajo. Si crezcés a USD 20K–50K, subís al siguiente, y así. Cobramos más solo cuando vos ganás más.
         </p>
-      </form>
-
-      <div id="form-success" style="display:none; text-align:center; padding:32px 16px;">
-        <div style="font-size:2rem; margin-bottom:12px;">✅</div>
-        <div style="font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:8px;">¡Listo! Te contactamos pronto.</div>
-        <div style="font-size:0.88rem; color:var(--muted);">Revisamos tu perfil y te escribimos por WhatsApp en las próximas 24 hs.</div>
       </div>
+
     </div>
+  </section>
 
-    <!-- WhatsApp alternativo -->
-    <div style="text-align:center; margin-top:24px;" class="fade-up delay-3">
-      <p style="font-size:0.83rem; color:var(--muted); margin-bottom:10px;">O si preferís escribir directo:</p>
-      <a
-        href="https://wa.me/5493476245523?text=Hola%2C%20vi%20la%20p%C3%A1gina%20del%20Sistema%20CAR%20para%20skincare%20y%20quiero%20saber%20m%C3%A1s"
-        target="_blank"
-        class="btn-ghost"
-        style="font-size:0.88rem;"
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--green)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Escribir por WhatsApp
-      </a>
+  <!-- ════════════ CONTACTO ════════════ -->
+  <section class="py-24 px-6 md:px-12 bg-white" id="contacto">
+    <div class="max-w-xl mx-auto reveal">
+
+      <div class="bg-white p-8 md:p-12 rounded-3xl shadow-apple border border-primary/5">
+        <div class="text-center mb-10">
+          <div class="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-medium px-4 py-2 rounded-full mb-5">
+            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></span>
+            Cupos limitados por mes
+          </div>
+          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-2">¿Tu marca califica?</h2>
+          <p class="text-sm text-primary/50">Completá el formulario. Si tu negocio califica, te contactamos en menos de 24 hs.</p>
+        </div>
+
+        <div id="form-success" class="hidden mb-8 p-6 bg-green-50 border border-green-200 rounded-2xl text-center">
+          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <span class="material-symbols-outlined text-2xl text-green-600">check_circle</span>
+          </div>
+          <p class="text-green-800 font-bold text-lg">¡Solicitud enviada!</p>
+          <p class="text-green-600 text-sm mt-1">Revisamos tu perfil y te escribimos por WhatsApp en las próximas 24 hs.</p>
+        </div>
+
+        <form id="lp-form" class="space-y-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="relative group">
+              <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="lp-nombre" name="nombre" placeholder="Nombre" type="text" required />
+              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-nombre">Nombre</label>
+            </div>
+            <div class="relative group">
+              <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="lp-marca" name="marca" placeholder="Marca" type="text" required />
+              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-marca">Nombre de tu marca</label>
+            </div>
+          </div>
+
+          <div class="relative group">
+            <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="lp-wa" name="whatsapp" placeholder="WhatsApp" type="tel" required />
+            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-wa">WhatsApp</label>
+          </div>
+
+          <div class="relative">
+            <select id="lp-facturacion" name="facturacion" required class="lp-select w-full border-b border-gray-200 py-3 px-1 pr-8 text-sm text-primary focus:border-primary focus:outline-none transition-colors cursor-pointer">
+              <option value="" disabled selected>Facturación mensual aprox.</option>
+              <option>Hasta USD 20.000 / mes</option>
+              <option>USD 20.000 – 50.000 / mes</option>
+              <option>USD 50.000 – 100.000 / mes</option>
+              <option>USD 100.000+ / mes</option>
+            </select>
+            <svg class="absolute right-1 top-3.5 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+
+          <div class="relative group">
+            <textarea class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none" id="lp-msg" name="mensaje" placeholder="Problema" rows="2"></textarea>
+            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-msg">¿Cuál es tu problema principal hoy?</label>
+          </div>
+
+          <button type="submit" id="lp-submit" class="w-full bg-primary text-white py-4 px-8 rounded-full font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg text-sm">
+            Quiero aplicar al sistema →
+          </button>
+
+          <p class="text-xs text-primary/40 text-center">Te respondemos por WhatsApp en menos de 24 hs. Sin compromiso.</p>
+        </form>
+      </div>
+
+      <!-- WhatsApp alt -->
+      <div class="text-center mt-6">
+        <p class="text-xs text-primary/40 mb-3">O si preferís escribir directo:</p>
+        <a href="https://wa.me/5493476245523?text=Hola%2C%20vi%20la%20p%C3%A1gina%20del%20Sistema%20CAR%20para%20skincare%20y%20quiero%20saber%20m%C3%A1s" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium text-primary/70 hover:text-primary transition-colors border border-primary/10 rounded-full px-5 py-2.5 hover:bg-surface">
+          <svg class="w-4 h-4 fill-current text-emerald-600" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribir por WhatsApp
+        </a>
+      </div>
+
     </div>
+  </section>
 
-  </div>
-</section>
+</main>
 
-<!-- ════════════════════ FOOTER ════════════════════ -->
-<footer style="padding:32px 20px; border-top:1px solid var(--border); text-align:center;">
-  <div style="font-size:0.78rem; color:var(--muted);">
-    © 2025 <strong style="color:var(--sub);">Algoritmia</strong> · Sistema CAR para Skincare
-    · <a href="https://algoritmiadesarrollos.com.ar" style="color:var(--muted); text-decoration:none; hover:color:#fff;">algoritmiadesarrollos.com.ar</a>
-  </div>
-</footer>
+
+<style>
+  .glass-nav {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  select option { color: #1d1d1f; background: white; }
+  .lp-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+</style>
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    // Intersection Observer para fade-up
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-    // Form submit
+    // Form
     const form = document.getElementById('lp-form') as HTMLFormElement | null;
     const success = document.getElementById('form-success');
-    if (form && success) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const data = Object.fromEntries(new FormData(form));
-        const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-        if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
-        try {
-          await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...data, source: 'landing-skincare' }),
-          });
-        } catch {}
-        form.style.display = 'none';
-        success.style.display = 'block';
-        if ((window as any).fbq) {
-          (window as any).fbq('track', 'Lead', { content_name: 'Landing Skincare CAR' });
-        }
+    const btn = document.getElementById('lp-submit') as HTMLButtonElement | null;
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
+      const data = { ...Object.fromEntries(new FormData(form)), source: 'landing-skincare' };
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+      } catch {}
+      if (form) form.style.display = 'none';
+      if (success) success.style.display = 'block';
+      if ((window as any).fbq) (window as any).fbq('track', 'Lead', { content_name: 'Landing Skincare CAR' });
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = (a as HTMLAnchorElement).getAttribute('href')?.replace('#', '');
+        const el = id ? document.getElementById(id) : null;
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
       });
-    }
+    });
   });
 </script>
 
