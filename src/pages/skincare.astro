@@ -33,7 +33,7 @@ import logo from '../assets/logoAlgoritmia1.webp';
     <a href="#hero" class="flex items-center hover:opacity-80 transition-opacity">
       <Image src={logo} alt="Algoritmia" class="w-8 h-8 object-contain" />
     </a>
-    <a href="#contacto" class="bg-primary text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-[#2c2c2e] transition-all shadow-md shadow-primary/10">
+    <a href="#contacto" class="cta-btn text-white px-5 py-2 rounded-full text-[13px] font-semibold transition-all">
       Quiero aplicar
     </a>
   </div>
@@ -45,12 +45,11 @@ import logo from '../assets/logoAlgoritmia1.webp';
       </a>
     </div>
     <nav class="flex items-center gap-1">
-      <a href="#sistema" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">Sistema</a>
-      <a href="#precios" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">Inversión</a>
+      <a href="#sistema" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">El sistema</a>
       <a href="#contacto" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">Contacto</a>
     </nav>
     <div class="flex items-center justify-center">
-      <a href="#contacto" class="bg-primary text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-[#2c2c2e] transition-all shadow-md shadow-primary/10 whitespace-nowrap">
+      <a href="#contacto" class="cta-btn text-white px-5 py-2 rounded-full text-[13px] font-semibold transition-all whitespace-nowrap">
         Quiero aplicar
       </a>
     </div>
@@ -76,13 +75,10 @@ import logo from '../assets/logoAlgoritmia1.webp';
         Captación con Meta Ads <span class="mx-1">+</span> Atención con IA <span class="mx-1">+</span> Retención Automatizada
       </p>
 
-      <div class="flex flex-col sm:flex-row gap-3 justify-center reveal delay-300">
-        <a href="#contacto" class="h-12 px-8 bg-primary text-white rounded-full text-sm font-medium hover:bg-[#2c2c2e] transition-all shadow-xl shadow-primary/10 flex items-center justify-center gap-2">
-          Quiero aplicar al sistema
-          <span class="material-symbols-outlined text-lg">arrow_forward</span>
-        </a>
-        <a href="#video" class="h-12 px-8 bg-white border border-primary/10 text-primary rounded-full text-sm font-medium hover:bg-surface transition-all flex items-center justify-center">
-          Ver cómo funciona
+      <div class="flex justify-center reveal delay-300">
+        <a href="#contacto" class="cta-btn h-12 px-8 text-white rounded-full text-sm font-semibold flex items-center justify-center gap-2">
+          Quiero que me contacten
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
         </a>
       </div>
 
@@ -334,146 +330,121 @@ import logo from '../assets/logoAlgoritmia1.webp';
     </div>
   </section>
 
-  <!-- ════════════ PRICING ════════════ -->
-  <section class="py-24 px-6 md:px-12 bg-surface" id="precios">
-    <div class="max-w-2xl mx-auto">
-
-      <div class="text-center mb-10 reveal">
-        <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-3">Inversión</p>
-        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-4">La mensualidad sube<br />con tu facturación</h2>
-        <p class="text-primary/60 text-base max-w-md mx-auto leading-relaxed">
-          Según tu facturación.
-        </p>
-      </div>
-
-      <div class="bg-white rounded-3xl border border-primary/5 shadow-apple overflow-hidden reveal delay-100">
-
-        <!-- Setup -->
-        <div class="p-7 flex items-center justify-between gap-6 border-b border-primary/5">
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-1">Pago único al inicio</p>
-            <p class="text-sm text-primary font-semibold">Setup, instalación del Sistema CAR + onboarding</p>
-          </div>
-          <div class="text-right flex-shrink-0">
-            <p class="text-3xl font-bold text-primary tracking-tight">USD 600</p>
-            <p class="text-xs text-primary/40">setup único</p>
-          </div>
-        </div>
-
-        <!-- Label -->
-        <div class="px-7 pt-6 pb-2">
-          <p class="text-xs font-semibold uppercase tracking-widest text-primary/40">Mensualidad — según facturación</p>
-        </div>
-
-        <!-- Tiers -->
-        {[
-          { label: 'Tier 1 — Arranque', range: 'Hasta USD 20.000 / mes facturado', price: 'USD 600', note: 'Mientras el sistema toma velocidad.', accent: 'text-primary/50' },
-          { label: 'Tier 2 — Crecimiento', range: 'USD 20.000 – 50.000 / mes', price: 'USD 1.200', note: 'Sistema con datos y creativos optimizados.', accent: 'text-emerald-600' },
-          { label: 'Tier 3 — Escala', range: 'USD 50.000 – 100.000 / mes', price: 'USD 2.000', note: 'Operación de alto volumen.', accent: 'text-violet-600' },
-          { label: 'Tier 4 — Alto impacto', range: 'USD 100.000+ / mes', price: 'USD 3.000', note: 'Máxima expresión del Sistema CAR.', accent: 'text-amber-600' },
-        ].map((t, i) => (
-          <div class={`px-7 py-5 flex items-center justify-between gap-4 ${i < 3 ? 'border-b border-primary/5' : ''}`}>
-            <div>
-              <p class={`text-xs font-bold uppercase tracking-wider mb-1 ${t.accent}`}>{t.label}</p>
-              <p class="text-sm font-semibold text-primary">{t.range}</p>
-              <p class="text-xs text-primary/40 mt-0.5">{t.note}</p>
-            </div>
-            <div class="text-right flex-shrink-0">
-              <p class="text-2xl font-bold text-primary tracking-tight">{t.price}</p>
-              <p class="text-xs text-primary/40">/mes</p>
-            </div>
-          </div>
-        ))}
-
-        <!-- Footer note -->
-        <div class="px-7 py-5 bg-surface border-t border-primary/5 flex items-center gap-2">
-          <span class="material-symbols-outlined text-sm text-primary/50">info</span>
-          <p class="text-xs text-primary/60">La inversión en publicidad va aparte — mínimo recomendado USD 800/mes en Meta Ads.</p>
-        </div>
-
-      </div>
-
-      <div class="mt-5 bg-primary rounded-2xl p-6 text-white reveal delay-200">
-        <p class="text-sm font-semibold mb-2">¿Cómo funciona el precio?</p>
-        <p class="text-sm text-white/70 leading-relaxed">
-          La mensualidad se ajusta automáticamente según lo que factures. Si facturás menos de USD 20.000, pagás el tier más bajo. Si crezcés a USD 20K–50K, subís al siguiente, y así. Cobramos más solo cuando vos ganás más.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
   <!-- ════════════ CONTACTO ════════════ -->
-  <section class="py-24 px-6 md:px-12 bg-white" id="contacto">
-    <div class="max-w-xl mx-auto reveal">
+  <section class="py-24 px-6 md:px-12 bg-surface" id="contacto">
+    <div class="max-w-lg mx-auto">
 
-      <div class="bg-white p-8 md:p-12 rounded-3xl shadow-apple border border-primary/5">
-        <div class="text-center mb-10">
-          <div class="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-medium px-4 py-2 rounded-full mb-5">
-            <span class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></span>
-            Cupos limitados por mes
-          </div>
-          <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-primary mb-2">¿Tu marca califica?</h2>
-          <p class="text-sm text-primary/50">Completá el formulario. Si tu negocio califica, te contactamos en menos de 24 hs.</p>
+      <div class="text-center mb-8 reveal">
+        <div class="inline-flex items-center gap-2 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold px-4 py-2 rounded-full mb-5">
+          <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-pulse"></span>
+          Cupos limitados por mes
+        </div>
+        <h2 class="text-2xl md:text-4xl font-semibold tracking-tight text-primary mb-2">¿Tu marca califica?</h2>
+        <p class="text-sm text-primary/50">Respondé 2 preguntas. Si calificás, te contactamos en menos de 24 hs.</p>
+      </div>
+
+      <div class="bg-white rounded-3xl shadow-apple border border-primary/5 p-8 md:p-10 reveal delay-100">
+
+        <!-- Progress bar -->
+        <div class="flex items-center gap-2 mb-8" id="progress-bar">
+          <div class="h-1.5 flex-1 rounded-full bg-rose-500 transition-all duration-500" id="prog-1"></div>
+          <div class="h-1.5 flex-1 rounded-full bg-gray-100 transition-all duration-500" id="prog-2"></div>
+          <div class="h-1.5 flex-1 rounded-full bg-gray-100 transition-all duration-500" id="prog-3"></div>
         </div>
 
-        <div id="form-success" class="hidden mb-8 p-6 bg-green-50 border border-green-200 rounded-2xl text-center">
-          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-            <span class="material-symbols-outlined text-2xl text-green-600">check_circle</span>
+        <!-- STEP 1: Tienda online -->
+        <div id="step-1">
+          <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-2">Paso 1 de 3</p>
+          <h3 class="text-lg font-bold text-primary mb-6">¿Tu marca vende por tienda online?</h3>
+          <div class="flex flex-col gap-3">
+            {[
+              { label: 'Sí, en TiendaNube', value: 'tiendanube', ok: true },
+              { label: 'Sí, en Shopify', value: 'shopify', ok: true },
+              { label: 'Sí, en otra plataforma', value: 'otra', ok: true },
+              { label: 'No, solo por WhatsApp / Instagram', value: 'no', ok: false },
+            ].map(opt => (
+              <button type="button" class="store-opt w-full text-left px-5 py-4 rounded-2xl border-2 border-primary/8 hover:border-rose-400 hover:bg-rose-50 transition-all duration-200 text-sm font-semibold text-primary flex items-center justify-between group" data-value={opt.value} data-ok={opt.ok ? 'true' : 'false'}>
+                {opt.label}
+                <span class="material-symbols-outlined text-lg text-primary/20 group-hover:text-rose-500 transition-colors">chevron_right</span>
+              </button>
+            ))}
           </div>
-          <p class="text-green-800 font-bold text-lg">¡Solicitud enviada!</p>
-          <p class="text-green-600 text-sm mt-1">Revisamos tu perfil y te escribimos por WhatsApp en las próximas 24 hs.</p>
         </div>
 
-        <form id="lp-form" class="space-y-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="relative group">
-              <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="lp-nombre" name="nombre" placeholder="Nombre" type="text" required />
-              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-nombre">Nombre</label>
-            </div>
-            <div class="relative group">
-              <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="lp-marca" name="marca" placeholder="Marca" type="text" required />
-              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-marca">Nombre de tu marca</label>
-            </div>
+        <!-- STEP 2: Facturación -->
+        <div id="step-2" class="hidden">
+          <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-2">Paso 2 de 3</p>
+          <h3 class="text-lg font-bold text-primary mb-6">¿Cuánto facturás por mes con tu tienda?</h3>
+          <div class="flex flex-col gap-3">
+            {[
+              { label: 'Menos de USD 3.000 / mes', value: 'low', ok: false },
+              { label: 'USD 3.000 – 15.000 / mes', value: 'med', ok: true },
+              { label: 'USD 15.000 – 50.000 / mes', value: 'high', ok: true },
+              { label: 'Más de USD 50.000 / mes', value: 'top', ok: true },
+            ].map(opt => (
+              <button type="button" class="rev-opt w-full text-left px-5 py-4 rounded-2xl border-2 border-primary/8 hover:border-rose-400 hover:bg-rose-50 transition-all duration-200 text-sm font-semibold text-primary flex items-center justify-between group" data-value={opt.value} data-ok={opt.ok ? 'true' : 'false'}>
+                {opt.label}
+                <span class="material-symbols-outlined text-lg text-primary/20 group-hover:text-rose-500 transition-colors">chevron_right</span>
+              </button>
+            ))}
           </div>
-
-          <div class="relative group">
-            <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors" id="lp-wa" name="whatsapp" placeholder="WhatsApp" type="tel" required />
-            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-wa">WhatsApp</label>
-          </div>
-
-          <div class="relative">
-            <select id="lp-facturacion" name="facturacion" required class="lp-select w-full border-b border-gray-200 py-3 px-1 pr-8 text-sm text-primary focus:border-primary focus:outline-none transition-colors cursor-pointer">
-              <option value="" disabled selected>Facturación mensual aprox.</option>
-              <option>Hasta USD 20.000 / mes</option>
-              <option>USD 20.000 – 50.000 / mes</option>
-              <option>USD 50.000 – 100.000 / mes</option>
-              <option>USD 100.000+ / mes</option>
-            </select>
-            <svg class="absolute right-1 top-3.5 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-          </div>
-
-          <div class="relative group">
-            <textarea class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-primary focus:ring-0 transition-colors resize-none" id="lp-msg" name="mensaje" placeholder="Problema" rows="2"></textarea>
-            <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-primary pointer-events-none" for="lp-msg">¿Cuál es tu problema principal hoy?</label>
-          </div>
-
-          <button type="submit" id="lp-submit" class="w-full bg-primary text-white py-4 px-8 rounded-full font-medium hover:bg-primary/90 transition-all duration-300 hover:shadow-lg text-sm">
-            Quiero aplicar al sistema →
+          <button type="button" id="back-1" class="mt-4 text-xs text-primary/40 hover:text-primary transition-colors flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">arrow_back</span> Volver
           </button>
+        </div>
 
-          <p class="text-xs text-primary/40 text-center">Te respondemos por WhatsApp en menos de 24 hs. Sin compromiso.</p>
-        </form>
+        <!-- STEP 3: Datos -->
+        <div id="step-3" class="hidden">
+          <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-2">Paso 3 de 3</p>
+          <h3 class="text-lg font-bold text-primary mb-6">¿A dónde te contactamos?</h3>
+          <form id="lp-form" class="space-y-6">
+            <input type="hidden" id="lp-store" name="tienda" />
+            <input type="hidden" id="lp-revenue" name="facturacion" />
+            <div class="relative group">
+              <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-rose-500 focus:ring-0 transition-colors" id="lp-nombre" name="nombre" placeholder="Nombre" type="text" required />
+              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-rose-500 pointer-events-none" for="lp-nombre">Tu nombre</label>
+            </div>
+            <div class="relative group">
+              <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-rose-500 focus:ring-0 transition-colors" id="lp-marca" name="marca" placeholder="Marca" type="text" required />
+              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-rose-500 pointer-events-none" for="lp-marca">Nombre de tu marca</label>
+            </div>
+            <div class="relative group">
+              <input class="peer w-full border-0 border-b border-gray-200 bg-transparent py-3 px-1 text-sm text-primary placeholder-transparent focus:border-rose-500 focus:ring-0 transition-colors" id="lp-wa" name="whatsapp" placeholder="WhatsApp" type="tel" required />
+              <label class="absolute left-1 -top-3.5 text-xs text-primary/40 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-primary/40 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-rose-500 pointer-events-none" for="lp-wa">WhatsApp</label>
+            </div>
+            <button type="submit" id="lp-submit" class="cta-btn w-full text-white py-4 px-8 rounded-full font-semibold transition-all duration-300 text-sm mt-2">
+              Quiero que me contacten →
+            </button>
+            <p class="text-xs text-primary/40 text-center">Te respondemos por WhatsApp en menos de 24 hs. Sin compromiso.</p>
+          </form>
+          <button type="button" id="back-2" class="mt-2 text-xs text-primary/40 hover:text-primary transition-colors flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">arrow_back</span> Volver
+          </button>
+        </div>
+
+        <!-- DISQUALIFY -->
+        <div id="step-disqualify" class="hidden text-center py-4">
+          <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-2xl text-primary/30">schedule</span>
+          </div>
+          <h3 class="text-lg font-bold text-primary mb-2">Todavía no es el momento</h3>
+          <p class="text-sm text-primary/50 leading-relaxed mb-6" id="disqualify-msg">El Sistema C.A.R está diseñado para marcas con tienda online activa.</p>
+          <button type="button" id="back-disq" class="text-xs text-primary/40 hover:text-primary transition-colors flex items-center gap-1 mx-auto">
+            <span class="material-symbols-outlined text-sm">arrow_back</span> Volver
+          </button>
+        </div>
+
+        <!-- SUCCESS -->
+        <div id="step-success" class="hidden text-center py-4">
+          <div class="w-14 h-14 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-2xl text-rose-600">check_circle</span>
+          </div>
+          <h3 class="text-lg font-bold text-primary mb-2">¡Listo! Recibimos tu solicitud</h3>
+          <p class="text-sm text-primary/50 leading-relaxed">Revisamos tu perfil y te escribimos por WhatsApp en las próximas 24 hs.</p>
+        </div>
+
       </div>
 
-      <!-- WhatsApp alt -->
-      <div class="text-center mt-6">
-        <p class="text-xs text-primary/40 mb-3">O si preferís escribir directo:</p>
-        <a href="https://wa.me/5493476245523?text=Hola%2C%20vi%20la%20p%C3%A1gina%20del%20Sistema%20CAR%20para%20skincare%20y%20quiero%20saber%20m%C3%A1s" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium text-primary/70 hover:text-primary transition-colors border border-primary/10 rounded-full px-5 py-2.5 hover:bg-surface">
-          <svg class="w-4 h-4 fill-current text-emerald-600" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Escribir por WhatsApp
-        </a>
-      </div>
 
     </div>
   </section>
@@ -498,19 +469,113 @@ import logo from '../assets/logoAlgoritmia1.webp';
     border-left: none;
     border-right: none;
   }
+
+  /* CTA button — rosa fucsia con shimmer */
+  .cta-btn {
+    background: linear-gradient(135deg, #f43f5e, #ec4899);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -160%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-15deg);
+    animation: shimmer-sweep 3.5s ease-in-out infinite;
+  }
+  .cta-btn:hover {
+    box-shadow: 0 6px 28px rgba(244, 63, 94, 0.5);
+    transform: translateY(-1px);
+  }
+  @keyframes shimmer-sweep {
+    0%        { left: -160%; }
+    35%, 100% { left: 200%; }
+  }
 </style>
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    // Form
+
+    // ── Multi-step form ──
+    const steps = {
+      s1: document.getElementById('step-1'),
+      s2: document.getElementById('step-2'),
+      s3: document.getElementById('step-3'),
+      disq: document.getElementById('step-disqualify'),
+      ok: document.getElementById('step-success'),
+    };
+    const prog = [
+      document.getElementById('prog-1'),
+      document.getElementById('prog-2'),
+      document.getElementById('prog-3'),
+    ];
+    const progressBar = document.getElementById('progress-bar');
+
+    function showOnly(el: HTMLElement | null) {
+      Object.values(steps).forEach(s => s?.classList.add('hidden'));
+      el?.classList.remove('hidden');
+    }
+
+    function setProgress(n: number) {
+      prog.forEach((p, i) => {
+        if (!p) return;
+        p.classList.toggle('bg-rose-500', i < n);
+        p.classList.toggle('bg-gray-100', i >= n);
+      });
+      if (progressBar) progressBar.classList.toggle('hidden', n === 0);
+    }
+
+    // Step 1 — tienda
+    document.querySelectorAll('.store-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ok = (btn as HTMLElement).dataset.ok === 'true';
+        const val = (btn as HTMLElement).dataset.value ?? '';
+        const hidden = document.getElementById('lp-store') as HTMLInputElement | null;
+        if (hidden) hidden.value = val;
+        if (ok) { showOnly(steps.s2); setProgress(2); }
+        else {
+          const msg = document.getElementById('disqualify-msg');
+          if (msg) msg.textContent = 'El Sistema C.A.R necesita una tienda online para funcionar. Guardá este link — cuando la tengas, volvé.';
+          showOnly(steps.disq); setProgress(0);
+        }
+      });
+    });
+
+    // Step 2 — facturación
+    document.querySelectorAll('.rev-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ok = (btn as HTMLElement).dataset.ok === 'true';
+        const val = (btn as HTMLElement).dataset.value ?? '';
+        const hidden = document.getElementById('lp-revenue') as HTMLInputElement | null;
+        if (hidden) hidden.value = val;
+        if (ok) { showOnly(steps.s3); setProgress(3); }
+        else {
+          const msg = document.getElementById('disqualify-msg');
+          if (msg) msg.textContent = 'Todavía no estás en el volumen ideal para el sistema. Guardá este link — cuando llegues a ese punto, el C.A.R puede multiplicar tus resultados.';
+          showOnly(steps.disq); setProgress(0);
+        }
+      });
+    });
+
+    // Backs
+    document.getElementById('back-1')?.addEventListener('click', () => { showOnly(steps.s1); setProgress(1); });
+    document.getElementById('back-2')?.addEventListener('click', () => { showOnly(steps.s2); setProgress(2); });
+    document.getElementById('back-disq')?.addEventListener('click', () => { showOnly(steps.s1); setProgress(1); });
+
+    // Submit
     const form = document.getElementById('lp-form') as HTMLFormElement | null;
-    const success = document.getElementById('form-success');
-    const btn = document.getElementById('lp-submit') as HTMLButtonElement | null;
+    const submitBtn = document.getElementById('lp-submit') as HTMLButtonElement | null;
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (btn) { btn.textContent = 'Enviando...'; btn.disabled = true; }
-      const data = { ...Object.fromEntries(new FormData(form)), source: 'landing-skincare' };
+      if (submitBtn) { submitBtn.textContent = 'Enviando...'; submitBtn.disabled = true; }
+      const data = { ...Object.fromEntries(new FormData(form)), source: 'landing-cosmeticas' };
       try {
         await fetch('/api/send-email', {
           method: 'POST',
@@ -518,12 +583,12 @@ import logo from '../assets/logoAlgoritmia1.webp';
           body: JSON.stringify(data),
         });
       } catch {}
-      if (form) form.style.display = 'none';
-      if (success) success.style.display = 'block';
-      if ((window as any).fbq) (window as any).fbq('track', 'Lead', { content_name: 'Landing Skincare CAR' });
+      showOnly(steps.ok);
+      setProgress(0);
+      if ((window as any).fbq) (window as any).fbq('track', 'Lead', { content_name: 'Landing Cosmeticas CAR' });
     });
 
-    // Smooth scroll for nav links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         const id = (a as HTMLAnchorElement).getAttribute('href')?.replace('#', '');
