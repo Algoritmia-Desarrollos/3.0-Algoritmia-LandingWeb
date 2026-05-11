@@ -516,32 +516,17 @@ import logo from '../assets/logoAlgoritmia1.webp';
     border-right: none;
   }
 
-  /* CTA button — rosa fucsia con shimmer */
+  /* CTA button — rosa fucsia sólido */
   .cta-btn {
-    background: linear-gradient(135deg, #f43f5e, #ec4899);
+    background: #f43f5e;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(244, 63, 94, 0.35);
+    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
     transition: box-shadow 0.2s, transform 0.2s;
   }
-  .cta-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -160%;
-    width: 70%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-    transform: skewX(-15deg);
-    animation: shimmer-sweep 3.5s ease-in-out infinite;
-  }
   .cta-btn:hover {
-    box-shadow: 0 6px 28px rgba(244, 63, 94, 0.5);
+    box-shadow: 0 6px 22px rgba(244, 63, 94, 0.4);
     transform: translateY(-1px);
-  }
-  @keyframes shimmer-sweep {
-    0%        { left: -160%; }
-    35%, 100% { left: 200%; }
   }
 </style>
 
