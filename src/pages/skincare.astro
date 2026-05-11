@@ -123,35 +123,34 @@ import logo from '../assets/logoAlgoritmia1.webp';
           {
             letter: 'C',
             color: 'emerald',
-            title: 'Sin sistema de captación seguro',
-            desc: 'No tienen una máquina predecible que traiga clientes nuevos cada mes. Dependen del orgánico, del boca en boca, o de ads que a veces funcionan y a veces no. Sin consistencia, no hay crecimiento.',
+            title: 'Sin captación predecible',
+            desc: 'Dependen del orgánico o ads inconsistentes. Sin un sistema, no hay crecimiento estable.',
           },
           {
             letter: 'A',
             color: 'violet',
             title: 'Atención que pierde ventas',
-            desc: 'Cada consulta por WhatsApp requiere a alguien que responda. Las preguntas básicas llegan tarde, los interesados se enfrían. Ventas que podrían cerrarse solas se pierden por demora.',
+            desc: 'Las consultas llegan, nadie responde rápido. El interesado se enfría y compra en otro lado.',
           },
           {
             letter: 'R',
             color: 'pink',
-            title: 'Clientes que compran solo una vez',
-            desc: 'El costo de conseguir un cliente nuevo es cada vez más alto. Sin un sistema que haga volver a quien ya compró, el negocio depende del 100% de publicidad para sobrevivir.',
+            title: 'Clientes que no vuelven',
+            desc: 'Sin retención, el negocio depende 100% de publicidad para sobrevivir.',
           },
         ].map((item, i) => (
-          <div class={`bg-white p-7 rounded-3xl border border-primary/5 hover:border-primary/10 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300 reveal delay-${(i+1)*100}`}>
-            <div class={`w-10 h-10 rounded-xl flex items-center justify-center mb-5 bg-${item.color}-50 border border-${item.color}-100`}>
+          <div class={`bg-white p-6 rounded-3xl border border-primary/5 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300 reveal delay-${(i+1)*100}`}>
+            <div class={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 bg-${item.color}-50 border border-${item.color}-100`}>
               <span class={`text-sm font-black text-${item.color}-600`}>{item.letter}</span>
             </div>
-            <h3 class="text-base font-bold text-primary mb-2">{item.title}</h3>
-            <p class="text-sm text-primary/60 leading-relaxed">{item.desc}</p>
+            <h3 class="text-sm font-bold text-primary mb-1.5">{item.title}</h3>
+            <p class="text-sm text-primary/50 leading-relaxed">{item.desc}</p>
           </div>
         ))}
       </div>
 
-      <div class="mt-6 bg-primary rounded-2xl p-6 text-white leading-relaxed reveal delay-200">
-        <p class="text-base font-semibold mb-1">El Sistema CAR resuelve los tres a la vez.</p>
-        <p class="text-sm text-white/60">Captación predecible con Meta Ads + Atención que cierra con IA + Retención automática. No son servicios sueltos — es un sistema que trabaja junto para que el negocio crezca.</p>
+      <div class="mt-4 bg-primary rounded-2xl p-5 text-white reveal delay-200">
+        <p class="text-sm font-semibold">El Sistema CAR resuelve los tres a la vez — no son servicios sueltos, es un sistema integrado.</p>
       </div>
 
     </div>
@@ -161,12 +160,10 @@ import logo from '../assets/logoAlgoritmia1.webp';
   <section class="py-24 px-6 md:px-12 bg-white" id="sistema">
     <div class="max-w-5xl mx-auto">
 
-      <div class="text-center mb-14 reveal">
+      <div class="text-center mb-10 reveal">
         <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-3">La solución</p>
-        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-4">El Sistema CAR</h2>
-        <p class="text-primary/60 text-base md:text-lg max-w-xl mx-auto">
-          Tres palancas integradas. No son servicios sueltos — cada parte alimenta a la siguiente.
-        </p>
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-3">El Sistema CAR</h2>
+        <p class="text-primary/60 text-base max-w-sm mx-auto">Tres palancas. Un sistema. Cada parte alimenta a la siguiente.</p>
       </div>
 
       <div class="flex flex-col gap-4">
@@ -324,6 +321,68 @@ import logo from '../assets/logoAlgoritmia1.webp';
             <p class="text-xs font-semibold text-primary leading-tight">{f.label}</p>
           </div>
         ))}
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════ TESTIMONIOS ════════════ -->
+  <section class="py-24 px-6 md:px-12 bg-black text-white" id="resultados">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="text-center mb-14 reveal">
+        <p class="text-xs font-semibold uppercase tracking-widest text-white/40 mb-3">El mismo Sistema C.A.R</p>
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-white mb-3">Lo que dicen nuestros clientes</h2>
+      </div>
+
+      <!-- Botones desktop -->
+      <div class="hidden md:flex justify-end mb-6 gap-3 reveal delay-100">
+        <button id="test-prev-btn" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30" aria-label="Anterior">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+        </button>
+        <button id="test-next-btn" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30" aria-label="Siguiente">
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Carrusel -->
+      <div class="overflow-hidden cursor-grab active:cursor-grabbing reveal delay-100" id="test-carousel-container">
+        <div class="flex transition-transform duration-500 ease-out select-none" id="test-carousel-track">
+
+          {[
+            { id: 'wmpar2ho96', name: 'Gastón', business: 'Librería Mayorista Leo', result: 'De 2 pedidos/sem a facturar USD 150k al año' },
+            { id: '25qh1l05lm', name: 'Tomás', business: 'Puertas Blindadas Jack', result: 'Multiplicó sus ventas ×10 en 6 meses' },
+            { id: 'xd4owsfosr', name: 'Florencia', business: 'Atérmicos Pinamar', result: 'Empezaron a vender un 200% más en 2 meses' },
+            { id: 'p1gnlgzb2r', name: 'Rocío', business: 'Psicóloga Rocío', result: 'Aumentó su clientela un 400% en 1 mes' },
+            { id: '3gj3u8rkxc', name: 'Lucía', business: 'Case Rossi', result: 'Aumentaron su facturación un 100% en 1 mes' },
+          ].map(t => (
+            <div class="w-full md:w-1/2 flex-shrink-0 px-3">
+              <!-- Video Wistia -->
+              <div class="rounded-2xl overflow-hidden border border-white/10 mb-4 bg-[#111]">
+                <script src="https://fast.wistia.com/player.js" async></script>
+                <script src={`https://fast.wistia.com/embed/${t.id}.js`} async type="module"></script>
+                <style set:html={`wistia-player[media-id='${t.id}']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/${t.id}/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }`}></style>
+                <wistia-player media-id={t.id} aspect="1.7777777777777777"></wistia-player>
+              </div>
+              <!-- Info -->
+              <div class="px-1">
+                <p class="text-sm font-bold text-white">{t.name} <span class="font-normal text-white/40">· {t.business}</span></p>
+                <p class="text-xs text-rose-400 font-semibold mt-0.5">{t.result}</p>
+              </div>
+            </div>
+          ))}
+
+        </div>
+      </div>
+
+      <!-- Botones mobile -->
+      <div class="mt-8 flex justify-center gap-3 md:hidden">
+        <button id="test-prev-btn-mobile" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30" aria-label="Anterior">
+          <span class="material-symbols-outlined text-sm">arrow_back</span>
+        </button>
+        <button id="test-next-btn-mobile" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors disabled:opacity-30" aria-label="Siguiente">
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
       </div>
 
     </div>
@@ -536,6 +595,28 @@ import logo from '../assets/logoAlgoritmia1.webp';
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.03); }
   }
+
+  /* Ticker social proof */
+  .animate-scroll {
+    animation: ticker-scroll 35s linear infinite;
+    will-change: transform;
+  }
+  .animate-scroll-fast {
+    animation: ticker-scroll 20s linear infinite;
+    will-change: transform;
+  }
+  @media (min-width: 768px) {
+    .animate-scroll-fast {
+      animation: ticker-scroll 35s linear infinite;
+    }
+  }
+  .hover-pause:hover {
+    animation-play-state: paused;
+  }
+  @keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 </style>
 
 <script>
@@ -663,6 +744,103 @@ import logo from '../assets/logoAlgoritmia1.webp';
         if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+
+    // ── Testimonios Carousel ──
+    const testContainer = document.getElementById('test-carousel-container');
+    const testTrack = document.getElementById('test-carousel-track');
+    const testPrev = document.getElementById('test-prev-btn');
+    const testNext = document.getElementById('test-next-btn');
+    const testPrevMob = document.getElementById('test-prev-btn-mobile');
+    const testNextMob = document.getElementById('test-next-btn-mobile');
+
+    if (testTrack && testContainer) {
+      const testTotal = testTrack.children.length;
+      let testIdx = 0, testStartX = 0, testCurT = 0, testPrevT = 0;
+      let testDrag = false, testMov = false, testClickT = 0, testAnimID = 0;
+
+      const testVisible = () => window.innerWidth >= 768 ? 2 : 1;
+      const testMax = () => testTotal - testVisible();
+
+      const updateTest = (i: number) => {
+        testIdx = Math.max(0, Math.min(i, testMax()));
+        const pct = (100 / testVisible()) * testIdx;
+        testCurT = -pct; testPrevT = testCurT;
+        (testTrack as HTMLElement).style.transform = `translateX(${-pct}%)`;
+        [[testPrev, testPrevMob], [testNext, testNextMob]].forEach(([a, b], gi) => {
+          [a, b].forEach(btn => { if (btn) (btn as HTMLButtonElement).disabled = gi === 0 ? testIdx === 0 : testIdx === testMax(); });
+        });
+      };
+
+      const tStart = (e: MouseEvent | TouchEvent) => {
+        testDrag = true; testMov = false; testClickT = Date.now();
+        testStartX = e instanceof MouseEvent ? e.pageX : e.touches[0].clientX;
+        (testTrack as HTMLElement).style.transition = 'none';
+        testAnimID = requestAnimationFrame(tAnim);
+      };
+      const tEnd = () => {
+        if (!testDrag) return; testDrag = false; cancelAnimationFrame(testAnimID);
+        (testTrack as HTMLElement).style.transition = 'transform 0.5s ease-out';
+        const thr = (100 / testVisible()) / 4, moved = testCurT - testPrevT;
+        if (moved < -thr) updateTest(testIdx + 1);
+        else if (moved > thr) updateTest(testIdx - 1);
+        else updateTest(testIdx);
+      };
+      const tMove = (e: MouseEvent | TouchEvent) => {
+        if (!testDrag) return;
+        const x = e instanceof MouseEvent ? e.pageX : e.touches[0].clientX;
+        const diff = x - testStartX;
+        if (Math.abs(diff) > 5) testMov = true;
+        if (e.cancelable) e.preventDefault();
+        testCurT = testPrevT + (diff / (testContainer as HTMLElement).offsetWidth) * 100;
+      };
+      const tAnim = () => {
+        if (testDrag) { (testTrack as HTMLElement).style.transform = `translateX(${testCurT}%)`; testAnimID = requestAnimationFrame(tAnim); }
+      };
+
+      testContainer.addEventListener('mousedown', tStart as EventListener);
+      testContainer.addEventListener('touchstart', tStart as EventListener, { passive: false });
+      testContainer.addEventListener('mouseup', tEnd);
+      testContainer.addEventListener('mouseleave', () => { if (testDrag) tEnd(); });
+      testContainer.addEventListener('touchend', tEnd);
+      testContainer.addEventListener('mousemove', tMove as EventListener);
+      testContainer.addEventListener('touchmove', tMove as EventListener, { passive: false });
+      testPrev?.addEventListener('click', () => updateTest(testIdx - 1));
+      testNext?.addEventListener('click', () => updateTest(testIdx + 1));
+      testPrevMob?.addEventListener('click', () => updateTest(testIdx - 1));
+      testNextMob?.addEventListener('click', () => updateTest(testIdx + 1));
+      window.addEventListener('resize', () => updateTest(testIdx));
+      updateTest(0);
+    }
+
+    // ── Video Modal ──
+    const modal = document.getElementById('video-modal');
+    const iframe = document.getElementById('modal-iframe') as HTMLIFrameElement | null;
+    const closeBtn = document.getElementById('close-modal');
+
+    const openModal = (videoId: string) => {
+      if (!modal || !iframe) return;
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      modal.classList.remove('hidden'); modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeModal = () => {
+      if (!modal || !iframe) return;
+      iframe.src = '';
+      modal.classList.add('hidden'); modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    };
+
+    document.querySelectorAll('.test-video-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const vid = (card as HTMLElement).dataset.videoId ?? '';
+        if (vid && !vid.startsWith('TU_VIDEO')) openModal(vid);
+      });
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
   });
 </script>
 
