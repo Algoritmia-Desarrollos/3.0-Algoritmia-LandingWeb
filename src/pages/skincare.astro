@@ -112,9 +112,8 @@ import logo from '../assets/logoAlgoritmia1.webp';
       <div class="text-center mb-14 reveal">
         <p class="text-xs font-semibold uppercase tracking-widest text-primary/40 mb-3">El problema</p>
         <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-primary mb-4">
-          Lo que le pasa a la mayoría<br class="hidden md:block" /> de las marcas de skincare
-        </h2>
-        <p class="text-primary/60 text-base md:text-lg max-w-xl mx-auto">
+          Lo que le pasa a la mayoría<br class="hidden md:block" /> de las marcas
+        </h2>        <p class="text-primary/60 text-base md:text-lg max-w-xl mx-auto">
           No es el producto. Es el sistema.
         </p>
       </div>
@@ -340,7 +339,7 @@ import logo from '../assets/logoAlgoritmia1.webp';
           Cupos limitados por mes
         </div>
         <h2 class="text-2xl md:text-4xl font-semibold tracking-tight text-primary mb-2">¿Tu marca califica?</h2>
-        <p class="text-sm text-primary/50">Respondé 2 preguntas. Si calificás, te contactamos en menos de 24 hs.</p>
+        <p class="text-sm text-primary/50">Respondé 4 preguntas. Si calificás, te contactamos en menos de 24 hs.</p>
       </div>
 
       <div class="bg-white rounded-3xl shadow-apple border border-primary/5 p-8 md:p-10 reveal delay-100">
@@ -640,9 +639,11 @@ import logo from '../assets/logoAlgoritmia1.webp';
           body: JSON.stringify(data),
         });
       } catch {}
-      showOnly(steps.ok);
-      setProgress(0);
+      
       if ((window as any).fbq) (window as any).fbq('track', 'Lead', { content_name: 'Landing Cosmeticas CAR' });
+      
+      // Redirect to Thank You page
+      window.location.href = '/gracias';
     });
 
     // Smooth scroll
