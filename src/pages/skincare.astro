@@ -33,7 +33,7 @@ import logo from '../assets/logoAlgoritmia1.webp';
     <a href="#hero" class="flex items-center hover:opacity-80 transition-opacity">
       <Image src={logo} alt="Algoritmia" class="w-8 h-8 object-contain" />
     </a>
-    <a href="#contacto" class="cta-btn text-white px-5 py-2 rounded-full text-[13px] font-semibold transition-all">
+    <a href="#contacto" class="cta-btn nav-pulse text-white px-5 py-2 rounded-full text-[13px] font-semibold transition-all">
       Quiero aplicar
     </a>
   </div>
@@ -49,7 +49,7 @@ import logo from '../assets/logoAlgoritmia1.webp';
       <a href="#contacto" class="text-[13px] font-medium text-primary/80 hover:text-primary transition-all px-4 py-2 rounded-full hover:bg-black/5 flex items-center justify-center">Contacto</a>
     </nav>
     <div class="flex items-center justify-center">
-      <a href="#contacto" class="cta-btn text-white px-5 py-2 rounded-full text-[13px] font-semibold transition-all whitespace-nowrap">
+      <a href="#contacto" class="cta-btn nav-pulse text-white px-5 py-2 rounded-full text-[13px] font-semibold transition-all whitespace-nowrap">
         Quiero aplicar
       </a>
     </div>
@@ -526,6 +526,15 @@ import logo from '../assets/logoAlgoritmia1.webp';
   .cta-btn:hover {
     box-shadow: 0 6px 22px rgba(244, 63, 94, 0.4);
     transform: translateY(-1px);
+  }
+
+  .nav-pulse {
+    animation: pulse-subtle 3.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-subtle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
   }
 </style>
 
