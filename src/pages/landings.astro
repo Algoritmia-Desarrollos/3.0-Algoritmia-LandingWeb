@@ -1,0 +1,618 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import logo from '../assets/logoAlgoritmia1.webp';
+
+// Imágenes a poner en /public/images/webs/ (si faltan, hay placeholder).
+const showcaseTabs = [
+  { id: 'tiendas-online',  label: 'Tiendas Online',      img: '/images/webs/tiendas-online.webp',   desc: "E-commerce completo en Shopify o Tiendanube. Checkout sin fricción, catálogo claro y métricas conectadas desde el día 1. <strong>+62% conversión promedio.</strong>" },
+  { id: 'landing-page',    label: 'Landing Page',        img: '/images/webs/landing-page.webp',     desc: "Página única para tráfico frío de Meta y Google Ads. Mensaje claro, formulario calificador, cero distracción. <strong>Costo por lead ‑57%.</strong>" },
+  { id: 'institucional',   label: 'Institucionales',     img: '/images/webs/institucional.webp',    desc: "Sitio corporativo que comunica autoridad. Astro o Next.js con carga sub-segundo. <strong>Lighthouse 95+</strong> y SEO técnico cuidado." },
+  { id: 'un-producto',     label: '1 Solo Producto',     img: '/images/webs/un-producto.webp',      desc: "Landing mono-producto al estilo Apple. Una sola misión: vender ese producto. Pensada para escalar con pauta en frío. <strong>AOV +38%.</strong>" },
+  { id: 'varios-productos',label: 'Varios Productos',    img: '/images/webs/varios-productos.webp', desc: "Catálogo con foco en cross-sell. Bundles, productos relacionados y descripciones extendidas que disparan el ticket promedio." },
+  { id: 'servicios-pro',   label: 'Servicios Profesionales', img: '/images/webs/servicios.webp',    desc: "Web para abogados, médicos, consultores y clínicas. Calendario integrado, formulario calificador y posicionamiento premium." },
+  { id: 'mayorista',       label: 'Mayorista B2B',       img: '/images/webs/mayorista.webp',        desc: "Tienda con precios por volumen, login de cuenta corriente, listas de precios por cliente y catálogo descargable en PDF." },
+  { id: 'inmobiliaria',    label: 'Inmobiliaria',        img: '/images/webs/inmobiliaria.webp',     desc: "Sitio integrado a Tokko o sistema propio, fichas de propiedad SEO-friendly y formularios de reserva conectados a WhatsApp." }
+];
+
+const platforms = [
+  { name: 'Shopify',     logo: '/images/platforms/shopify-bag.webp' },
+  { name: 'Tiendanube',  logo: '/images/platforms/tiendanubeoscuro.png' },
+  { name: 'WordPress',   logo: '/images/platforms/logowordpress.webp' },
+  { name: 'React',       logo: '/images/platforms/react.svg' },
+  { name: 'Next.js',     logo: '/images/platforms/nextjs.svg' },
+  { name: 'Astro',       logo: '/images/platforms/astro.svg' },
+  { name: 'TypeScript',  logo: '/images/platforms/typescript.svg' },
+  { name: 'JavaScript',  logo: '/images/platforms/javascript.svg' },
+  { name: 'HTML5',       logo: '/images/platforms/html5.svg' },
+  { name: 'CSS3',        logo: '/images/platforms/css3.svg' },
+  { name: 'Tailwind CSS',logo: '/images/platforms/tailwindcss.svg' },
+  { name: 'Supabase',    logo: '/images/platforms/supabase.svg' },
+  { name: 'Node.js',     logo: '/images/platforms/nodejs.svg' },
+  { name: 'Vercel',      logo: '/images/platforms/vercel.svg' },
+  { name: 'Figma',       logo: '/images/platforms/figma.svg' }
+];
+
+// Qué se lleva el cliente — lista de entregables concretos que vende el servicio
+const entregables = [
+  { icon: 'palette',       title: 'Diseño 100% custom',         desc: 'Cero templates de Themeforest. Cada sección dibujada en Figma y aprobada por vos.' },
+  { icon: 'edit_note',     title: 'Copy estratégico incluido',  desc: 'Headlines, subtítulos y CTAs escritos por nosotros con frameworks probados (PAS / AIDA).' },
+  { icon: 'speed',         title: 'Velocidad Lighthouse 95+',   desc: 'Optimización técnica para que tu web cargue en menos de 1.2 segundos en móvil 4G.' },
+  { icon: 'analytics',     title: 'Tracking impecable',         desc: 'GA4, Meta Pixel + CAPI, eventos custom. Datos limpios para escalar pauta desde el día 1.' },
+  { icon: 'auto_awesome',  title: 'SEO técnico desde el día 1', desc: 'Schema markup, sitemap, robots, OG images y meta correctos. No quedás invisible en Google.' },
+  { icon: 'dns',           title: 'Hosting + dominio listo',    desc: 'Te configuramos Vercel, dominio, SSL y emails corporativos. Llegás a producción sin tocar nada.' },
+  { icon: 'code_blocks',   title: 'Código tuyo, documentado',   desc: 'Repositorio en tu GitHub, README claro. Si querés cambiar de proveedor, lo hacés sin perder nada.' },
+  { icon: 'handshake',     title: 'Soporte 30 días post-launch', desc: 'Primer mes de ajustes ilimitados incluido. Si algo no convierte, lo arreglamos.' }
+];
+
+const proceso = [
+  { n: '01', title: 'Briefing estratégico', desc: 'Una llamada de 45 minutos. Entendemos negocio, oferta y a quién le vendés. Sin formularios infinitos.' },
+  { n: '02', title: 'Diseño en Figma',      desc: 'Mockup completo antes de tocar código. Aprobás cada sección con su copy. Cero sorpresas.' },
+  { n: '03', title: 'Desarrollo + Copy',    desc: 'Programación + redacción con frameworks probados (PAS / AIDA). Vos validás cada sección.' },
+  { n: '04', title: 'QA y lanzamiento',     desc: 'Testing en 5 dispositivos, Lighthouse 95+, pixel y tracking conectados, dominio en producción.' },
+  { n: '05', title: 'Optimización mes 1',   desc: 'Revisamos Hotjar / GA4 y ajustamos lo que no convierte. Incluido sin costo extra.' }
+];
+
+const testimonials = [
+  { title: 'The Skirting Factory',     stat: 'Gracias a su web: +300% ventas el 1º mes',     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-skirting.webp',     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/manuel-descartes.mp4', tag: 'E-commerce USA' },
+  { title: 'Dr. Juan Tesari',          stat: 'Gracias a su landing: +300 consultas/mes',     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-juan.webp',         video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/juan-tesari.mp4',     tag: 'Salud / Servicios' },
+  { title: 'Librería Mayorista Leo',   stat: 'Gracias a su tienda: $150K USD anuales',       cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-libreria-leo.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/libreria-leo.mp4',    tag: 'Mayorista B2B' },
+  { title: 'Puertas Blindadas Jack',   stat: 'Gracias a su web: x10 ventas High Ticket',     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-jack.webp',       video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/puertas-jack.mp4',    tag: 'High Ticket' },
+  { title: 'Atérmicos Pinamar',        stat: 'Gracias a su landing: +15 contratos High Ticket/mes', cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-atermicos.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/atermicos-pinamar.mp4', tag: 'Construcción Premium' },
+  { title: 'Case Rossi',               stat: 'Gracias a su tienda: ROAS récord 70x',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-case-rossi.webp',  video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/case-rossi.mp4',     tag: 'E-commerce Diseño' }
+];
+
+const faqs = [
+  { q: '¿En cuánto tiempo está mi web lista?',        a: 'Landings simples: 7 a 10 días hábiles. Tiendas Shopify/Tiendanube: 3 a 5 semanas según catálogo. Webs corporativas: 2 a 4 semanas. Fecha cerrada en la propuesta.' },
+  { q: '¿Trabajan con mi diseñador / mi marca?',      a: 'Sí. Si tenés brand book lo respetamos. Si no, lo construimos. Diseño siempre 100% custom — no usamos templates de Themeforest.' },
+  { q: '¿Quién hace el copy?',                         a: 'Nosotros. Venimos de gestionar más de USD 2M en pauta. Escribimos copy probado en mercado, no copy de manual. Validás cada sección.' },
+  { q: '¿Qué pasa después del lanzamiento?',           a: 'Primer mes de optimización incluido. Después podés contratar mantenimiento o quedarte con la web sin pagar nada — el código es tuyo.' },
+  { q: '¿Cuánto cuesta?',                              a: 'Depende del scope. Landing simple desde USD 600. Tienda custom desde USD 1.800. Web corporativa premium desde USD 1.200. Número cerrado en la 1ª llamada.' },
+  { q: '¿Por qué Algoritmia y no una agencia grande?', a: 'Porque venimos de pautear. Cada web sale con la cabeza puesta en cómo se comporta el tráfico pago. Eso una agencia que solo programa no lo tiene.' }
+];
+---
+
+<Layout
+  title="Diseño y Desarrollo Web · Shopify · Tiendanube · Landings | Algoritmia"
+  description="Hacemos webs, tiendas Shopify, tiendas Tiendanube y landing pages diseñadas para convertir tráfico pago en ventas reales. Más de 100 clientes."
+  noindex={true}
+>
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-[100] flex justify-center pt-2 md:pt-4 px-4 pointer-events-none">
+    <div class="pointer-events-auto bg-white/85 backdrop-blur-xl border border-zinc-200/70 shadow-md shadow-zinc-900/[0.04] rounded-[2rem] px-5 py-2 flex items-center justify-between w-full max-w-5xl mx-auto">
+      <a href="/" class="flex items-center gap-2">
+        <Image src={logo} alt="Algoritmia" class="w-8 h-8 md:w-9 md:h-9 object-contain" />
+        <div class="flex flex-col leading-none">
+          <span class="text-[14px] font-black tracking-tight text-zinc-900 font-display">Algoritmia</span>
+          <span class="text-[8.5px] font-bold text-violet-500 tracking-[0.22em] mt-0.5 uppercase">Webs</span>
+        </div>
+      </a>
+      <div class="flex items-center gap-1.5">
+        <a href="#servicios"   class="hidden md:inline-flex text-[12px] font-bold text-zinc-600 hover:text-zinc-900 px-3 py-2 transition-colors">Servicios</a>
+        <a href="#proceso"     class="hidden md:inline-flex text-[12px] font-bold text-zinc-600 hover:text-zinc-900 px-3 py-2 transition-colors">Proceso</a>
+        <a href="#testimonios" class="hidden md:inline-flex text-[12px] font-bold text-zinc-600 hover:text-zinc-900 px-3 py-2 transition-colors">Casos</a>
+        <a href="#contacto"    class="bg-zinc-900 text-white px-4 md:px-5 h-9 inline-flex items-center rounded-full text-[12px] md:text-[13px] font-black hover:bg-zinc-800 transition-all shadow-md shadow-zinc-900/20">Crear mi web</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="bg-white text-zinc-900">
+
+    <!-- =================== HERO =================== -->
+    <section class="relative pt-32 sm:pt-44 pb-20 lg:pb-28 overflow-hidden">
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-violet-400/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+        <h1 class="font-display tracking-tight max-w-4xl mx-auto mb-6 animate-in fade-in slide-in-from-bottom-5 duration-700 text-4xl sm:text-5xl md:text-[62px] lg:text-[72px] leading-[1.1] text-zinc-900">
+          <span class="font-semibold text-zinc-900">Webs, tiendas y landings.</span>{' '}
+          <span class="font-black underline decoration-violet-500 decoration-[3px] underline-offset-4">Diseñadas para vender</span>.
+        </h1>
+
+        <p class="text-[15.5px] sm:text-[17px] max-w-xl mx-auto leading-relaxed mb-10 text-zinc-500">
+          Diseñamos cada sitio con la cabeza puesta en el tráfico pago. Menos fricción, más conversión. Probado en más de <strong class="text-zinc-900">100 clientes</strong> reales.
+        </p>
+
+        <div class="flex flex-col items-center gap-3 mb-16">
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a href="#contacto" class="w-full sm:w-auto h-12 px-8 font-black rounded-xl text-[13px] flex items-center justify-center gap-2 shadow-md shadow-zinc-900/20 bg-zinc-900 text-white hover:bg-zinc-800 transition-all">
+              Pedir mi propuesta
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="#trabajos" class="w-full sm:w-auto h-12 px-8 border font-bold rounded-xl text-[13px] flex items-center justify-center gap-2 bg-white border-zinc-200 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 shadow-sm transition-all">
+              Ver trabajos →
+            </a>
+          </div>
+        </div>
+
+        <!-- Showcase Hero (CAR-SaaS exact pattern) -->
+        <div id="hero-showcase" class="relative max-w-5xl lg:max-w-6xl mx-auto mt-10 lg:mt-14 -mx-6 sm:mx-auto animate-in fade-in zoom-in-95 duration-1000">
+          <div class="w-full rounded-none sm:rounded-[22px] border p-0 sm:p-1 bg-zinc-950/20 border-zinc-200/35 shadow-xl">
+            <div class="rounded-none sm:rounded-[18px] border bg-white border-zinc-200/45 overflow-hidden">
+
+              <!-- Tabs -->
+              <div class="flex flex-wrap border-b p-1.5 gap-1 border-zinc-200/50 bg-zinc-50/40">
+                {showcaseTabs.map((tab, i) => (
+                  <button
+                    data-tab-id={tab.id}
+                    class={`showcase-tab h-6 md:h-[25px] px-2.5 rounded-md text-[10px] md:text-[11px] font-bold transition-all flex items-center justify-center relative ${i === 0 ? 'is-active bg-zinc-900 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100/80'}`}
+                  >
+                    {tab.label}
+                    <span class="tab-dot absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse opacity-0"></span>
+                  </button>
+                ))}
+              </div>
+
+              <!-- Progress bar -->
+              <div class="h-[6px] overflow-hidden bg-zinc-200 relative">
+                <div id="hero-progress-bar" class="h-full bg-gradient-to-r from-violet-500 via-violet-500 to-violet-400 origin-left shadow-[0_0_12px_rgba(139,92,246,0.6)]" style="transform: scaleX(0);"></div>
+              </div>
+
+              <!-- Image area -->
+              <div class="relative overflow-hidden bg-zinc-50" style="aspect-ratio: 1600/900;">
+                {showcaseTabs.map((tab, i) => (
+                  <div
+                    data-pane={tab.id}
+                    data-desc={tab.desc}
+                    data-label={tab.label}
+                    class={`showcase-pane absolute inset-0 transition-opacity duration-500 ease-out ${i === 0 ? 'opacity-100 z-20' : 'opacity-0 z-10'}`}
+                  >
+                    <img
+                      src={tab.img}
+                      alt={`Antes y después — ${tab.label}`}
+                      loading="eager"
+                      decoding="async"
+                      class="w-full h-full object-cover object-top"
+                      onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                    />
+                    <!-- Placeholder simple (web próximamente) -->
+                    <div class="hidden absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-zinc-50 to-zinc-100 text-zinc-400">
+                      <svg class="w-14 h-14 text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                      <p class="text-[11px] font-black uppercase tracking-widest text-zinc-500">Vista previa próximamente</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Tab description -->
+              <div class="h-[118px] sm:h-[98px] md:h-[86px] px-4 sm:px-5 py-2.5 border-t border-zinc-100 bg-zinc-50/60 flex items-start gap-3 text-left">
+                <div class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-violet-500"></div>
+                <div class="min-w-0 flex-1 md:max-w-2xl lg:max-w-3xl">
+                  <p id="hero-tab-label" class="text-[11px] font-black uppercase tracking-wider mb-1 text-zinc-700">{showcaseTabs[0].label}</p>
+                  <p id="hero-tab-desc" class="text-[11.5px] sm:text-[12px] leading-relaxed font-medium text-zinc-500 [&_strong]:font-black [&_strong]:text-zinc-800" set:html={showcaseTabs[0].desc}></p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== LOGO MARQUEE =================== -->
+    <section class="py-8 lg:py-10 border-t border-b bg-zinc-50/30 border-zinc-200/40">
+      <p class="text-center text-[9px] font-bold text-zinc-400 uppercase tracking-[0.2em] font-sans mb-4 px-6">
+        Stack técnico · Partners certificados · Diseño profesional
+      </p>
+      <div class="relative w-full flex overflow-hidden">
+        <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="logo-marquee-track py-2 gap-4 sm:gap-8 md:gap-12">
+          {[...platforms, ...platforms].map((p, idx) => (
+            <div class="flex items-center gap-2.5 sm:gap-3.5 opacity-80 hover:opacity-100 transition-all duration-300 cursor-pointer h-10 sm:h-12 px-3.5 sm:px-5 rounded-xl sm:rounded-2xl bg-zinc-200/10 border border-transparent hover:border-violet-500/15">
+              <img src={p.logo} alt={p.name} class="h-5 sm:h-7 object-contain max-w-[84px] sm:max-w-[120px]" />
+              <span class="text-[11px] sm:text-[12px] font-bold tracking-tight whitespace-nowrap text-zinc-700">{p.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FILOSOFÍA =================== -->
+    <section class="py-24 lg:py-28 px-6 md:px-12 bg-zinc-950 text-white relative overflow-hidden">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-violet-500/10 blur-[160px] rounded-full pointer-events-none"></div>
+      <div class="max-w-4xl mx-auto text-center space-y-7 relative z-10">
+        <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-400 font-bold">Filosofía</p>
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-black leading-[1.1] tracking-tight">
+          No diseñamos para premios.<br/>
+          <span class="text-zinc-400">Diseñamos para que tu negocio facture.</span>
+        </h2>
+        <p class="text-white/70 text-base md:text-[17px] max-w-2xl mx-auto leading-relaxed">
+          Venimos de gestionar pauta. Sabemos exactamente dónde el usuario rebota, dónde se traba, dónde clickea. Esa data está bakeada en cada sección que construimos.
+        </p>
+      </div>
+    </section>
+
+    <!-- =================== QUÉ INCLUYE (entregables) =================== -->
+    <section id="servicios" class="py-24 lg:py-28 px-6 md:px-12 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Qué incluye tu proyecto</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.05]">8 cosas que vas a recibir.</h2>
+          <p class="text-zinc-500 mt-5 text-[15px]">Sin sorpresas ni costos extras. Lo que ves acá es lo que se entrega.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {entregables.map(e => (
+            <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 hover:bg-white hover:shadow-xl hover:border-zinc-200 transition-all">
+              <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-[20px]">{e.icon}</span>
+              </div>
+              <h3 class="text-[15px] font-black text-zinc-900 mb-1.5 font-display">{e.title}</h3>
+              <p class="text-zinc-500 text-[12.5px] leading-relaxed">{e.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div class="mt-10 flex flex-col items-center gap-3">
+          <a href="#contacto" class="h-12 px-8 font-black rounded-xl text-[13px] flex items-center justify-center gap-2 shadow-md shadow-zinc-900/20 bg-zinc-900 text-white hover:bg-zinc-800 transition-all">
+            Quiero todo esto
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <p class="text-[11px] text-zinc-400 font-medium">Propuesta cerrada en 24h</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== CASO REAL: PDP =================== -->
+    <section id="caso-pdp" class="py-24 lg:py-28 px-6 md:px-12 bg-white relative overflow-hidden">
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-violet-500/5 blur-[140px] rounded-full pointer-events-none"></div>
+      <div class="max-w-6xl mx-auto relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-200 bg-violet-50 mb-5">
+            <span class="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse"></span>
+            <span class="text-[10.5px] font-black text-violet-700 uppercase tracking-[0.18em]">Caso real · Sin tocar la pauta</span>
+          </div>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.05] mb-5">
+            Subimos la conversión <span class="text-violet-600">2.7×</span> cambiando solo la ficha de producto.
+          </h2>
+          <p class="text-zinc-500 text-[15px] md:text-[16px] leading-relaxed max-w-2xl mx-auto">
+            De <strong class="text-zinc-900">0,7% a 1,9%</strong> de conversión. Mismo tráfico, misma inversión en Meta Ads, mismo producto. Lo único que tocamos fue el diseño y el copy de la PDP.
+          </p>
+        </div>
+
+        <div class="rounded-[22px] border border-zinc-200/60 bg-white p-1.5 shadow-2xl shadow-zinc-900/10">
+          <div class="rounded-[18px] overflow-hidden border border-zinc-100">
+            <img src="/images/webs/caso-pdp-skincare.webp" alt="Antes y después de la ficha de producto — conversión 0,7% a 1,9%" class="w-full h-auto block" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
+          <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 text-center">
+            <p class="text-[10px] uppercase tracking-widest text-zinc-400 font-black mb-2">Tasa de conversión</p>
+            <p class="font-display text-3xl md:text-4xl font-black text-zinc-900">0,7% → <span class="text-violet-600">1,9%</span></p>
+          </div>
+          <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 text-center">
+            <p class="text-[10px] uppercase tracking-widest text-zinc-400 font-black mb-2">Lift de conversión</p>
+            <p class="font-display text-3xl md:text-4xl font-black text-violet-600">+170%</p>
+          </div>
+          <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 text-center">
+            <p class="text-[10px] uppercase tracking-widest text-zinc-400 font-black mb-2">Inversión adicional en ads</p>
+            <p class="font-display text-3xl md:text-4xl font-black text-zinc-900">$0</p>
+          </div>
+        </div>
+
+        <div class="mt-8 p-6 md:p-8 rounded-[18px] border border-zinc-200/60 bg-zinc-50/30">
+          <p class="text-[10.5px] font-black uppercase tracking-[0.18em] text-violet-600 mb-3">Lo que cambió en la ficha</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-[13.5px] text-zinc-700">
+            <p class="flex gap-2"><span class="text-violet-500 font-black">✓</span> Prueba social arriba del fold (<strong>+150 clientes contentos</strong>)</p>
+            <p class="flex gap-2"><span class="text-violet-500 font-black">✓</span> Beneficios en bullets con íconos (no lista de features)</p>
+            <p class="flex gap-2"><span class="text-violet-500 font-black">✓</span> Urgencia real (<strong>¡últimas 4 unidades!</strong>)</p>
+            <p class="flex gap-2"><span class="text-violet-500 font-black">✓</span> Bundles con descuento (<strong>Comprá 1 / 2 / 3</strong>) para subir AOV</p>
+            <p class="flex gap-2"><span class="text-violet-500 font-black">✓</span> Galería de imágenes lateral con antes/después del producto</p>
+            <p class="flex gap-2"><span class="text-violet-500 font-black">✓</span> Precio de transferencia destacado para incentivar el método</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== TRABAJOS =================== -->
+    <section id="trabajos" class="py-24 lg:py-28 px-6 md:px-12 bg-zinc-50/60 border-t border-b border-zinc-100">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Trabajos recientes</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.05]">Webs reales. Números reales.</h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {showcaseTabs.slice(0, 4).map(tab => (
+            <div class="rounded-[20px] border border-zinc-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-shadow">
+              <div class="aspect-[16/10] bg-zinc-100 relative">
+                <img src={tab.img} alt={tab.label} class="w-full h-full object-cover object-top" onerror="this.parentElement.classList.add('bg-gradient-to-br','from-zinc-100','to-zinc-200');this.style.display='none'" />
+              </div>
+              <div class="p-5">
+                <p class="text-[10px] uppercase tracking-widest text-violet-600 font-black mb-1">{tab.label}</p>
+                <p class="text-[13px] text-zinc-700 leading-relaxed [&_strong]:font-black [&_strong]:text-zinc-900" set:html={tab.desc}></p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== PROCESO =================== -->
+    <section id="proceso" class="py-24 lg:py-28 px-6 md:px-12 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Cómo trabajamos</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.05]">5 pasos. Sin sorpresas.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+          {proceso.map(p => (
+            <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 hover:bg-white hover:shadow-lg transition-all">
+              <p class="text-2xl font-black text-violet-500 mb-3 font-display">{p.n}</p>
+              <h3 class="font-black text-zinc-900 text-[14.5px] mb-2 font-display">{p.title}</h3>
+              <p class="text-zinc-500 text-[12.5px] leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== TESTIMONIOS =================== -->
+    <section id="testimonios" class="py-24 lg:py-28 px-6 md:px-12 bg-zinc-50/60 border-t border-b border-zinc-100">
+      <div class="max-w-5xl mx-auto space-y-12">
+        <div class="text-center space-y-3">
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold">Lo dicen ellos</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black text-zinc-900 max-w-2xl mx-auto leading-[1.05] tracking-tight">Casos reales. Resultados reales.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {testimonials.map(item => (
+            <div class="p-5 rounded-[20px] bg-white border border-zinc-200 shadow-sm flex flex-col space-y-5">
+              <div class="flex justify-between items-start gap-3">
+                <div>
+                  <span class="text-[10px] font-black text-violet-600 uppercase tracking-wider">{item.tag}</span>
+                  <h3 class="text-lg font-black text-zinc-900 mt-1 font-display">{item.title}</h3>
+                </div>
+                <span class="bg-violet-50 border border-violet-200 text-violet-700 text-[10.5px] font-black px-3 py-1 rounded-full leading-tight text-right max-w-[55%]">{item.stat}</span>
+              </div>
+              <div class="testimonial-card relative group cursor-pointer rounded-2xl overflow-hidden bg-black shadow-lg aspect-[3/4] lg:aspect-video w-full">
+                <img class="video-cover-img absolute inset-0 w-full h-full object-cover" src={item.cover} alt={`Portada de ${item.title}`} />
+                <video class="hero-testimonial-video w-full h-full object-contain bg-black hidden" preload="metadata">
+                  <source src={item.video} type="video/mp4" />
+                </video>
+                <div class="video-overlay absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-all duration-300">
+                  <button class="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform" aria-label="Reproducir">
+                    <svg class="w-6 h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== POR QUÉ ALGORITMIA =================== -->
+    <section class="py-24 lg:py-28 px-6 md:px-12 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Por qué Algoritmia</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.05]">Diseño con cabeza de performance.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {[
+            { icon: 'speed',      title: 'Carga < 1.2s',     desc: 'El 53% del tráfico paga rebota si tarda más de 3s. Astro + CDN edge cierran ese agujero.' },
+            { icon: 'smartphone', title: 'Mobile-first real', desc: 'El 95% del tráfico de Meta es móvil. Diseñamos primero el celular, después escalamos al desktop.' },
+            { icon: 'target',     title: 'Copy que convierte', desc: 'Cada sección con framework probado (PAS / AIDA). No texto de relleno.' },
+            { icon: 'analytics',  title: 'Tracking impecable', desc: 'GA4, Meta Pixel + CAPI, eventos custom. Datos limpios desde el día 1.' },
+            { icon: 'handshake',  title: 'Sin permanencia',   desc: 'El código y la web son tuyos. Si querés llevarte el proyecto, te lo entregamos documentado.' },
+            { icon: 'verified',   title: 'Garantía 30 días',  desc: 'Primer mes post-lanzamiento incluido. Ajustes ilimitados de copy y secciones.' }
+          ].map(b => (
+            <div class="p-7 rounded-[20px] bg-zinc-50/50 border border-zinc-200/60">
+              <span class="material-symbols-outlined text-violet-500 text-[26px] mb-3">{b.icon}</span>
+              <h3 class="font-black text-zinc-900 mb-2 font-display">{b.title}</h3>
+              <p class="text-zinc-500 text-[13px] leading-relaxed">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== FAQ =================== -->
+    <section id="faq" class="py-24 lg:py-28 px-6 md:px-12 bg-zinc-50/60 border-t border-zinc-100">
+      <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-12">
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Preguntas frecuentes</p>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[48px] font-black tracking-tight text-zinc-900 leading-[1.05]">Las dudas que ya respondimos</h2>
+        </div>
+        <div class="space-y-3">
+          {faqs.map(f => (
+            <details class="group rounded-2xl bg-white border border-zinc-200/60 p-5 cursor-pointer">
+              <summary class="flex items-center justify-between font-black text-zinc-900 text-[14.5px] list-none font-display">
+                {f.q}
+                <span class="material-symbols-outlined text-zinc-400 group-open:rotate-180 transition-transform">expand_more</span>
+              </summary>
+              <p class="text-zinc-500 text-[13.5px] mt-3 leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== CTA + FORM =================== -->
+    <section id="contacto" class="py-24 lg:py-28 px-6 md:px-12 bg-white">
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-zinc-950 text-white p-8 md:p-12 rounded-[24px] shadow-2xl shadow-zinc-900/15 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-[#25D366]/15 blur-[120px] rounded-full pointer-events-none"></div>
+          <div class="relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-[#25D366]/15 border border-[#25D366]/30 text-[#25D366] text-[11px] font-black px-3 py-1.5 rounded-full mb-6 uppercase tracking-wider">
+              <span class="w-1.5 h-1.5 bg-[#25D366] rounded-full animate-pulse"></span>
+              Respuesta directa · En minutos
+            </div>
+            <h2 class="font-display text-3xl md:text-4xl font-black mb-3 tracking-tight leading-[1.05]">Escribinos por WhatsApp</h2>
+            <p class="text-sm text-white/60 mb-8 max-w-md mx-auto">Contanos qué necesitás y te pasamos propuesta cerrada en 24h. Sin formularios infinitos.</p>
+
+            <a
+              href="https://wa.me/5493476245523?text=Hola%20Algoritmia%2C%20quiero%20una%20propuesta%20para%20mi%20web."
+              target="_blank"
+              rel="noopener"
+              class="group inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-sm uppercase tracking-wider py-4 px-8 rounded-xl shadow-xl shadow-[#25D366]/30 hover:shadow-2xl hover:shadow-[#25D366]/40 transition-all duration-300 w-full sm:w-auto"
+            >
+              <svg class="w-5 h-5" viewBox="0 0 32 32" fill="currentColor"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.34.68 4.515 1.85 6.353L4 28l6.81-1.793A11.948 11.948 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm0 21.6c-1.875 0-3.61-.516-5.097-1.41l-.366-.218-4.043 1.065 1.084-3.94-.238-.404A8.96 8.96 0 0 1 7 15c0-4.964 4.036-9 9.001-9 4.965 0 9 4.036 9 9s-4.035 9-9 9zm5.187-6.733c-.285-.143-1.686-.832-1.948-.928-.262-.095-.453-.143-.643.143-.19.286-.738.928-.904 1.118-.166.19-.333.214-.618.071-.285-.143-1.202-.443-2.29-1.413-.846-.755-1.418-1.687-1.584-1.973-.166-.286-.018-.44.125-.583.128-.128.286-.333.428-.5.143-.166.19-.285.286-.475.095-.19.048-.357-.024-.5-.071-.143-.643-1.55-.881-2.122-.232-.557-.467-.481-.643-.49-.166-.008-.357-.01-.547-.01a1.05 1.05 0 0 0-.762.357c-.262.286-1 .976-1 2.381 0 1.405 1.023 2.762 1.166 2.953.143.19 2.013 3.073 4.88 4.31.682.294 1.215.47 1.63.603.685.218 1.308.187 1.802.114.55-.082 1.686-.69 1.924-1.355.238-.667.238-1.238.166-1.357-.071-.119-.262-.19-.547-.333z"/></svg>
+              Hablar por WhatsApp
+            </a>
+
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-x-6 gap-y-2 text-[11.5px] text-white/50">
+              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-[#25D366]">check</span> +54 9 3476 24-5523</span>
+              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-[#25D366]">check</span> Lun a Vie · 9 a 19hs</span>
+              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-[#25D366]">check</span> Respuesta &lt; 1h</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+
+  <style is:global>
+    .logo-marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scroll-marquee 50s linear infinite;
+    }
+    @keyframes scroll-marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    #hero-progress-bar.running {
+      transition: transform 4000ms linear;
+      transform: scaleX(1);
+    }
+    .showcase-tab.is-active .tab-dot { opacity: 1; }
+  </style>
+
+  <script>
+    function initShowcase() {
+      const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.showcase-tab'));
+      const panes = Array.from(document.querySelectorAll<HTMLDivElement>('.showcase-pane'));
+      const labelEl = document.getElementById('hero-tab-label');
+      const descEl = document.getElementById('hero-tab-desc');
+      const progress = document.getElementById('hero-progress-bar');
+      if (!tabs.length || !panes.length) return;
+
+      let activeIdx = 0;
+      let autoCycle = true;
+      let timer: number | undefined;
+
+      const meta = panes.map(p => ({
+        id: p.getAttribute('data-pane') || '',
+        label: p.getAttribute('data-label') || '',
+        desc: p.getAttribute('data-desc') || ''
+      }));
+
+      const activate = (idx: number) => {
+        activeIdx = idx;
+        tabs.forEach((t, i) => {
+          const active = i === idx;
+          t.classList.toggle('is-active', active);
+          t.classList.toggle('bg-zinc-900', active);
+          t.classList.toggle('text-white', active);
+          t.classList.toggle('shadow-sm', active);
+          t.classList.toggle('text-zinc-500', !active);
+        });
+        panes.forEach((p, i) => {
+          p.style.opacity = i === idx ? '1' : '0';
+          p.style.zIndex = i === idx ? '20' : '10';
+        });
+        if (labelEl) labelEl.textContent = meta[idx].label;
+        if (descEl) descEl.innerHTML = meta[idx].desc;
+
+        if (progress) {
+          progress.classList.remove('running');
+          progress.style.transform = 'scaleX(0)';
+          void progress.offsetWidth;
+          if (autoCycle) progress.classList.add('running');
+        }
+      };
+
+      const cycle = () => activate((activeIdx + 1) % tabs.length);
+
+      const startTimer = () => {
+        if (timer) window.clearInterval(timer);
+        if (autoCycle) timer = window.setInterval(cycle, 4000);
+      };
+
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => {
+          autoCycle = false;
+          if (timer) window.clearInterval(timer);
+          if (progress) { progress.classList.remove('running'); progress.style.transform = 'scaleX(0)'; }
+          activate(i);
+        });
+      });
+
+      activate(0);
+      requestAnimationFrame(() => { if (progress && autoCycle) progress.classList.add('running'); });
+      startTimer();
+    }
+
+    function initTestimonialPlayers() {
+      document.querySelectorAll('.testimonial-card').forEach(card => {
+        const video = card.querySelector('.hero-testimonial-video') as HTMLVideoElement | null;
+        const overlay = card.querySelector('.video-overlay') as HTMLElement | null;
+        const coverImg = card.querySelector('.video-cover-img') as HTMLImageElement | null;
+        if (!video || !overlay || video.dataset.playerSetup) return;
+        video.dataset.playerSetup = 'true';
+
+        const play = () => {
+          if (video.paused) {
+            document.querySelectorAll<HTMLVideoElement>('.hero-testimonial-video').forEach(v => { if (v !== video && !v.paused) v.pause(); });
+            coverImg?.classList.add('hidden');
+            video.classList.remove('hidden');
+            video.play();
+            overlay.classList.add('hidden');
+            video.setAttribute('controls', 'true');
+          } else { video.pause(); }
+        };
+        overlay.addEventListener('click', play);
+        video.addEventListener('pause', () => overlay.classList.remove('hidden'));
+        video.addEventListener('ended', () => {
+          video.classList.add('hidden');
+          video.removeAttribute('controls');
+          coverImg?.classList.remove('hidden');
+          overlay.classList.remove('hidden');
+        });
+      });
+    }
+
+    function initForm() {
+      const form = document.getElementById('landingContactForm') as HTMLFormElement | null;
+      const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement | null;
+      const btnText = document.getElementById('btn-text');
+      const success = document.getElementById('success-message');
+      const error = document.getElementById('error-message');
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        success?.classList.add('hidden');
+        error?.classList.add('hidden');
+        if (submitBtn) submitBtn.disabled = true;
+        if (btnText) btnText.textContent = 'Enviando...';
+
+        const data = Object.fromEntries(new FormData(form).entries());
+        try {
+          const res = await fetch('/api/landing-lead', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
+          if (!res.ok) throw new Error('server');
+          form.classList.add('hidden');
+          success?.classList.remove('hidden');
+          form.reset();
+        } catch {
+          error?.classList.remove('hidden');
+          if (submitBtn) submitBtn.disabled = false;
+          if (btnText) btnText.textContent = 'Quiero mi propuesta';
+        }
+      });
+    }
+
+    function bootLanding() {
+      initShowcase();
+      initTestimonialPlayers();
+      initForm();
+    }
+    document.addEventListener('astro:page-load', bootLanding);
+    bootLanding();
+  </script>
+</Layout>

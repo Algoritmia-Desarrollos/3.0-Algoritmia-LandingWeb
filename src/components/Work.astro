@@ -6,20 +6,34 @@ import workEcomoda from '../assets/clients/work-ecomoda/work.jpg';
 import portadaLeo from '../assets/clients/libreria-leo/portada.webp';
 import portadaJack from '../assets/clients/puertas-jack/portada.webp';
 import portadaRocio from '../assets/clients/psicologa-rocio/portada.webp';
-import portadaClinically from '../assets/clients/clinically/portada.webp';
 import portadaCase from '../assets/clients/case-rossi/portada.webp';
 import portadaAtermicos from '../assets/clients/atermicos-pinamar/portada.webp';
-import portadaAtermicos from '../assets/clients/atermicos-pinamar/portada.webp';
 import portadaFagaz from '../assets/imgwebs/FagazSa.webp';
+import portadaTesari from '../assets/clients/juan-tesari/portada.webp';
+import portadaSkirting from '../assets/clients/skirting-factory/portada.webp';
 // import portadaIntertenis from '../assets/clients/intertenis/portada.webp';
 
 const projects = [
+  {
+    title: "The Skirting Factory",
+    description: "De $0 en ads a un crecimiento de <strong class='text-white'>+300% en ventas</strong> el primer mes y <strong class='text-white'>+600% acumulado</strong> al tercer mes.",
+    image: portadaSkirting,
+    alt: "Importador de cuero premium en EE.UU.",
+    link: "/clientes/skirting-factory"
+  },
   {
     title: "Librería Mayorista Leo",
     description: "De 2 pedidos semanales a facturar más de <strong class='text-white'>150.000 USD al año</strong> con un <strong class='text-white'>ROAS de 43 promedio anual</strong>.",
     image: portadaLeo,
     alt: "E-commerce B2B Mayorista",
     link: "/clientes/libreria-leo"
+  },
+  {
+    title: "Dr. Juan Tesari",
+    description: "Llenamos su agenda con <strong class='text-white'>pacientes calificados</strong> y construimos un sistema de captación predecible para su consultorio premium.",
+    image: portadaTesari,
+    alt: "Consultorio médico premium",
+    link: "/clientes/juan-tesari"
   },
   {
     title: "Puertas Blindadas Jack",
@@ -48,15 +62,7 @@ const projects = [
     image: portadaRocio,
     alt: "Consultorio de psicología",
     link: "/clientes/psicologa-rocio"
-  },
-  {
-    title: "Clinically",
-    description: "Generamos más de <strong class='text-white'>50 Nuevos Pacientes Semanales</strong>. Un sistema de adquisición predecible que llena la agenda.",
-    image: portadaClinically,
-    alt: "Plataforma médica digital",
-    link: "/clientes/clinically"
   }
-
 ];
 ---
 
@@ -85,10 +91,10 @@ const projects = [
             <div class="w-full md:w-1/2 flex-shrink-0 px-6 pointer-events-none md:pointer-events-auto reveal">
               {project.link ? (
                 <a href={project.link} class="block group cursor-pointer pointer-events-auto">
-                  <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-900 mb-6 border border-white/10">
+                  <div class="relative aspect-[4/3] rounded-3xl overflow-hidden bg-black mb-6 border border-white/10">
                     <div class="w-full h-full transition-transform duration-700 group-hover:scale-105">
-                      <Image 
-                        src={project.image} 
+                      <Image
+                        src={project.image}
                         alt={project.alt}
                         class="w-full h-full object-cover pointer-events-none"
                         width={800}
@@ -97,6 +103,11 @@ const projects = [
                         draggable="false"
                       />
                       <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-black/55 backdrop-blur-sm border border-white/30 flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:bg-black/70 transition-all">
+                        <svg class="w-7 h-7 md:w-8 md:h-8 text-white ml-1" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                      </div>
                     </div>
                   </div>
                   <div class="flex flex-col items-start">

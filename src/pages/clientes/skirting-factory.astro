@@ -1,0 +1,324 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/ads/HeaderAds.astro';
+import Footer from '../../components/Footer.astro';
+
+
+const title = "The Skirting Factory — Caso de Éxito | Algoritmia";
+const description = "Cómo escalamos de cero a un ROAS de 26x en el primer mes a una marca de cuero premium exportadora desde Texas, con un anuncio ganador al 53x.";
+---
+<Layout title={title} description={description}>
+  <Header />
+
+  <main class="bg-white text-black selection:bg-gray-200">
+    <!-- Hero -->
+    <section class="relative pt-32 md:pt-48 pb-20 px-6 md:px-12 overflow-hidden">
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-center">
+          <div class="flex-1 space-y-8 w-full">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito · E-commerce USA</span>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-black">
+              De $0 en ads a un crecimiento de <span class="text-green-600">+300% en ventas</span> en el primer mes.
+            </h1>
+
+            <p class="text-xl text-gray-500 max-w-xl leading-relaxed">
+              Arrancamos desde cero las campañas de Meta Ads de <strong class='text-black'>The Skirting Factory</strong>, importador de cuero premium argentino en Texas. En 30 días construimos el canal de adquisición digital que el negocio necesitaba.
+            </p>
+
+            <div class="flex flex-wrap gap-3 items-center">
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">+300%</span>
+                <span class="text-sm text-gray-600 font-medium">Crecimiento 1º mes</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">+600%</span>
+                <span class="text-sm text-gray-600 font-medium">Crecimiento 3º mes</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">100%</span>
+                <span class="text-sm text-gray-600 font-medium">Canal validado</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-1 w-full flex justify-center">
+            <div class="relative group cursor-pointer rounded-3xl overflow-hidden border border-gray-100 bg-black shadow-2xl shadow-gray-200/50 w-full max-w-[540px] aspect-[3/4] lg:aspect-video mx-auto">
+              <!-- Testimonial Video (Vertical 9:16 inside responsive container) -->
+              <!-- Cover Image (Real img tag to guarantee object-cover occupies 100% of container) -->
+              <img 
+                id="video-cover-img" 
+                src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-skirting.webp" 
+                class="absolute inset-0 w-full h-full object-cover" 
+                alt="Portada Testimonio"
+              />
+              <!-- Testimonial Video (Vertical 9:16 inside responsive container) -->
+              <video 
+                id="hero-testimonial-video" 
+                class="w-full h-full object-contain bg-black hidden" 
+                preload="metadata"
+              >
+                <source src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/manuel-descartes.mp4" type="video/mp4" />
+                Tu navegador no soporta el elemento de video.
+              </video>
+              <!-- Play Overlay -->
+              <div id="video-overlay" class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-all duration-300">
+                <button class="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300" aria-label="Reproducir video">
+                  <span class="material-symbols-outlined text-[36px] ml-1">play_arrow</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonio -->
+    <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
+      <div class="max-w-4xl mx-auto text-center space-y-8">
+        <span class="material-symbols-outlined text-5xl text-gray-300">format_quote</span>
+        <blockquote class="text-2xl md:text-3xl font-medium text-black leading-tight">
+          "Nunca habíamos hecho publicidad paga. En el primer mes tuvimos un 300% más de ventas, y para el tercer mes volvimos a crecer otro 300% respecto al primero. Hoy la venta online es uno de nuestros canales más importantes y tenemos total claridad de los números para tomar decisiones."
+        </blockquote>
+        <div class="flex flex-col items-center gap-1">
+          <p class="text-black font-semibold">Manuel Nardelli</p>
+          <p class="text-gray-400 text-sm">Fundador · The Skirting Factory LLC (Texas)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Desafío -->
+    <section class="py-24 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-gray-400 mb-4">El punto de partida</p>
+          <h2 class="text-3xl md:text-5xl font-bold text-black leading-tight mb-6">
+            Producto premium, mercado dormido.
+          </h2>
+          <p class="text-gray-500 text-lg leading-relaxed">
+            The Skirting Factory importa cuero curtido vegetal argentino para silleros y talabarteros en EE.UU. Producto de primera categoría a la mitad del precio de los competidores históricos. Pero nadie sabía que existían: 643 seguidores en Instagram y cero pauta paga.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <p class="text-black font-semibold mb-1">Competencia "intocable"</p>
+            <p class="text-gray-500 text-sm">Hermann Oak y Wickett & Craig dominan desde hace 140 años, sin invertir un dólar en Meta.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <p class="text-black font-semibold mb-1">Cero data publicitaria</p>
+            <p class="text-gray-500 text-sm">Sin píxel maduro, sin audiencias, sin creativos validados. El típico arranque de fase cero.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <p class="text-black font-semibold mb-1">Ticket alto, ciclo largo</p>
+            <p class="text-gray-500 text-sm">$85–$110 por side de cuero. El cliente compara, investiga y pide muestras antes de comprar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resultados Reales -->
+    <section class="py-32 px-6 md:px-12 bg-white border-t border-gray-100">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div class="space-y-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
+            <p class="text-gray-500 text-lg">
+              Establecimos un motor de adquisición rentable y predecible desde cero absoluto. En solo 90 días, validamos creativos y audiencias clave en el exigente mercado estadounidense.
+            </p>
+            
+            <div class="space-y-6">
+              <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Crecimiento Primer Mes</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-4xl font-bold text-black">+300%</span>
+                  <span class="text-sm text-gray-500 mb-2">En Ventas Online</span>
+                </div>
+                <p class="text-gray-400 text-sm mt-2">Multiplicamos por tres el volumen de pedidos online desde el primer mes de pauta publicitaria.</p>
+              </div>
+              
+              <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Crecimiento Tercer Mes</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-5xl font-bold text-black">+600%</span>
+                  <span class="text-sm text-gray-500 mb-2">Acumulado</span>
+                </div>
+                <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[18px]">trending_up</span>
+                  Al tercer mes de optimización volvimos a duplicar el volumen del primer mes (+600% vs. inicio).
+                </p>
+              </div>
+            </div>
+            
+            <div class="pt-4">
+              <p class="text-7xl font-bold text-black tracking-tighter">
+                100%
+              </p>
+              <p class="text-gray-500 mt-2 text-xl font-medium">Control de Métricas de Negocio</p>
+            </div>
+          </div>
+          
+          <!-- Hitos de Campaña -->
+          <div class="flex flex-col gap-6 w-full">
+            <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 space-y-6 shadow-sm">
+              <h3 class="text-xl font-bold text-black">Hitos del Primer Mes</h3>
+              
+              <div class="space-y-4">
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-green-600 text-[24px] mt-1">check_circle</span>
+                  <div>
+                    <h4 class="font-semibold text-black">Escalabilidad Validada</h4>
+                    <p class="text-gray-500 text-sm">Partimos de un histórico publicitario nulo ($0 invertido previamente) y construimos un canal de ventas estable.</p>
+                  </div>
+                </div>
+                
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-green-600 text-[24px] mt-1">check_circle</span>
+                  <div>
+                    <h4 class="font-semibold text-black">Cuero Argentino en Texas</h4>
+                    <p class="text-gray-500 text-sm">Llegamos directo a los talleres de talabartería (saddle makers) de EE.UU. con un mensaje claro del precio justo.</p>
+                  </div>
+                </div>
+                
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-green-600 text-[24px] mt-1">check_circle</span>
+                  <div>
+                    <h4 class="font-semibold text-black">Comunicación Estratégica</h4>
+                    <p class="text-gray-500 text-sm">La propuesta de comunicación transparente sobre el origen y calidad directa de fábrica superó a cualquier anuncio publicitario tradicional.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estrategia -->
+    <section class="py-32 px-6 md:px-12 bg-black text-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="max-w-3xl mb-16">
+          <p class="text-xs uppercase tracking-widest text-white/40 mb-4">Lo que hicimos</p>
+          <h2 class="text-3xl md:text-5xl font-bold leading-tight">
+            Estrategia de adquisición directa y posicionamiento.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div class="p-8 rounded-3xl border border-white/10 bg-white/5">
+            <span class="text-3xl font-bold text-white/30">01</span>
+            <h3 class="text-xl font-semibold mt-4 mb-3">Segmentación y Diagnóstico</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Identificación de sub-nichos y comunidades de fabricantes específicos en Estados Unidos para enfocar el presupuesto donde la demanda era inmediata.</p>
+          </div>
+          <div class="p-8 rounded-3xl border border-white/10 bg-white/5">
+            <span class="text-3xl font-bold text-white/30">02</span>
+            <h3 class="text-xl font-semibold mt-4 mb-3">Estructura de Campañas Eficiente</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Diseño de una arquitectura de pauta publicitaria simplificada para evitar la dispersión de presupuesto y acelerar el aprendizaje de las audiencias.</p>
+          </div>
+          <div class="p-8 rounded-3xl border border-white/10 bg-white/5">
+            <span class="text-3xl font-bold text-white/30">03</span>
+            <h3 class="text-xl font-semibold mt-4 mb-3">Desarrollo de Contenido Estratégico</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Producción de piezas de comunicación enfocadas en educar sobre la procedencia directa y la propuesta de valor del cuero premium, eliminando fricciones.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Por qué Algoritmia -->
+    <section class="py-32 px-6 md:px-12 bg-gray-50">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <p class="text-xs uppercase tracking-widest text-gray-400 mb-4">Por qué Algoritmia</p>
+          <h2 class="text-3xl md:text-5xl font-bold text-black leading-tight max-w-3xl mx-auto">
+            No hacemos magia. Hacemos método.
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Especialistas exclusivamente en Meta Ads</h3>
+            <p class="text-gray-500 text-sm">No diversificamos en 10 servicios. Hacemos una cosa muy bien.</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Estructuras pensadas, no copiadas de YouTube</h3>
+            <p class="text-gray-500 text-sm">CBO, ABO, Advantage+, segmentación manual — la decisión depende del negocio y del nivel de data, no de moda.</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Creativo + media trabajando juntos</h3>
+            <p class="text-gray-500 text-sm">Te ayudamos a producir los anuncios que necesitamos para ganar. No solo "subimos lo que mandes".</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Trabajamos con pocos clientes</h3>
+            <p class="text-gray-500 text-sm">Cupos limitados para garantizar tiempo real de optimización sobre tu cuenta. Si te tomamos, te tomamos en serio.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 text-center bg-black text-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-6">¿Tu producto premium también está dormido?</h2>
+        <p class="text-white/60 text-lg mb-10">
+          Si tenés un producto bueno y un mercado al que todavía no llegás, te ayudamos a construir el canal de ventas que te falta. Diagnóstico sin costo.
+        </p>
+        <a href="/#contact" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-medium text-sm hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl">
+          Agendar diagnóstico gratuito
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  
+  <script>
+    function setupVideoPlayer() {
+      const video = document.getElementById('hero-testimonial-video') as HTMLVideoElement | null;
+      const overlay = document.getElementById('video-overlay');
+      const coverImg = document.getElementById('video-cover-img') as HTMLImageElement | null;
+      
+      if (video && overlay && !video.dataset.playerSetup) {
+        video.dataset.playerSetup = "true";
+        
+        const handlePlay = () => {
+          if (video.paused) {
+            if (coverImg) coverImg.classList.add('hidden');
+            video.classList.remove('hidden');
+            video.play();
+            overlay.classList.add('hidden');
+            video.setAttribute('controls', 'true');
+          } else {
+            video.pause();
+          }
+        };
+        
+        overlay.addEventListener('click', handlePlay);
+        
+        video.addEventListener('pause', () => {
+          overlay.classList.remove('hidden');
+        });
+        
+        video.addEventListener('play', () => {
+          if (coverImg) coverImg.classList.add('hidden');
+          video.classList.remove('hidden');
+          overlay.classList.add('hidden');
+          video.setAttribute('controls', 'true');
+        });
+        
+        video.addEventListener('ended', () => {
+          video.classList.add('hidden');
+          video.removeAttribute('controls');
+          if (coverImg) coverImg.classList.remove('hidden');
+          overlay.classList.remove('hidden');
+        });
+      }
+    }
+    
+    // Setup on page load and transitions
+    document.addEventListener('astro:page-load', setupVideoPlayer);
+  </script>
+</Layout>

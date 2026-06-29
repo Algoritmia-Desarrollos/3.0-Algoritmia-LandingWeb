@@ -1,0 +1,323 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/ads/HeaderAds.astro';
+import Footer from '../../components/Footer.astro';
+
+
+const title = "Dr. Juan Tesari — Caso de Éxito | Algoritmia";
+const description = "Cómo construimos un sistema de captación de pacientes calificados para el consultorio del Dr. Juan Tesari con Meta Ads de alta segmentación.";
+---
+<Layout title={title} description={description}>
+  <Header />
+
+  <main class="bg-white text-black selection:bg-gray-200">
+    <!-- Hero -->
+    <section class="relative pt-32 md:pt-48 pb-20 px-6 md:px-12 overflow-hidden">
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
+          <div class="flex-1 space-y-8 w-full">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-gray-50">
+              <span class="w-2 h-2 rounded-full bg-green-500"></span>
+              <span class="text-xs font-medium text-gray-600 uppercase tracking-wide">Caso de Éxito · Salud</span>
+            </div>
+
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-black">
+              Agenda llena de pacientes que realmente quieren operarse.
+            </h1>
+
+            <p class="text-xl text-gray-500 max-w-xl leading-relaxed">
+              Diseñamos un sistema de captación premium para el <strong class='text-black'>Dr. Juan Tesari</strong> que filtra al curioso, califica al paciente real y convierte la pauta en consultas presenciales que pagan.
+            </p>
+
+            <div class="hidden lg:flex flex-wrap gap-3 items-center">
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">+300</span>
+                <span class="text-sm text-gray-600 font-medium">Consultas mensuales</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">100%</span>
+                <span class="text-sm text-gray-600 font-medium">Audiencia calificada</span>
+              </div>
+              <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-gray-50 border border-gray-100">
+                <span class="text-green-600 font-bold">0</span>
+                <span class="text-sm text-gray-600 font-medium">Leads basura</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-1 w-full flex justify-center">
+            <div class="relative group cursor-pointer rounded-3xl overflow-hidden border border-gray-100 bg-black shadow-2xl shadow-gray-200/50 w-full max-w-[540px] aspect-[3/4] lg:aspect-video mx-auto">
+              <!-- Testimonial Video (Vertical 9:16 inside responsive container) -->
+              <!-- Cover Image (Real img tag to guarantee object-cover occupies 100% of container) -->
+              <img 
+                id="video-cover-img" 
+                src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-juan.webp" 
+                class="absolute inset-0 w-full h-full object-cover" 
+                alt="Portada Testimonio"
+              />
+              <!-- Testimonial Video (Vertical 9:16 inside responsive container) -->
+              <video 
+                id="hero-testimonial-video" 
+                class="w-full h-full object-contain bg-black hidden" 
+                preload="metadata"
+              >
+                <source src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/juan-tessari.mp4" type="video/mp4" />
+                Tu navegador no soporta el elemento de video.
+              </video>
+              <!-- Play Overlay -->
+              <div id="video-overlay" class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-all duration-300">
+                <button class="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300" aria-label="Reproducir video">
+                  <span class="material-symbols-outlined text-[36px] ml-1">play_arrow</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonio destacado -->
+    <section class="py-24 px-6 md:px-12 bg-gray-50 relative">
+      <div class="max-w-4xl mx-auto text-center space-y-8">
+        <span class="material-symbols-outlined text-5xl text-gray-300">format_quote</span>
+        <blockquote class="text-2xl md:text-3xl font-medium text-black leading-tight">
+          "Desde que contraté a los chicos aumentaron radicalmente las consultas porque llegamos al público correcto. Es un equipo que se mete de lleno en el servicio para comunicarlo con lo último de la tecnología."
+        </blockquote>
+        <div class="flex flex-col items-center gap-1">
+          <p class="text-black font-semibold">Dr. Juan Tesari</p>
+          <p class="text-gray-400 text-sm">Cirujano · Cliente de Algoritmia</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- El desafío -->
+    <section class="py-24 px-6 md:px-12 bg-white">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-gray-400 mb-4">El punto de partida</p>
+          <h2 class="text-3xl md:text-5xl font-bold text-black leading-tight mb-6">
+            Mucha consulta, poca cirugía.
+          </h2>
+          <p class="text-gray-500 text-lg leading-relaxed">
+            La salud es uno de los rubros más difíciles para escalar con publicidad: rechazos constantes de Meta, leads que no son candidatos reales y agendas que se llenan de gente que no termina avanzando.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <p class="text-black font-semibold mb-1">Audiencia equivocada</p>
+            <p class="text-gray-500 text-sm">La pauta atraía consultas que no tenían capacidad de contratar el servicio.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <p class="text-black font-semibold mb-1">Tiempo perdido</p>
+            <p class="text-gray-500 text-sm">Horas de consulta gastadas en pacientes que no avanzaban a cirugía.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-gray-50 border border-gray-100">
+            <p class="text-black font-semibold mb-1">Sin previsibilidad</p>
+            <p class="text-gray-500 text-sm">Meses buenos y meses muertos sin entender por qué.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Estrategia implementada -->
+    <section class="py-32 px-6 md:px-12 bg-black text-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="max-w-3xl mb-16">
+          <p class="text-xs uppercase tracking-widest text-white/40 mb-4">Lo que hicimos</p>
+          <h2 class="text-3xl md:text-5xl font-bold leading-tight">
+            Un sistema de adquisición pensado para el rubro salud, no copiado de e-commerce.
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-8 rounded-3xl border border-white/10 bg-white/5">
+            <span class="text-3xl font-bold text-white/30">01</span>
+            <h3 class="text-xl font-semibold mt-4 mb-3">Segmentación quirúrgica</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Pauta filtrada para que solo lleguen perfiles con intención real y capacidad de contratación, evitando el ruido típico del sector.</p>
+          </div>
+          <div class="p-8 rounded-3xl border border-white/10 bg-white/5">
+            <span class="text-3xl font-bold text-white/30">02</span>
+            <h3 class="text-xl font-semibold mt-4 mb-3">Creativos que respetan el rubro</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Comunicación profesional alineada a políticas de Meta para salud: cero promesas vacías, mucho posicionamiento de autoridad médica.</p>
+          </div>
+          <div class="p-8 rounded-3xl border border-white/10 bg-white/5">
+            <span class="text-3xl font-bold text-white/30">03</span>
+            <h3 class="text-xl font-semibold mt-4 mb-3">Funnel con calificación</h3>
+            <p class="text-white/60 text-sm leading-relaxed">Cada lead atraviesa filtros antes de llegar al consultorio. Lo que entra a la agenda ya viene pre-vendido.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resultados Reales -->
+    <section class="py-32 px-6 md:px-12 bg-white border-t border-gray-100">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div class="space-y-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-black">Resultados Reales</h2>
+            <p class="text-gray-500 text-lg">
+              Construimos un sistema de captación premium para el consultorio que filtra a los curiosos y califica a los pacientes con intención real de operarse.
+            </p>
+            
+            <div class="space-y-6">
+              <div class="p-6 rounded-2xl bg-white border border-gray-200 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase mb-2 tracking-wider">Consultas Calificadas</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-4xl font-bold text-black">+300</span>
+                  <span class="text-sm text-gray-500 mb-2">Mensuales</span>
+                </div>
+                <p class="text-gray-400 text-sm mt-2">Pacientes perfilados interesados directamente en cirugías.</p>
+              </div>
+              
+              <div class="p-6 rounded-2xl bg-white border border-black shadow-lg">
+                <p class="text-xs text-black uppercase mb-2 font-bold tracking-wider">Eficiencia de Calificación</p>
+                <div class="flex items-end gap-4">
+                  <span class="text-5xl font-bold text-black">100%</span>
+                  <span class="text-sm text-gray-500 mb-2">Leads Filtrados</span>
+                </div>
+                <p class="text-green-600 font-medium mt-2 text-sm flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[18px]">verified</span>
+                  Eliminamos los contactos fuera de zona o sin presupuesto.
+                </p>
+              </div>
+            </div>
+            
+            <div class="pt-4">
+              <p class="text-7xl font-bold text-black tracking-tighter">
+                24/7
+              </p>
+              <p class="text-gray-500 mt-2 text-xl font-medium">Captación Automática e Ininterrumpida</p>
+            </div>
+          </div>
+          
+          <!-- Hitos de Campaña -->
+          <div class="flex flex-col gap-6 w-full">
+            <div class="p-8 rounded-3xl bg-gray-50 border border-gray-100 space-y-6 shadow-sm">
+              <h3 class="text-xl font-bold text-black">Hitos de la Campaña</h3>
+              
+              <div class="space-y-4">
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-green-600 text-[24px] mt-1">check_circle</span>
+                  <div>
+                    <h4 class="font-semibold text-black">Calidad sobre Cantidad</h4>
+                    <p class="text-gray-500 text-sm">Filtros pre-consulta automatizados para asegurar que el tiempo del Dr. Tesari se use en pacientes listos para avanzar.</p>
+                  </div>
+                </div>
+                
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-green-600 text-[24px] mt-1">check_circle</span>
+                  <div>
+                    <h4 class="font-semibold text-black">Segmentación por Patología</h4>
+                    <p class="text-gray-500 text-sm">Dirigimos creativos específicos a personas buscando soluciones quirúrgicas concretas, aumentando la conversión.</p>
+                  </div>
+                </div>
+                
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-green-600 text-[24px] mt-1">check_circle</span>
+                  <div>
+                    <h4 class="font-semibold text-black">Autoridad y Confianza</h4>
+                    <p class="text-gray-500 text-sm">Comunicación limpia y ética que respeta las normativas de salud de Meta, consolidando la confianza del paciente.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Por qué Algoritmia -->
+    <section class="py-32 px-6 md:px-12 bg-gray-50">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <p class="text-xs uppercase tracking-widest text-gray-400 mb-4">Por qué Algoritmia</p>
+          <h2 class="text-3xl md:text-5xl font-bold text-black leading-tight max-w-3xl mx-auto">
+            Trabajamos con pocos clientes para que el tuyo realmente crezca.
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Especialistas, no community managers</h3>
+            <p class="text-gray-500 text-sm">Equipo dedicado 100% a Meta Ads y estrategia de adquisición, no a publicar posts.</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Decisiones por datos, no por intuición</h3>
+            <p class="text-gray-500 text-sm">Cada cambio en campañas se justifica con métricas, no con "yo creo que".</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Sin permanencia ni letra chica</h3>
+            <p class="text-gray-500 text-sm">Si no traemos resultado, no hay motivo para que sigas con nosotros. Así de simple.</p>
+          </div>
+          <div class="p-8 rounded-3xl bg-white border border-gray-100">
+            <h3 class="text-lg font-bold text-black mb-2">Reportes que se entienden</h3>
+            <p class="text-gray-500 text-sm">Te mostramos qué pasó, por qué pasó y qué vamos a hacer la próxima semana. En castellano, no en jerga.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 text-center bg-black text-white">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-bold mb-6">¿Tu consultorio necesita más pacientes reales?</h2>
+        <p class="text-white/60 text-lg mb-10">
+          Aplicamos a tu rubro el mismo sistema que llena la agenda del Dr. Tesari mes a mes.
+        </p>
+        <a href="/#contact" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-medium text-sm hover:bg-gray-200 transition-colors shadow-lg hover:shadow-xl">
+          Agendar diagnóstico gratuito
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  
+  <script>
+    function setupVideoPlayer() {
+      const video = document.getElementById('hero-testimonial-video') as HTMLVideoElement | null;
+      const overlay = document.getElementById('video-overlay');
+      const coverImg = document.getElementById('video-cover-img') as HTMLImageElement | null;
+      
+      if (video && overlay && !video.dataset.playerSetup) {
+        video.dataset.playerSetup = "true";
+        
+        const handlePlay = () => {
+          if (video.paused) {
+            if (coverImg) coverImg.classList.add('hidden');
+            video.classList.remove('hidden');
+            video.play();
+            overlay.classList.add('hidden');
+            video.setAttribute('controls', 'true');
+          } else {
+            video.pause();
+          }
+        };
+        
+        overlay.addEventListener('click', handlePlay);
+        
+        video.addEventListener('pause', () => {
+          overlay.classList.remove('hidden');
+        });
+        
+        video.addEventListener('play', () => {
+          if (coverImg) coverImg.classList.add('hidden');
+          video.classList.remove('hidden');
+          overlay.classList.add('hidden');
+          video.setAttribute('controls', 'true');
+        });
+        
+        video.addEventListener('ended', () => {
+          video.classList.add('hidden');
+          video.removeAttribute('controls');
+          if (coverImg) coverImg.classList.remove('hidden');
+          overlay.classList.remove('hidden');
+        });
+      }
+    }
+    
+    // Setup on page load and transitions
+    document.addEventListener('astro:page-load', setupVideoPlayer);
+  </script>
+</Layout>

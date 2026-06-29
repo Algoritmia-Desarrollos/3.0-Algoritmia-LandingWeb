@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/ads/HeaderAds.astro';
 import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
+
 import leadsResults from '../../assets/clients/psicologa-rocio/Resultados de Leads Calificados Psicologa Rocio.png';
 
 const title = "Psicóloga Rocío - Caso de Éxito | Algoritmia";
@@ -40,11 +41,33 @@ const description = "Cómo llenamos la agenda de consultas de una psicóloga con
             </div>
           </div>
           
-          <div class="flex-1 w-full space-y-6">
-             <div class="relative rounded-3xl overflow-hidden border border-gray-100 bg-black shadow-2xl shadow-gray-200/50 group">
-              <!-- Testimonial Video -->
-              <script src="https://fast.wistia.com/player.js" async></script><script src="https://fast.wistia.com/embed/p1gnlgzb2r.js" async type="module"></script><style>wistia-player[media-id='p1gnlgzb2r']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/p1gnlgzb2r/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style> <wistia-player media-id="p1gnlgzb2r" aspect="1.7777777777777777"></wistia-player>
+          <div class="flex-1 w-full flex justify-center">
+            <div class="relative group cursor-pointer rounded-3xl overflow-hidden border border-gray-100 bg-black shadow-2xl shadow-gray-200/50 w-full max-w-[540px] aspect-[3/4] lg:aspect-video mx-auto">
+              <!-- Testimonial Video (Vertical 9:16 inside responsive container) -->
+              <!-- Cover Image (Real img tag to guarantee object-cover occupies 100% of container) -->
+              <img 
+                id="video-cover-img" 
+                src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-rocio.webp" 
+                class="absolute inset-0 w-full h-full object-cover" 
+                alt="Portada Testimonio"
+              />
+              <!-- Testimonial Video (Vertical 9:16 inside responsive container) -->
+              <video 
+                id="hero-testimonial-video" 
+                class="w-full h-full object-contain bg-black hidden" 
+                preload="metadata"
+              >
+                <source src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/psicologa-rocio.mp4" type="video/mp4" />
+                Tu navegador no soporta el elemento de video.
+              </video>
+              <!-- Play Overlay -->
+              <div id="video-overlay" class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-all duration-300">
+                <button class="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-300" aria-label="Reproducir video">
+                  <span class="material-symbols-outlined text-[36px] ml-1">play_arrow</span>
+                </button>
+              </div>
             </div>
+          </div>
             
             <!-- Buttons for Mobile -->
             <div class="flex lg:hidden flex-col gap-4 items-start">
@@ -141,4 +164,51 @@ const description = "Cómo llenamos la agenda de consultas de una psicóloga con
   </main>
   
   <Footer />
+  
+  <script>
+    function setupVideoPlayer() {
+      const video = document.getElementById('hero-testimonial-video') as HTMLVideoElement | null;
+      const overlay = document.getElementById('video-overlay');
+      const coverImg = document.getElementById('video-cover-img') as HTMLImageElement | null;
+      
+      if (video && overlay && !video.dataset.playerSetup) {
+        video.dataset.playerSetup = "true";
+        
+        const handlePlay = () => {
+          if (video.paused) {
+            if (coverImg) coverImg.classList.add('hidden');
+            video.classList.remove('hidden');
+            video.play();
+            overlay.classList.add('hidden');
+            video.setAttribute('controls', 'true');
+          } else {
+            video.pause();
+          }
+        };
+        
+        overlay.addEventListener('click', handlePlay);
+        
+        video.addEventListener('pause', () => {
+          overlay.classList.remove('hidden');
+        });
+        
+        video.addEventListener('play', () => {
+          if (coverImg) coverImg.classList.add('hidden');
+          video.classList.remove('hidden');
+          overlay.classList.add('hidden');
+          video.setAttribute('controls', 'true');
+        });
+        
+        video.addEventListener('ended', () => {
+          video.classList.add('hidden');
+          video.removeAttribute('controls');
+          if (coverImg) coverImg.classList.remove('hidden');
+          overlay.classList.remove('hidden');
+        });
+      }
+    }
+    
+    // Setup on page load and transitions
+    document.addEventListener('astro:page-load', setupVideoPlayer);
+  </script>
 </Layout>
