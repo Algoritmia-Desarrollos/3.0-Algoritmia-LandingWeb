@@ -147,7 +147,7 @@ const faqs = [
 
               <!-- Progress bar -->
               <div class="h-[6px] overflow-hidden bg-zinc-200 relative">
-                <div id="hero-progress-bar" class="h-full bg-gradient-to-r from-violet-500 via-violet-500 to-violet-400 origin-left shadow-[0_0_12px_rgba(139,92,246,0.6)]" style="transform: scaleX(0);"></div>
+                <div id="hero-progress-bar" class="h-full bg-gradient-to-r from-violet-500 via-violet-500 to-violet-400 shadow-[0_0_12px_rgba(139,92,246,0.6)]"></div>
               </div>
 
               <!-- Image area -->
@@ -476,9 +476,17 @@ const faqs = [
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
+    #hero-progress-bar {
+      transform-origin: left center;
+      transform: scaleX(0);
+      will-change: transform;
+    }
     #hero-progress-bar.running {
-      transition: transform 4000ms linear;
-      transform: scaleX(1);
+      animation: progress-fill 4000ms linear forwards;
+    }
+    @keyframes progress-fill {
+      0%   { transform: scaleX(0); }
+      100% { transform: scaleX(1); }
     }
     .showcase-tab.is-active .tab-dot { opacity: 1; }
   </style>
@@ -521,7 +529,7 @@ const faqs = [
 
         if (progress) {
           progress.classList.remove('running');
-          progress.style.transform = 'scaleX(0)';
+          // Force reflow so removing+adding the class restarts the animation
           void progress.offsetWidth;
           if (autoCycle) progress.classList.add('running');
         }
@@ -538,13 +546,12 @@ const faqs = [
         tab.addEventListener('click', () => {
           autoCycle = false;
           if (timer) window.clearInterval(timer);
-          if (progress) { progress.classList.remove('running'); progress.style.transform = 'scaleX(0)'; }
+          if (progress) progress.classList.remove('running');
           activate(i);
         });
       });
 
       activate(0);
-      requestAnimationFrame(() => { if (progress && autoCycle) progress.classList.add('running'); });
       startTimer();
     }
 
