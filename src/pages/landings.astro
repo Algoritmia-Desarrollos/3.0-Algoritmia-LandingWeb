@@ -426,32 +426,6 @@ const faqs = [
       </div>
     </section>
 
-    <!-- =================== POR QUÉ ALGORITMIA =================== -->
-    <section class="py-24 lg:py-28 px-6 md:px-12 bg-white">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center max-w-2xl mx-auto mb-14">
-          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Por qué Algoritmia</p>
-          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.05]">Diseño con cabeza de performance.</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {[
-            { icon: 'speed',      title: 'Carga < 1.2s',     desc: 'El 53% del tráfico paga rebota si tarda más de 3s. Astro + CDN edge cierran ese agujero.' },
-            { icon: 'smartphone', title: 'Mobile-first real', desc: 'El 95% del tráfico de Meta es móvil. Diseñamos primero el celular, después escalamos al desktop.' },
-            { icon: 'target',     title: 'Copy que convierte', desc: 'Cada sección con framework probado (PAS / AIDA). No texto de relleno.' },
-            { icon: 'analytics',  title: 'Tracking impecable', desc: 'GA4, Meta Pixel + CAPI, eventos custom. Datos limpios desde el día 1.' },
-            { icon: 'handshake',  title: 'Sin permanencia',   desc: 'El código y la web son tuyos. Si querés llevarte el proyecto, te lo entregamos documentado.' },
-            { icon: 'verified',   title: 'Garantía 30 días',  desc: 'Primer mes post-lanzamiento incluido. Ajustes ilimitados de copy y secciones.' }
-          ].map(b => (
-            <div class="p-7 rounded-[20px] bg-zinc-50/50 border border-zinc-200/60">
-              <span class="material-symbols-outlined text-violet-500 text-[26px] mb-3">{b.icon}</span>
-              <h3 class="font-black text-zinc-900 mb-2 font-display">{b.title}</h3>
-              <p class="text-zinc-500 text-[13px] leading-relaxed">{b.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
     <!-- =================== FAQ =================== -->
     <section id="faq" class="py-24 lg:py-28 px-6 md:px-12 bg-zinc-50/60 border-t border-zinc-100">
       <div class="max-w-3xl mx-auto">
@@ -485,8 +459,8 @@ const faqs = [
           <span class="text-[10.5px] font-black text-violet-700 uppercase tracking-[0.18em]">Cupos limitados · Respuesta en 1h</span>
         </div>
 
-        <h2 class="font-display text-4xl sm:text-5xl md:text-[64px] lg:text-[72px] font-black tracking-tight text-zinc-900 leading-[1.02] mb-6">
-          Tu próxima web puede <span class="underline decoration-violet-500 decoration-[3px] underline-offset-[6px]">duplicarte las ventas</span>.
+        <h2 class="font-display text-4xl sm:text-5xl md:text-[64px] lg:text-[72px] tracking-tight text-zinc-900 leading-[1.02] mb-6">
+          <span class="font-semibold">Tu próxima web puede</span> <span class="font-black underline decoration-violet-500 decoration-[3px] underline-offset-[6px]">duplicarte las ventas</span>.
         </h2>
 
         <p class="text-zinc-500 text-[16px] md:text-[18px] leading-relaxed max-w-2xl mx-auto mb-10">
@@ -504,11 +478,6 @@ const faqs = [
           Quiero vender más con mi web
           <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
-
-        <!-- Sub CTA: número directo + horario -->
-        <p class="mt-6 text-[13px] text-zinc-500">
-          O llamanos directo: <a href="tel:+5493476245523" class="font-black text-zinc-900 hover:text-violet-600 transition-colors">+54 9 3476 24-5523</a>
-        </p>
 
         <!-- 3 garantías -->
         <div class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
