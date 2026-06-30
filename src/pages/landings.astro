@@ -572,26 +572,26 @@ const faqs = [
     /* Botón principal del hero — pulse + glow violeta suave (sin reflejo) */
     .btn-hero-pulse {
       position: relative;
-      animation: btn-hero-pulse 3.2s ease-in-out infinite;
+      animation: hero-pulse-glow 2s ease-in-out infinite;
       will-change: transform, box-shadow;
     }
-    @keyframes btn-hero-pulse {
+    @keyframes hero-pulse-glow {
       0%, 100% {
         transform: scale(1);
         box-shadow:
           0 6px 18px -4px rgba(79, 70, 229, 0.35),
-          0 0 0 0 rgba(99, 102, 241, 0.4);
+          0 0 0 0 rgba(99, 102, 241, 0.5);
       }
       50% {
-        transform: scale(1.025);
+        transform: scale(1.03);
         box-shadow:
-          0 12px 28px -6px rgba(79, 70, 229, 0.4),
-          0 0 0 8px rgba(99, 102, 241, 0);
+          0 14px 32px -6px rgba(79, 70, 229, 0.45),
+          0 0 0 10px rgba(99, 102, 241, 0);
       }
     }
     .btn-hero-pulse:hover {
       animation-play-state: paused;
-      transform: scale(1.04) translateY(-2px);
+      transform: scale(1.05) translateY(-2px);
       box-shadow: 0 20px 40px -8px rgba(9, 9, 11, 0.55);
     }
     @media (prefers-reduced-motion: reduce) {
