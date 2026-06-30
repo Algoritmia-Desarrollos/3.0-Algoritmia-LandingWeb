@@ -240,11 +240,11 @@ const faqs = [
       <div class="max-w-5xl mx-auto text-center space-y-7 relative z-10">
         <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-400 font-bold">Filosofía</p>
         <h2 class="text-[26px] md:text-5xl font-semibold tracking-tighter text-white leading-tight mb-7">
-          No diseñamos para premios.<br/>
-          <span class="text-zinc-400">Diseñamos algo que genera clientes.</span>
+          Diseño con un solo fin:<br/>
+          <span class="text-zinc-400">convertir tu tráfico en clientes.</span>
         </h2>
         <p class="text-white/70 text-lg leading-relaxed font-normal max-w-2xl mx-auto">
-          Venimos de gestionar Meta Ads. Sabemos exactamente dónde la gente rebota, dónde se traba y dónde clickea. Esa cabeza la metemos en cada sección que construimos.
+          Estructuramos cada sección con lógica de embudo. Sabemos exactamente qué hace que un usuario abandone una página y qué lo impulsa a comprar, optimizando tu web al máximo.
         </p>
       </div>
     </section>
@@ -627,6 +627,8 @@ const faqs = [
           t.classList.toggle('text-white', active);
           t.classList.toggle('shadow-sm', active);
           t.classList.toggle('text-zinc-500', !active);
+          t.classList.toggle('hover:bg-zinc-100/80', !active);
+          t.classList.toggle('hover:text-zinc-700', !active);
         });
         panes.forEach((p, i) => {
           p.style.opacity = i === idx ? '1' : '0';
