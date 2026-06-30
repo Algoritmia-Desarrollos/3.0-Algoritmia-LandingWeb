@@ -702,11 +702,33 @@ const faqs = [
       setTimeout(sequence, 800);
     }
 
+    function initLeadTracking() {
+      // Listener delegado para capturar clicks en cualquier link de WhatsApp
+      // y disparar el evento Lead de Meta Pixel
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        if (!target) return;
+        const link = target.closest('a[href*="wa.me"]') as HTMLAnchorElement | null;
+        if (!link) return;
+        const fbq = (window as any).fbq;
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead', {
+            content_name: 'WhatsApp CTA — Landing webs',
+            content_category: 'web-services',
+            value: 250,
+            currency: 'USD'
+          });
+          fbq('trackCustom', 'WhatsAppClick', { source: 'landings-page' });
+        }
+      });
+    }
+
     function bootLanding() {
       initShowcase();
       initTestimonialPlayers();
       initForm();
       initPdpCompare();
+      initLeadTracking();
     }
     document.addEventListener('astro:page-load', bootLanding);
     bootLanding();
