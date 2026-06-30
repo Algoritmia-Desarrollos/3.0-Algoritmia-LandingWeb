@@ -90,12 +90,10 @@ const faqs = [
           <span class="text-[8.5px] font-bold text-violet-500 tracking-[0.22em] mt-0.5 uppercase">Webs</span>
         </div>
       </a>
-      <div class="flex items-center gap-1.5">
-        <a href="#servicios"   class="hidden md:inline-flex text-[12px] font-bold text-zinc-600 hover:text-zinc-900 px-3 py-2 transition-colors">Servicios</a>
-        <a href="#proceso"     class="hidden md:inline-flex text-[12px] font-bold text-zinc-600 hover:text-zinc-900 px-3 py-2 transition-colors">Proceso</a>
-        <a href="#testimonios" class="hidden md:inline-flex text-[12px] font-bold text-zinc-600 hover:text-zinc-900 px-3 py-2 transition-colors">Casos</a>
-        <a href="#contacto"    class="bg-zinc-900 text-white px-4 md:px-5 h-9 inline-flex items-center rounded-full text-[12px] md:text-[13px] font-black hover:bg-zinc-800 transition-all shadow-md shadow-zinc-900/20">Crear mi web</a>
-      </div>
+      <a href="#contacto" class="group bg-zinc-900 text-white px-4 md:px-5 h-9 md:h-10 inline-flex items-center gap-2 rounded-full text-[12px] md:text-[13px] font-black hover:bg-zinc-800 transition-all shadow-md shadow-zinc-900/20">
+        Quiero vender más
+        <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div>
   </header>
 
@@ -475,33 +473,70 @@ const faqs = [
       </div>
     </section>
 
-    <!-- =================== CTA + FORM =================== -->
-    <section id="contacto" class="py-24 lg:py-28 px-6 md:px-12 bg-white">
-      <div class="max-w-2xl mx-auto">
-        <div class="bg-zinc-950 text-white p-8 md:p-12 rounded-[24px] shadow-2xl shadow-zinc-900/15 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-[300px] h-[300px] bg-[#25D366]/15 blur-[120px] rounded-full pointer-events-none"></div>
-          <div class="relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 bg-[#25D366]/15 border border-[#25D366]/30 text-[#25D366] text-[11px] font-black px-3 py-1.5 rounded-full mb-6 uppercase tracking-wider">
-              <span class="w-1.5 h-1.5 bg-[#25D366] rounded-full animate-pulse"></span>
-              Respuesta directa · En minutos
+    <!-- =================== CTA FINAL =================== -->
+    <section id="contacto" class="py-28 lg:py-36 px-6 md:px-12 bg-white relative overflow-hidden">
+      <!-- Glow violeta del fondo -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-violet-500/8 blur-[180px] rounded-full pointer-events-none"></div>
+      <div class="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-violet-400/10 blur-[140px] rounded-full pointer-events-none"></div>
+
+      <div class="max-w-4xl mx-auto relative z-10 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-200 bg-violet-50 mb-6">
+          <span class="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse"></span>
+          <span class="text-[10.5px] font-black text-violet-700 uppercase tracking-[0.18em]">Cupos limitados · Respuesta en 1h</span>
+        </div>
+
+        <h2 class="font-display text-4xl sm:text-5xl md:text-[64px] lg:text-[72px] font-black tracking-tight text-zinc-900 leading-[1.02] mb-6">
+          Tu próxima web puede <span class="underline decoration-violet-500 decoration-[3px] underline-offset-[6px]">duplicarte las ventas</span>.
+        </h2>
+
+        <p class="text-zinc-500 text-[16px] md:text-[18px] leading-relaxed max-w-2xl mx-auto mb-10">
+          Escribinos ahora por WhatsApp. Te contestamos al toque, entendemos qué necesitás y te pasamos <strong class="text-zinc-900">propuesta cerrada en 24 horas</strong>. Sin formularios infinitos, sin esperas.
+        </p>
+
+        <!-- CTA principal -->
+        <a
+          href="https://wa.me/5493476245523?text=Hola%20Algoritmia%2C%20quiero%20vender%20m%C3%A1s%20con%20una%20web%20que%20convierta."
+          target="_blank"
+          rel="noopener"
+          class="group inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-[15px] uppercase tracking-wider py-5 px-10 rounded-2xl shadow-2xl shadow-[#25D366]/30 hover:shadow-[0_25px_60px_-12px_rgba(37,211,102,0.5)] hover:-translate-y-0.5 transition-all duration-300"
+        >
+          <svg class="w-6 h-6 transition-transform group-hover:rotate-12" viewBox="0 0 32 32" fill="currentColor"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.34.68 4.515 1.85 6.353L4 28l6.81-1.793A11.948 11.948 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm0 21.6c-1.875 0-3.61-.516-5.097-1.41l-.366-.218-4.043 1.065 1.084-3.94-.238-.404A8.96 8.96 0 0 1 7 15c0-4.964 4.036-9 9.001-9 4.965 0 9 4.036 9 9s-4.035 9-9 9zm5.187-6.733c-.285-.143-1.686-.832-1.948-.928-.262-.095-.453-.143-.643.143-.19.286-.738.928-.904 1.118-.166.19-.333.214-.618.071-.285-.143-1.202-.443-2.29-1.413-.846-.755-1.418-1.687-1.584-1.973-.166-.286-.018-.44.125-.583.128-.128.286-.333.428-.5.143-.166.19-.285.286-.475.095-.19.048-.357-.024-.5-.071-.143-.643-1.55-.881-2.122-.232-.557-.467-.481-.643-.49-.166-.008-.357-.01-.547-.01a1.05 1.05 0 0 0-.762.357c-.262.286-1 .976-1 2.381 0 1.405 1.023 2.762 1.166 2.953.143.19 2.013 3.073 4.88 4.31.682.294 1.215.47 1.63.603.685.218 1.308.187 1.802.114.55-.082 1.686-.69 1.924-1.355.238-.667.238-1.238.166-1.357-.071-.119-.262-.19-.547-.333z"/></svg>
+          Quiero vender más con mi web
+          <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+
+        <!-- Sub CTA: número directo + horario -->
+        <p class="mt-6 text-[13px] text-zinc-500">
+          O llamanos directo: <a href="tel:+5493476245523" class="font-black text-zinc-900 hover:text-violet-600 transition-colors">+54 9 3476 24-5523</a>
+        </p>
+
+        <!-- 3 garantías -->
+        <div class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div class="p-5 rounded-2xl bg-zinc-50/60 border border-zinc-200/60 flex items-center gap-3 text-left">
+            <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
-            <h2 class="font-display text-3xl md:text-4xl font-black mb-3 tracking-tight leading-[1.05]">Escribinos por WhatsApp</h2>
-            <p class="text-sm text-white/60 mb-8 max-w-md mx-auto">Contanos qué necesitás y te pasamos propuesta cerrada en 24h. Sin formularios infinitos.</p>
-
-            <a
-              href="https://wa.me/5493476245523?text=Hola%20Algoritmia%2C%20quiero%20una%20propuesta%20para%20mi%20web."
-              target="_blank"
-              rel="noopener"
-              class="group inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-sm uppercase tracking-wider py-4 px-8 rounded-xl shadow-xl shadow-[#25D366]/30 hover:shadow-2xl hover:shadow-[#25D366]/40 transition-all duration-300 w-full sm:w-auto"
-            >
-              <svg class="w-5 h-5" viewBox="0 0 32 32" fill="currentColor"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.34.68 4.515 1.85 6.353L4 28l6.81-1.793A11.948 11.948 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm0 21.6c-1.875 0-3.61-.516-5.097-1.41l-.366-.218-4.043 1.065 1.084-3.94-.238-.404A8.96 8.96 0 0 1 7 15c0-4.964 4.036-9 9.001-9 4.965 0 9 4.036 9 9s-4.035 9-9 9zm5.187-6.733c-.285-.143-1.686-.832-1.948-.928-.262-.095-.453-.143-.643.143-.19.286-.738.928-.904 1.118-.166.19-.333.214-.618.071-.285-.143-1.202-.443-2.29-1.413-.846-.755-1.418-1.687-1.584-1.973-.166-.286-.018-.44.125-.583.128-.128.286-.333.428-.5.143-.166.19-.285.286-.475.095-.19.048-.357-.024-.5-.071-.143-.643-1.55-.881-2.122-.232-.557-.467-.481-.643-.49-.166-.008-.357-.01-.547-.01a1.05 1.05 0 0 0-.762.357c-.262.286-1 .976-1 2.381 0 1.405 1.023 2.762 1.166 2.953.143.19 2.013 3.073 4.88 4.31.682.294 1.215.47 1.63.603.685.218 1.308.187 1.802.114.55-.082 1.686-.69 1.924-1.355.238-.667.238-1.238.166-1.357-.071-.119-.262-.19-.547-.333z"/></svg>
-              Hablar por WhatsApp
-            </a>
-
-            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-x-6 gap-y-2 text-[11.5px] text-white/50">
-              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-[#25D366]">check</span> +54 9 3476 24-5523</span>
-              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-[#25D366]">check</span> Lun a Vie · 9 a 19hs</span>
-              <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-[#25D366]">check</span> Respuesta &lt; 1h</span>
+            <div>
+              <p class="text-[12.5px] font-black text-zinc-900">Propuesta en 24h</p>
+              <p class="text-[11px] text-zinc-500">Número cerrado, tiempos claros</p>
+            </div>
+          </div>
+          <div class="p-5 rounded-2xl bg-zinc-50/60 border border-zinc-200/60 flex items-center gap-3 text-left">
+            <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <p class="text-[12.5px] font-black text-zinc-900">Lun a Vie · 9 a 19hs</p>
+              <p class="text-[11px] text-zinc-500">Respondemos &lt; 1 hora</p>
+            </div>
+          </div>
+          <div class="p-5 rounded-2xl bg-zinc-50/60 border border-zinc-200/60 flex items-center gap-3 text-left">
+            <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <p class="text-[12.5px] font-black text-zinc-900">Sin compromiso</p>
+              <p class="text-[11px] text-zinc-500">100% libre de spam</p>
             </div>
           </div>
         </div>
