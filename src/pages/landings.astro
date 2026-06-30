@@ -104,14 +104,30 @@ const faqs = [
       <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-violet-400/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
-        <h1 class="font-display tracking-tight max-w-4xl mx-auto mb-6 animate-in fade-in slide-in-from-bottom-5 duration-700 text-4xl sm:text-5xl md:text-[62px] lg:text-[72px] leading-[1.1] text-zinc-900">
-          <span class="font-semibold text-zinc-900">Webs, tiendas y landings.</span>{' '}
-          <span class="font-black underline decoration-violet-500 decoration-[3px] underline-offset-4">Diseñadas para vender</span>.
+        <h1 class="font-display tracking-tight max-w-4xl mx-auto mb-6 animate-in fade-in slide-in-from-bottom-5 duration-700 text-4xl sm:text-5xl md:text-[62px] lg:text-[72px] leading-[1.05] text-zinc-900">
+          <span class="font-semibold text-zinc-900">Tu web no vende.</span>{' '}
+          <span class="font-black underline decoration-violet-500 decoration-[3px] underline-offset-4">La rehacemos en 7 días</span>.
         </h1>
 
-        <p class="text-[15.5px] sm:text-[17px] max-w-2xl mx-auto leading-relaxed mb-10 text-zinc-500">
-          <strong class="text-zinc-900">No diseñamos para premios. Diseñamos para que tu negocio facture.</strong><br/>
-          Si querés algo "lindo pero que no vende", hay 800 diseñadores en LinkedIn esperándote.
+        <p class="text-[16px] sm:text-[19px] max-w-2xl mx-auto leading-snug mb-6 text-zinc-700 font-medium">
+          Si no convierte mejor que la actual, <strong class="text-zinc-900">te devolvemos los USD 250</strong>.
+        </p>
+
+        <!-- Price + Guarantee badges -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5 mb-8">
+          <span class="inline-flex items-center gap-2 h-9 px-4 rounded-full bg-violet-50 border border-violet-200">
+            <svg class="w-4 h-4 text-violet-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span class="text-[12px] font-black text-violet-700 uppercase tracking-wider">Desde USD 250</span>
+          </span>
+          <span class="inline-flex items-center gap-2 h-9 px-4 rounded-full bg-emerald-50 border border-emerald-200">
+            <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            <span class="text-[12px] font-black text-emerald-700 uppercase tracking-wider">Garantía 100% o te devolvemos la plata</span>
+          </span>
+        </div>
+
+        <!-- Authority -->
+        <p class="text-[13px] sm:text-[14px] text-zinc-500 mb-8">
+          <strong class="text-zinc-900">+300 landings construidas</strong> · Venimos de gestionar <strong class="text-zinc-900">+USD 2M en pauta paga</strong>.
         </p>
 
         <div class="flex flex-col items-center gap-3 mb-16">
@@ -425,6 +441,54 @@ const faqs = [
               <p class="text-zinc-500 text-[13.5px] mt-3 leading-relaxed">{f.a}</p>
             </details>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== GARANTÍA =================== -->
+    <section id="garantia" class="py-24 lg:py-28 px-6 md:px-12 bg-white relative overflow-hidden">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-emerald-500/8 blur-[160px] rounded-full pointer-events-none"></div>
+      <div class="max-w-5xl mx-auto relative z-10">
+        <div class="rounded-[28px] border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-50/40 to-white p-8 md:p-12 lg:p-16 shadow-2xl shadow-emerald-500/10">
+          <div class="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-10 lg:gap-14 items-center">
+
+            <!-- Sello visual -->
+            <div class="flex justify-center lg:justify-start">
+              <div class="relative w-40 h-40 md:w-48 md:h-48">
+                <div class="absolute inset-0 rounded-full bg-emerald-500/10 animate-pulse"></div>
+                <div class="absolute inset-3 rounded-full bg-white border-4 border-emerald-500 shadow-2xl shadow-emerald-500/30 flex flex-col items-center justify-center">
+                  <svg class="w-12 h-12 text-emerald-600 mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                  <p class="text-[10px] font-black uppercase tracking-[0.15em] text-emerald-700 leading-tight text-center">Garantía<br/>100%</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Texto -->
+            <div class="text-center lg:text-left">
+              <p class="text-[10.5px] uppercase tracking-[0.22em] text-emerald-600 font-black mb-3">Nuestra garantía</p>
+              <h2 class="font-display text-3xl sm:text-4xl md:text-[44px] font-black tracking-tight text-zinc-900 leading-[1.05] mb-5">
+                Si no convierte mejor que tu web actual,<br/>
+                <span class="underline decoration-emerald-500 decoration-[3px] underline-offset-[6px]">te devolvemos los USD 250</span>.
+              </h2>
+              <p class="text-zinc-600 text-[15px] md:text-[16.5px] leading-relaxed mb-6">
+                Sin letra chica. Sin "te lo descontamos del próximo proyecto". Sin "primero analizamos". Te transferimos los <strong class="text-zinc-900">USD 250 a tu cuenta</strong> y queda como aprendizaje nuestro.
+              </p>
+              <div class="flex flex-wrap gap-2.5 justify-center lg:justify-start">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-[11.5px] font-bold text-zinc-700">
+                  <svg class="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Cero permanencia
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-[11.5px] font-bold text-zinc-700">
+                  <svg class="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Código tuyo
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-zinc-200 text-[11.5px] font-bold text-zinc-700">
+                  <svg class="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Devolución en 7 días
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
