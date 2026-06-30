@@ -6,15 +6,15 @@ import logo from '../assets/logoAlgoritmia1.webp';
 
 // Imágenes a poner en /public/images/webs/ (si faltan, hay placeholder).
 const showcaseTabs = [
-  { id: 'landing-page',    label: 'Landing Page',        img: '/images/webs/landing-page.webp',     desc: "Página única para tráfico frío de Meta y Google Ads. Mensaje claro, formulario calificador, cero distracción. <strong>Costo por lead ‑57%.</strong>" },
-  { id: 'un-producto',     label: '1 Solo Producto',     img: '/images/webs/un-producto.webp',      desc: "Landing mono-producto al estilo Apple. Una sola misión: vender ese producto. Pensada para escalar con pauta en frío. <strong>AOV +38%.</strong>" },
-  { id: 'varios-productos',label: 'Varios Productos',    img: '/images/webs/varios-productos.webp', desc: "Catálogo con foco en cross-sell. Bundles, productos relacionados y descripciones extendidas que disparan el ticket promedio." },
-  { id: 'tiendas-online',  label: 'Tiendas Online',      img: '/images/webs/tiendas-online.webp',   desc: "E-commerce completo en Shopify o Tiendanube. Checkout sin fricción, catálogo claro y métricas conectadas desde el día 1. <strong>+62% conversión promedio.</strong>" },
-  { id: 'institucional',   label: 'Institucionales',     img: '/images/webs/institucional.webp',    desc: "Sitio corporativo que comunica autoridad. Astro o Next.js con carga sub-segundo. <strong>Lighthouse 95+</strong> y SEO técnico cuidado." },
-  { id: 'servicios-pro',   label: 'Servicios Profesionales', img: '/images/webs/servicios.webp',    desc: "Web para abogados, médicos, consultores y clínicas. Calendario integrado, formulario calificador y posicionamiento premium." },
-  { id: 'viajes',          label: 'Agencia de Viajes',   img: '/images/webs/viajes.webp',           desc: "Sitio para agencias de turismo con catálogo de destinos, búsqueda por presupuesto y formularios conectados a WhatsApp. <strong>Pensado para vender experiencias.</strong>" },
-  { id: 'mayorista',       label: 'Mayorista B2B',       img: '/images/webs/mayorista.webp',        desc: "Tienda mayorista con grilla editorial por categoría, precios por volumen y compra fraccionada. Catálogo claro que convierte revendedores en clientes fijos." },
-  { id: 'inmobiliaria',    label: 'Arquitectura',        img: '/images/webs/inmobiliaria.webp',     desc: "Sitio editorial premium para estudios de arquitectura e inmobiliarias. Tipografía bestial, fichas de proyecto SEO-friendly y look internacional." }
+  { id: 'landing-page',    label: 'Página Única',        img: '/images/webs/landing-page.webp',     desc: "Una sola página, una sola misión: que la gente que entra termine comprando. Mensaje claro, cero distracción. <strong>Bajamos el costo por lead un 57%.</strong>" },
+  { id: 'un-producto',     label: '1 Solo Producto',     img: '/images/webs/un-producto.webp',      desc: "Web mono-producto al estilo Apple. Pensada para escalar con pauta en frío y subir el ticket promedio. <strong>Subimos el ticket promedio un 38%.</strong>" },
+  { id: 'varios-productos',label: 'Varios Productos',    img: '/images/webs/varios-productos.webp', desc: "Catálogo con foco en venta cruzada. Combos, productos relacionados y descripciones que hacen que el cliente termine llevando más de lo que pensaba." },
+  { id: 'tiendas-online',  label: 'Tiendas Online',      img: '/images/webs/tiendas-online.webp',   desc: "Tienda completa en Shopify o Tiendanube. Carrito sin fricción, catálogo claro y métricas conectadas desde el día 1. <strong>+62% de conversión promedio.</strong>" },
+  { id: 'institucional',   label: 'Institucionales',     img: '/images/webs/institucional.webp',    desc: "Web corporativa que transmite autoridad y carga en menos de 1 segundo. Pensada para cerrar reuniones, no para ganar premios de diseño." },
+  { id: 'servicios-pro',   label: 'Servicios Profesionales', img: '/images/webs/servicios.webp',    desc: "Web para abogados, médicos, consultores y clínicas. Agenda integrada, formulario que filtra leads y posicionamiento premium." },
+  { id: 'viajes',          label: 'Agencia de Viajes',   img: '/images/webs/viajes.webp',           desc: "Web para agencias de turismo con catálogo de destinos, búsqueda por presupuesto y formularios conectados a WhatsApp. <strong>Vendés experiencias, no paquetes.</strong>" },
+  { id: 'mayorista',       label: 'Mayorista B2B',       img: '/images/webs/mayorista.webp',        desc: "Tienda mayorista con grilla por categoría, precios por volumen y compra fraccionada. Catálogo que convierte revendedores en clientes que vuelven." },
+  { id: 'inmobiliaria',    label: 'Arquitectura',        img: '/images/webs/inmobiliaria.webp',     desc: "Web editorial premium para estudios de arquitectura e inmobiliarias. Tipografía bestial, fichas de proyecto pensadas para SEO y look internacional." }
 ];
 
 const platforms = [
@@ -57,22 +57,35 @@ const proceso = [
 
 
 
+const testimonials = [
+  { title: 'The Skirting Factory',   stat: '+300% ventas el 1º mes',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-skirting.webp',     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/manuel-descartes.mp4', tag: 'E-commerce USA' },
+  { title: 'Librería Mayorista Leo', stat: '$150K USD anuales',              cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-libreria-leo.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/libreria-leo.mp4',    tag: 'Mayorista B2B' },
+  { title: 'Puertas Blindadas Jack', stat: 'x10 ventas High Ticket',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-jack.webp',       video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/puertas-jack.mp4',    tag: 'High Ticket' },
+  { title: 'Dr. Juan Tesari',        stat: '+300 consultas / mes',           cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-juan.webp',         video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/juan-tesari.mp4',     tag: 'Salud / Servicios' },
+  { title: 'Atérmicos Pinamar',      stat: '+15 contratos High Ticket / mes', cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-atermicos.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/atermicos-pinamar.mp4', tag: 'Construcción Premium' },
+  { title: 'Case Rossi',             stat: 'ROAS récord 70x',                cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-case-rossi.webp',  video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/case-rossi.mp4',     tag: 'E-commerce Diseño' }
+];
+
 const faqs = [
   {
-    q: '¿Trabajan con mi diseñador / mi marca?',
-    a: '<strong class="text-zinc-900">Sí.</strong> Si ya tenés brand book, lo respetamos. Si no lo tenés, lo armamos.<br/><br/>Diseño 100% custom. Cero templates de Themeforest. Si querías eso, hay 14.000 freelancers en Fiverr esperándote por USD 80.'
-  },
-  {
-    q: '¿Quién hace el copy?',
-    a: '<strong class="text-zinc-900">Nosotros.</strong><br/><br/>Venimos de gestionar más de USD 2M en pauta — sabemos qué frenó scroll, qué hizo clickear y qué hizo cerrar la pestaña. Esa data está bakeada en cada headline.<br/><br/>El copy lo validás vos sección por sección. Cero sorpresas en el live.'
+    q: '¿En cuánto tiempo está mi web lista?',
+    a: '<strong class="text-zinc-900">En 7 días una web simple. 3 a 5 semanas una tienda con catálogo grande.</strong><br/><br/>La fecha exacta va cerrada en la propuesta. Sin "te aviso", sin "la semana que viene", sin "lo veo con el equipo". Fecha. Cerrada.'
   },
   {
     q: '¿Cuánto cuesta?',
-    a: '<strong class="text-zinc-900">Desde USD 250.</strong><br/>Sí, leíste bien.<br/><br/>El número exacto depende del scope (landing simple, tienda con catálogo grande, web corporativa). En la primera llamada salís con propuesta cerrada y número final. No "te lo paso por mail mañana", no "te coordino con el equipo de presupuestos". Número. En la llamada.'
+    a: '<strong class="text-zinc-900">Desde USD 250.</strong><br/>Sí, leíste bien.<br/><br/>El número exacto depende de qué necesites (una web simple, una tienda con catálogo, una web corporativa). En la primera llamada salís con propuesta cerrada y número final. No "te lo paso por mail mañana". Número en la llamada.'
   },
   {
-    q: '¿Y si no me convierte mejor que mi web actual?',
-    a: '<strong class="text-zinc-900">Te devolvemos el 100% de la plata.</strong><br/><br/>El único que arriesga acá somos nosotros.'
+    q: '¿Y si la web no me hace vender más?',
+    a: '<strong class="text-zinc-900">Te devolvemos el 100% de la plata.</strong><br/><br/>De más de 300 webs que hicimos, 1 sola pidió devolución. Se la dimos. El único que arriesga algo acá somos nosotros.'
+  },
+  {
+    q: '¿Quién hace el copy y el diseño?',
+    a: '<strong class="text-zinc-900">Nosotros.</strong><br/><br/>Venimos de gestionar más de USD 2M en Meta Ads — sabemos qué frena el scroll, qué hace clickear y qué hace cerrar la pestaña. Esa cabeza la metemos en cada headline y cada sección.<br/><br/>Vos validás cada parte antes de que toquemos código. Cero sorpresas en el live.'
+  },
+  {
+    q: '¿Trabajan con mi marca o tengo que tener una?',
+    a: '<strong class="text-zinc-900">Si ya tenés marca, la respetamos. Si no, te ayudamos a armarla.</strong><br/><br/>Diseño 100% custom. Cero plantillas. Si querías eso, hay 14.000 freelancers en Fiverr esperándote por USD 80.'
   },
   {
     q: '¿Por qué Algoritmia y no una agencia grande con 14 personas?',
@@ -99,7 +112,7 @@ const faqs = [
         <span class="text-[15px] md:text-[16px] font-black tracking-tight text-zinc-900 font-display">Algoritmia</span>
       </a>
       <a href="#contacto" class="group bg-violet-600 hover:bg-violet-500 text-white px-4 md:px-5 h-9 md:h-10 inline-flex items-center gap-2 rounded-full text-[12px] md:text-[13px] font-black hover:shadow-lg hover:shadow-violet-600/20 hover:-translate-y-0.5 transition-all duration-300 active:scale-95 shadow-md shadow-violet-600/10">
-        Quiero mi web
+        Empecemos
         <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
@@ -121,11 +134,11 @@ const faqs = [
         </div>
 
         <h1 class="font-semibold tracking-tighter max-w-4xl mx-auto mb-3 sm:mb-5 animate-in fade-in slide-in-from-bottom-5 duration-700 text-[32px] sm:text-5xl md:text-[62px] lg:text-[72px] leading-[1.1] sm:leading-[1.05] text-zinc-900">
-          Hacemos webs.<br/>
-          <span class="bg-violet-50 text-zinc-900 px-4 sm:px-6 py-1 sm:py-2 rounded-2xl inline-block mt-1 sm:mt-2 border border-violet-100 shadow-sm font-bold">Pero solo las que venden.</span>
+          Tu web no vende.<br/>
+          <span class="bg-violet-50 text-zinc-900 px-4 sm:px-6 py-1 sm:py-2 rounded-2xl inline-block mt-1 sm:mt-2 border border-violet-100 shadow-sm font-bold">Hacemos una que sí.</span>
         </h1>
 
-        <p class="text-[10.5px] xs:text-xs md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-12 text-zinc-500 font-normal whitespace-nowrap">
+        <p class="text-[11px] sm:text-[14px] md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-12 text-zinc-500 font-normal whitespace-nowrap">
           Si no convierte mejor que la actual, <strong class="text-zinc-900 font-semibold">te devolvemos los USD 250</strong>.
         </p>
 
@@ -231,7 +244,7 @@ const faqs = [
           <span class="text-zinc-400">Diseñamos algo que genera clientes.</span>
         </h2>
         <p class="text-white/70 text-lg leading-relaxed font-normal max-w-2xl mx-auto">
-          Venimos de gestionar pauta. Sabemos exactamente dónde el usuario rebota, dónde se traba, dónde clickea. Esa data está bakeada en cada sección que construimos.
+          Venimos de gestionar Meta Ads. Sabemos exactamente dónde la gente rebota, dónde se traba y dónde clickea. Esa cabeza la metemos en cada sección que construimos.
         </p>
       </div>
     </section>
@@ -249,11 +262,11 @@ const faqs = [
             Subimos la conversión <span class="text-violet-600 font-bold">2.7×</span>.
           </h2>
           <p class="text-zinc-500/80 text-[14px] sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
-            Mismo producto. Mismo tráfico. Mismo todo.<br/>
-            <strong class="text-zinc-900 font-semibold">Solo arreglamos la web.</strong>
+            Mismo producto. Mismo tráfico. Misma plata en ads.<br/>
+            <strong class="text-zinc-900 font-semibold">Lo único que cambiamos fue la web.</strong>
           </p>
           <p class="text-zinc-900 text-[16px] md:text-xl leading-snug max-w-2xl mx-auto mt-6 font-semibold">
-            Imaginate eso pasando con <span class="text-violet-600 font-bold">la tuya</span>.
+            Ahora imaginate esto pasando con <span class="text-violet-600 font-bold">tu negocio</span>.
           </p>
         </div>
 
@@ -315,17 +328,17 @@ const faqs = [
             <p class="font-display text-3xl md:text-4xl font-black text-zinc-900">0,7% → <span class="text-violet-600">1,9%</span></p>
           </div>
           <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 text-center">
-            <p class="text-[10px] uppercase tracking-widest text-zinc-400 font-black mb-2">Lift de conversión</p>
+            <p class="text-[10px] uppercase tracking-widest text-zinc-400 font-black mb-2">Mejora de conversión</p>
             <p class="font-display text-3xl md:text-4xl font-black text-violet-600">+170%</p>
           </div>
           <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 text-center">
-            <p class="text-[10px] uppercase tracking-widest text-zinc-400 font-black mb-2">Inversión adicional en ads</p>
+            <p class="text-[10px] uppercase tracking-widest text-zinc-400 font-black mb-2">Plata extra invertida en ads</p>
             <p class="font-display text-3xl md:text-4xl font-black text-zinc-900">$0</p>
           </div>
         </div>
 
         <div class="mt-8 p-6 md:p-8 rounded-[18px] border border-zinc-200/60 bg-zinc-50/30">
-          <p class="text-[10.5px] font-black uppercase tracking-[0.18em] text-violet-600 mb-3">Lo que cambió en la ficha</p>
+          <p class="text-[10.5px] font-black uppercase tracking-[0.18em] text-violet-600 mb-3">Lo que cambiamos para duplicar la conversión</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5 text-[13.5px] text-zinc-700">
             <p class="flex gap-2"><span class="text-violet-500 font-black shrink-0">✓</span> <span>Prueba social arriba del fold (<strong>+150 clientes contentos</strong>)</span></p>
             <p class="flex gap-2"><span class="text-violet-500 font-black shrink-0">✓</span> <span>Beneficios en bullets con íconos (no lista de features)</span></p>
@@ -342,8 +355,8 @@ const faqs = [
     <section id="trabajos" class="py-24 lg:py-28 px-3 sm:px-6 md:px-12 bg-zinc-50/60 border-t border-b border-zinc-100">
       <div class="max-w-[1400px] mx-auto">
         <div class="text-center max-w-2xl mx-auto mb-14">
-          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Trabajos recientes</p>
-          <h2 class="text-[26px] md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Así es como convertimos visitas en ventas.</h2>
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Cada negocio, una web pensada para vender</p>
+          <h2 class="text-[26px] md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Así convertimos visitas en clientes.</h2>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {showcaseTabs.slice(0, 4).map(tab => (
@@ -363,12 +376,59 @@ const faqs = [
 
 
 
+    <!-- =================== TESTIMONIOS =================== -->
+    <section id="testimonios" class="py-24 lg:py-28 px-3 sm:px-6 md:px-12 bg-zinc-50/60 border-t border-zinc-100">
+      <div class="max-w-[1400px] mx-auto">
+        <div class="text-center mb-12">
+          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Lo dicen ellos</p>
+          <h2 class="text-[26px] md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Casos reales. Números reales.</h2>
+          <p class="text-zinc-500 mt-4 text-[14px] sm:text-[15px]">Clientes que hoy venden gracias a su nueva web.</p>
+        </div>
+
+        <div class="relative">
+          <div id="testimonials-track" class="flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-3 px-3 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+            {testimonials.map(item => (
+              <div class="snap-start shrink-0 w-[78%] sm:w-[48%] lg:w-[32%] p-4 sm:p-5 rounded-[20px] bg-white border border-zinc-200 shadow-sm flex flex-col gap-3">
+                <div class="flex flex-col gap-1.5 min-h-[82px]">
+                  <span class="text-[10px] font-black text-violet-600 uppercase tracking-[0.12em]">{item.tag}</span>
+                  <h3 class="text-[15px] sm:text-[16px] font-bold text-zinc-900 leading-tight">{item.title}</h3>
+                  <span class="self-start mt-1 bg-violet-50 border border-violet-200 text-violet-700 text-[10.5px] font-black px-2.5 py-1 rounded-full leading-tight">{item.stat}</span>
+                </div>
+                <div class="testimonial-card relative group cursor-pointer rounded-2xl overflow-hidden bg-black shadow-lg aspect-[4/5] w-full">
+                  <img class="video-cover-img absolute inset-0 w-full h-full object-cover" src={item.cover} alt={`Portada de ${item.title}`} loading="lazy" />
+                  <video class="hero-testimonial-video absolute inset-0 w-full h-full object-cover bg-black hidden" preload="none" playsinline>
+                    <source src={item.video} type="video/mp4" />
+                  </video>
+                  <div class="video-overlay absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-all duration-300">
+                    <button class="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform" aria-label="Reproducir">
+                      <svg class="w-6 h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Navegación desktop -->
+          <div class="hidden md:flex justify-end gap-3 mt-6">
+            <button id="testimonials-prev" class="w-11 h-11 rounded-full border border-zinc-200 bg-white text-zinc-700 flex items-center justify-center hover:border-violet-300 hover:text-violet-600 transition-colors shadow-sm" aria-label="Anterior">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button id="testimonials-next" class="w-11 h-11 rounded-full border border-zinc-200 bg-white text-zinc-700 flex items-center justify-center hover:border-violet-300 hover:text-violet-600 transition-colors shadow-sm" aria-label="Siguiente">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- =================== FAQ =================== -->
     <section id="faq" class="py-24 lg:py-28 px-3 sm:px-6 md:px-12 bg-zinc-50/60 border-t border-zinc-100">
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12">
           <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Preguntas frecuentes</p>
-          <h2 class="text-[26px] md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Las dudas que ya respondimos</h2>
+          <h2 class="text-[26px] md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Las dudas que todos tienen.</h2>
+          <p class="text-zinc-500 mt-4 text-[14px] sm:text-[15px]">Lo que nos preguntan antes de decidirse.</p>
         </div>
         <div class="space-y-3">
           {faqs.map(f => (
@@ -400,8 +460,8 @@ const faqs = [
         <h2 class="text-[32px] sm:text-5xl md:text-[62px] lg:text-[72px] font-semibold tracking-tighter text-zinc-900 leading-[1.1] sm:leading-[1.05] mb-4">
           Tu próxima web puede<br class="block md:hidden" /> <span class="text-violet-600 font-bold">duplicarte las ventas</span>.
         </h2>
-        <p class="text-xs md:text-lg text-zinc-500/70 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
-          O podés seguir viendo cómo <span class="text-zinc-900 font-semibold">tu competidor lo hace primero</span>.
+        <p class="text-[14px] sm:text-[16px] md:text-lg text-zinc-500 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+          Empezamos esta semana. <strong class="text-zinc-900">USD 250 · Garantía 100%</strong>.
         </p>
 
 
@@ -434,8 +494,8 @@ const faqs = [
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
             <div>
-              <p class="text-[12.5px] font-black text-zinc-900">Lun a Vie · 9 a 19hs</p>
-              <p class="text-[11px] text-zinc-500">Respondemos &lt; 1 hora</p>
+              <p class="text-[12.5px] font-black text-zinc-900">Entrega en 7 días</p>
+              <p class="text-[11px] text-zinc-500">Fecha cerrada en propuesta</p>
             </div>
           </div>
           <div class="p-5 rounded-2xl bg-zinc-50/60 border border-zinc-200/60 flex items-center gap-3 text-left">
@@ -443,8 +503,8 @@ const faqs = [
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div>
-              <p class="text-[12.5px] font-black text-zinc-900">Sin compromiso</p>
-              <p class="text-[11px] text-zinc-500">100% libre de spam</p>
+              <p class="text-[12.5px] font-black text-zinc-900">Garantía 100%</p>
+              <p class="text-[11px] text-zinc-500">O te devolvemos la plata</p>
             </div>
           </div>
         </div>
@@ -576,7 +636,7 @@ const faqs = [
 
       const startTimer = () => {
         if (timer) window.clearInterval(timer);
-        if (autoCycle) timer = window.setInterval(cycle, 3000);
+        if (autoCycle) timer = window.setInterval(cycle, 4000);
       };
 
       tabs.forEach((tab, i) => {
@@ -708,11 +768,58 @@ const faqs = [
       });
     }
 
+    function initTestimonialPlayers() {
+      document.querySelectorAll('.testimonial-card').forEach(card => {
+        const video = card.querySelector('.hero-testimonial-video') as HTMLVideoElement | null;
+        const overlay = card.querySelector('.video-overlay') as HTMLElement | null;
+        const coverImg = card.querySelector('.video-cover-img') as HTMLImageElement | null;
+        if (!video || !overlay || video.dataset.playerSetup) return;
+        video.dataset.playerSetup = 'true';
+
+        const play = () => {
+          if (video.paused) {
+            document.querySelectorAll<HTMLVideoElement>('.hero-testimonial-video').forEach(v => { if (v !== video && !v.paused) v.pause(); });
+            coverImg?.classList.add('hidden');
+            video.classList.remove('hidden');
+            video.play();
+            overlay.classList.add('hidden');
+            video.setAttribute('controls', 'true');
+          } else { video.pause(); }
+        };
+        overlay.addEventListener('click', play);
+        video.addEventListener('pause', () => overlay.classList.remove('hidden'));
+        video.addEventListener('ended', () => {
+          video.classList.add('hidden');
+          video.removeAttribute('controls');
+          coverImg?.classList.remove('hidden');
+          overlay.classList.remove('hidden');
+        });
+      });
+    }
+
+    function initTestimonialsCarousel() {
+      const track = document.getElementById('testimonials-track');
+      const prev = document.getElementById('testimonials-prev');
+      const next = document.getElementById('testimonials-next');
+      if (!track) return;
+      const getStep = () => {
+        const first = track.querySelector<HTMLElement>(':scope > div');
+        if (!first) return 320;
+        const style = getComputedStyle(track);
+        const gap = parseInt(style.columnGap || style.gap || '20', 10) || 20;
+        return first.offsetWidth + gap;
+      };
+      prev?.addEventListener('click', () => track.scrollBy({ left: -getStep(), behavior: 'smooth' }));
+      next?.addEventListener('click', () => track.scrollBy({ left: getStep(), behavior: 'smooth' }));
+    }
+
     function bootLanding() {
       initShowcase();
       initForm();
       initPdpCompare();
       initLeadTracking();
+      initTestimonialPlayers();
+      initTestimonialsCarousel();
     }
     document.addEventListener('astro:page-load', bootLanding);
   </script>
