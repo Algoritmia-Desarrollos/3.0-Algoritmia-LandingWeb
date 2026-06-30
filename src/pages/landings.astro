@@ -410,7 +410,7 @@ const faqs = [
           href="https://wa.me/5493476245523?text=Hola%20Algoritmia%2C%20quiero%20vender%20m%C3%A1s%20con%20una%20web%20que%20convierta."
           target="_blank"
           rel="noopener"
-          class="group inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-[13px] sm:text-[15px] uppercase tracking-wider py-4 sm:py-5 px-6 sm:px-10 rounded-2xl shadow-2xl shadow-[#25D366]/30 hover:shadow-[0_25px_60px_-12px_rgba(37,211,102,0.5)] hover:-translate-y-0.5 transition-all duration-300 active:scale-95 whitespace-nowrap"
+          class="group flex sm:inline-flex w-full sm:w-auto max-w-[320px] sm:max-w-none mx-auto items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-[13px] sm:text-[15px] uppercase tracking-wider py-4 sm:py-5 px-6 sm:px-10 rounded-2xl shadow-2xl btn-whatsapp-pulse transition-all duration-300 active:scale-95 whitespace-nowrap"
         >
           <svg class="w-6 h-6 transition-transform group-hover:rotate-12" viewBox="0 0 32 32" fill="currentColor"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.34.68 4.515 1.85 6.353L4 28l6.81-1.793A11.948 11.948 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm0 21.6c-1.875 0-3.61-.516-5.097-1.41l-.366-.218-4.043 1.065 1.084-3.94-.238-.404A8.96 8.96 0 0 1 7 15c0-4.964 4.036-9 9.001-9 4.965 0 9 4.036 9 9s-4.035 9-9 9zm5.187-6.733c-.285-.143-1.686-.832-1.948-.928-.262-.095-.453-.143-.643.143-.19.286-.738.928-.904 1.118-.166.19-.333.214-.618.071-.285-.143-1.202-.443-2.29-1.413-.846-.755-1.418-1.687-1.584-1.973-.166-.286-.018-.44.125-.583.128-.128.286-.333.428-.5.143-.166.19-.285.286-.475.095-.19.048-.357-.024-.5-.071-.143-.643-1.55-.881-2.122-.232-.557-.467-.481-.643-.49-.166-.008-.357-.01-.547-.01a1.05 1.05 0 0 0-.762.357c-.262.286-1 .976-1 2.381 0 1.405 1.023 2.762 1.166 2.953.143.19 2.013 3.073 4.88 4.31.682.294 1.215.47 1.63.603.685.218 1.308.187 1.802.114.55-.082 1.686-.69 1.924-1.355.238-.667.238-1.238.166-1.357-.071-.119-.262-.19-.547-.333z"/></svg>
           Empecemos
@@ -485,6 +485,27 @@ const faqs = [
     #pdp-compare.is-dragging #pdp-compare-after,
     #pdp-compare.is-dragging #pdp-compare-divider {
       transition: none !important;
+    }
+
+    /* Pulsing CTA button glow */
+    @keyframes pulse-glow {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 10px 25px -5px rgba(37, 211, 102, 0.4), 0 0 0 0 rgba(37, 211, 102, 0.5);
+      }
+      50% {
+        transform: scale(1.03);
+        box-shadow: 0 20px 35px -5px rgba(37, 211, 102, 0.6), 0 0 0 12px rgba(37, 211, 102, 0);
+      }
+    }
+    .btn-whatsapp-pulse {
+      animation: pulse-glow 2s infinite ease-in-out;
+      will-change: transform, box-shadow;
+    }
+    .btn-whatsapp-pulse:hover {
+      animation-play-state: paused;
+      transform: scale(1.05) !important;
+      box-shadow: 0 20px 35px -5px rgba(37, 211, 102, 0.6);
     }
   </style>
 
