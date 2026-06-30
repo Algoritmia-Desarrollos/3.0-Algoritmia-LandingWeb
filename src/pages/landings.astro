@@ -147,11 +147,11 @@ const faqs = [
             <div class="rounded-none sm:rounded-[18px] border bg-white border-zinc-200/45 overflow-hidden">
 
               <!-- Tabs -->
-              <div class="flex flex-wrap border-b p-1.5 gap-1 border-zinc-200/50 bg-zinc-50/40">
+              <div class="flex overflow-x-auto whitespace-nowrap border-b p-1.5 gap-1 border-zinc-200/50 bg-zinc-50/40 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {showcaseTabs.map((tab, i) => (
                   <button
                     data-tab-id={tab.id}
-                    class={`showcase-tab h-6 md:h-[25px] px-2.5 rounded-md text-[10px] md:text-[11px] font-bold transition-all flex items-center justify-center relative ${i === 0 ? 'is-active bg-zinc-900 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100/80'}`}
+                    class={`showcase-tab h-6 md:h-[25px] px-2.5 rounded-md text-[10px] md:text-[11px] font-bold transition-all flex items-center justify-center relative shrink-0 ${i === 0 ? 'is-active bg-zinc-900 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-700 hover:bg-zinc-100/80'}`}
                   >
                     {tab.label}
                     <span class="tab-dot absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse opacity-0"></span>
@@ -519,6 +519,7 @@ const faqs = [
         });
         if (labelEl) labelEl.textContent = meta[idx].label;
         if (descEl) descEl.innerHTML = meta[idx].desc;
+        tabs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 
         if (progress) {
           progress.classList.remove('running');
