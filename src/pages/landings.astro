@@ -722,15 +722,20 @@ const faqs = [
       let dragging = false;
       let cachedLeft = 0;
       let cachedWidth = 0;
+      let rafId: number | null = null;
 
-      const setPos = (clientX: number) => {
-        let pct = ((clientX - cachedLeft) / cachedWidth) * 100;
-        pct = Math.max(2, Math.min(98, pct));
+      const setPercent = (pct: number) => {
         after.style.clipPath = `inset(0 0 0 ${pct}%)`;
         divider.style.left = `${pct}%`;
         if (hint && hint.style.opacity !== '0') {
           hint.style.opacity = '0';
         }
+      };
+
+      const setPos = (clientX: number) => {
+        let pct = ((clientX - cachedLeft) / cachedWidth) * 100;
+        pct = Math.max(2, Math.min(98, pct));
+        setPercent(pct);
       };
 
       const updateCache = () => {
@@ -746,14 +751,25 @@ const faqs = [
         updateCache();
         setPos(e.clientX);
       };
+
       const onMove = (e: PointerEvent) => {
         if (!dragging) return;
-        setPos(e.clientX);
+        if (rafId !== null) return;
+
+        rafId = requestAnimationFrame(() => {
+          setPos(e.clientX);
+          rafId = null;
+        });
       };
+
       const onUp = (e: PointerEvent) => {
         dragging = false;
         container.classList.remove('is-dragging');
         try { container.releasePointerCapture?.(e.pointerId); } catch {}
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
       };
 
       container.addEventListener('pointerdown', onDown);
@@ -768,7 +784,7 @@ const faqs = [
         if (cachedWidth === 0) return;
         const steps = [30, 70, 50];
         for (const s of steps) {
-          setPos(cachedLeft + cachedWidth * (s/100));
+          setPercent(s);
           await new Promise(r => setTimeout(r, 700));
         }
       };
