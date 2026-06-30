@@ -65,12 +65,34 @@ const testimonials = [
 ];
 
 const faqs = [
-  { q: '¿En cuánto tiempo está mi web lista?',        a: 'Landings simples: 7 a 10 días hábiles. Tiendas Shopify/Tiendanube: 3 a 5 semanas según catálogo. Webs corporativas: 2 a 4 semanas. Fecha cerrada en la propuesta.' },
-  { q: '¿Trabajan con mi diseñador / mi marca?',      a: 'Sí. Si tenés brand book lo respetamos. Si no, lo construimos. Diseño siempre 100% custom — no usamos templates de Themeforest.' },
-  { q: '¿Quién hace el copy?',                         a: 'Nosotros. Venimos de gestionar más de USD 2M en pauta. Escribimos copy probado en mercado, no copy de manual. Validás cada sección.' },
-  { q: '¿Qué pasa después del lanzamiento?',           a: 'Primer mes de optimización incluido. Después podés contratar mantenimiento o quedarte con la web sin pagar nada — el código es tuyo.' },
-  { q: '¿Cuánto cuesta?',                              a: 'Proyectos desde USD 250. El número exacto depende del scope (landing simple, tienda completa, web corporativa, etc). En la 1ª llamada salís con propuesta cerrada y número final.' },
-  { q: '¿Por qué Algoritmia y no una agencia grande?', a: 'Porque venimos de pautear. Cada web sale con la cabeza puesta en cómo se comporta el tráfico pago. Eso una agencia que solo programa no lo tiene.' }
+  {
+    q: '¿Trabajan con mi diseñador / mi marca?',
+    a: '<strong class="text-zinc-900">Sí.</strong> Si ya tenés brand book, lo respetamos. Si no lo tenés, lo armamos.<br/><br/>Diseño 100% custom. Cero templates de Themeforest. Si querías eso, hay 14.000 freelancers en Fiverr esperándote por USD 80.'
+  },
+  {
+    q: '¿Quién hace el copy?',
+    a: '<strong class="text-zinc-900">Nosotros.</strong><br/><br/>Venimos de gestionar más de USD 2M en pauta — sabemos qué frenó scroll, qué hizo clickear y qué hizo cerrar la pestaña. Esa data está bakeada en cada headline.<br/><br/>El copy lo validás vos sección por sección. Cero sorpresas en el live.'
+  },
+  {
+    q: '¿Qué pasa después del lanzamiento?',
+    a: '<strong class="text-zinc-900">Primer mes de ajustes ilimitados, incluido.</strong> Si algo no convierte, lo arreglamos.<br/><br/>Después tenés dos opciones: contratar mantenimiento o quedarte con la web sin pagarnos un peso más. El código es tuyo, el repo es tuyo, el dominio es tuyo. No te encadenamos.'
+  },
+  {
+    q: '¿Cuánto cuesta?',
+    a: '<strong class="text-zinc-900">Desde USD 250.</strong><br/>Sí, leíste bien.<br/><br/>El número exacto depende del scope (landing simple, tienda con catálogo grande, web corporativa). En la primera llamada salís con propuesta cerrada y número final. No "te lo paso por mail mañana", no "te coordino con el equipo de presupuestos". Número. En la llamada.'
+  },
+  {
+    q: '¿Y si no me convierte mejor que mi web actual?',
+    a: '<strong class="text-zinc-900">Te devolvemos el 100% de la plata.</strong><br/><br/>De más de 300 webs hechas, 299 clientes contentos. Al 1 que falta todavía no logramos contactarlo.<br/><br/>El único que arriesga acá somos nosotros.'
+  },
+  {
+    q: '¿Por qué Algoritmia y no una agencia grande con 14 personas?',
+    a: '<strong class="text-zinc-900">Porque venimos de pautear, no de hacer slides.</strong><br/><br/>Cada web la diseñamos pensando cómo se comporta el tráfico pago — dónde rebota, dónde se traba, dónde cliquea. Eso una agencia que solo programa no lo tiene. Y una que solo diseña, menos.<br/><br/>Además: cobramos lo que cobramos porque hacemos 10 al mes en vez de 2 sobrepreciadas. La diferencia se la queda el cliente, no LinkedIn.'
+  },
+  {
+    q: '¿Y si soy de afuera de Argentina?',
+    a: '<strong class="text-zinc-900">También.</strong> Trabajamos con clientes en USA, México, España y Chile.<br/><br/>Las llamadas son por Zoom, las firmas digitales, los pagos por transferencia o Stripe. La distancia no es problema. La indecisión sí.'
+  }
 ];
 ---
 
@@ -400,7 +422,7 @@ const faqs = [
                 {f.q}
                 <span class="material-symbols-outlined text-zinc-400 group-open:rotate-180 transition-transform">expand_more</span>
               </summary>
-              <p class="text-zinc-500 text-[13.5px] mt-3 leading-relaxed">{f.a}</p>
+              <p class="text-zinc-500 text-[13.5px] mt-3 leading-relaxed" set:html={f.a}></p>
             </details>
           ))}
         </div>
