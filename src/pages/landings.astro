@@ -55,13 +55,7 @@ const proceso = [
   { n: '05', title: 'Optimización mes 1',   desc: 'Revisamos Hotjar / GA4 y ajustamos lo que no convierte. Incluido sin costo extra.' }
 ];
 
-const testimonials = [
-  { title: 'Dr. Juan Tesari',          stat: 'Gracias a su landing: +300 consultas/mes',     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-juan.webp',         video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/juan-tesari.mp4',     tag: 'Salud / Servicios' },
-  { title: 'The Skirting Factory',     stat: 'Gracias a su web: +300% ventas el 1º mes',     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-skirting.webp',     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/manuel-descartes.mp4', tag: 'E-commerce USA' },
-  { title: 'Librería Mayorista Leo',   stat: 'Gracias a su tienda: $150K USD anuales',       cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-libreria-leo.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/libreria-leo.mp4',    tag: 'Mayorista B2B' },
-  { title: 'Puertas Blindadas Jack',   stat: 'Gracias a su web: x10 ventas High Ticket',     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-jack.webp',       video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/puertas-jack.mp4',    tag: 'High Ticket' },
-  { title: 'Case Rossi',               stat: 'Gracias a su tienda: ROAS récord 70x',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-case-rossi.webp',  video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/case-rossi.mp4',     tag: 'E-commerce Diseño' }
-];
+
 
 const faqs = [
   {
@@ -373,39 +367,7 @@ const faqs = [
       </div>
     </section>
 
-    <!-- =================== TESTIMONIOS =================== -->
-    <section id="testimonios" class="py-24 lg:py-28 px-6 md:px-12 bg-zinc-50/60 border-t border-b border-zinc-100">
-      <div class="max-w-5xl mx-auto space-y-12">
-        <div class="text-center space-y-3">
-          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold">Lo dicen ellos</p>
-          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black text-zinc-900 max-w-3xl mx-auto leading-[1.05] tracking-tight">No te lo decimos nosotros. Te lo dicen ellos.</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {testimonials.map(item => (
-            <div class="p-5 rounded-[20px] bg-white border border-zinc-200 shadow-sm flex flex-col space-y-5">
-              <div class="flex justify-between items-start gap-3">
-                <div>
-                  <span class="text-[10px] font-black text-violet-600 uppercase tracking-wider">{item.tag}</span>
-                  <h3 class="text-lg font-black text-zinc-900 mt-1 font-display">{item.title}</h3>
-                </div>
-                <span class="bg-violet-50 border border-violet-200 text-violet-700 text-[10.5px] font-black px-3 py-1 rounded-full leading-tight text-right max-w-[55%]">{item.stat}</span>
-              </div>
-              <div class="testimonial-card relative group cursor-pointer rounded-2xl overflow-hidden bg-black shadow-lg aspect-[3/4] lg:aspect-video w-full">
-                <img class="video-cover-img absolute inset-0 w-full h-full object-cover" src={item.cover} alt={`Portada de ${item.title}`} />
-                <video class="hero-testimonial-video w-full h-full object-contain bg-black hidden" preload="metadata">
-                  <source src={item.video} type="video/mp4" />
-                </video>
-                <div class="video-overlay absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-all duration-300">
-                  <button class="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform" aria-label="Reproducir">
-                    <svg class="w-6 h-6 ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+
 
     <!-- =================== FAQ =================== -->
     <section id="faq" class="py-24 lg:py-28 px-6 md:px-12 bg-zinc-50/60 border-t border-zinc-100">
@@ -590,34 +552,7 @@ const faqs = [
       startTimer();
     }
 
-    function initTestimonialPlayers() {
-      document.querySelectorAll('.testimonial-card').forEach(card => {
-        const video = card.querySelector('.hero-testimonial-video') as HTMLVideoElement | null;
-        const overlay = card.querySelector('.video-overlay') as HTMLElement | null;
-        const coverImg = card.querySelector('.video-cover-img') as HTMLImageElement | null;
-        if (!video || !overlay || video.dataset.playerSetup) return;
-        video.dataset.playerSetup = 'true';
 
-        const play = () => {
-          if (video.paused) {
-            document.querySelectorAll<HTMLVideoElement>('.hero-testimonial-video').forEach(v => { if (v !== video && !v.paused) v.pause(); });
-            coverImg?.classList.add('hidden');
-            video.classList.remove('hidden');
-            video.play();
-            overlay.classList.add('hidden');
-            video.setAttribute('controls', 'true');
-          } else { video.pause(); }
-        };
-        overlay.addEventListener('click', play);
-        video.addEventListener('pause', () => overlay.classList.remove('hidden'));
-        video.addEventListener('ended', () => {
-          video.classList.add('hidden');
-          video.removeAttribute('controls');
-          coverImg?.classList.remove('hidden');
-          overlay.classList.remove('hidden');
-        });
-      });
-    }
 
     function initForm() {
       const form = document.getElementById('landingContactForm') as HTMLFormElement | null;
@@ -722,7 +657,6 @@ const faqs = [
 
     function bootLanding() {
       initShowcase();
-      initTestimonialPlayers();
       initForm();
       initPdpCompare();
       initLeadTracking();
