@@ -519,7 +519,18 @@ const faqs = [
         });
         if (labelEl) labelEl.textContent = meta[idx].label;
         if (descEl) descEl.innerHTML = meta[idx].desc;
-        tabs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        const activeTab = tabs[idx];
+        const container = activeTab.parentElement;
+        if (container) {
+          const containerWidth = container.clientWidth;
+          const tabWidth = activeTab.clientWidth;
+          const tabLeft = activeTab.offsetLeft - (activeTab.offsetParent === container ? 0 : container.offsetLeft);
+          const scrollLeftTarget = tabLeft - (containerWidth / 2) + (tabWidth / 2);
+          container.scrollTo({
+            left: scrollLeftTarget,
+            behavior: 'smooth'
+          });
+        }
 
         if (progress) {
           progress.classList.remove('running');
