@@ -569,12 +569,10 @@ const faqs = [
       box-shadow: 0 20px 35px -5px rgba(37, 211, 102, 0.6);
     }
 
-    /* Botón principal del hero — pulse + glow violeta + reflejo diagonal */
+    /* Botón principal del hero — pulse + glow violeta suave (sin reflejo) */
     .btn-hero-pulse {
       position: relative;
-      overflow: hidden;
-      isolation: isolate;
-      animation: btn-hero-pulse 2.4s ease-in-out infinite;
+      animation: btn-hero-pulse 3.2s ease-in-out infinite;
       will-change: transform, box-shadow;
     }
     @keyframes btn-hero-pulse {
@@ -582,53 +580,22 @@ const faqs = [
         transform: scale(1);
         box-shadow:
           0 6px 18px -4px rgba(79, 70, 229, 0.35),
-          0 0 0 0 rgba(99, 102, 241, 0.5);
+          0 0 0 0 rgba(99, 102, 241, 0.4);
       }
       50% {
-        transform: scale(1.04);
+        transform: scale(1.025);
         box-shadow:
-          0 14px 32px -6px rgba(79, 70, 229, 0.45),
-          0 0 0 10px rgba(99, 102, 241, 0);
+          0 12px 28px -6px rgba(79, 70, 229, 0.4),
+          0 0 0 8px rgba(99, 102, 241, 0);
       }
-    }
-    /* Reflejo diagonal que pasa periódicamente sobre el botón */
-    .btn-hero-pulse::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -50%;
-      width: 40%;
-      height: 100%;
-      background: linear-gradient(
-        100deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.28) 45%,
-        rgba(255, 255, 255, 0.45) 50%,
-        rgba(255, 255, 255, 0.28) 55%,
-        transparent 100%
-      );
-      transform: skewX(-20deg);
-      animation: btn-hero-shine 3.2s ease-in-out infinite;
-      pointer-events: none;
-      z-index: -1;
-    }
-    @keyframes btn-hero-shine {
-      0%, 8% { left: -50%; opacity: 0; }
-      14% { opacity: 1; }
-      45% { left: 160%; opacity: 1; }
-      46%, 100% { left: 160%; opacity: 0; }
     }
     .btn-hero-pulse:hover {
       animation-play-state: paused;
-      transform: scale(1.06) translateY(-2px);
+      transform: scale(1.04) translateY(-2px);
       box-shadow: 0 20px 40px -8px rgba(9, 9, 11, 0.55);
     }
-    .btn-hero-pulse:hover::before {
-      animation-play-state: paused;
-    }
     @media (prefers-reduced-motion: reduce) {
-      .btn-hero-pulse,
-      .btn-hero-pulse::before { animation: none; }
+      .btn-hero-pulse { animation: none; }
     }
   </style>
 
