@@ -111,7 +111,7 @@ const faqs = [
         <Image src={logo} alt="Algoritmia" class="w-8 h-8 md:w-9 md:h-9 object-contain" />
         <span class="text-[15px] md:text-[16px] font-black tracking-tight text-zinc-900 font-display">Algoritmia</span>
       </a>
-      <a href="#contacto" class="bg-zinc-950 text-white px-4 md:px-5 h-9 md:h-10 inline-flex items-center gap-2 rounded-full text-[12px] md:text-[13px] font-bold shadow-md shadow-zinc-900/15">
+      <a href="#contacto" class="bg-indigo-600 text-white px-4 md:px-5 h-9 md:h-10 inline-flex items-center gap-2 rounded-full text-[12px] md:text-[13px] font-bold shadow-md shadow-indigo-600/25">
         Empecemos
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
@@ -144,7 +144,7 @@ const faqs = [
 
         <div class="flex flex-col items-center gap-3 mb-12 sm:mb-20">
           <div class="flex items-center justify-center">
-            <a href="#contacto" class="btn-hero-pulse group w-full sm:w-auto h-12 px-8 font-bold uppercase tracking-wider rounded-xl text-[13px] flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-900 text-white transition-colors duration-300 active:scale-95">
+            <a href="#contacto" class="btn-hero-pulse group w-full sm:w-auto h-12 px-8 font-bold uppercase tracking-wider rounded-xl text-[13px] flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white transition-colors duration-300 active:scale-95">
               Quiero mi web
               <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
@@ -381,7 +381,7 @@ const faqs = [
       <div class="max-w-[1400px] mx-auto">
         <div class="text-center mb-12">
           <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Lo dicen ellos</p>
-          <h2 class="text-[26px] md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Casos reales. Números reales.</h2>
+          <h2 class="text-[26px] md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Ellos lo cuentan mejor que yo.</h2>
           <p class="text-zinc-500 mt-4 text-[14px] sm:text-[15px]">Clientes que hoy venden gracias a su nueva web.</p>
         </div>
 
@@ -569,32 +569,66 @@ const faqs = [
       box-shadow: 0 20px 35px -5px rgba(37, 211, 102, 0.6);
     }
 
-    /* Pulse del botón principal del hero — escala + glow ondulante */
+    /* Botón principal del hero — pulse + glow violeta + reflejo diagonal */
+    .btn-hero-pulse {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      animation: btn-hero-pulse 2.4s ease-in-out infinite;
+      will-change: transform, box-shadow;
+    }
     @keyframes btn-hero-pulse {
       0%, 100% {
         transform: scale(1);
         box-shadow:
-          0 6px 18px -4px rgba(9, 9, 11, 0.35),
-          0 0 0 0 rgba(124, 58, 237, 0.45);
+          0 6px 18px -4px rgba(79, 70, 229, 0.35),
+          0 0 0 0 rgba(99, 102, 241, 0.5);
       }
       50% {
-        transform: scale(1.045);
+        transform: scale(1.04);
         box-shadow:
-          0 14px 32px -6px rgba(9, 9, 11, 0.5),
-          0 0 0 10px rgba(124, 58, 237, 0);
+          0 14px 32px -6px rgba(79, 70, 229, 0.45),
+          0 0 0 10px rgba(99, 102, 241, 0);
       }
     }
-    .btn-hero-pulse {
-      animation: btn-hero-pulse 2.2s ease-in-out infinite;
-      will-change: transform, box-shadow;
+    /* Reflejo diagonal que pasa periódicamente sobre el botón */
+    .btn-hero-pulse::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(
+        100deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.28) 45%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0.28) 55%,
+        transparent 100%
+      );
+      transform: skewX(-20deg);
+      animation: btn-hero-shine 3.2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+    @keyframes btn-hero-shine {
+      0%, 8% { left: -50%; opacity: 0; }
+      14% { opacity: 1; }
+      45% { left: 160%; opacity: 1; }
+      46%, 100% { left: 160%; opacity: 0; }
     }
     .btn-hero-pulse:hover {
       animation-play-state: paused;
       transform: scale(1.06) translateY(-2px);
       box-shadow: 0 20px 40px -8px rgba(9, 9, 11, 0.55);
     }
+    .btn-hero-pulse:hover::before {
+      animation-play-state: paused;
+    }
     @media (prefers-reduced-motion: reduce) {
-      .btn-hero-pulse { animation: none; }
+      .btn-hero-pulse,
+      .btn-hero-pulse::before { animation: none; }
     }
   </style>
 
