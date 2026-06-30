@@ -228,35 +228,6 @@ const faqs = [
       </div>
     </section>
 
-    <!-- =================== QUÉ INCLUYE (entregables) =================== -->
-    <section id="servicios" class="py-24 lg:py-28 px-6 md:px-12 bg-white">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center max-w-2xl mx-auto mb-16">
-          <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Qué incluye tu proyecto</p>
-          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.05]">8 cosas que vas a recibir.</h2>
-          <p class="text-zinc-500 mt-5 text-[15px]">Sin sorpresas ni costos extras. Lo que ves acá es lo que se entrega.</p>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {entregables.map(e => (
-            <div class="p-6 rounded-[18px] border border-zinc-200/70 bg-zinc-50/40 hover:bg-white hover:shadow-xl hover:border-zinc-200 transition-all">
-              <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-600 flex items-center justify-center mb-4">
-                <span class="material-symbols-outlined text-[20px]">{e.icon}</span>
-              </div>
-              <h3 class="text-[15px] font-black text-zinc-900 mb-1.5 font-display">{e.title}</h3>
-              <p class="text-zinc-500 text-[12.5px] leading-relaxed">{e.desc}</p>
-            </div>
-          ))}
-        </div>
-        <div class="mt-10 flex flex-col items-center gap-3">
-          <a href="#contacto" class="h-12 px-8 font-black rounded-xl text-[13px] flex items-center justify-center gap-2 shadow-md shadow-zinc-900/20 bg-zinc-900 text-white hover:bg-zinc-800 transition-all">
-            Quiero todo esto
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <p class="text-[11px] text-zinc-400 font-medium">Propuesta cerrada en 24h</p>
-        </div>
-      </div>
-    </section>
-
     <!-- =================== CASO REAL: PDP =================== -->
     <section id="caso-pdp" class="py-24 lg:py-28 px-6 md:px-12 bg-white relative overflow-hidden">
       <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-violet-500/5 blur-[140px] rounded-full pointer-events-none"></div>
@@ -386,7 +357,7 @@ const faqs = [
       <div class="max-w-5xl mx-auto space-y-12">
         <div class="text-center space-y-3">
           <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold">Lo dicen ellos</p>
-          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black text-zinc-900 max-w-3xl mx-auto leading-[1.05] tracking-tight">No te lo decimos nosotros. <span class="text-zinc-500 font-semibold">Te lo dicen ellos.</span></h2>
+          <h2 class="font-display text-3xl sm:text-4xl md:text-[52px] font-black text-zinc-900 max-w-3xl mx-auto leading-[1.05] tracking-tight">No te lo decimos nosotros. Te lo dicen ellos.</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {testimonials.map(item => (
