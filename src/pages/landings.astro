@@ -480,6 +480,17 @@ const faqs = [
       100% { transform: scaleX(1); }
     }
     .showcase-tab.is-active .tab-dot { opacity: 1; }
+
+    /* PDP Compare slider transitions & performance */
+    #pdp-compare-after,
+    #pdp-compare-divider {
+      transition: clip-path 0.5s cubic-bezier(0.16, 1, 0.3, 1), left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: clip-path, left;
+    }
+    #pdp-compare.is-dragging #pdp-compare-after,
+    #pdp-compare.is-dragging #pdp-compare-divider {
+      transition: none !important;
+    }
   </style>
 
   <script>
@@ -604,10 +615,11 @@ const faqs = [
       if (!container || !after || !divider) return;
 
       let dragging = false;
+      let cachedLeft = 0;
+      let cachedWidth = 0;
 
       const setPos = (clientX: number) => {
-        const rect = container.getBoundingClientRect();
-        let pct = ((clientX - rect.left) / rect.width) * 100;
+        let pct = ((clientX - cachedLeft) / cachedWidth) * 100;
         pct = Math.max(2, Math.min(98, pct));
         after.style.clipPath = `inset(0 0 0 ${pct}%)`;
         divider.style.left = `${pct}%`;
@@ -616,9 +628,17 @@ const faqs = [
         }
       };
 
+      const updateCache = () => {
+        const rect = container.getBoundingClientRect();
+        cachedLeft = rect.left;
+        cachedWidth = rect.width;
+      };
+
       const onDown = (e: PointerEvent) => {
         dragging = true;
+        container.classList.add('is-dragging');
         container.setPointerCapture?.(e.pointerId);
+        updateCache();
         setPos(e.clientX);
       };
       const onMove = (e: PointerEvent) => {
@@ -627,6 +647,7 @@ const faqs = [
       };
       const onUp = (e: PointerEvent) => {
         dragging = false;
+        container.classList.remove('is-dragging');
         try { container.releasePointerCapture?.(e.pointerId); } catch {}
       };
 
@@ -636,16 +657,19 @@ const faqs = [
       container.addEventListener('pointercancel', onUp);
       container.addEventListener('pointerleave', onUp);
 
-      // Animación de bienvenida: pasa de 50% → 35% → 65% → 50% para invitar a jugar
+      // Animación de bienvenida: pasa de 50% → 30% → 70% → 50% para invitar a jugar de forma fluida
       const sequence = async () => {
-        const steps = [50, 30, 70, 50];
+        updateCache();
+        if (cachedWidth === 0) return;
+        const steps = [30, 70, 50];
         for (const s of steps) {
-          const rect = container.getBoundingClientRect();
-          setPos(rect.left + rect.width * (s/100));
-          await new Promise(r => setTimeout(r, 600));
+          setPos(cachedLeft + cachedWidth * (s/100));
+          await new Promise(r => setTimeout(r, 700));
         }
       };
-      setTimeout(sequence, 800);
+      setTimeout(() => {
+        if (!dragging) sequence();
+      }, 1000);
     }
 
     function initLeadTracking() {
