@@ -111,9 +111,9 @@ const faqs = [
         <Image src={logo} alt="Algoritmia" class="w-8 h-8 md:w-9 md:h-9 object-contain" />
         <span class="text-[15px] md:text-[16px] font-black tracking-tight text-zinc-900 font-display">Algoritmia</span>
       </a>
-      <a href="#contacto" class="group bg-violet-600 hover:bg-violet-500 text-white px-4 md:px-5 h-9 md:h-10 inline-flex items-center gap-2 rounded-full text-[12px] md:text-[13px] font-black hover:shadow-lg hover:shadow-violet-600/20 hover:-translate-y-0.5 transition-all duration-300 active:scale-95 shadow-md shadow-violet-600/10">
+      <a href="#contacto" class="bg-zinc-950 text-white px-4 md:px-5 h-9 md:h-10 inline-flex items-center gap-2 rounded-full text-[12px] md:text-[13px] font-bold shadow-md shadow-zinc-900/15">
         Empecemos
-        <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
     </div>
   </header>
@@ -144,7 +144,7 @@ const faqs = [
 
         <div class="flex flex-col items-center gap-3 mb-12 sm:mb-20">
           <div class="flex items-center justify-center">
-            <a href="#contacto" class="group w-full sm:w-auto h-12 px-8 font-black rounded-xl text-[13px] flex items-center justify-center gap-2 bg-violet-600 hover:bg-violet-500 text-white hover:shadow-xl hover:shadow-violet-600/35 hover:-translate-y-0.5 transition-all duration-300 active:scale-95 shadow-md shadow-violet-600/20">
+            <a href="#contacto" class="btn-hero-pulse group w-full sm:w-auto h-12 px-8 font-bold uppercase tracking-wider rounded-xl text-[13px] flex items-center justify-center gap-2 bg-zinc-950 hover:bg-zinc-900 text-white transition-colors duration-300 active:scale-95">
               Quiero mi web
               <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
@@ -529,7 +529,7 @@ const faqs = [
       will-change: transform;
     }
     #hero-progress-bar.running {
-      animation: progress-fill 3000ms linear forwards;
+      animation: progress-fill 4000ms linear forwards;
     }
     @keyframes progress-fill {
       0%   { transform: scaleX(0); }
@@ -567,6 +567,34 @@ const faqs = [
       animation-play-state: paused;
       transform: scale(1.05) !important;
       box-shadow: 0 20px 35px -5px rgba(37, 211, 102, 0.6);
+    }
+
+    /* Pulse del botón principal del hero — escala + glow ondulante */
+    @keyframes btn-hero-pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow:
+          0 6px 18px -4px rgba(9, 9, 11, 0.35),
+          0 0 0 0 rgba(124, 58, 237, 0.45);
+      }
+      50% {
+        transform: scale(1.045);
+        box-shadow:
+          0 14px 32px -6px rgba(9, 9, 11, 0.5),
+          0 0 0 10px rgba(124, 58, 237, 0);
+      }
+    }
+    .btn-hero-pulse {
+      animation: btn-hero-pulse 2.2s ease-in-out infinite;
+      will-change: transform, box-shadow;
+    }
+    .btn-hero-pulse:hover {
+      animation-play-state: paused;
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 20px 40px -8px rgba(9, 9, 11, 0.55);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .btn-hero-pulse { animation: none; }
     }
   </style>
 
