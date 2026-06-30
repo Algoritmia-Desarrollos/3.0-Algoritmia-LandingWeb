@@ -119,13 +119,13 @@ const faqs = [
           </span>
         </div>
 
-        <h1 class="font-display tracking-tight max-w-4xl mx-auto mb-5 sm:mb-8 animate-in fade-in slide-in-from-bottom-5 duration-700 text-[32px] sm:text-5xl md:text-[62px] lg:text-[72px] leading-[1.1] sm:leading-[1.05] text-zinc-900">
-          <span class="font-semibold text-zinc-900">Tu web no convierte.</span><br/>
-          <span class="font-black">La rehacemos en 7 días</span>.
+        <h1 class="font-semibold tracking-tighter max-w-4xl mx-auto mb-5 sm:mb-8 animate-in fade-in slide-in-from-bottom-5 duration-700 text-[26px] md:text-[44px] lg:text-[52px] leading-[1.08] text-zinc-900">
+          Tu web no convierte.<br/>
+          <span class="font-semibold text-zinc-900">La rehacemos en 7 días</span>.
         </h1>
 
-        <p class="text-[10.5px] xs:text-[12px] sm:text-[19px] max-w-2xl mx-auto leading-snug mb-8 sm:mb-12 text-zinc-700 font-medium whitespace-nowrap">
-          Si no convierte mejor que la actual, <strong class="text-zinc-900">te devolvemos los USD 250</strong>.
+        <p class="text-[10.5px] xs:text-xs md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-12 text-zinc-500 font-normal whitespace-nowrap">
+          Si no convierte mejor que la actual, <strong class="text-zinc-900 font-semibold">te devolvemos los USD 250</strong>.
         </p>
 
         <div class="flex flex-col items-center gap-3 mb-12 sm:mb-20">
@@ -225,11 +225,11 @@ const faqs = [
       <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-violet-500/10 blur-[160px] rounded-full pointer-events-none"></div>
       <div class="max-w-5xl mx-auto text-center space-y-7 relative z-10">
         <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-400 font-bold">Filosofía</p>
-        <h2 class="font-display text-[26px] sm:text-4xl md:text-5xl font-black leading-[1.2] sm:leading-[1.1] tracking-tight">
+        <h2 class="text-3xl md:text-5xl font-semibold tracking-tighter text-white leading-tight mb-7">
           No diseñamos para premios.<br/>
           <span class="text-zinc-400">No solo diseñamos algo lindo.</span>
         </h2>
-        <p class="text-white/70 text-[13.5px] sm:text-base md:text-[17px] max-w-2xl mx-auto leading-relaxed">
+        <p class="text-white/70 text-lg leading-relaxed font-normal max-w-2xl mx-auto">
           Venimos de gestionar pauta. Sabemos exactamente dónde el usuario rebota, dónde se traba, dónde clickea. Esa data está bakeada en cada sección que construimos.
         </p>
       </div>
@@ -244,15 +244,15 @@ const faqs = [
             <span class="w-1.5 h-1.5 rounded-full bg-violet-500 animate-pulse"></span>
             <span class="text-[10.5px] font-black text-violet-700 uppercase tracking-[0.18em]">Caso real · Sin tocar la pauta</span>
           </div>
-          <h2 class="font-display text-[26px] sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.1] sm:leading-[1.05] mb-5">
-            Subimos la conversión <span class="text-violet-600">2.7×</span>.
+          <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight mb-5">
+            Subimos la conversión <span class="text-violet-600 font-bold">2.7×</span>.
           </h2>
-          <p class="text-zinc-600 text-[14px] sm:text-[19px] leading-relaxed max-w-2xl mx-auto font-medium">
+          <p class="text-zinc-500/80 text-[14px] sm:text-lg leading-relaxed max-w-2xl mx-auto font-normal">
             Mismo producto. Mismo tráfico. Mismo todo.<br/>
-            <strong class="text-zinc-900">Solo arreglamos la web.</strong>
+            <strong class="text-zinc-900 font-semibold">Solo arreglamos la web.</strong>
           </p>
-          <p class="text-zinc-900 text-[16px] md:text-[22px] leading-snug max-w-2xl mx-auto mt-6 font-display font-black">
-            Imaginate eso pasando con <span class="underline decoration-violet-500 decoration-[3px] underline-offset-[6px]">la tuya</span>.
+          <p class="text-zinc-900 text-[16px] md:text-xl leading-snug max-w-2xl mx-auto mt-6 font-semibold">
+            Imaginate eso pasando con <span class="text-violet-600 font-bold">la tuya</span>.
           </p>
         </div>
 
@@ -342,7 +342,7 @@ const faqs = [
       <div class="max-w-[1400px] mx-auto">
         <div class="text-center max-w-2xl mx-auto mb-14">
           <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Trabajos recientes</p>
-          <h2 class="font-display text-[26px] sm:text-4xl md:text-[52px] font-black tracking-tight text-zinc-900 leading-[1.1] sm:leading-[1.05]">Webs reales. Números reales.</h2>
+          <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Webs reales. Números reales.</h2>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {showcaseTabs.slice(0, 4).map(tab => (
@@ -351,8 +351,8 @@ const faqs = [
                 <img src={tab.img} alt={tab.label} class="w-full h-full object-cover object-top" onerror="this.parentElement.classList.add('bg-gradient-to-br','from-zinc-100','to-zinc-200');this.style.display='none'" />
               </div>
               <div class="p-5">
-                <p class="text-[10px] uppercase tracking-widest text-violet-600 font-black mb-1">{tab.label}</p>
-                <p class="text-[13px] text-zinc-700 leading-relaxed [&_strong]:font-black [&_strong]:text-zinc-900" set:html={tab.desc}></p>
+                <p class="text-[10px] uppercase tracking-widest text-violet-600 font-bold mb-1">{tab.label}</p>
+                <p class="text-[13px] text-zinc-700 leading-relaxed [&_strong]:font-bold [&_strong]:text-zinc-900" set:html={tab.desc}></p>
               </div>
             </div>
           ))}
@@ -367,12 +367,12 @@ const faqs = [
       <div class="max-w-4xl mx-auto">
         <div class="text-center mb-12">
           <p class="text-[10.5px] uppercase tracking-[0.22em] text-violet-600 font-bold mb-3">Preguntas frecuentes</p>
-          <h2 class="font-display text-[26px] sm:text-4xl md:text-[48px] font-black tracking-tight text-zinc-900 leading-[1.1] sm:leading-[1.05]">Las dudas que ya respondimos</h2>
+          <h2 class="text-3xl md:text-5xl font-semibold tracking-tight text-zinc-900 leading-tight">Las dudas que ya respondimos</h2>
         </div>
         <div class="space-y-3">
           {faqs.map(f => (
             <details class="group rounded-2xl bg-white border border-zinc-200/60 p-5 cursor-pointer">
-              <summary class="flex items-center justify-between font-black text-zinc-900 text-[14.5px] list-none font-display">
+              <summary class="flex items-center justify-between font-semibold text-zinc-900 text-[15px] list-none">
                 {f.q}
                 <span class="material-symbols-outlined text-zinc-400 group-open:rotate-180 transition-transform">expand_more</span>
               </summary>
@@ -396,11 +396,11 @@ const faqs = [
           <span class="text-[10.5px] font-black text-violet-700 uppercase tracking-[0.18em]">Cupos limitados · Respuesta en 1h</span>
         </div>
 
-        <h2 class="font-display text-[28px] sm:text-5xl md:text-[64px] lg:text-[72px] tracking-tight text-zinc-900 leading-[1.1] sm:leading-[1.02] mb-4">
-          <span class="font-semibold">Tu próxima web puede</span> <span class="font-black">duplicarte las ventas</span>.
+        <h2 class="text-[26px] md:text-[44px] lg:text-[52px] font-semibold tracking-tighter text-zinc-900 leading-[1.08] mb-4">
+          Tu próxima web puede <span class="text-violet-600 font-bold">duplicarte las ventas</span>.
         </h2>
-        <p class="text-zinc-500 text-[16px] md:text-[20px] leading-snug max-w-2xl mx-auto mb-10 font-medium">
-          O podés seguir viendo cómo <span class="text-zinc-900 font-black">tu competidor lo hace primero</span>.
+        <p class="text-xs md:text-lg text-zinc-500/70 font-normal leading-relaxed max-w-2xl mx-auto mb-10">
+          O podés seguir viendo cómo <span class="text-zinc-900 font-semibold">tu competidor lo hace primero</span>.
         </p>
 
 
