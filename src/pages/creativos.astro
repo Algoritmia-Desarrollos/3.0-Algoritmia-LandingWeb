@@ -1,0 +1,567 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+import { creativos } from '../data/creativos50';
+
+// ⚠️ CONFIGURACIÓN
+// CHECKOUT_URL = link real de pago (Gumroad / Lemon Squeezy / Hotmart).
+// Los botones de arriba llevan a #comprar (el bloque de precio); solo ese va al pago.
+const CHECKOUT_URL = '#comprar';
+const PRECIO       = '19.97';
+const PRECIO_ANTES = '47';
+
+// Descuento y ahorro se calculan solos a partir de los dos precios de arriba.
+const DESCUENTO = Math.round((1 - Number(PRECIO) / Number(PRECIO_ANTES)) * 100);
+const AHORRO    = (Number(PRECIO_ANTES) - Number(PRECIO)).toFixed(2);
+
+// Contador rotativo. El tiempo restante SIEMPRE cae entre 3h y 7h.
+// Se calcula desde el reloj universal, no desde la visita: si el usuario sale y vuelve,
+// el contador siguió corriendo (no se reinicia). Cada ventana se reprograma sola.
+const VENTANA_MIN = 210;   // 3h30 — al cerrar la ventana, el plazo salta de nuevo a ~7h
+const COLCHON_MIN = 180;   // 3h    — piso: nunca muestra menos que esto
+const JITTER_MAX  = 30;    // hasta 30 min de variación por ventana, para que no sea redondo
+
+// Videos reales de clientes (los mismos de /landings). Prueba social.
+const SB = 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials';
+const videos = [
+	{ nombre: 'The Skirting Factory',   stat: '+300% ventas el 1º mes',   cover: `${SB}/portada-skirting.webp`,      src: `${SB}/manuel-descartes.mp4` },
+	{ nombre: 'Case Rossi',             stat: 'ROAS récord 70x',           cover: `${SB}/portada-case-rossi.webp`,    src: `${SB}/case-rossi.mp4` },
+	{ nombre: 'Librería Mayorista Leo', stat: 'USD 150K anuales',          cover: `${SB}/portada-libreria-leo.webp`,  src: `${SB}/libreria-leo.mp4` },
+	{ nombre: 'Puertas Blindadas Jack', stat: 'x10 ventas high ticket',    cover: `${SB}/portada-jack.webp`,          src: `${SB}/puertas-jack.mp4` },
+	{ nombre: 'Atérmicos Pinamar',      stat: '+15 contratos por mes',     cover: `${SB}/portada-atermicos.webp`,     src: `${SB}/atermicos-pinamar.mp4` },
+	{ nombre: 'Dr. Juan Tesari',        stat: '+300 consultas por mes',    cover: `${SB}/portada-juan.webp`,          src: `${SB}/juan-tesari.mp4` }
+];
+
+// Los 50 agrupados por función — solo nombres, sin imágenes.
+const grupos = [
+	{ t: 'Prueba social', d: 'Que otro lo diga por vos.',      ids: creativos.filter(c => c.ring === 'social') },
+	{ t: 'Oferta',        d: 'La razón para comprar hoy.',     ids: creativos.filter(c => c.ring === 'oferta') },
+	{ t: 'Educativo',     d: 'Lo único que funciona en frío.', ids: creativos.filter(c => c.ring === 'educativo') },
+	{ t: 'Producto',      d: 'Lo que sostiene el escalado.',   ids: creativos.filter(c => c.ring === 'demo') },
+	{ t: 'Comparación',   d: 'Por qué vos y no el otro.',      ids: creativos.filter(c => c.ring === 'vs') },
+	{ t: 'Autoridad',     d: 'Por qué deberían creerte.',      ids: creativos.filter(c => c.ring === 'autoridad') }
+];
+
+const pasos = [
+	{ n: '01', t: 'Elegí el creativo', d: 'Cada uno viene con su ficha: para qué sirve, a quién le habla y en qué momento del embudo usarlo.' },
+	{ n: '02', t: 'Pegá el prompt',    d: 'Ya está escrito. Lo pegás en tu IA, indicás cuál es tu producto, y sale el mismo layout con tu marca.' },
+	{ n: '03', t: 'Publicá y vendé',   d: 'Directo a Meta. Sin diseñador, sin Canva, sin esperar tres días a que alguien te conteste.' }
+];
+
+const faqs = [
+	{ q: '¿Necesito saber diseñar?', a: 'No. Cada creativo viene con su prompt escrito: lo pegás en tu IA, indicás cuál es tu producto, y te devuelve el mismo layout con tu marca. Si sabés copiar y pegar, alcanza.' },
+	{ q: '¿Sirve para mi rubro?', a: 'Sí. Y esto es lo que casi nadie entiende: <strong class="text-zinc-900">un creativo no gana por el rubro, gana por la estructura.</strong> El mismo layout vende suplementos, colchones, software y cursos. Lo que cambia es el producto adentro, no la arquitectura.' },
+	{ q: '¿Es solo un pack de imágenes?', a: 'No. La imagen es lo de menos. Lo que comprás es <strong class="text-zinc-900">saber cuál usar y cuándo</strong>: cuál va a público frío, cuál a retargeting, cuál levanta el ticket promedio, cuál recupera carritos abandonados. Un creativo excelente en el momento equivocado no vende nada.' },
+	{ q: '¿Cómo los recibo?', a: 'Apenas se acredita el pago te llegan a tu correo. Los descargás y quedan en tu compu: <strong class="text-zinc-900">no es una suscripción ni una plataforma a la que entrás</strong>, son archivos tuyos.' },
+	{ q: '¿Es un pago único?', a: 'Sí. <strong class="text-zinc-900">Pagás una vez y son tuyos para siempre.</strong> No hay renovación, ni mensualidad, ni cobro sorpresa más adelante. Y si más adelante sumo creativos nuevos al pack, te llegan sin pagar de nuevo.' }
+];
+---
+
+<Layout
+	title="50 Creativos Estáticos para Meta Ads | Algoritmia"
+	description="Los 50 creativos estáticos con los que escalamos cuentas de Meta Ads. Copiás el prompt, lo adaptás a tu marca y publicás. Sin diseñador."
+	noindex={true}
+>
+
+<!-- ══════════ NAVBAR FIJO — mismo negro que el hero, sin línea ══════════ -->
+<header id="nav" class="fixed top-0 left-0 right-0 z-[100] bg-zinc-950">
+	<div class="max-w-[1080px] mx-auto px-5 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-4">
+		<a href="#top" class="flex items-center gap-2.5 shrink-0">
+			<span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white flex items-center justify-center shrink-0">
+				<img src="/logoAlgoritmia.webp" alt="Algoritmia" class="w-5 h-5 sm:w-[22px] sm:h-[22px] object-contain" />
+			</span>
+			<span class="text-[14px] sm:text-[15px] font-bold tracking-tight text-white">Algoritmia</span>
+		</a>
+
+		<a href="#comprar" class="group h-9 sm:h-10 px-5 sm:px-6 inline-flex items-center gap-2 rounded-full bg-white hover:bg-zinc-200 text-zinc-900 text-[12.5px] sm:text-[13px] font-semibold tracking-tight transition-colors active:scale-[0.98]">
+			<span class="sm:hidden">Los quiero</span>
+			<span class="hidden sm:inline">Quiero los 50 creativos</span>
+			<svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+		</a>
+	</div>
+</header>
+
+<main id="top" class="bg-white text-zinc-900 overflow-x-hidden">
+
+	<!-- ══════════ HERO (oscuro) ══════════ -->
+	<section class="relative pt-28 sm:pt-40 pb-20 sm:pb-28 bg-zinc-950 text-white overflow-hidden">
+		<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-white/[0.04] rounded-full blur-[130px] pointer-events-none"></div>
+
+		<div class="max-w-[900px] mx-auto px-5 sm:px-6 text-center relative z-10">
+
+			<h1 class="font-semibold tracking-tighter mb-8 text-[36px] sm:text-[54px] md:text-[64px] leading-[1.22] sm:leading-[1.18] text-white">
+				Los únicos 50 creativos <span class="marca marca-clara">que tu negocio necesita.</span>
+			</h1>
+
+			<p class="text-[15.5px] sm:text-[18px] max-w-[640px] mx-auto leading-relaxed mb-10 text-zinc-400">
+				Están corriendo ahora mismo en negocios que facturan
+				<strong class="text-white font-semibold">+50.000 USD al mes en Meta Ads</strong>.
+			</p>
+
+			<div class="flex flex-col items-center gap-4">
+				<a href="#comprar" class="group w-full sm:w-auto h-14 px-10 font-semibold tracking-wide rounded-xl text-[14px] flex items-center justify-center gap-2.5 bg-white hover:bg-zinc-200 text-zinc-900 transition-colors active:scale-[0.98] shadow-lg shadow-black/20">
+					Quiero mis 50 creativos
+					<svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+				</a>
+				<p class="text-[12px] text-zinc-500 font-medium">
+					Los comprás una vez y son tuyos para siempre
+				</p>
+			</div>
+
+		</div>
+
+		<!-- ── Prueba social: videos de clientes reales (misma sección, sin corte) ── -->
+		<div class="mt-16 sm:mt-20 relative z-10">
+			<p class="text-center text-[9px] font-bold text-zinc-500 uppercase tracking-[0.22em] mb-8 px-6">
+				Algunos de los clientes que usan estos anuncios
+			</p>
+
+			<!-- Viewport más angosto que el set de 6 tarjetas: nunca se ven dos copias a la vez -->
+			<div class="video-marquee relative max-w-[880px] mx-auto overflow-hidden">
+				<div class="pointer-events-none absolute left-0 top-0 bottom-0 w-14 sm:w-24 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent z-20"></div>
+				<div class="pointer-events-none absolute right-0 top-0 bottom-0 w-14 sm:w-24 bg-gradient-to-l from-zinc-950 via-zinc-950/70 to-transparent z-20"></div>
+
+				<div class="video-track flex w-max gap-4 py-1">
+					{[...videos, ...videos].map((v) => (
+						<button
+							type="button"
+							data-video={v.src}
+							data-nombre={v.nombre}
+							class="video-card group relative shrink-0 w-[126px] sm:w-[152px] lg:w-[168px] aspect-[9/16] rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 text-left transition-all duration-300 hover:scale-[1.04] hover:border-white/30"
+						>
+							<img
+								src={v.cover}
+								alt={v.nombre}
+								loading="lazy"
+								decoding="async"
+								class="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity duration-300"
+							/>
+							<span class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></span>
+
+							<span class="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-white/15 backdrop-blur-sm border border-white/25 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-colors">
+								<svg class="w-2.5 h-2.5 text-white group-hover:text-zinc-900 transition-colors ml-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+							</span>
+
+							<span class="absolute bottom-0 left-0 right-0 p-2.5 sm:p-3">
+								<span class="block text-[10px] sm:text-[11px] font-bold text-white leading-tight tracking-tight mb-0.5 truncate">{v.nombre}</span>
+								<span class="block text-[9px] sm:text-[10px] font-medium text-emerald-400 leading-tight truncate">{v.stat}</span>
+							</span>
+						</button>
+					))}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ── Lightbox de video ── -->
+	<div id="vbox" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+		<button id="vbox-close" type="button" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-colors">
+			<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+		</button>
+		<div class="w-full max-w-[380px]">
+			<video id="vbox-video" class="w-full rounded-2xl border border-white/15 bg-black aspect-[9/16] object-cover" controls playsinline></video>
+			<p id="vbox-name" class="mt-3 text-center text-[13px] font-semibold text-white"></p>
+		</div>
+	</div>
+
+	<!-- ══════════ EL PROBLEMA ══════════ -->
+	<section class="py-20 sm:py-24">
+		<div class="max-w-[720px] mx-auto px-5 sm:px-6">
+			<h2 class="text-[27px] sm:text-[40px] font-semibold tracking-tighter leading-[1.3] text-zinc-900 mb-8 reveal">
+				Copiá lo que ya funciona.<br/>
+				<span class="marca marca-oscura">Y escalá de una vez.</span>
+			</h2>
+
+			<div class="space-y-5 text-[15.5px] sm:text-[17px] leading-relaxed text-zinc-600 reveal delay-100">
+				<p>
+					No son ideas sueltas ni teoría. Son <strong class="text-zinc-900 font-semibold">50 creativos ya probados en cuentas reales</strong>,
+					en decenas de negocios distintos. Y entre los 50 están <strong class="text-zinc-900 font-semibold">todos los ángulos posibles</strong>:
+					precio, urgencia, prueba social, autoridad, comparación con la competencia, educación.
+				</p>
+				<p>
+					Eso importa porque <strong class="text-zinc-900 font-semibold">nadie sabe de antemano qué ángulo le va a pegar a tu negocio</strong>.
+					A uno le funciona el precio; al de al lado, con el mismo producto, le funciona la prueba social. No se adivina: se prueba.
+				</p>
+				<p>
+					Elegís, copiás el prompt, lo adaptás a tu marca. En una tarde tenés diez creativos listos para publicar —
+					lo que antes te llevaba semanas de ida y vuelta con un diseñador.
+				</p>
+				<p>
+					Y no te dejo solo con los archivos. Va incluida <strong class="text-zinc-900 font-semibold">la guía de por cuál empezar</strong>:
+					qué ángulo probar primero según tu negocio, cuántos correr a la vez, cuánto esperar antes de sacar conclusiones,
+					cuándo pausar el que no anda y cómo escalar el que gana sin romper la cuenta.
+				</p>
+				<p class="text-zinc-900 font-semibold text-[16.5px] sm:text-[18.5px] leading-snug pt-1">
+					Porque no necesitás 50 ganadores. Necesitás uno solo. Lo que te llevás son las 50 puertas para encontrarlo,
+					y la guía para saber cuál abrir primero.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- ══════════ QUÉ HAY ADENTRO ══════════ -->
+	<section class="py-20 sm:py-24 bg-zinc-50/50 border-y border-zinc-200/60">
+		<div class="max-w-[1080px] mx-auto px-5 sm:px-6">
+
+			<div class="max-w-xl mb-12 reveal">
+				<p class="text-[9.5px] font-bold uppercase tracking-[0.22em] text-zinc-400 mb-4">Qué hay adentro</p>
+				<h2 class="text-[27px] sm:text-[40px] font-semibold tracking-tighter leading-[1.12] text-zinc-900 mb-4">
+					Los 50 creativos,<br/>agrupados por función.
+				</h2>
+				<p class="text-[15px] sm:text-[16.5px] text-zinc-500 leading-relaxed">
+					No son 50 imágenes sueltas. Son seis grupos, y cada uno derriba una objeción distinta.
+					Cuando una cuenta se estanca, casi siempre es porque le falta <strong class="text-zinc-900 font-semibold">un grupo entero</strong> — no un anuncio más.
+				</p>
+			</div>
+
+			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+				{grupos.map((g, i) => (
+					<div class={`reveal delay-${((i % 3) + 1) * 100} rounded-2xl border border-zinc-200/80 bg-white p-6 hover:border-zinc-300 transition-colors`}>
+						<div class="flex items-baseline justify-between mb-1.5">
+							<h3 class="text-[16.5px] font-semibold tracking-tight text-zinc-900">{g.t}</h3>
+							<span class="text-[10px] font-bold text-zinc-500 bg-zinc-100 border border-zinc-200/70 rounded-md px-2 py-0.5 tabular-nums">{g.ids.length}</span>
+						</div>
+						<p class="text-[12.5px] text-zinc-400 mb-5">{g.d}</p>
+
+						<ul class="space-y-2">
+							{g.ids.map((c) => (
+								<li class="flex items-center gap-2.5">
+									<span class="text-[10px] font-bold text-zinc-500 tabular-nums w-4 shrink-0">{String(c.id).padStart(2, '0')}</span>
+									<span class="text-[13.5px] text-zinc-800">{c.nombre}</span>
+									<span class="ml-auto text-[9.5px] font-bold text-zinc-900 tracking-wide">{c.n}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
+
+			<p class="mt-8 text-[13px] text-zinc-400 leading-relaxed max-w-2xl reveal">
+				N1 a N5 indica el nivel de consciencia al que le habla cada creativo, de "todavía no sabe que tiene el problema" (N1) a "quiere comprar hoy" (N5).
+				<strong class="text-zinc-600 font-semibold">La mayoría de las cuentas concentra todo en N4 y N5</strong>, hablándole solo a gente que ya las conoce. Por eso llegan a un techo y no lo pasan nunca.
+			</p>
+
+		</div>
+	</section>
+
+	<!-- ══════════ CÓMO FUNCIONA + QUÉ TE LLEVÁS (fusionadas) ══════════ -->
+	<section class="py-20 sm:py-28 bg-zinc-950 text-white">
+		<div class="max-w-[1080px] mx-auto px-5 sm:px-6">
+
+			<!-- Encabezado -->
+			<div class="text-center max-w-xl mx-auto mb-14 sm:mb-16 reveal">
+				<h2 class="text-[28px] sm:text-[42px] font-semibold tracking-tighter leading-[1.1] text-white mb-4">
+					Con tu marca en cinco minutos.
+				</h2>
+				<p class="text-[15px] sm:text-[16.5px] text-zinc-400 leading-relaxed">
+					No es un curso. No hay cuarenta videos que ver. Lo abrís hoy y lo usás hoy.
+				</p>
+			</div>
+
+			<!-- Los 3 pasos -->
+			<div class="grid md:grid-cols-3 gap-4">
+				{pasos.map((p, i) => (
+					<div class={`reveal delay-${(i + 1) * 100} rounded-2xl border border-white/10 bg-white/[0.03] p-7`}>
+						<span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white text-zinc-900 text-[11px] font-bold mb-5 tabular-nums">{p.n}</span>
+						<h3 class="text-[16.5px] font-semibold tracking-tight text-white mb-2.5">{p.t}</h3>
+						<p class="text-[13.5px] text-zinc-400 leading-relaxed">{p.d}</p>
+					</div>
+				))}
+			</div>
+
+		</div>
+	</section>
+
+	<!-- ══════════ PRECIO ══════════ -->
+	<section id="comprar" class="py-20 sm:py-28 scroll-mt-20 bg-zinc-100/60">
+		<div class="max-w-[520px] mx-auto px-5 sm:px-6">
+
+			<div class="relative reveal">
+				<!-- halo -->
+				<div class="absolute -inset-3 bg-zinc-900/[0.07] rounded-[2.2rem] blur-2xl pointer-events-none"></div>
+
+				<div class="relative rounded-[1.75rem] bg-zinc-950 text-white overflow-hidden shadow-2xl shadow-zinc-900/25 ring-1 ring-white/10">
+
+					<!-- brillo superior -->
+					<div class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[420px] h-[220px] bg-white/[0.07] blur-[70px] rounded-full"></div>
+					<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"></div>
+
+					<div class="relative p-8 sm:p-10">
+
+						<!-- Encabezado -->
+						<div class="text-center mb-8">
+							<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-400/10 ring-1 ring-emerald-400/25 mb-7">
+								<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+								<span class="text-[10.5px] font-bold text-emerald-400 uppercase tracking-[0.14em]">{DESCUENTO}% de descuento</span>
+							</span>
+
+							<div class="flex items-center justify-center gap-3 sm:gap-4 mb-3">
+								<span class="text-[22px] sm:text-[26px] font-semibold text-zinc-500 tracking-tight line-through decoration-red-500 decoration-[2.5px] whitespace-nowrap">
+									USD {PRECIO_ANTES}
+								</span>
+								<span class="flex items-baseline gap-1.5 whitespace-nowrap">
+									<span class="text-[19px] sm:text-[22px] font-medium text-zinc-400">USD</span>
+									<span class="text-[52px] sm:text-[62px] font-bold tracking-tighter leading-none text-white">{PRECIO}</span>
+								</span>
+							</div>
+
+							<p class="text-[12.5px] text-zinc-500 font-medium">
+								Ahorrás USD {AHORRO} · Precio de lanzamiento
+							</p>
+						</div>
+
+						<!-- Contador -->
+						<div
+							id="cd"
+							data-ventana={VENTANA_MIN}
+							data-colchon={COLCHON_MIN}
+							data-jitter={JITTER_MAX}
+							class="mb-8 pb-8 border-b border-white/10"
+						>
+							<p class="text-center text-[9.5px] font-bold uppercase tracking-[0.18em] text-zinc-500 mb-4">
+								El precio sube en
+							</p>
+							<div class="flex items-stretch justify-center gap-2.5">
+								{[['h', 'horas'], ['m', 'minutos'], ['s', 'segundos']].map(([k, label]) => (
+									<div class="flex-1 max-w-[92px] rounded-xl bg-white/[0.05] ring-1 ring-white/10 py-3 flex flex-col items-center">
+										<span data-cd={k} class="text-[24px] sm:text-[27px] font-bold tabular-nums tracking-tight leading-none text-white">00</span>
+										<span class="mt-1.5 text-[8.5px] font-bold uppercase tracking-[0.12em] text-zinc-500">{label}</span>
+									</div>
+								))}
+							</div>
+						</div>
+
+						<!-- Qué incluye -->
+						<ul class="space-y-3.5 mb-8">
+							{[
+								'Los 50 creativos, listos para descargar',
+								'Cómo usar cada uno: para qué sirve y cuándo publicarlo',
+								'Cómo adaptarlos a tu negocio en cinco minutos',
+								'La guía de por cuál empezar según tu negocio',
+								'Cómo testear los ángulos y encontrar tu ganador',
+								'Cómo escalar el que gana, sin romper la cuenta'
+							].map((f) => (
+								<li class="flex items-start gap-3">
+									<span class="mt-0.5 w-4 h-4 rounded-full bg-white/10 ring-1 ring-white/15 flex items-center justify-center shrink-0">
+										<svg class="w-2.5 h-2.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+									</span>
+									<span class="text-[13.5px] text-zinc-300 leading-snug">{f}</span>
+								</li>
+							))}
+						</ul>
+
+						<a href={CHECKOUT_URL} class="group w-full h-14 font-semibold tracking-wide rounded-xl text-[14.5px] flex items-center justify-center gap-2.5 bg-white hover:bg-zinc-200 text-zinc-900 transition-colors active:scale-[0.98] shadow-lg shadow-black/25">
+							Sí, quiero los 50 creativos
+							<svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+						</a>
+
+						<p class="mt-5 text-center text-[11.5px] text-zinc-500 font-medium">
+							Pagás una vez · Los descargás al instante · Son tuyos para siempre
+						</p>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+	<!-- ══════════ FAQ ══════════ -->
+	<section class="py-20 sm:py-24 bg-zinc-50/50 border-y border-zinc-200/60">
+		<div class="max-w-[700px] mx-auto px-5 sm:px-6">
+			<h2 class="text-[27px] sm:text-[36px] font-semibold tracking-tighter leading-[1.12] text-zinc-900 mb-10 reveal">
+				Preguntas frecuentes.
+			</h2>
+
+			<div class="divide-y divide-zinc-200">
+				{faqs.map((f) => (
+					<details class="faq group py-5">
+						<summary class="flex items-center justify-between gap-6 cursor-pointer list-none">
+							<span class="text-[15px] sm:text-[16px] font-semibold text-zinc-900 tracking-tight">{f.q}</span>
+							<span class="shrink-0 w-7 h-7 rounded-full border border-zinc-200 bg-white flex items-center justify-center text-zinc-400 group-open:bg-zinc-900 group-open:border-zinc-900 group-open:text-white transition-colors">
+								<svg class="w-3.5 h-3.5 transition-transform group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+							</span>
+						</summary>
+						<p class="mt-4 text-[14px] sm:text-[14.5px] text-zinc-500 leading-relaxed pr-12" set:html={f.a}></p>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- ══════════ CIERRE ══════════ -->
+	<section class="py-24 sm:py-32">
+		<div class="max-w-[760px] mx-auto px-5 sm:px-6 text-center reveal">
+			<h2 class="text-[29px] sm:text-[44px] font-semibold tracking-tighter leading-[1.1] text-zinc-900 mb-6">
+				El creativo que te falta<br/>ya está escrito.
+			</h2>
+			<p class="text-[15px] sm:text-[17px] text-zinc-500 leading-relaxed max-w-md mx-auto mb-9">
+				Podés seguir subiendo la foto del producto sobre fondo blanco y esperar que esta vez funcione.
+				O podés comprarlos en dos minutos y publicar algo que ya sabés que funciona.
+			</p>
+
+			<a href="#comprar" class="group w-full sm:w-auto h-14 px-10 font-semibold tracking-wide rounded-xl text-[14px] inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 text-white transition-colors active:scale-[0.98]">
+				Quiero mis 50 creativos
+				<svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+			</a>
+
+			<p class="mt-5 text-[12px] text-zinc-400 font-medium">
+				Pagás una vez · Son tuyos para siempre
+			</p>
+		</div>
+	</section>
+
+</main>
+
+<style>
+	/* Resaltado tipo marcador: una barra bajo el texto, no una caja que lo encierra.
+	   Va con background y no con border-bottom para que siga cada línea al hacer wrap. */
+	.marca {
+		background-repeat: no-repeat;
+		background-position: 0 100%;
+		background-size: 100% 0.085em;
+		/* Justo debajo de las descendentes (q, g, j) sin llegar a tocarlas. */
+		padding-bottom: 0.13em;
+		box-decoration-break: clone;
+		-webkit-box-decoration-break: clone;
+	}
+	/* sobre fondo oscuro */
+	.marca-clara { background-image: linear-gradient(#fff, #fff); }
+	/* sobre fondo claro */
+	.marca-oscura { background-image: linear-gradient(#18181b, #18181b); }
+
+	.faq summary::-webkit-details-marker { display: none; }
+
+	/* Marquee continuo. El track lleva la lista DUPLICADA y `w-max`, así su ancho es la
+	   suma real de las 12 tarjetas (no el del contenedor). Entonces -50% equivale exacto
+	   a un set de 6, y el -0.5rem cierra el gap entre la 6ª y la 7ª: al reiniciar, el
+	   fotograma es idéntico al del inicio. Sin `w-max`, el 50% se calcula sobre el ancho
+	   del padre y el ciclo no cierra — ahí aparecía el salto. */
+	.video-track {
+		animation: videoScroll 14s linear infinite;
+		will-change: transform;
+		backface-visibility: hidden;
+	}
+	/* No frena con el mouse encima: solo se pausa al tocarlo en móvil (para poder abrir un video) */
+	.video-track.paused { animation-play-state: paused; }
+
+	@keyframes videoScroll {
+		from { transform: translate3d(0, 0, 0); }
+		to   { transform: translate3d(calc(-50% - 0.5rem), 0, 0); }
+	}
+
+	/* Nunca scroll manual ni barra visible: el movimiento es siempre automático */
+	.video-marquee {
+		overflow: hidden;
+		scrollbar-width: none;
+	}
+	.video-marquee::-webkit-scrollbar { display: none; }
+</style>
+
+<script>
+	function initCreativos() {
+		// Contador rotativo: el restante siempre queda entre 3h y 7h.
+		//
+		// El tiempo se parte en ventanas fijas ancladas al reloj universal (no a la visita).
+		// El plazo de una ventana vence COLCHON minutos después de que la ventana cierra,
+		// así el restante va de (VENTANA + COLCHON) hasta COLCHON, y ahí salta a la siguiente.
+		// Como todo se deriva del reloj, si el usuario recarga o vuelve más tarde, el contador
+		// siguió corriendo: nunca se reinicia por entrar de nuevo.
+		const cd = document.getElementById('cd');
+		if (cd) {
+			const MIN     = 60_000;
+			const ventana = Number(cd.dataset.ventana) * MIN;
+			const colchon = Number(cd.dataset.colchon) * MIN;
+			const jitter  = Number(cd.dataset.jitter)  * MIN;
+			const slots   = cd.querySelectorAll<HTMLElement>('[data-cd]');
+			const pad     = (n: number) => String(Math.max(0, n)).padStart(2, '0');
+
+			// Desvío estable por ventana: la misma ventana da siempre el mismo desvío,
+			// pero cada ventana cae en un minuto distinto (no queda redondo).
+			const desvio = (n: number) => {
+				let h = n * 2654435761 % 2147483647;
+				h = (h ^ (h >>> 13)) >>> 0;
+				return (h % (jitter + 1));
+			};
+
+			const vence = () => {
+				const ahora = Date.now();
+				const i     = Math.floor(ahora / ventana);          // índice de ventana actual
+				const fin   = (i + 1) * ventana + colchon + desvio(i);
+				// Si por el desvío el plazo ya pasó, tomamos el de la ventana siguiente.
+				return fin > ahora ? fin : (i + 2) * ventana + colchon + desvio(i + 1);
+			};
+
+			let deadline = vence();
+
+			const tick = () => {
+				let falta = deadline - Date.now();
+				if (falta <= 0) {                 // se cerró la ventana: se reprograma sola
+					deadline = vence();
+					falta = deadline - Date.now();
+				}
+				const s = Math.floor(falta / 1000);
+				const map: Record<string, number> = {
+					h: Math.floor(s / 3600),
+					m: Math.floor((s % 3600) / 60),
+					s: s % 60
+				};
+				slots.forEach((el) => { el.textContent = pad(map[el.dataset.cd || 's']); });
+			};
+
+			tick();
+			setInterval(tick, 1000);
+		}
+
+		// En móvil no hay hover: al tocar el carrusel se pausa para poder abrir un video
+		const track = document.querySelector<HTMLElement>('.video-track');
+		track?.addEventListener('touchstart', () => track.classList.add('paused'), { passive: true });
+
+		// Lightbox de video
+		const box   = document.getElementById('vbox');
+		const video = document.getElementById('vbox-video') as HTMLVideoElement | null;
+		const name  = document.getElementById('vbox-name');
+		const close = document.getElementById('vbox-close');
+
+		const cerrar = () => {
+			if (!box || !video) return;
+			video.pause();
+			video.removeAttribute('src');
+			video.load();
+			box.classList.add('hidden');
+			box.classList.remove('flex');
+			document.body.style.overflow = '';
+			track?.classList.remove('paused');   // el carrusel vuelve a andar al cerrar el video
+		};
+
+		document.querySelectorAll<HTMLButtonElement>('.video-card').forEach((card) => {
+			card.addEventListener('click', () => {
+				if (!box || !video) return;
+				video.src = card.dataset.video || '';
+				if (name) name.textContent = card.dataset.nombre || '';
+				box.classList.remove('hidden');
+				box.classList.add('flex');
+				document.body.style.overflow = 'hidden';
+				video.play().catch(() => {});
+			});
+		});
+
+		close?.addEventListener('click', cerrar);
+		box?.addEventListener('click', (e) => { if (e.target === box) cerrar(); });
+		document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
+
+		// FAQ: abrir uno cierra el resto
+		const faqs = document.querySelectorAll<HTMLDetailsElement>('.faq');
+		faqs.forEach((d) => {
+			d.addEventListener('toggle', () => {
+				if (!d.open) return;
+				faqs.forEach((o) => { if (o !== d) o.open = false; });
+			});
+		});
+	}
+
+	document.addEventListener('astro:page-load', initCreativos);
+	document.addEventListener('DOMContentLoaded', initCreativos);
+</script>
+
+</Layout>
