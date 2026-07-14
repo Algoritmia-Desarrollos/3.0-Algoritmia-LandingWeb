@@ -46,6 +46,12 @@ const testimonials = [
     <link rel="dns-prefetch" href="https://czocbnyoenjbpxmcqobn.supabase.co" />
     <link rel="preconnect" href="https://link.1prompt.com" crossorigin />
     <link rel="dns-prefetch" href="https://link.1prompt.com" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-poster-1280-v2.jpg"
+      fetchpriority="high"
+    />
   </Fragment>
   <main>
     <section class="hero-section" aria-labelledby="page-title">
@@ -64,12 +70,12 @@ const testimonials = [
             muted
             loop
             playsinline
-            preload="auto"
+            preload="none"
             data-full-src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-final-1080p.mp4"
             poster="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-poster-1280-v2.jpg"
             aria-label="Presentación del sistema de crecimiento para marcas de cosmética"
           >
-            <source src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-teaser-5s-720p.mp4" type="video/mp4" />
+            <source data-src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-teaser-5s-720p.mp4" type="video/mp4" />
             Tu navegador no soporta la reproducción de video.
           </video>
           <button id="vsl-unmute" class="vsl-unmute" type="button" aria-label="Ver video completo con sonido">
@@ -90,25 +96,55 @@ const testimonials = [
         <p>Completá el formulario. Si calificás, te contactamos en menos de 24 horas.</p>
       </div>
 
-      <div class="form-embed-card">
+      <div class="form-embed-card" aria-busy="true">
         <iframe
-          src="https://link.1prompt.com/widget/survey/QRU7dBIDhhv78Ir66Mv9"
+          data-src="https://link.1prompt.com/widget/survey/QRU7dBIDhhv78Ir66Mv9"
           class="survey-embed"
           style="border:none;width:100%;"
           scrolling="no"
           id="QRU7dBIDhhv78Ir66Mv9"
           title="Formulario de aplicación"
-          loading="eager"
         ></iframe>
       </div>
-      <script is:inline src="https://link.1prompt.com/js/form_embed.js"></script>
       <script is:inline>
         (() => {
           const iframe = document.getElementById('QRU7dBIDhhv78Ir66Mv9');
           if (!(iframe instanceof HTMLIFrameElement)) return;
 
-          const formOrigin = new URL(iframe.src).origin;
+          const formUrl = iframe.dataset.src;
+          if (!formUrl) return;
+          const formOrigin = new URL(formUrl).origin;
           const qualifiedRedirectUrl = 'https://sistema.car.fluyent.cc/thank-you';
+          const formCard = iframe.closest('.form-embed-card');
+          const formSection = document.getElementById('formulario');
+          let formLoaded = false;
+
+          const loadForm = () => {
+            if (formLoaded) return;
+            formLoaded = true;
+            iframe.src = formUrl;
+
+            const embedScript = document.createElement('script');
+            embedScript.src = 'https://link.1prompt.com/js/form_embed.js';
+            embedScript.async = true;
+            document.head.appendChild(embedScript);
+          };
+
+          if ('IntersectionObserver' in window && formSection) {
+            const observer = new IntersectionObserver((entries) => {
+              if (!entries.some(entry => entry.isIntersecting)) return;
+              observer.disconnect();
+              loadForm();
+            }, { rootMargin: '240px 0px' });
+            observer.observe(formSection);
+          }
+
+          document.querySelector('.video-cta')?.addEventListener('pointerdown', loadForm, { once: true });
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(loadForm, { timeout: 1400 });
+          } else {
+            window.setTimeout(loadForm, 700);
+          }
 
           window.addEventListener('message', (event) => {
             if (event.origin !== formOrigin || event.source !== iframe.contentWindow) return;
@@ -128,6 +164,8 @@ const testimonials = [
             const nextHeight = Math.max(minimumHeight, reportedHeight - verticalTrim);
             iframe.dataset.compactHeight = String(nextHeight);
             iframe.style.height = `${nextHeight}px`;
+            formCard?.classList.add('is-loaded');
+            formCard?.setAttribute('aria-busy', 'false');
           };
 
           new MutationObserver(compactHeight).observe(iframe, { attributes: true, attributeFilter: ['style'] });
@@ -148,10 +186,10 @@ const testimonials = [
       </div>
       <div class="marquee" aria-label="Testimonios de clientes">
         <div class="marquee-track">
-          {[...testimonials, ...testimonials, ...testimonials].map((testimonial, index) => (
-            <article class="testimonial-card" aria-hidden={index < testimonials.length || index >= testimonials.length * 2 ? 'true' : undefined}>
+          {testimonials.map((testimonial) => (
+            <article class="testimonial-card">
               <div class="testimonial-video">
-                <img class="video-cover" src={testimonial.cover} alt="" loading="lazy" decoding="async" />
+                <img class="video-cover" src={testimonial.cover} alt="" loading="lazy" decoding="async" fetchpriority="low" />
                 <video class="testimonial-player hidden" preload="none" playsinline data-src={testimonial.video}></video>
                 <button class="video-overlay" type="button" aria-label="Reproducir testimonio">
                   <span class="material-symbols-outlined">play_arrow</span>
@@ -193,8 +231,12 @@ const testimonials = [
   .eyebrow span { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 5px rgba(230,45,88,.1); }
   .form-heading h2 { margin: 0; font-size: clamp(42px, 6vw, 66px); line-height: .98; letter-spacing: -.06em; font-weight: 760; }
   .form-heading > p:last-child { margin: 20px auto 0; max-width: 510px; color: #766d72; font-size: 16px; line-height: 1.55; }
-  .form-embed-card { width: 100%; max-width: 720px; box-sizing: border-box; padding: 12px; overflow: hidden; border: 1px solid rgba(35,23,29,.08); border-radius: 28px; background: white; box-shadow: 0 28px 80px rgba(74,31,48,.13); }
-  .survey-embed { width: 100%; height: 510px; display: block; }
+  .form-embed-card { position: relative; width: 100%; max-width: 720px; box-sizing: border-box; padding: 12px; overflow: hidden; border: 1px solid rgba(35,23,29,.08); border-radius: 28px; background: white; box-shadow: 0 28px 80px rgba(74,31,48,.13); }
+  .form-embed-card::before { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; color: #9b8e94; background: linear-gradient(110deg, #fff 30%, #fff5f7 50%, #fff 70%); background-size: 220% 100%; content: 'Preparando el formulario…'; font-size: 13px; font-weight: 700; animation: form-loading 1.2s linear infinite; transition: opacity .2s ease; }
+  .form-embed-card.is-loaded::before { opacity: 0; pointer-events: none; animation: none; }
+  .survey-embed { width: 100%; height: 510px; display: block; opacity: 0; transition: opacity .22s ease; }
+  .form-embed-card.is-loaded .survey-embed { opacity: 1; }
+  @keyframes form-loading { to { background-position: -220% 0; } }
   .hidden { display: none !important; }
 
   .testimonials-section { padding: 100px 0 86px; color: white; background: #171315; }
@@ -250,6 +292,7 @@ const testimonials = [
     if (vsl && vslUnmute && vsl.dataset.initialized !== 'true') {
       vsl.dataset.initialized = 'true';
       let teaserMode = true;
+      const teaserSource = vsl.querySelector<HTMLSourceElement>('source[data-src]');
 
       const playMutedTeaser = () => {
         if (!teaserMode) return;
@@ -260,6 +303,14 @@ const testimonials = [
       };
 
       vsl.addEventListener('loadedmetadata', playMutedTeaser);
+
+      const loadTeaserAfterFirstPaint = () => {
+        if (!teaserMode || !teaserSource?.dataset.src || teaserSource.src) return;
+        teaserSource.src = teaserSource.dataset.src;
+        vsl.load();
+      };
+
+      requestAnimationFrame(() => requestAnimationFrame(loadTeaserAfterFirstPaint));
 
       vslUnmute.addEventListener('click', async () => {
         teaserMode = false;
@@ -290,6 +341,19 @@ const testimonials = [
     const marqueeTrack = document.querySelector<HTMLElement>('.marquee-track');
     if (marquee && marqueeTrack && marquee.dataset.manualReady !== 'true') {
       marquee.dataset.manualReady = 'true';
+      const originalCards = Array.from(marqueeTrack.children);
+      const before = document.createDocumentFragment();
+      const after = document.createDocumentFragment();
+      originalCards.forEach(card => {
+        const previousClone = card.cloneNode(true) as HTMLElement;
+        const nextClone = card.cloneNode(true) as HTMLElement;
+        previousClone.setAttribute('aria-hidden', 'true');
+        nextClone.setAttribute('aria-hidden', 'true');
+        before.appendChild(previousClone);
+        after.appendChild(nextClone);
+      });
+      marqueeTrack.prepend(before);
+      marqueeTrack.append(after);
       let setWidth = 0;
       let normalizeTimer: number | undefined;
 
