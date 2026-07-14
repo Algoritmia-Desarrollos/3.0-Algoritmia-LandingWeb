@@ -1,567 +1,150 @@
 ---
 export const prerender = true;
 import Layout from '../layouts/Layout.astro';
-import { creativos } from '../data/creativos50';
 
-// ⚠️ CONFIGURACIÓN
-// CHECKOUT_URL = link real de pago (Gumroad / Lemon Squeezy / Hotmart).
-// Los botones de arriba llevan a #comprar (el bloque de precio); solo ese va al pago.
-const CHECKOUT_URL = '#comprar';
-const PRECIO       = '19.97';
-const PRECIO_ANTES = '47';
-
-// Descuento y ahorro se calculan solos a partir de los dos precios de arriba.
-const DESCUENTO = Math.round((1 - Number(PRECIO) / Number(PRECIO_ANTES)) * 100);
-const AHORRO    = (Number(PRECIO_ANTES) - Number(PRECIO)).toFixed(2);
-
-// Contador rotativo. El tiempo restante SIEMPRE cae entre 3h y 7h.
-// Se calcula desde el reloj universal, no desde la visita: si el usuario sale y vuelve,
-// el contador siguió corriendo (no se reinicia). Cada ventana se reprograma sola.
-const VENTANA_MIN = 210;   // 3h30 — al cerrar la ventana, el plazo salta de nuevo a ~7h
-const COLCHON_MIN = 180;   // 3h    — piso: nunca muestra menos que esto
-const JITTER_MAX  = 30;    // hasta 30 min de variación por ventana, para que no sea redondo
-
-// Videos reales de clientes (los mismos de /landings). Prueba social.
-const SB = 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials';
-const videos = [
-	{ nombre: 'The Skirting Factory',   stat: '+300% ventas el 1º mes',   cover: `${SB}/portada-skirting.webp`,      src: `${SB}/manuel-descartes.mp4` },
-	{ nombre: 'Case Rossi',             stat: 'ROAS récord 70x',           cover: `${SB}/portada-case-rossi.webp`,    src: `${SB}/case-rossi.mp4` },
-	{ nombre: 'Librería Mayorista Leo', stat: 'USD 150K anuales',          cover: `${SB}/portada-libreria-leo.webp`,  src: `${SB}/libreria-leo.mp4` },
-	{ nombre: 'Puertas Blindadas Jack', stat: 'x10 ventas high ticket',    cover: `${SB}/portada-jack.webp`,          src: `${SB}/puertas-jack.mp4` },
-	{ nombre: 'Atérmicos Pinamar',      stat: '+15 contratos por mes',     cover: `${SB}/portada-atermicos.webp`,     src: `${SB}/atermicos-pinamar.mp4` },
-	{ nombre: 'Dr. Juan Tesari',        stat: '+300 consultas por mes',    cover: `${SB}/portada-juan.webp`,          src: `${SB}/juan-tesari.mp4` }
+const plans = [
+	{ code: 'creator', name: 'Creator', price: 19, credits: 40, copy: 'Para empezar a producir con constancia.', featured: false },
+	{ code: 'pro', name: 'Pro', price: 39, credits: 120, copy: 'Para marcas que testean todas las semanas.', featured: true },
+	{ code: 'scale', name: 'Scale', price: 79, credits: 300, copy: 'Para equipos y cuentas con alto volumen.', featured: false },
 ];
 
-// Los 50 agrupados por función — solo nombres, sin imágenes.
-const grupos = [
-	{ t: 'Prueba social', d: 'Que otro lo diga por vos.',      ids: creativos.filter(c => c.ring === 'social') },
-	{ t: 'Oferta',        d: 'La razón para comprar hoy.',     ids: creativos.filter(c => c.ring === 'oferta') },
-	{ t: 'Educativo',     d: 'Lo único que funciona en frío.', ids: creativos.filter(c => c.ring === 'educativo') },
-	{ t: 'Producto',      d: 'Lo que sostiene el escalado.',   ids: creativos.filter(c => c.ring === 'demo') },
-	{ t: 'Comparación',   d: 'Por qué vos y no el otro.',      ids: creativos.filter(c => c.ring === 'vs') },
-	{ t: 'Autoridad',     d: 'Por qué deberían creerte.',      ids: creativos.filter(c => c.ring === 'autoridad') }
+const categories = [
+	{ title: 'Vender más', copy: 'Ofertas, urgencia y razones para comprar hoy.', color: '#ff7a59', branches: ['Promociones', 'Packs y volumen', 'Envío gratis', 'Cuotas'] },
+	{ title: 'Generar confianza', copy: 'Prueba social que baja el riesgo percibido.', color: '#9b7cf3', branches: ['Reseñas', 'Mensajes', 'UGC', 'Resultados'] },
+	{ title: 'Convencer', copy: 'Comparaciones que vuelven obvia la elección.', color: '#ef646f', branches: ['Competencia', 'Valor y costo', 'Antes y después'] },
+	{ title: 'Educar', copy: 'Contenido que convierte atención en intención.', color: '#55a8ff', branches: ['Datos', 'Mitos', 'Preguntas', 'Storytelling'] },
+	{ title: 'Mostrar producto', copy: 'Imágenes para explicar, demostrar y vender.', color: '#3fc68c', branches: ['Hero', 'Lifestyle', 'Detalle', 'Uso'] },
+	{ title: 'Construir autoridad', copy: 'Credenciales y relatos que hacen creíble tu marca.', color: '#e7b348', branches: ['Expertos', 'Certificaciones', 'Fundador'] },
 ];
 
-const pasos = [
-	{ n: '01', t: 'Elegí el creativo', d: 'Cada uno viene con su ficha: para qué sirve, a quién le habla y en qué momento del embudo usarlo.' },
-	{ n: '02', t: 'Pegá el prompt',    d: 'Ya está escrito. Lo pegás en tu IA, indicás cuál es tu producto, y sale el mismo layout con tu marca.' },
-	{ n: '03', t: 'Publicá y vendé',   d: 'Directo a Meta. Sin diseñador, sin Canva, sin esperar tres días a que alguien te conteste.' }
+const businessTypes = [
+	{ name: 'E-commerce', color: '#a77bf7', icon: 'M3 4h2l2 10h10l2-7H6m3 12a1 1 0 1 0 0 .01M17 19a1 1 0 1 0 0 .01' },
+	{ name: 'Gastronomía', color: '#ff9b63', icon: 'M7 3v7m-2-7v4a2 2 0 0 0 4 0V3M7 10v11m8-18c-2 3-2 7 1 9v9m0-9V3' },
+	{ name: 'Moda', color: '#f27cb0', icon: 'M12 7a2 2 0 1 0-2-2m2 2v2L3 17h18L12 9' },
+	{ name: 'Belleza', color: '#df8cff', icon: 'M12 3c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10m6 1v4m-2-2h4' },
+	{ name: 'Fitness', color: '#6ed5a1', icon: 'M4 9v6m3-8v10m10-10v10m3-8v6M7 12h10M2 11v2m20-2v2' },
+	{ name: 'Servicios', color: '#75b7ff', icon: 'M9 6V4h6v2m-11 0h16v13H4zM4 11h16M9 11v2h6v-2' },
+	{ name: 'Productos digitales', color: '#ffd16c', icon: 'M4 4h16v16H4zM4 8h16m-8 4 4 2.5-4 2.5z' },
+	{ name: 'Apps y SaaS', color: '#8f95ff', icon: 'M5 4h5v5H5zm9 0h5v5h-5zM5 14h5v5H5zm9 0h5v5h-5z' },
 ];
 
 const faqs = [
-	{ q: '¿Necesito saber diseñar?', a: 'No. Cada creativo viene con su prompt escrito: lo pegás en tu IA, indicás cuál es tu producto, y te devuelve el mismo layout con tu marca. Si sabés copiar y pegar, alcanza.' },
-	{ q: '¿Sirve para mi rubro?', a: 'Sí. Y esto es lo que casi nadie entiende: <strong class="text-zinc-900">un creativo no gana por el rubro, gana por la estructura.</strong> El mismo layout vende suplementos, colchones, software y cursos. Lo que cambia es el producto adentro, no la arquitectura.' },
-	{ q: '¿Es solo un pack de imágenes?', a: 'No. La imagen es lo de menos. Lo que comprás es <strong class="text-zinc-900">saber cuál usar y cuándo</strong>: cuál va a público frío, cuál a retargeting, cuál levanta el ticket promedio, cuál recupera carritos abandonados. Un creativo excelente en el momento equivocado no vende nada.' },
-	{ q: '¿Cómo los recibo?', a: 'Apenas se acredita el pago te llegan a tu correo. Los descargás y quedan en tu compu: <strong class="text-zinc-900">no es una suscripción ni una plataforma a la que entrás</strong>, son archivos tuyos.' },
-	{ q: '¿Es un pago único?', a: 'Sí. <strong class="text-zinc-900">Pagás una vez y son tuyos para siempre.</strong> No hay renovación, ni mensualidad, ni cobro sorpresa más adelante. Y si más adelante sumo creativos nuevos al pack, te llegan sin pagar de nuevo.' }
+	{ q: '¿Es un pack de 50 creativos?', a: 'No. Es una aplicación por suscripción con una biblioteca que se actualiza continuamente. Las primeras estructuras son el punto de partida; vas a encontrar cada vez más categorías, estilos y variantes.' },
+	{ q: '¿Necesito saber diseñar o escribir prompts?', a: 'No. Elegís qué querés generar, seleccionás un producto y completás decisiones simples. La aplicación arma la dirección creativa por detrás.' },
+	{ q: '¿Qué pasa con mi marca y mis productos?', a: 'Tu web, Instagram, colores, logo y catálogo quedan asociados a tu cuenta privada para reutilizarlos en cada generación.' },
+	{ q: '¿Cómo funciona la prueba gratuita?', a: 'Creás una cuenta con Google o email y recibís 3 generaciones gratis. No necesitás cargar una tarjeta para probar el flujo completo.' },
+	{ q: '¿Qué incluye la suscripción?', a: 'Acceso a toda la biblioteca, nuevas categorías, historial, favoritos, productos guardados y una cantidad mensual de generaciones según el plan.' },
+	{ q: '¿Puedo volver a usar un creativo anterior?', a: 'Sí. Cada resultado queda en tu historial y podés reutilizar su estructura, formato, producto y dirección para crear una nueva versión.' },
 ];
 ---
 
 <Layout
-	title="50 Creativos Estáticos para Meta Ads | Algoritmia"
-	description="Los 50 creativos estáticos con los que escalamos cuentas de Meta Ads. Copiás el prompt, lo adaptás a tu marca y publicás. Sin diseñador."
+	title="Creative Studio con IA para tu marca | Algoritmia"
+	description="Explorá una biblioteca creciente de ideas, elegí un producto y generá creativos publicitarios con tu marca. Probá 3 generaciones gratis."
+	ogTitle="La mejor plataforma para generar imágenes que venden para tu negocio | Algoritmia"
+	ogDescription="Creá anuncios, promociones y fotos de producto con IA, tu marca y una biblioteca de ideas en expansión. Probá 3 generaciones gratis."
+	ogImage="/images/creativos/moki-og.jpg"
+	favicon="/images/creativos/moki-favicon-96.png"
+	appleTouchIcon="/images/creativos/moki-apple-touch.png"
+	manifest="/creative-studio.webmanifest"
 	noindex={true}
 >
-
-<!-- ══════════ NAVBAR FIJO — mismo negro que el hero, sin línea ══════════ -->
-<header id="nav" class="fixed top-0 left-0 right-0 z-[100] bg-zinc-950">
-	<div class="max-w-[1080px] mx-auto px-5 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-4">
-		<a href="#top" class="flex items-center gap-2.5 shrink-0">
-			<span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white flex items-center justify-center shrink-0">
-				<img src="/logoAlgoritmia.webp" alt="Algoritmia" class="w-5 h-5 sm:w-[22px] sm:h-[22px] object-contain" />
-			</span>
-			<span class="text-[14px] sm:text-[15px] font-bold tracking-tight text-white">Algoritmia</span>
-		</a>
-
-		<a href="#comprar" class="group h-9 sm:h-10 px-5 sm:px-6 inline-flex items-center gap-2 rounded-full bg-white hover:bg-zinc-200 text-zinc-900 text-[12.5px] sm:text-[13px] font-semibold tracking-tight transition-colors active:scale-[0.98]">
-			<span class="sm:hidden">Los quiero</span>
-			<span class="hidden sm:inline">Quiero los 50 creativos</span>
-			<svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-		</a>
-	</div>
-</header>
-
-<main id="top" class="bg-white text-zinc-900 overflow-x-hidden">
-
-	<!-- ══════════ HERO (oscuro) ══════════ -->
-	<section class="relative pt-28 sm:pt-40 pb-20 sm:pb-28 bg-zinc-950 text-white overflow-hidden">
-		<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-white/[0.04] rounded-full blur-[130px] pointer-events-none"></div>
-
-		<div class="max-w-[900px] mx-auto px-5 sm:px-6 text-center relative z-10">
-
-			<h1 class="font-semibold tracking-tighter mb-8 text-[36px] sm:text-[54px] md:text-[64px] leading-[1.22] sm:leading-[1.18] text-white">
-				Los únicos 50 creativos <span class="marca marca-clara">que tu negocio necesita.</span>
-			</h1>
-
-			<p class="text-[15.5px] sm:text-[18px] max-w-[640px] mx-auto leading-relaxed mb-10 text-zinc-400">
-				Están corriendo ahora mismo en negocios que facturan
-				<strong class="text-white font-semibold">+50.000 USD al mes en Meta Ads</strong>.
-			</p>
-
-			<div class="flex flex-col items-center gap-4">
-				<a href="#comprar" class="group w-full sm:w-auto h-14 px-10 font-semibold tracking-wide rounded-xl text-[14px] flex items-center justify-center gap-2.5 bg-white hover:bg-zinc-200 text-zinc-900 transition-colors active:scale-[0.98] shadow-lg shadow-black/20">
-					Quiero mis 50 creativos
-					<svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-				</a>
-				<p class="text-[12px] text-zinc-500 font-medium">
-					Los comprás una vez y son tuyos para siempre
-				</p>
-			</div>
-
+	<header class="nav-shell">
+		<div class="nav-inner">
+			<a href="#top" class="brand"><span><img src="/logoAlgoritmia.webp" alt="Algoritmia" /></span><b>Algoritmia</b><small>Creative Studio</small></a>
+			<a href="/creativos/app/" class="nav-cta"><span>Empezar gratis</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 		</div>
+	</header>
 
-		<!-- ── Prueba social: videos de clientes reales (misma sección, sin corte) ── -->
-		<div class="mt-16 sm:mt-20 relative z-10">
-			<p class="text-center text-[9px] font-bold text-zinc-500 uppercase tracking-[0.22em] mb-8 px-6">
-				Algunos de los clientes que usan estos anuncios
-			</p>
+	<main id="top">
+		<section class="hero">
+			<div class="hero-grid"></div><div class="hero-glow"></div>
+			<div class="hero-inner">
+				<div class="hero-copy">
+					<span class="eyebrow"><i></i>IMÁGENES CON IA PARA NEGOCIOS</span>
+					<h1>La mejor plataforma para generar <em>imágenes que venden</em> para tu negocio.</h1>
+					<p>Elegí una idea pensada para convertir, sumá tu producto y generá una imagen lista para publicar. <strong>Sin diseñar, sin escribir prompts y sin empezar de cero.</strong></p>
+					<div class="hero-actions"><a href="/creativos/app/">Crear 3 imágenes gratis <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><span><b>✓</b> Google o email · Sin tarjeta</span></div>
+					<div class="hero-proof"><span><strong>En minutos</strong><small>de producto a anuncio</small></span><i></i><span><strong>Tu marca</strong><small>siempre precargada</small></span><i></i><span><strong>Más ideas</strong><small>cada semana</small></span></div>
+				</div>
+				<div class="hero-conversion-visual"><img src="/images/creativos/moki-hero-conversion.webp" alt="Moki convierte una foto de producto en una imagen publicitaria lista para vender" width="1402" height="1122" fetchpriority="high"/></div>
+			</div>
+			<div class="hero-bottom"><span>Ofertas que convierten</span><i></i><span>Producto &amp; lifestyle</span><i></i><span>Prueba social</span><i></i><span>Ads listos para publicar</span></div>
+		</section>
 
-			<!-- Viewport más angosto que el set de 6 tarjetas: nunca se ven dos copias a la vez -->
-			<div class="video-marquee relative max-w-[880px] mx-auto overflow-hidden">
-				<div class="pointer-events-none absolute left-0 top-0 bottom-0 w-14 sm:w-24 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent z-20"></div>
-				<div class="pointer-events-none absolute right-0 top-0 bottom-0 w-14 sm:w-24 bg-gradient-to-l from-zinc-950 via-zinc-950/70 to-transparent z-20"></div>
+		<section class="living-library" id="biblioteca">
+			<div class="section-inner split-heading">
+				<div><span class="section-kicker">NO ES UN PACK CERRADO</span><h2>Una biblioteca viva.<br/><em>Siempre hay algo nuevo para probar.</em></h2></div>
+				<p>No comprás cincuenta archivos y te quedás solo. Te suscribís a una herramienta que organiza las mejores ideas por objetivo y te permite convertir cualquiera en una imagen de tu marca.</p>
+			</div>
+			<div class="category-grid section-inner">
+				{categories.map((category, index) => <article style={`--accent:${category.color}`}><header><span>{String(index + 1).padStart(2,'0')}</span><i></i></header><h3>{category.title}</h3><p>{category.copy}</p><div>{category.branches.map((branch) => <span>{branch}<b>›</b></span>)}</div></article>)}
+			</div>
+			<div class="taxonomy-demo section-inner">
+				<div class="taxonomy-copy"><span class="section-kicker">ENCONTRÁ TODO RÁPIDO</span><h3>Tres niveles.<br/>Cero confusión.</h3><p>Primero elegís el objetivo, después la categoría y finalmente el tipo exacto de imagen. También podés buscar por nombre o guardar tus favoritas.</p></div>
+				<div class="taxonomy-path"><div><small>1 · OBJETIVO</small><strong>Vender más</strong></div><i>→</i><div><small>2 · CATEGORÍA</small><strong>Promociones</strong></div><i>→</i><div><small>3 · TIPO</small><strong>Envío gratis</strong></div><span>✓</span></div>
+			</div>
+		</section>
 
-				<div class="video-track flex w-max gap-4 py-1">
-					{[...videos, ...videos].map((v) => (
-						<button
-							type="button"
-							data-video={v.src}
-							data-nombre={v.nombre}
-							class="video-card group relative shrink-0 w-[126px] sm:w-[152px] lg:w-[168px] aspect-[9/16] rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 text-left transition-all duration-300 hover:scale-[1.04] hover:border-white/30"
-						>
-							<img
-								src={v.cover}
-								alt={v.nombre}
-								loading="lazy"
-								decoding="async"
-								class="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-100 transition-opacity duration-300"
-							/>
-							<span class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></span>
-
-							<span class="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-white/15 backdrop-blur-sm border border-white/25 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-colors">
-								<svg class="w-2.5 h-2.5 text-white group-hover:text-zinc-900 transition-colors ml-[1px]" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-							</span>
-
-							<span class="absolute bottom-0 left-0 right-0 p-2.5 sm:p-3">
-								<span class="block text-[10px] sm:text-[11px] font-bold text-white leading-tight tracking-tight mb-0.5 truncate">{v.nombre}</span>
-								<span class="block text-[9px] sm:text-[10px] font-medium text-emerald-400 leading-tight truncate">{v.stat}</span>
-							</span>
-						</button>
-					))}
+		<section class="how" id="como-funciona">
+			<div class="section-inner"><div class="center-heading"><span class="section-kicker">TAN SIMPLE QUE NO NECESITA TUTORIAL</span><h2>De “necesito un anuncio”<br/>a “ya está listo”.</h2><p>Moki te guía en el orden correcto. Vos tomás decisiones simples; la aplicación se ocupa de la complejidad.</p></div>
+				<div class="steps">
+					<article><span>01</span><div class="step-icon">⌕</div><h3>Encontrá una idea</h3><p>Buscá por objetivo, categoría, formato o palabra clave. Guardá las que quieras volver a usar.</p></article>
+					<article><span>02</span><div class="step-icon">◇</div><h3>Elegí tu producto</h3><p>Tu web e Instagram ya están analizados. Seleccionás un producto guardado o subís uno nuevo.</p></article>
+					<article><span>03</span><div class="step-icon">✦</div><h3>Generá y reutilizá</h3><p>Elegís formato y variante. El resultado queda en tu historial para descargarlo o volver a generarlo.</p></article>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!-- ── Lightbox de video ── -->
-	<div id="vbox" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4">
-		<button id="vbox-close" type="button" aria-label="Cerrar" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-colors">
-			<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-		</button>
-		<div class="w-full max-w-[380px]">
-			<video id="vbox-video" class="w-full rounded-2xl border border-white/15 bg-black aspect-[9/16] object-cover" controls playsinline></video>
-			<p id="vbox-name" class="mt-3 text-center text-[13px] font-semibold text-white"></p>
-		</div>
-	</div>
-
-	<!-- ══════════ EL PROBLEMA ══════════ -->
-	<section class="py-20 sm:py-24">
-		<div class="max-w-[720px] mx-auto px-5 sm:px-6">
-			<h2 class="text-[27px] sm:text-[40px] font-semibold tracking-tighter leading-[1.3] text-zinc-900 mb-8 reveal">
-				Copiá lo que ya funciona.<br/>
-				<span class="marca marca-oscura">Y escalá de una vez.</span>
-			</h2>
-
-			<div class="space-y-5 text-[15.5px] sm:text-[17px] leading-relaxed text-zinc-600 reveal delay-100">
-				<p>
-					No son ideas sueltas ni teoría. Son <strong class="text-zinc-900 font-semibold">50 creativos ya probados en cuentas reales</strong>,
-					en decenas de negocios distintos. Y entre los 50 están <strong class="text-zinc-900 font-semibold">todos los ángulos posibles</strong>:
-					precio, urgencia, prueba social, autoridad, comparación con la competencia, educación.
-				</p>
-				<p>
-					Eso importa porque <strong class="text-zinc-900 font-semibold">nadie sabe de antemano qué ángulo le va a pegar a tu negocio</strong>.
-					A uno le funciona el precio; al de al lado, con el mismo producto, le funciona la prueba social. No se adivina: se prueba.
-				</p>
-				<p>
-					Elegís, copiás el prompt, lo adaptás a tu marca. En una tarde tenés diez creativos listos para publicar —
-					lo que antes te llevaba semanas de ida y vuelta con un diseñador.
-				</p>
-				<p>
-					Y no te dejo solo con los archivos. Va incluida <strong class="text-zinc-900 font-semibold">la guía de por cuál empezar</strong>:
-					qué ángulo probar primero según tu negocio, cuántos correr a la vez, cuánto esperar antes de sacar conclusiones,
-					cuándo pausar el que no anda y cómo escalar el que gana sin romper la cuenta.
-				</p>
-				<p class="text-zinc-900 font-semibold text-[16.5px] sm:text-[18.5px] leading-snug pt-1">
-					Porque no necesitás 50 ganadores. Necesitás uno solo. Lo que te llevás son las 50 puertas para encontrarlo,
-					y la guía para saber cuál abrir primero.
-				</p>
+		<section class="memory-section">
+			<div class="section-inner memory-grid">
+				<div class="memory-visual">
+					<div class="memory-moki"><img src="/images/creativos/moki-mascot.webp" alt="Moki" width="1254" height="1254" loading="lazy"/></div>
+					<div class="memory-card favorite-card"><span>♥</span><div><small>GUARDADO</small><strong>Lifestyle premium</strong><p>Mostrar producto · Presentación</p></div></div>
+					<div class="memory-card recent-card"><span>↻</span><div><small>ÚLTIMO CREATIVO</small><strong>Envío gratis · 4:5</strong><p>Reutilizar configuración</p></div></div>
+					<div class="memory-card brand-card"><span>✓</span><div><small>TU MARCA</small><strong>Productos sincronizados</strong><p>Web · Instagram · Logo</p></div></div>
+				</div>
+				<div class="memory-copy"><span class="section-kicker">LA APP APRENDE TU FLUJO</span><h2>Configurás una vez.<br/><em>Después todo es más rápido.</em></h2><p>Tu identidad, catálogo, ideas favoritas y últimas creaciones quedan dentro de tu perfil. No volvés a cargar lo mismo cada vez.</p><ul><li><b>✓</b><span><strong>Favoritos</strong><small>Guardá categorías e ideas para encontrarlas en segundos.</small></span></li><li><b>✓</b><span><strong>Historial reutilizable</strong><small>Abrí una creación anterior y recuperá su configuración.</small></span></li><li><b>✓</b><span><strong>Biblioteca en expansión</strong><small>Las nuevas ideas aparecen automáticamente en tu cuenta.</small></span></li></ul></div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!-- ══════════ QUÉ HAY ADENTRO ══════════ -->
-	<section class="py-20 sm:py-24 bg-zinc-50/50 border-y border-zinc-200/60">
-		<div class="max-w-[1080px] mx-auto px-5 sm:px-6">
-
-			<div class="max-w-xl mb-12 reveal">
-				<p class="text-[9.5px] font-bold uppercase tracking-[0.22em] text-zinc-400 mb-4">Qué hay adentro</p>
-				<h2 class="text-[27px] sm:text-[40px] font-semibold tracking-tighter leading-[1.12] text-zinc-900 mb-4">
-					Los 50 creativos,<br/>agrupados por función.
-				</h2>
-				<p class="text-[15px] sm:text-[16.5px] text-zinc-500 leading-relaxed">
-					No son 50 imágenes sueltas. Son seis grupos, y cada uno derriba una objeción distinta.
-					Cuando una cuenta se estanca, casi siempre es porque le falta <strong class="text-zinc-900 font-semibold">un grupo entero</strong> — no un anuncio más.
-				</p>
-			</div>
-
-			<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-				{grupos.map((g, i) => (
-					<div class={`reveal delay-${((i % 3) + 1) * 100} rounded-2xl border border-zinc-200/80 bg-white p-6 hover:border-zinc-300 transition-colors`}>
-						<div class="flex items-baseline justify-between mb-1.5">
-							<h3 class="text-[16.5px] font-semibold tracking-tight text-zinc-900">{g.t}</h3>
-							<span class="text-[10px] font-bold text-zinc-500 bg-zinc-100 border border-zinc-200/70 rounded-md px-2 py-0.5 tabular-nums">{g.ids.length}</span>
-						</div>
-						<p class="text-[12.5px] text-zinc-400 mb-5">{g.d}</p>
-
-						<ul class="space-y-2">
-							{g.ids.map((c) => (
-								<li class="flex items-center gap-2.5">
-									<span class="text-[10px] font-bold text-zinc-500 tabular-nums w-4 shrink-0">{String(c.id).padStart(2, '0')}</span>
-									<span class="text-[13.5px] text-zinc-800">{c.nombre}</span>
-									<span class="ml-auto text-[9.5px] font-bold text-zinc-900 tracking-wide">{c.n}</span>
-								</li>
-							))}
-						</ul>
-					</div>
-				))}
-			</div>
-
-			<p class="mt-8 text-[13px] text-zinc-400 leading-relaxed max-w-2xl reveal">
-				N1 a N5 indica el nivel de consciencia al que le habla cada creativo, de "todavía no sabe que tiene el problema" (N1) a "quiere comprar hoy" (N5).
-				<strong class="text-zinc-600 font-semibold">La mayoría de las cuentas concentra todo en N4 y N5</strong>, hablándole solo a gente que ya las conoce. Por eso llegan a un techo y no lo pasan nunca.
-			</p>
-
-		</div>
-	</section>
-
-	<!-- ══════════ CÓMO FUNCIONA + QUÉ TE LLEVÁS (fusionadas) ══════════ -->
-	<section class="py-20 sm:py-28 bg-zinc-950 text-white">
-		<div class="max-w-[1080px] mx-auto px-5 sm:px-6">
-
-			<!-- Encabezado -->
-			<div class="text-center max-w-xl mx-auto mb-14 sm:mb-16 reveal">
-				<h2 class="text-[28px] sm:text-[42px] font-semibold tracking-tighter leading-[1.1] text-white mb-4">
-					Con tu marca en cinco minutos.
-				</h2>
-				<p class="text-[15px] sm:text-[16.5px] text-zinc-400 leading-relaxed">
-					No es un curso. No hay cuarenta videos que ver. Lo abrís hoy y lo usás hoy.
-				</p>
-			</div>
-
-			<!-- Los 3 pasos -->
-			<div class="grid md:grid-cols-3 gap-4">
-				{pasos.map((p, i) => (
-					<div class={`reveal delay-${(i + 1) * 100} rounded-2xl border border-white/10 bg-white/[0.03] p-7`}>
-						<span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white text-zinc-900 text-[11px] font-bold mb-5 tabular-nums">{p.n}</span>
-						<h3 class="text-[16.5px] font-semibold tracking-tight text-white mb-2.5">{p.t}</h3>
-						<p class="text-[13.5px] text-zinc-400 leading-relaxed">{p.d}</p>
-					</div>
-				))}
-			</div>
-
-		</div>
-	</section>
-
-	<!-- ══════════ PRECIO ══════════ -->
-	<section id="comprar" class="py-20 sm:py-28 scroll-mt-20 bg-zinc-100/60">
-		<div class="max-w-[520px] mx-auto px-5 sm:px-6">
-
-			<div class="relative reveal">
-				<!-- halo -->
-				<div class="absolute -inset-3 bg-zinc-900/[0.07] rounded-[2.2rem] blur-2xl pointer-events-none"></div>
-
-				<div class="relative rounded-[1.75rem] bg-zinc-950 text-white overflow-hidden shadow-2xl shadow-zinc-900/25 ring-1 ring-white/10">
-
-					<!-- brillo superior -->
-					<div class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[420px] h-[220px] bg-white/[0.07] blur-[70px] rounded-full"></div>
-					<div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent"></div>
-
-					<div class="relative p-8 sm:p-10">
-
-						<!-- Encabezado -->
-						<div class="text-center mb-8">
-							<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-400/10 ring-1 ring-emerald-400/25 mb-7">
-								<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-								<span class="text-[10.5px] font-bold text-emerald-400 uppercase tracking-[0.14em]">{DESCUENTO}% de descuento</span>
-							</span>
-
-							<div class="flex items-center justify-center gap-3 sm:gap-4 mb-3">
-								<span class="text-[22px] sm:text-[26px] font-semibold text-zinc-500 tracking-tight line-through decoration-red-500 decoration-[2.5px] whitespace-nowrap">
-									USD {PRECIO_ANTES}
-								</span>
-								<span class="flex items-baseline gap-1.5 whitespace-nowrap">
-									<span class="text-[19px] sm:text-[22px] font-medium text-zinc-400">USD</span>
-									<span class="text-[52px] sm:text-[62px] font-bold tracking-tighter leading-none text-white">{PRECIO}</span>
-								</span>
-							</div>
-
-							<p class="text-[12.5px] text-zinc-500 font-medium">
-								Ahorrás USD {AHORRO} · Precio de lanzamiento
-							</p>
-						</div>
-
-						<!-- Contador -->
-						<div
-							id="cd"
-							data-ventana={VENTANA_MIN}
-							data-colchon={COLCHON_MIN}
-							data-jitter={JITTER_MAX}
-							class="mb-8 pb-8 border-b border-white/10"
-						>
-							<p class="text-center text-[9.5px] font-bold uppercase tracking-[0.18em] text-zinc-500 mb-4">
-								El precio sube en
-							</p>
-							<div class="flex items-stretch justify-center gap-2.5">
-								{[['h', 'horas'], ['m', 'minutos'], ['s', 'segundos']].map(([k, label]) => (
-									<div class="flex-1 max-w-[92px] rounded-xl bg-white/[0.05] ring-1 ring-white/10 py-3 flex flex-col items-center">
-										<span data-cd={k} class="text-[24px] sm:text-[27px] font-bold tabular-nums tracking-tight leading-none text-white">00</span>
-										<span class="mt-1.5 text-[8.5px] font-bold uppercase tracking-[0.12em] text-zinc-500">{label}</span>
-									</div>
-								))}
-							</div>
-						</div>
-
-						<!-- Qué incluye -->
-						<ul class="space-y-3.5 mb-8">
-							{[
-								'Los 50 creativos, listos para descargar',
-								'Cómo usar cada uno: para qué sirve y cuándo publicarlo',
-								'Cómo adaptarlos a tu negocio en cinco minutos',
-								'La guía de por cuál empezar según tu negocio',
-								'Cómo testear los ángulos y encontrar tu ganador',
-								'Cómo escalar el que gana, sin romper la cuenta'
-							].map((f) => (
-								<li class="flex items-start gap-3">
-									<span class="mt-0.5 w-4 h-4 rounded-full bg-white/10 ring-1 ring-white/15 flex items-center justify-center shrink-0">
-										<svg class="w-2.5 h-2.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-									</span>
-									<span class="text-[13.5px] text-zinc-300 leading-snug">{f}</span>
-								</li>
-							))}
-						</ul>
-
-						<a href={CHECKOUT_URL} class="group w-full h-14 font-semibold tracking-wide rounded-xl text-[14.5px] flex items-center justify-center gap-2.5 bg-white hover:bg-zinc-200 text-zinc-900 transition-colors active:scale-[0.98] shadow-lg shadow-black/25">
-							Sí, quiero los 50 creativos
-							<svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-						</a>
-
-						<p class="mt-5 text-center text-[11.5px] text-zinc-500 font-medium">
-							Pagás una vez · Los descargás al instante · Son tuyos para siempre
-						</p>
-
-					</div>
+		<section class="business-section">
+			<div class="section-inner business-heading"><span class="section-kicker">HECHO PARA NEGOCIOS REALES</span><h2>Si tenés algo para vender,<br/><em>tenés algo para crear.</em></h2><p>La biblioteca se adapta al objetivo y al tipo de producto. No necesitás conocer de diseño ni de inteligencia artificial.</p></div>
+			<div class="business-marquee" aria-label="Tipos de negocio compatibles">
+				<div class="business-track">
+					<div class="business-set">{businessTypes.map((business) => <span style={`--business-accent:${business.color}`}><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d={business.icon}/></svg></i><b>{business.name}</b></span>)}</div>
+					<div class="business-set" aria-hidden="true">{businessTypes.map((business) => <span style={`--business-accent:${business.color}`}><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d={business.icon}/></svg></i><b>{business.name}</b></span>)}</div>
 				</div>
 			</div>
+		</section>
 
-		</div>
-	</section>
-
-	<!-- ══════════ FAQ ══════════ -->
-	<section class="py-20 sm:py-24 bg-zinc-50/50 border-y border-zinc-200/60">
-		<div class="max-w-[700px] mx-auto px-5 sm:px-6">
-			<h2 class="text-[27px] sm:text-[36px] font-semibold tracking-tighter leading-[1.12] text-zinc-900 mb-10 reveal">
-				Preguntas frecuentes.
-			</h2>
-
-			<div class="divide-y divide-zinc-200">
-				{faqs.map((f) => (
-					<details class="faq group py-5">
-						<summary class="flex items-center justify-between gap-6 cursor-pointer list-none">
-							<span class="text-[15px] sm:text-[16px] font-semibold text-zinc-900 tracking-tight">{f.q}</span>
-							<span class="shrink-0 w-7 h-7 rounded-full border border-zinc-200 bg-white flex items-center justify-center text-zinc-400 group-open:bg-zinc-900 group-open:border-zinc-900 group-open:text-white transition-colors">
-								<svg class="w-3.5 h-3.5 transition-transform group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-							</span>
-						</summary>
-						<p class="mt-4 text-[14px] sm:text-[14.5px] text-zinc-500 leading-relaxed pr-12" set:html={f.a}></p>
-					</details>
-				))}
+		<section class="plans-section" id="planes">
+			<div class="section-inner"><div class="center-heading"><span class="section-kicker">EMPEZÁ GRATIS. ESCALÁ CUANDO LO NECESITES.</span><h2>Un plan para cada ritmo.</h2><p>Todos incluyen la biblioteca completa, nuevas categorías, favoritos, historial y tus productos guardados.</p></div>
+				<div class="plans-grid">{plans.map((plan) => <article class:list={{featured:plan.featured}}>{plan.featured && <span class="popular">MÁS ELEGIDO</span>}<small>PLAN {plan.name.toUpperCase()}</small><h3><b>USD</b>{plan.price}<em>/mes</em></h3><p>{plan.copy}</p><strong>{plan.credits} generaciones por mes</strong><ul><li>✓ Biblioteca completa y actualizaciones</li><li>✓ Marca y productos precargados</li><li>✓ Favoritos e historial reutilizable</li></ul><a href={`/creativos/app/?plan=${plan.code}`}>Elegir {plan.name}<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></article>)}</div>
+				<p class="plan-note">Primero recibís 3 generaciones gratis. Elegís un plan solamente cuando quieras seguir creando.</p>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!-- ══════════ CIERRE ══════════ -->
-	<section class="py-24 sm:py-32">
-		<div class="max-w-[760px] mx-auto px-5 sm:px-6 text-center reveal">
-			<h2 class="text-[29px] sm:text-[44px] font-semibold tracking-tighter leading-[1.1] text-zinc-900 mb-6">
-				El creativo que te falta<br/>ya está escrito.
-			</h2>
-			<p class="text-[15px] sm:text-[17px] text-zinc-500 leading-relaxed max-w-md mx-auto mb-9">
-				Podés seguir subiendo la foto del producto sobre fondo blanco y esperar que esta vez funcione.
-				O podés comprarlos en dos minutos y publicar algo que ya sabés que funciona.
-			</p>
+		<section class="faq-section"><div class="section-inner faq-grid"><div><span class="section-kicker">PREGUNTAS FRECUENTES</span><h2>Todo claro antes de empezar.</h2><p>Si sabés elegir una foto de tu producto, ya sabés usar la aplicación.</p></div><div>{faqs.map((faq) => <details><summary><span>{faq.q}</span><b>+</b></summary><p>{faq.a}</p></details>)}</div></div></section>
 
-			<a href="#comprar" class="group w-full sm:w-auto h-14 px-10 font-semibold tracking-wide rounded-xl text-[14px] inline-flex items-center justify-center gap-2.5 bg-zinc-900 hover:bg-zinc-800 text-white transition-colors active:scale-[0.98]">
-				Quiero mis 50 creativos
-				<svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-			</a>
+		<section class="final-section"><div class="final-card section-inner"><div class="final-moki"><img src="/images/creativos/moki-mascot.webp" alt="" width="1254" height="1254" loading="lazy"/></div><div><span class="section-kicker">TU PRÓXIMA IMAGEN PUEDE VENDER MÁS</span><h2>Dejá de imaginarla.<br/>Generala en minutos.</h2><p>Probá el flujo completo con tu propia marca y creá tus primeras 3 imágenes sin pagar.</p><a href="/creativos/app/">Crear 3 imágenes gratis <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><small>Google o email · Sin tarjeta · Tus datos quedan guardados</small></div></div></section>
+	</main>
 
-			<p class="mt-5 text-[12px] text-zinc-400 font-medium">
-				Pagás una vez · Son tuyos para siempre
-			</p>
-		</div>
-	</section>
-
-</main>
-
-<style>
-	/* Resaltado tipo marcador: una barra bajo el texto, no una caja que lo encierra.
-	   Va con background y no con border-bottom para que siga cada línea al hacer wrap. */
-	.marca {
-		background-repeat: no-repeat;
-		background-position: 0 100%;
-		background-size: 100% 0.085em;
-		/* Justo debajo de las descendentes (q, g, j) sin llegar a tocarlas. */
-		padding-bottom: 0.13em;
-		box-decoration-break: clone;
-		-webkit-box-decoration-break: clone;
-	}
-	/* sobre fondo oscuro */
-	.marca-clara { background-image: linear-gradient(#fff, #fff); }
-	/* sobre fondo claro */
-	.marca-oscura { background-image: linear-gradient(#18181b, #18181b); }
-
-	.faq summary::-webkit-details-marker { display: none; }
-
-	/* Marquee continuo. El track lleva la lista DUPLICADA y `w-max`, así su ancho es la
-	   suma real de las 12 tarjetas (no el del contenedor). Entonces -50% equivale exacto
-	   a un set de 6, y el -0.5rem cierra el gap entre la 6ª y la 7ª: al reiniciar, el
-	   fotograma es idéntico al del inicio. Sin `w-max`, el 50% se calcula sobre el ancho
-	   del padre y el ciclo no cierra — ahí aparecía el salto. */
-	.video-track {
-		animation: videoScroll 14s linear infinite;
-		will-change: transform;
-		backface-visibility: hidden;
-	}
-	/* No frena con el mouse encima: solo se pausa al tocarlo en móvil (para poder abrir un video) */
-	.video-track.paused { animation-play-state: paused; }
-
-	@keyframes videoScroll {
-		from { transform: translate3d(0, 0, 0); }
-		to   { transform: translate3d(calc(-50% - 0.5rem), 0, 0); }
-	}
-
-	/* Nunca scroll manual ni barra visible: el movimiento es siempre automático */
-	.video-marquee {
-		overflow: hidden;
-		scrollbar-width: none;
-	}
-	.video-marquee::-webkit-scrollbar { display: none; }
-</style>
-
-<script>
-	function initCreativos() {
-		// Contador rotativo: el restante siempre queda entre 3h y 7h.
-		//
-		// El tiempo se parte en ventanas fijas ancladas al reloj universal (no a la visita).
-		// El plazo de una ventana vence COLCHON minutos después de que la ventana cierra,
-		// así el restante va de (VENTANA + COLCHON) hasta COLCHON, y ahí salta a la siguiente.
-		// Como todo se deriva del reloj, si el usuario recarga o vuelve más tarde, el contador
-		// siguió corriendo: nunca se reinicia por entrar de nuevo.
-		const cd = document.getElementById('cd');
-		if (cd) {
-			const MIN     = 60_000;
-			const ventana = Number(cd.dataset.ventana) * MIN;
-			const colchon = Number(cd.dataset.colchon) * MIN;
-			const jitter  = Number(cd.dataset.jitter)  * MIN;
-			const slots   = cd.querySelectorAll<HTMLElement>('[data-cd]');
-			const pad     = (n: number) => String(Math.max(0, n)).padStart(2, '0');
-
-			// Desvío estable por ventana: la misma ventana da siempre el mismo desvío,
-			// pero cada ventana cae en un minuto distinto (no queda redondo).
-			const desvio = (n: number) => {
-				let h = n * 2654435761 % 2147483647;
-				h = (h ^ (h >>> 13)) >>> 0;
-				return (h % (jitter + 1));
-			};
-
-			const vence = () => {
-				const ahora = Date.now();
-				const i     = Math.floor(ahora / ventana);          // índice de ventana actual
-				const fin   = (i + 1) * ventana + colchon + desvio(i);
-				// Si por el desvío el plazo ya pasó, tomamos el de la ventana siguiente.
-				return fin > ahora ? fin : (i + 2) * ventana + colchon + desvio(i + 1);
-			};
-
-			let deadline = vence();
-
-			const tick = () => {
-				let falta = deadline - Date.now();
-				if (falta <= 0) {                 // se cerró la ventana: se reprograma sola
-					deadline = vence();
-					falta = deadline - Date.now();
-				}
-				const s = Math.floor(falta / 1000);
-				const map: Record<string, number> = {
-					h: Math.floor(s / 3600),
-					m: Math.floor((s % 3600) / 60),
-					s: s % 60
-				};
-				slots.forEach((el) => { el.textContent = pad(map[el.dataset.cd || 's']); });
-			};
-
-			tick();
-			setInterval(tick, 1000);
-		}
-
-		// En móvil no hay hover: al tocar el carrusel se pausa para poder abrir un video
-		const track = document.querySelector<HTMLElement>('.video-track');
-		track?.addEventListener('touchstart', () => track.classList.add('paused'), { passive: true });
-
-		// Lightbox de video
-		const box   = document.getElementById('vbox');
-		const video = document.getElementById('vbox-video') as HTMLVideoElement | null;
-		const name  = document.getElementById('vbox-name');
-		const close = document.getElementById('vbox-close');
-
-		const cerrar = () => {
-			if (!box || !video) return;
-			video.pause();
-			video.removeAttribute('src');
-			video.load();
-			box.classList.add('hidden');
-			box.classList.remove('flex');
-			document.body.style.overflow = '';
-			track?.classList.remove('paused');   // el carrusel vuelve a andar al cerrar el video
-		};
-
-		document.querySelectorAll<HTMLButtonElement>('.video-card').forEach((card) => {
-			card.addEventListener('click', () => {
-				if (!box || !video) return;
-				video.src = card.dataset.video || '';
-				if (name) name.textContent = card.dataset.nombre || '';
-				box.classList.remove('hidden');
-				box.classList.add('flex');
-				document.body.style.overflow = 'hidden';
-				video.play().catch(() => {});
-			});
-		});
-
-		close?.addEventListener('click', cerrar);
-		box?.addEventListener('click', (e) => { if (e.target === box) cerrar(); });
-		document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrar(); });
-
-		// FAQ: abrir uno cierra el resto
-		const faqs = document.querySelectorAll<HTMLDetailsElement>('.faq');
-		faqs.forEach((d) => {
-			d.addEventListener('toggle', () => {
-				if (!d.open) return;
-				faqs.forEach((o) => { if (o !== d) o.open = false; });
-			});
-		});
-	}
-
-	document.addEventListener('astro:page-load', initCreativos);
-	document.addEventListener('DOMContentLoaded', initCreativos);
-</script>
-
+	<style>
+		:global(html){scroll-behavior:smooth} :global(body){margin:0;background:#fff;color:#1b181e;font-family:Inter,system-ui,sans-serif}.nav-shell{position:absolute;z-index:100;top:0;left:0;right:0;background:transparent;border:0}.nav-inner{max-width:1180px;height:76px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:30px}.brand{display:flex;align-items:center;gap:9px;color:#241f27;text-decoration:none}.brand>span{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#211d24}.brand img{width:22px;height:22px;filter:invert(1)}.brand b{font-size:14px}.brand small{padding-left:10px;border-left:1px solid rgba(36,31,39,.12);color:#7850c2;font-size:7px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.nav-cta{height:45px;padding:0 21px;display:flex;align-items:center;gap:10px;border-radius:13px;background:linear-gradient(135deg,#7c4dea,#5d2ac8);color:#fff;text-decoration:none;font-size:10px;font-weight:800;box-shadow:0 13px 30px rgba(100,49,205,.22);transition:transform .2s ease,box-shadow .2s ease}.nav-cta:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(100,49,205,.3)}.nav-cta svg,.hero-actions svg,.plans-grid svg,.final-card svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+		main{overflow:hidden}.section-inner{width:min(1120px,calc(100% - 40px));margin-inline:auto}.hero{position:relative;min-height:850px;padding:126px 0 0;overflow:hidden;background:radial-gradient(circle at 78% 30%,rgba(170,129,255,.17),transparent 28%),linear-gradient(180deg,#fff,#faf7fd);color:#211d24}.hero-grid{position:absolute;inset:0;opacity:.42;background-image:linear-gradient(rgba(111,63,205,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(111,63,205,.045) 1px,transparent 1px);background-size:35px 35px;mask-image:linear-gradient(#000,transparent 86%)}.hero-glow{position:absolute;width:660px;height:660px;left:-260px;top:-430px;border-radius:50%;background:#d4bcff;filter:blur(150px);opacity:.32}.hero-inner{position:relative;z-index:2;width:min(1180px,calc(100% - 40px));margin:auto;display:grid;grid-template-columns:.93fr 1.07fr;align-items:center;gap:24px}.eyebrow,.section-kicker{display:inline-flex;align-items:center;gap:9px;color:#7446d0;font-size:8px;font-weight:850;letter-spacing:.17em}.eyebrow i{width:6px;height:6px;border-radius:50%;background:#8553e6;box-shadow:0 0 0 5px rgba(133,83,230,.1)}.hero-copy h1{max-width:680px;margin:25px 0 22px;font-size:clamp(46px,5.2vw,70px);line-height:.98;letter-spacing:-.06em}.hero-copy h1 em,.split-heading h2 em,.memory-copy h2 em{color:#7442dc;font-style:normal}.hero-copy>p{max-width:590px;margin:0;color:#67616b;font-size:15px;line-height:1.7}.hero-copy>p strong{color:#282329;font-weight:680}.hero-actions{display:flex;align-items:center;gap:20px;margin-top:31px}.hero-actions>a,.final-card a{height:58px;padding:0 27px;display:inline-flex;align-items:center;gap:11px;border-radius:14px;background:linear-gradient(135deg,#7e4ee9,#5926c3);color:#fff;text-decoration:none;font-size:11px;font-weight:850;box-shadow:0 18px 42px rgba(100,45,213,.28),inset 0 1px rgba(255,255,255,.25);transition:transform .2s ease,box-shadow .2s ease}.hero-actions>a:hover{transform:translateY(-3px);box-shadow:0 25px 52px rgba(100,45,213,.36),inset 0 1px rgba(255,255,255,.25)}.hero-actions>span{color:#827a87;font-size:9px}.hero-actions>span b{color:#27a871}.hero-proof{display:flex;align-items:center;gap:18px;margin-top:34px}.hero-proof span{display:flex;flex-direction:column;gap:3px}.hero-proof strong{font-size:11px}.hero-proof small{color:#938b97;font-size:7px}.hero-proof i{width:1px;height:27px;background:rgba(52,42,60,.12)}
+		.hero-conversion-visual{position:relative;height:575px;overflow:hidden;border:1px solid rgba(116,66,220,.1);border-radius:34px;background:#faf6fc;box-shadow:0 35px 80px rgba(73,43,93,.12)}.hero-conversion-visual img{width:100%;height:100%;object-fit:cover;object-position:center}.hero-bottom{position:absolute;z-index:3;left:50%;bottom:0;width:min(1120px,calc(100% - 40px));height:72px;display:flex;align-items:center;justify-content:center;gap:22px;border-top:1px solid rgba(50,40,57,.09);transform:translateX(-50%);color:#8c8490;font-size:8px;font-weight:750;letter-spacing:.06em}.hero-bottom i{width:4px;height:4px;border-radius:50%;background:#7a4ed0}
+		.capabilities-section{padding:115px 0;background:#0b090e;color:#fff}.center-heading h2 em{color:#a980f3;font-style:normal}.center-heading.dark{max-width:850px}.center-heading.dark h2{color:#fff}.capabilities-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:58px}.capability-card{position:relative;min-height:510px;padding:23px;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:linear-gradient(145deg,#18151c,#121015);box-shadow:0 18px 50px rgba(0,0,0,.22);transition:.25s}.capability-card:hover{transform:translateY(-6px);border-color:rgba(169,128,243,.28);box-shadow:0 28px 65px rgba(0,0,0,.32)}.capability-card header{display:flex;align-items:center;justify-content:space-between;color:#746d79;font-size:6px;font-weight:900;letter-spacing:.13em}.capability-card header b{padding:6px 8px;border-radius:20px;background:rgba(255,255,255,.07);color:#bba8de}.capability-card h3{margin:24px 0 10px;color:#fff;font-size:21px;line-height:1.1;letter-spacing:-.04em}.capability-card>p{margin:0;color:#8f8893;font-size:9px;line-height:1.65}.capability-art,.product-stage,.trust-seal{position:relative;height:270px;margin-top:24px;overflow:hidden;border-radius:17px}.capability-art{display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#fd9c76,#e9552b 72%);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}.capability-art i{position:absolute;width:190px;height:190px;border:1px solid rgba(255,255,255,.25);border-radius:50%;box-shadow:0 0 0 38px rgba(255,255,255,.06)}.capability-art strong{position:relative;font-size:43px;line-height:.85;letter-spacing:-.07em;text-align:center}.capability-art small{position:absolute;right:18px;top:18px;padding:8px;border-radius:50%;background:#fff;color:#dc4a23;font-size:7px;font-weight:950}.product-stage{background:radial-gradient(circle at 58% 33%,rgba(190,162,255,.65),transparent 31%),linear-gradient(145deg,#18111f,#35234c)}.product-stage>span{position:absolute;left:50%;top:42px;width:110px;height:145px;border-radius:20px 20px 31px 31px;background:linear-gradient(145deg,#faf8ff,#d8c8f8);transform:translateX(-50%) rotate(4deg);box-shadow:0 25px 40px rgba(0,0,0,.28)}.product-stage>span:before{content:'';position:absolute;left:50%;top:-13px;width:47px;height:26px;border-radius:8px;background:#a980f0;transform:translateX(-50%)}.product-stage i{position:absolute;left:20%;right:20%;bottom:55px;height:22px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(12px)}.product-stage b{position:absolute;left:18px;bottom:17px;color:#fff;font-size:11px;line-height:1.25}.trust-seal{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 50% 30%,rgba(174,132,255,.42),transparent 34%),linear-gradient(145deg,#21152f,#3a2456)}.trust-seal:before,.trust-seal:after{content:'';position:absolute;border:1px solid rgba(219,196,255,.2);border-radius:50%}.trust-seal:before{width:205px;height:205px}.trust-seal:after{width:158px;height:158px;border-style:dashed}.trust-seal>span,.trust-seal>strong,.trust-seal>small{position:relative;z-index:2}.trust-seal>span{width:42px;height:42px;display:grid;place-items:center;margin-bottom:12px;border-radius:50%;background:#fff;color:#7443da;font-size:19px;font-weight:900;box-shadow:0 10px 28px rgba(0,0,0,.22)}.trust-seal>strong{color:#fff;font-size:28px;line-height:.9;letter-spacing:-.05em}.trust-seal>small{margin-top:14px;color:#c9b4ee;font-size:7px;font-weight:850;letter-spacing:.12em}
+		.living-library{padding:110px 0;background:linear-gradient(180deg,#fff,#f8f5fb)}.split-heading{display:grid;grid-template-columns:1fr .75fr;gap:70px;align-items:end}.split-heading h2,.center-heading h2,.memory-copy h2,.faq-grid h2{margin:18px 0 0;font-size:clamp(35px,4.5vw,58px);line-height:1.03;letter-spacing:-.055em}.split-heading>p{margin:0;color:#6e6873;font-size:14px;line-height:1.75}.category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:55px}.category-grid article{padding:23px;border:1px solid #e8e2eb;border-radius:18px;background:#fff;box-shadow:0 14px 40px rgba(38,27,50,.04);transition:.22s}.category-grid article:hover{transform:translateY(-5px);box-shadow:0 24px 48px rgba(38,27,50,.09)}.category-grid header{display:flex;align-items:center;justify-content:space-between}.category-grid header span{color:#aaa2ae;font-size:7px;font-weight:800}.category-grid header i{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 12%,transparent)}.category-grid h3{margin:28px 0 8px;font-size:19px;letter-spacing:-.035em}.category-grid p{min-height:38px;margin:0 0 19px;color:#88818d;font-size:9px;line-height:1.55}.category-grid article>div{display:flex;flex-wrap:wrap;gap:6px}.category-grid article>div span{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:7px;background:color-mix(in srgb,var(--accent) 8%,#fff);color:#625a67;font-size:7px;font-weight:700}.category-grid article>div b{color:var(--accent)}.taxonomy-demo{display:grid;grid-template-columns:.72fr 1.28fr;gap:50px;align-items:center;margin-top:65px;padding:35px;border:1px solid #e3dce8;border-radius:24px;background:#17131c;color:#fff;box-shadow:0 28px 70px rgba(28,18,40,.15)}.taxonomy-copy h3{margin:13px 0 12px;font-size:30px;line-height:1.02;letter-spacing:-.045em}.taxonomy-copy p{margin:0;color:#9e96a3;font-size:10px;line-height:1.65}.taxonomy-path{display:flex;align-items:center;gap:10px}.taxonomy-path>div{flex:1;min-width:0;padding:15px;border:1px solid rgba(255,255,255,.09);border-radius:12px;background:rgba(255,255,255,.06)}.taxonomy-path small{display:block;color:#746b7b;font-size:5.5px;font-weight:850;letter-spacing:.11em}.taxonomy-path strong{display:block;margin-top:7px;font-size:9px}.taxonomy-path>i{color:#7759ba;font-style:normal}.taxonomy-path>span{width:31px;height:31px;display:grid;place-items:center;border-radius:50%;background:#6d35e8;font-size:10px}
+		.how{padding:110px 0;background:#0a090d;color:#fff}.center-heading{max-width:720px;margin:0 auto;text-align:center}.center-heading h2{margin-bottom:19px}.center-heading>p{max-width:580px;margin:0 auto;color:#8f8994;font-size:13px;line-height:1.7}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:55px}.steps article{position:relative;min-height:285px;padding:27px;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018))}.steps article>span{color:#635b68;font-size:8px;font-weight:850}.step-icon{width:54px;height:54px;display:grid;place-items:center;margin-top:41px;border:1px solid rgba(179,145,255,.18);border-radius:15px;background:rgba(139,92,246,.1);color:#c2a9fa;font-size:22px}.steps h3{margin:22px 0 10px;font-size:18px}.steps p{margin:0;color:#918a96;font-size:10px;line-height:1.62}
+		.memory-section{padding:110px 0;background:#fff}.memory-grid{display:grid;grid-template-columns:1fr .88fr;gap:80px;align-items:center}.memory-visual{position:relative;min-height:550px;border-radius:28px;background:radial-gradient(circle at 45% 60%,rgba(151,105,251,.22),transparent 36%),linear-gradient(145deg,#f8f5fb,#eee7f5);box-shadow:inset 0 0 0 1px #e5ddea}.memory-moki{position:absolute;left:50%;bottom:-25px;width:360px;height:360px;transform:translateX(-50%)}.memory-moki img{width:100%;height:100%;object-fit:contain}.memory-card{position:absolute;z-index:3;display:flex;align-items:center;gap:11px;padding:13px;border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.84);box-shadow:0 19px 45px rgba(47,31,62,.12);backdrop-filter:blur(15px)}.memory-card>span{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#eee6fc;color:#7540dd;font-size:15px}.memory-card>div{display:flex;flex-direction:column}.memory-card small{color:#9a8fa3;font-size:5.5px;font-weight:850;letter-spacing:.11em}.memory-card strong{margin-top:4px;font-size:9px}.memory-card p{margin:3px 0 0;color:#8d8492;font-size:6.5px}.favorite-card{left:25px;top:55px}.recent-card{right:22px;top:175px}.brand-card{left:40px;bottom:55px}.memory-copy>p{margin:24px 0 27px;color:#6e6873;font-size:14px;line-height:1.72}.memory-copy ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:17px}.memory-copy li{display:flex;align-items:flex-start;gap:12px}.memory-copy li>b{width:27px;height:27px;display:grid;place-items:center;border-radius:8px;background:#efe9f9;color:#6d35e8;font-size:9px}.memory-copy li>span{display:flex;flex-direction:column;gap:4px}.memory-copy li strong{font-size:11px}.memory-copy li small{color:#89828d;font-size:8px;line-height:1.5}
+		.business-section{padding:105px 0;overflow:hidden;background:#0b090e;color:#fff}.business-heading{display:grid;grid-template-columns:1fr .62fr;column-gap:90px;align-items:end}.business-heading .section-kicker{grid-column:1/-1}.business-heading h2{margin:20px 0 0;font-size:clamp(39px,4.8vw,61px);line-height:1;letter-spacing:-.06em}.business-heading h2 em{color:#b899fa;font-style:normal}.business-heading p{margin:0;color:#8d8692;font-size:12px;line-height:1.7}.business-marquee{margin-top:62px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}.business-track{width:max-content;display:flex;gap:12px;animation:businessScroll 30s linear infinite;will-change:transform}.business-set{display:flex;flex:0 0 auto;gap:12px}.business-marquee span{height:64px;padding:0 23px 0 10px;display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.105);border-radius:34px;background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.025));color:#d3cdd7;box-shadow:inset 0 1px rgba(255,255,255,.035);font-size:10px}.business-marquee span>i{width:43px;height:43px;display:grid;place-items:center;flex:0 0 auto;border:1px solid color-mix(in srgb,var(--business-accent) 30%,transparent);border-radius:50%;background:color-mix(in srgb,var(--business-accent) 12%,#17131c);color:var(--business-accent);box-shadow:0 0 24px color-mix(in srgb,var(--business-accent) 11%,transparent)}.business-marquee svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.business-marquee b{font-weight:750;white-space:nowrap}
+		.plans-section{padding:110px 0;background:radial-gradient(circle at 50% 35%,rgba(109,53,232,.11),transparent 28%),#f7f5f9}.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:55px;align-items:stretch}.plans-grid article{position:relative;display:flex;flex-direction:column;padding:29px;border:1px solid #e3dee7;border-radius:21px;background:#fff;box-shadow:0 18px 45px rgba(37,27,48,.05)}.plans-grid article.featured{border-color:#8e63e8;background:linear-gradient(155deg,#211827,#100e13);color:#fff;box-shadow:0 30px 70px rgba(67,32,124,.22);transform:translateY(-9px)}.popular{position:absolute;right:18px;top:17px;padding:6px 8px;border-radius:20px;background:#7c48e9;font-size:5.5px;font-weight:900;letter-spacing:.1em}.plans-grid article>small{color:#7c50d4;font-size:7px;font-weight:900;letter-spacing:.13em}.plans-grid h3{display:flex;align-items:baseline;gap:5px;margin:22px 0 10px;font-size:49px;line-height:1;letter-spacing:-.06em}.plans-grid h3 b{font-size:9px;letter-spacing:0}.plans-grid h3 em{color:#9c95a0;font-size:9px;font-style:normal;letter-spacing:0}.plans-grid article>p{min-height:37px;margin:0 0 20px;color:#8d8691;font-size:9px;line-height:1.55}.plans-grid article>strong{padding:13px;border-radius:10px;background:#f1ebfb;color:#5f31be;font-size:10px;text-align:center}.plans-grid .featured>strong{background:rgba(139,92,246,.18);color:#d3bfff}.plans-grid ul{flex:1;list-style:none;padding:0;margin:23px 0;display:flex;flex-direction:column;gap:12px}.plans-grid li{color:#6f6973;font-size:8px}.plans-grid .featured li{color:#beb6c3}.plans-grid article>a{height:45px;display:flex;align-items:center;justify-content:center;gap:9px;border-radius:10px;background:#211c24;color:#fff;text-decoration:none;font-size:9px;font-weight:800}.plans-grid .featured>a{background:#fff;color:#211c24}.plan-note{text-align:center;margin:29px 0 0;color:#8e8792;font-size:9px}
+		.faq-section{padding:110px 0;background:#0b090e;color:#fff}.faq-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:90px;align-items:start}.faq-grid>div:first-child{position:sticky;top:110px}.faq-grid>div:first-child p{color:#918a95;font-size:11px;line-height:1.6}.faq-grid details{border-bottom:1px solid rgba(255,255,255,.1)}.faq-grid summary{min-height:73px;display:flex;align-items:center;justify-content:space-between;gap:20px;cursor:pointer;list-style:none}.faq-grid summary span{font-size:13px;font-weight:700}.faq-grid summary b{width:29px;height:29px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.14);border-radius:50%;color:#b99eec;font-size:14px;transition:.2s}.faq-grid details[open] summary b{background:#fff;color:#211d24;transform:rotate(45deg)}.faq-grid details>p{margin:-5px 50px 23px 0;color:#928b97;font-size:10px;line-height:1.65}.faq-grid summary::-webkit-details-marker{display:none}
+		.final-section{position:relative;padding:76px 0 90px;background:linear-gradient(180deg,#f7f5f9 0,#fff 38%)}.final-section:before{content:'';position:absolute;left:50%;top:31px;width:54px;height:1px;background:#ded7e4;transform:translateX(-50%)}.final-card{position:relative;min-height:520px;display:grid;place-items:center;overflow:hidden;border-radius:32px;background:radial-gradient(circle at 20% 30%,rgba(118,61,234,.27),transparent 31%),#09080c;color:#fff;text-align:center;box-shadow:0 35px 90px rgba(29,20,39,.18)}.final-card>div:last-child{position:relative;z-index:3;max-width:650px;padding:60px 20px}.final-card h2{margin:18px 0;font-size:clamp(38px,5vw,62px);line-height:1;letter-spacing:-.06em}.final-card p{max-width:510px;margin:0 auto 27px;color:#9b949f;font-size:13px;line-height:1.65}.final-card a{margin:auto}.final-card>div:last-child>small{display:block;margin-top:16px;color:#69626c;font-size:7.5px}.final-moki{position:absolute;z-index:1;right:-110px;bottom:-130px;width:430px;height:430px;opacity:.48}.final-moki img{width:100%;height:100%;object-fit:contain}
+		@keyframes mokiFloat{0%,100%{translate:0 0;rotate:-.5deg}50%{translate:0 -9px;rotate:.7deg}}@keyframes mokiBlink{0%,42%,44%,47%,49%,100%{opacity:0}43%,48%{opacity:1}}@keyframes cardFloat{0%,100%{translate:0 0}50%{translate:0 -7px}}@keyframes businessScroll{to{transform:translate3d(calc(-50% - 6px),0,0)}}
+		@media(max-width:900px){.hero{min-height:auto;padding-bottom:72px}.hero-inner{grid-template-columns:1fr;text-align:center}.hero-copy>p{margin-inline:auto}.hero-actions,.hero-proof{justify-content:center}.hero-conversion-visual{height:520px;max-width:680px;width:100%;margin:42px auto 0}.hero-bottom{display:none}.capabilities-grid{grid-template-columns:1fr;max-width:620px;margin-inline:auto;margin-top:50px}.capability-card{min-height:auto}.split-heading,.memory-grid,.faq-grid,.business-heading{grid-template-columns:1fr;gap:38px}.business-heading p{margin-top:22px}.category-grid{grid-template-columns:repeat(2,1fr)}.taxonomy-demo{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.steps article{min-height:auto}.memory-visual{order:2}.plans-grid{grid-template-columns:1fr;max-width:520px;margin-inline:auto}.plans-grid article.featured{transform:none}.faq-grid>div:first-child{position:static}.final-moki{opacity:.3}}
+		@media(max-width:600px){.nav-inner{height:66px;padding:0 15px}.brand small{display:none}.nav-cta{height:39px;padding:0 15px}.hero{padding-top:105px}.hero-inner{width:min(100% - 28px,1120px)}.hero-copy h1{font-size:43px}.hero-copy>p{font-size:14px}.hero-actions{flex-direction:column;gap:13px}.hero-actions>a{width:100%;box-sizing:border-box;justify-content:center}.hero-proof{gap:11px}.hero-proof strong{font-size:10px}.hero-conversion-visual{height:340px;margin-top:34px;border-radius:22px}.section-inner{width:calc(100% - 28px)}.capabilities-section,.living-library,.how,.memory-section,.business-section,.plans-section,.faq-section{padding:78px 0}.capabilities-grid{margin-top:38px}.capability-card{padding:17px;border-radius:18px}.capability-art,.product-stage,.trust-seal{height:245px}.split-heading h2,.center-heading h2,.memory-copy h2,.faq-grid h2,.business-heading h2{font-size:37px}.category-grid{grid-template-columns:1fr}.taxonomy-demo{padding:23px}.taxonomy-path{align-items:stretch;flex-direction:column}.taxonomy-path>i{transform:rotate(90deg);align-self:center}.taxonomy-path>span{align-self:center}.memory-visual{min-height:470px}.memory-moki{width:300px;height:300px}.favorite-card{left:10px;top:35px}.recent-card{right:10px;top:145px}.brand-card{left:18px;bottom:35px}.business-marquee{margin-top:42px}.plans-grid article{padding:24px}.faq-grid{gap:20px}.final-section{padding:78px 12px 65px}.final-card{min-height:540px;border-radius:24px}.final-card h2{font-size:41px}.final-moki{right:-150px}}
+		@media(prefers-reduced-motion:reduce){:global(html){scroll-behavior:auto}.moki-open,.moki-blink,.float-card,.business-marquee>div{animation:none}.moki-blink{display:none}}
+	</style>
 </Layout>

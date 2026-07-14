@@ -1,4 +1,4 @@
-// Catálogo de los 50 creativos estáticos.
+// Catálogo inicial usado como respaldo cuando la biblioteca dinámica no está conectada.
 // N = nivel de consciencia al que le habla (N1 inconsciente → N5 decisión).
 // ring = anillo del framework (Prueba social, Oferta, Comparación, Educativo, Demo, Autoridad).
 
@@ -9,10 +9,17 @@ export type Creativo = {
 	n: string;
 	sirve: string;   // para qué sirve
 	cuando: string;  // cuándo usarlo
+	slug?: string;
+	categoryGroup?: string;
+	categoryBranch?: string;
+	categoryLeaf?: string;
+	keywords?: string[];
+	featured?: boolean;
+	sortOrder?: number;
 };
 
 export const rings = [
-	{ id: 'todos',     label: 'Los 50',        icon: 'grid_view' },
+	{ id: 'todos',     label: 'Explorar todo', icon: 'grid_view' },
 	{ id: 'social',    label: 'Prueba social', icon: 'reviews' },
 	{ id: 'oferta',    label: 'Oferta',        icon: 'sell' },
 	{ id: 'vs',        label: 'Comparación',   icon: 'compare_arrows' },
@@ -25,7 +32,7 @@ export const creativos: Creativo[] = [
 	// ---------- PRUEBA SOCIAL (12) ----------
 	{ id: 1,  ring: 'social', n: 'N3', nombre: 'Tweet',
 	  sirve: 'Un tweet elogiando tu producto, con avatar, likes y retweets. El cerebro lo lee como opinión de un tercero, no como publicidad — por eso baja la guardia antes de que te des cuenta de que es un anuncio.',
-	  cuando: 'Es el creativo con mejor CTR en frío del pack. Si vas a probar uno solo, probá este.' },
+	  cuando: 'Es una estructura fuerte para audiencias frías. Si vas a probar una sola, empezá por esta.' },
 
 	{ id: 2,  ring: 'social', n: 'N4', nombre: 'Reseña 5 estrellas',
 	  sirve: 'Una reseña real ampliada a pantalla completa: estrellas, nombre, verificado y la frase que más pega. Convierte una review escondida en tu web en el argumento central del anuncio.',
@@ -69,7 +76,7 @@ export const creativos: Creativo[] = [
 
 	{ id: 12, ring: 'social', n: 'N3', nombre: 'UGC con producto en mano',
 	  sirve: 'Foto tipo celular, mala luz a propósito, producto en mano + frase escrita encima. Se ve como contenido, no como anuncio, y eso es exactamente el punto.',
-	  cuando: 'Feed y Stories en frío. Es el que menos "cara de ad" tiene de los 50.' },
+	  cuando: 'Feed y Stories en frío. Se integra al contenido sin parecer un anuncio tradicional.' },
 
 	// ---------- OFERTA (10) ----------
 	{ id: 13, ring: 'oferta', n: 'N5', nombre: 'Precio tachado',
@@ -201,7 +208,7 @@ export const creativos: Creativo[] = [
 
 	{ id: 44, ring: 'demo', n: 'N3', nombre: 'Escala real',
 	  sirve: 'Tu producto al lado de un objeto conocido: una mano, una moneda, un teléfono. Elimina la duda de tamaño, que es una objeción silenciosa que mata muchas ventas.',
-	  cuando: 'Cualquier producto físico chico. Es de los más subestimados del pack.' },
+	  cuando: 'Cualquier producto físico chico. Es una estructura simple y muy subestimada.' },
 
 	{ id: 45, ring: 'demo', n: 'N4', nombre: 'Paso a paso 1-2-3',
 	  sirve: 'Tres cuadros mostrando lo simple que es usarlo. Mata la objeción de "esto va a ser complicado" antes de que aparezca.',

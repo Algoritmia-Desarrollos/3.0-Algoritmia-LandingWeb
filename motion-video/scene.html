@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1080px; overflow: hidden; background: #000; }
+  #stage {
+    position: relative; width: 1080px; height: 1080px; overflow: hidden;
+    font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #fff; -webkit-font-smoothing: antialiased;
+  }
+  .layer { position: absolute; inset: 0; will-change: opacity, transform; }
+  .abs { position: absolute; will-change: opacity, transform; }
+
+  /* backgrounds */
+  #bgDark { background: radial-gradient(circle at 50% 22%, #17131c 0%, #0b090e 60%); }
+  #bgPurple {
+    background:
+      radial-gradient(circle at 78% 22%, rgba(170,129,255,.35), transparent 42%),
+      linear-gradient(160deg, #7e4ee9 0%, #5926c3 60%, #3f1a95 100%);
+  }
+  #grid {
+    inset: 0; opacity: .5;
+    background-image:
+      linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 54px 54px;
+    -webkit-mask-image: radial-gradient(circle at 50% 45%, #000 30%, transparent 75%);
+  }
+  #glow {
+    width: 900px; height: 900px; left: 90px; top: -240px; border-radius: 50%;
+    background: #c9aaff; filter: blur(160px); opacity: .28;
+  }
+
+  .kicker {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 17px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase;
+    color: #c8b3f6;
+  }
+  .kicker i { width: 9px; height: 9px; border-radius: 50%; background: #a980f3; box-shadow: 0 0 0 7px rgba(169,128,243,.14); }
+
+  .h1 { font-weight: 800; letter-spacing: -.05em; line-height: .98; }
+  .em { color: #b998fb; }
+
+  /* brand lockup */
+  .brandChip { width: 96px; height: 96px; border-radius: 26px; background: linear-gradient(145deg,#231d2b,#120f16);
+    display: grid; place-items: center; box-shadow: 0 24px 60px rgba(0,0,0,.5), inset 0 1px rgba(255,255,255,.14); }
+  .brandChip img { width: 58px; height: 58px; filter: invert(1); }
+
+  .stepBadge { font-size: 130px; font-weight: 900; letter-spacing: -.06em;
+    background: linear-gradient(180deg,#fff, #b79bf0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .card { position: absolute; border-radius: 24px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 12px; padding: 18px 26px; border-radius: 16px;
+    font-size: 26px; font-weight: 700; border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05); color: #e9e4f0;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  .searchBar {
+    display: flex; align-items: center; gap: 18px; width: 720px; height: 92px; padding: 0 30px;
+    border-radius: 20px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06);
+    font-size: 30px; color: #efeaf6; box-shadow: 0 24px 70px rgba(0,0,0,.4);
+  }
+  .searchBar .mag { width: 30px; height: 30px; border: 3px solid #a980f3; border-radius: 50%; position: relative; }
+  .searchBar .mag::after { content:''; position:absolute; right:-11px; bottom:-6px; width:16px; height:3px; background:#a980f3; transform: rotate(45deg); border-radius: 2px; }
+  .caret { display:inline-block; width:3px; height:34px; background:#a980f3; margin-left:2px; vertical-align: middle; }
+
+  .adCard {
+    width: 470px; height: 470px; border-radius: 34px; overflow: hidden;
+    box-shadow: 0 40px 90px rgba(0,0,0,.55);
+    display: grid; place-items: center; position: relative;
+    background: radial-gradient(circle at 50% 38%, #fd9c76, #e9552b 72%);
+  }
+  .adCard .ring { position: absolute; width: 320px; height: 320px; border: 2px solid rgba(255,255,255,.28); border-radius: 50%; box-shadow: 0 0 0 60px rgba(255,255,255,.06); }
+  .adCard strong { position: relative; font-size: 78px; font-weight: 900; line-height: .84; letter-spacing: -.06em; text-align: center; text-shadow: 0 6px 24px rgba(0,0,0,.25); }
+  .adCard .badge { position: absolute; right: 30px; top: 30px; width: 74px; height: 74px; border-radius: 50%; background: #fff; color: #dc4a23; font-size: 17px; font-weight: 900; display: grid; place-items: center; text-align: center; line-height: 1; }
+  .adCard .fmt { position: absolute; left: 26px; bottom: 26px; padding: 10px 16px; border-radius: 12px; background: rgba(0,0,0,.35); font-size: 22px; font-weight: 800; backdrop-filter: blur(6px); }
+
+  .prodCard {
+    width: 300px; height: 380px; border-radius: 28px; position: relative; overflow: hidden;
+    background: radial-gradient(circle at 55% 30%, rgba(190,162,255,.7), transparent 40%), linear-gradient(150deg,#241833,#3a2657);
+    border: 1px solid rgba(255,255,255,.12); box-shadow: 0 34px 80px rgba(0,0,0,.5);
+  }
+  .prodCard .bottle { position: absolute; left: 50%; top: 70px; width: 130px; height: 190px; border-radius: 26px 26px 40px 40px;
+    background: linear-gradient(150deg,#faf8ff,#d6c4f7); transform: translateX(-50%) rotate(4deg); box-shadow: 0 30px 46px rgba(0,0,0,.3); }
+  .prodCard .bottle::before { content:''; position:absolute; left:50%; top:-16px; width:56px; height:30px; border-radius:9px; background:#a980f0; transform: translateX(-50%); }
+  .prodCard .cap { position: absolute; left: 18px; bottom: 18px; font-size: 22px; font-weight: 700; }
+  .selRing { position: absolute; inset: -6px; border-radius: 32px; border: 4px solid #3fc68c; box-shadow: 0 0 40px rgba(63,198,140,.4); }
+  .selCheck { position: absolute; right: -18px; top: -18px; width: 62px; height: 62px; border-radius: 50%; background: #3fc68c; color:#062b1c; display: grid; place-items: center; font-size: 32px; font-weight: 900; box-shadow: 0 12px 30px rgba(63,198,140,.5); }
+
+  .infoCard {
+    display: flex; align-items: center; gap: 18px; padding: 20px 24px; border-radius: 18px;
+    background: rgba(255,255,255,.9); color: #241f2b; box-shadow: 0 24px 60px rgba(20,10,35,.28);
+    border: 1px solid rgba(255,255,255,.9);
+  }
+  .infoCard .ic { width: 52px; height: 52px; border-radius: 14px; background: #efe7fb; color: #7540dd; display: grid; place-items: center; font-size: 26px; font-weight: 900; }
+  .infoCard small { display: block; color: #9a8fa3; font-size: 15px; font-weight: 800; letter-spacing: .12em; }
+  .infoCard b { display: block; font-size: 24px; margin-top: 3px; }
+  .infoCard p { font-size: 16px; color: #8d8492; margin-top: 2px; }
+
+  .ctaBtn {
+    display: inline-flex; align-items: center; gap: 18px; height: 108px; padding: 0 52px; border-radius: 26px;
+    background: #fff; color: #4a1fb0; font-size: 40px; font-weight: 900; letter-spacing: -.02em;
+    box-shadow: 0 30px 70px rgba(0,0,0,.3);
+  }
+  .ctaBtn .arrow { width: 40px; height: 40px; stroke: currentColor; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  .tick { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 700; color: #eae4f2; }
+  .tick .ck { width: 46px; height: 46px; border-radius: 50%; background: #3fc68c; color:#062b1c; display:grid; place-items:center; font-size: 24px; font-weight: 900; }
+
+  .moki { position: absolute; will-change: transform, opacity; }
+  .moki img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 30px 50px rgba(0,0,0,.35)); }
+
+  .shimmer { position:absolute; inset:0; border-radius: inherit; overflow:hidden; }
+  .shimmer::after { content:''; position:absolute; top:0; bottom:0; width:40%; left:-40%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+/* ============ engine ============ */
+const stage = document.getElementById('stage');
+const DUR = 24;                 // seconds
+const clamp = (x,a,b)=>Math.max(a,Math.min(b,x));
+const lerp = (a,b,t)=>a+(b-a)*t;
+const easeOut = t => 1-Math.pow(1-t,3);
+const easeInOut = t => t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+const easeOutBack = t => { const c1=1.70158,c3=c1+1; return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2); };
+// progress 0..1 across [a,b]
+const prog = (t,a,b)=>clamp((t-a)/(b-a),0,1);
+// opacity envelope: fade in over fi from a, hold, fade out over fo before b
+function env(t,a,b,fi=.4,fo=.4){
+  if(t<a||t>b) return 0;
+  const i = clamp((t-a)/fi,0,1);
+  const o = clamp((b-t)/fo,0,1);
+  return Math.min(i,o);
+}
+function el(cls, parent){ const d=document.createElement('div'); if(cls) d.className=cls; (parent||stage).appendChild(d); return d; }
+function set(node, o){ for(const k in o){ if(k==='text') node.textContent=o.text; else if(k==='html') node.innerHTML=o.html; else node.style[k]=o[k]; } }
+
+const A = 'assets/';
+
+/* ============ persistent elements ============ */
+const bgDark   = el('layer'); bgDark.id='bgDark';
+const grid     = el('layer'); grid.id='grid';
+const bgPurple = el('layer'); bgPurple.id='bgPurple';
+const glow     = el('abs');   glow.id='glow';
+
+/* ---- INTRO (scene 0) ---- */
+const introWrap = el('layer');
+const chip = el('brandChip abs', introWrap); chip.innerHTML = `<img src="${A}logoAlgoritmia.webp" alt="">`;
+set(chip,{left:'492px', top:'350px'});
+const brandName = el('abs', introWrap); set(brandName,{left:'0', top:'475px', width:'1080px', textAlign:'center', fontSize:'62px', fontWeight:900, letterSpacing:'-.03em'}); brandName.textContent='Algoritmia';
+const brandSub = el('abs', introWrap); set(brandSub,{left:'0', top:'552px', width:'1080px', textAlign:'center', fontSize:'22px', fontWeight:800, letterSpacing:'.42em', color:'#d8c7fb'}); brandSub.textContent='CREATIVE STUDIO';
+const introTag = el('abs', introWrap); set(introTag,{left:'90px', top:'640px', width:'900px', textAlign:'center', fontSize:'40px', fontWeight:800, letterSpacing:'-.03em', lineHeight:'1.15'});
+introTag.innerHTML = 'De una idea a un anuncio.<br><span class="em" style="color:#f0e7ff">En minutos.</span>';
+
+/* ---- HEADER (steps) ---- */
+const stepHead = el('abs'); set(stepHead,{left:'90px', top:'96px', width:'900px'});
+const stepKick = el('kicker', stepHead); stepKick.innerHTML='<i></i><span id="kickT"></span>';
+const kickT = stepKick.querySelector('#kickT');
+const stepTitle = el('abs'); set(stepTitle,{left:'90px', top:'150px', width:'900px', fontSize:'66px', fontWeight:800, letterSpacing:'-.05em', lineHeight:'1'});
+const stepBadge = el('stepBadge abs'); set(stepBadge,{right:'90px', top:'70px'});
+
+/* ---- STEP 1: search + taxonomy ---- */
+const s1 = el('layer');
+const search = el('searchBar abs', s1); set(search,{left:'180px', top:'340px'});
+search.innerHTML = '<span class="mag"></span><span id="q"></span><span class="caret"></span>';
+const qEl = search.querySelector('#q');
+const cats = [
+  {t:'Vender más', c:'#ff7a59', n:'01'},
+  {t:'Promociones', c:'#9b7cf3', n:'02'},
+  {t:'Envío gratis', c:'#3fc68c', n:'03'},
+];
+const catChips = cats.map((c,i)=>{
+  const ch = el('chip abs', s1);
+  ch.innerHTML = `<span class="dot" style="background:${c.c}"></span>${c.t}`;
+  set(ch,{left:(180+i*0)+'px'});
+  return ch;
+});
+const pathLine = el('abs', s1); // the "path" summary
+set(pathLine,{left:'180px', top:'720px', fontSize:'26px', fontWeight:800, color:'#cdbff0'});
+
+/* ---- STEP 2: brand synced + product ---- */
+const s2 = el('layer');
+const brandCard = el('infoCard abs', s2); set(brandCard,{left:'150px', top:'380px', width:'440px'});
+brandCard.innerHTML = '<div class="ic">✓</div><div><small>TU MARCA</small><b>Productos sincronizados</b><p>Web · Instagram · Logo</p></div>';
+const prod = el('prodCard abs', s2); set(prod,{left:'650px', top:'350px'});
+prod.innerHTML = '<div class="bottle"></div><div class="cap">Tu producto</div>';
+const selRing = el('selRing', prod);
+const selCheck = el('selCheck', prod); selCheck.textContent='✓';
+
+/* ---- STEP 3: generate -> ad ---- */
+const s3 = el('layer');
+const genLoader = el('abs', s3); set(genLoader,{left:'305px', top:'340px', width:'470px', height:'470px', borderRadius:'34px', border:'1px solid rgba(255,255,255,.12)', background:'rgba(255,255,255,.04)', overflow:'hidden'});
+genLoader.innerHTML = '<div class="shimmer"><div class="sh"></div></div>';
+const genLabel = el('abs', s3); set(genLabel,{left:'0', top:'560px', width:'1080px', textAlign:'center', fontSize:'26px', fontWeight:700, color:'#b9b0c6'}); genLabel.textContent='Generando con tu marca…';
+const shBar = el('abs', genLoader); set(shBar,{top:'0', bottom:'0', width:'45%', left:'-45%', background:'linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)'});
+
+const ad = el('adCard abs', s3); set(ad,{left:'305px', top:'340px'});
+ad.innerHTML = '<div class="ring"></div><strong>ENVÍO<br>GRATIS</strong><div class="badge">HOY</div><div class="fmt">4:5</div>';
+
+const ticks = ['Sin diseñar','Sin escribir prompts','Sin empezar de cero'].map((tx,i)=>{
+  const tk = el('tick abs', s3);
+  tk.innerHTML = `<span class="ck">✓</span>${tx}`;
+  set(tk,{left:'330px', top:(850+i*0)+'px'});
+  return tk;
+});
+
+/* ---- CTA (scene 4) ---- */
+const s4 = el('layer');
+const ctaKick = el('kicker abs', s4); set(ctaKick,{left:'0', top:'300px', width:'1080px', justifyContent:'center', color:'#efe6ff'});
+ctaKick.innerHTML = '<i style="background:#fff;box-shadow:0 0 0 7px rgba(255,255,255,.25)"></i>TU PRÓXIMA IMAGEN PUEDE VENDER MÁS';
+const ctaTitle = el('abs', s4); set(ctaTitle,{left:'60px', top:'350px', width:'960px', textAlign:'center', fontSize:'78px', fontWeight:900, letterSpacing:'-.05em', lineHeight:'.98'});
+ctaTitle.innerHTML = 'Dejá de imaginarla.<br>Generala en minutos.';
+const ctaBtn = el('ctaBtn abs', s4); set(ctaBtn,{left:'50%', top:'560px', transform:'translateX(-50%)'});
+ctaBtn.innerHTML = 'Crear 3 imágenes gratis <svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const ctaSub = el('abs', s4); set(ctaSub,{left:'0', top:'700px', width:'1080px', textAlign:'center', fontSize:'24px', fontWeight:600, color:'#e7dcff'});
+ctaSub.textContent = 'Google o email · Sin tarjeta · Tus datos quedan guardados';
+const ctaBrand = el('abs', s4); set(ctaBrand,{left:'0', top:'980px', width:'1080px', textAlign:'center', fontSize:'20px', fontWeight:800, letterSpacing:'.4em', color:'rgba(255,255,255,.7)'});
+ctaBrand.textContent = 'ALGORITMIA · CREATIVE STUDIO';
+
+/* ---- MOKI (shared) ---- */
+const moki = el('moki'); moki.innerHTML = `<img id="mkImg" src="${A}moki-mascot.webp" alt="">`;
+const mkImg = moki.querySelector('#mkImg');
+
+/* ============ timeline ============ */
+// scene windows
+const S0=[0,3.2], S1=[3.2,8.6], S2=[8.6,13.6], S3=[13.6,19.4], S4=[19.4,24];
+
+function render(t){
+  // ---- backgrounds ----
+  const purpleOn = env(t,0,S0[1]+.3,.01,.5) + env(t,S4[0]-.3,DUR,.5,.01);
+  bgPurple.style.opacity = clamp(purpleOn,0,1);
+  bgDark.style.opacity = 1;
+  glow.style.opacity = 0.28*clamp(purpleOn,0,1);
+  grid.style.opacity = 0.5*(1-clamp(purpleOn,0,1));
+
+  // ---- header (steps 1-3) ----
+  const headOn = env(t,S1[0],S3[1],.4,.4);
+  stepHead.style.opacity = headOn; stepTitle.style.opacity = headOn;
+  stepBadge.style.opacity = headOn;
+  // step meta
+  let meta = null;
+  if(t>=S1[0]&&t<S2[0]) meta={k:'PASO 01 · ENCONTRÁ UNA IDEA', ti:'Buscás.<br>Sin pensar en diseño.', n:'01'};
+  else if(t>=S2[0]&&t<S3[0]) meta={k:'PASO 02 · ELEGÍ TU PRODUCTO', ti:'Tu marca ya<br>está cargada.', n:'02'};
+  else if(t>=S3[0]) meta={k:'PASO 03 · GENERÁ', ti:'Listo para<br>publicar.', n:'03'};
+  if(meta){ kickT.textContent=meta.k; stepTitle.innerHTML=meta.ti; stepBadge.textContent=meta.n; }
+  // subtle slide-in per step
+  const segStart = t<S2[0]?S1[0] : t<S3[0]?S2[0] : S3[0];
+  const slide = (1-easeOut(prog(t,segStart,segStart+.6)))*30;
+  stepHead.style.transform = `translateY(${slide}px)`;
+  stepTitle.style.transform = `translateY(${slide}px)`;
+
+  /* ---------- SCENE 0: intro ---------- */
+  introWrap.style.opacity = env(t,0,S0[1],.5,.5);
+  { const p=easeOutBack(prog(t,.15,1.0));
+    set(chip,{transform:`scale(${lerp(.4,1,clamp(p,0,1))}) rotate(${lerp(-12,0,clamp(p,0,1))}deg)`, opacity:clamp(prog(t,.1,.7),0,1)});
+    brandName.style.opacity = clamp(prog(t,.7,1.2),0,1);
+    brandName.style.transform = `translateY(${lerp(18,0,easeOut(prog(t,.7,1.3)))}px)`;
+    brandSub.style.opacity = clamp(prog(t,1.0,1.5),0,1);
+    introTag.style.opacity = clamp(prog(t,1.5,2.2),0,1);
+    introTag.style.transform = `translateY(${lerp(20,0,easeOut(prog(t,1.5,2.3)))}px)`;
+  }
+
+  /* ---------- SCENE 1: search + taxonomy ---------- */
+  s1.style.opacity = env(t,S1[0],S1[1],.4,.45);
+  {
+    const l0=S1[0];
+    // typing "envío gratis"
+    const word='envío gratis';
+    const typed = Math.round(lerp(0,word.length, clamp(prog(t,l0+.5,l0+2.0),0,1)));
+    qEl.textContent = word.slice(0,typed);
+    search.style.opacity = clamp(prog(t,l0+.2,l0+.7),0,1);
+    search.style.transform = `translateY(${lerp(24,0,easeOut(prog(t,l0+.2,l0+.9)))}px)`;
+    // caret blink
+    search.querySelector('.caret').style.opacity = (Math.floor(t*2)%2===0)?1:.15;
+    // category chips cascade
+    catChips.forEach((ch,i)=>{
+      const a = l0+2.2+i*0.55;
+      const p = clamp(prog(t,a,a+.5),0,1);
+      ch.style.opacity = p;
+      ch.style.transform = `translateY(${lerp(26,0,easeOutBack(p))}px)`;
+      // layout chips horizontally centered-ish, stacked with arrows via left offset
+      const xs=[180, 470, 720];
+      set(ch,{left:xs[i]+'px', top:'470px'});
+      // highlight border when active
+      const active = t> a+.2;
+      ch.style.borderColor = active? cats[i].c : 'rgba(255,255,255,.12)';
+      ch.style.background = active? `color-mix(in srgb, ${cats[i].c} 16%, rgba(255,255,255,.05))` : 'rgba(255,255,255,.05)';
+    });
+    // path summary
+    const pp = clamp(prog(t,l0+4.2,l0+4.8),0,1);
+    pathLine.style.opacity = pp;
+    pathLine.innerHTML = 'Vender más <span style="color:#7c67c9">›</span> Promociones <span style="color:#7c67c9">›</span> <span style="color:#3fc68c">Envío gratis ✓</span>';
+  }
+
+  /* ---------- SCENE 2: brand + product ---------- */
+  s2.style.opacity = env(t,S2[0],S2[1],.4,.45);
+  {
+    const l0=S2[0];
+    brandCard.style.opacity = clamp(prog(t,l0+.3,l0+.9),0,1);
+    brandCard.style.transform = `translateX(${lerp(-40,0,easeOut(prog(t,l0+.3,l0+1.1)))}px)`;
+    const pp = clamp(prog(t,l0+1.1,l0+1.7),0,1);
+    prod.style.opacity = pp;
+    prod.style.transform = `translateX(${lerp(50,0,easeOut(prog(t,l0+1.1,l0+1.9)))}px)`;
+    // selection appears
+    const sel = clamp(prog(t,l0+2.4,l0+2.9),0,1);
+    selRing.style.opacity = sel;
+    selCheck.style.opacity = sel;
+    selCheck.style.transform = `scale(${easeOutBack(sel)})`;
+  }
+
+  /* ---------- SCENE 3: generate -> ad ---------- */
+  s3.style.opacity = env(t,S3[0],S3[1],.4,.5);
+  {
+    const l0=S3[0];
+    // loader visible first ~1.6s then ad
+    const genP = prog(t,l0+.2,l0+1.9);
+    genLoader.style.opacity = clamp(1-prog(t,l0+1.6,l0+2.0),0,1)*clamp(prog(t,l0+.1,l0+.4),0,1);
+    // shimmer sweep
+    const sweep = (t*1.2)%1;
+    shBar.style.left = lerp(-45,100,sweep)+'%';
+    genLabel.style.opacity = clamp(prog(t,l0+.2,l0+.5),0,1)*clamp(1-prog(t,l0+1.6,l0+2.0),0,1);
+    // ad reveal
+    const ap = clamp(prog(t,l0+1.7,l0+2.4),0,1);
+    ad.style.opacity = ap;
+    ad.style.transform = `scale(${lerp(.82,1,easeOutBack(ap))})`;
+    // ticks appear
+    ticks.forEach((tk,i)=>{
+      const a=l0+2.7+i*0.5;
+      const p=clamp(prog(t,a,a+.45),0,1);
+      tk.style.opacity=p;
+      tk.style.left = lerp(300,330,easeOut(p))+'px';
+      tk.style.top = (850+i*72)+'px';
+    });
+  }
+
+  /* ---------- SCENE 4: CTA ---------- */
+  s4.style.opacity = env(t,S4[0],DUR,.5,.01);
+  {
+    const l0=S4[0];
+    ctaKick.style.opacity = clamp(prog(t,l0+.2,l0+.7),0,1);
+    ctaTitle.style.opacity = clamp(prog(t,l0+.4,l0+1.0),0,1);
+    ctaTitle.style.transform = `translateY(${lerp(24,0,easeOut(prog(t,l0+.4,l0+1.1)))}px)`;
+    const bp = clamp(prog(t,l0+1.0,l0+1.5),0,1);
+    ctaBtn.style.opacity = bp;
+    ctaBtn.style.transform = `translateX(-50%) scale(${lerp(.9,1,easeOutBack(bp))})`;
+    // gentle pulse
+    const pulse = 1+0.02*Math.sin((t-l0)*3.2);
+    if(t>l0+1.5) ctaBtn.style.transform = `translateX(-50%) scale(${pulse})`;
+    ctaSub.style.opacity = clamp(prog(t,l0+1.4,l0+1.9),0,1);
+    ctaBrand.style.opacity = clamp(prog(t,l0+1.8,l0+2.4),0,1)*0.9;
+  }
+
+  /* ---------- MOKI: floats around, blinks ---------- */
+  // choose moki position/size per scene
+  let mk = {x:820, y:720, s:230, o:0, rot:0};
+  if(t>=S0[0]&&t<S0[1]) mk={x:820, y:150, s:180, o:env(t,.4,S0[1],.5,.4)*.9, rot:6};
+  else if(t>=S1[0]&&t<S3[1]) mk={x:830, y:690, s:260, o:env(t,S1[0]+.4,S3[1],.5,.5)*.95, rot:-3};
+  else if(t>=S4[0]) mk={x:800, y:690, s:300, o:env(t,S4[0]+.6,DUR,.6,.05)*.9, rot:0};
+  const fl = Math.sin(t*1.6)*10;
+  set(moki,{left:(mk.x)+'px', top:(mk.y+fl)+'px', width:mk.s+'px', height:mk.s+'px', opacity:mk.o, transform:`rotate(${mk.rot+Math.sin(t*1.1)*1.5}deg)`});
+  // blink: swap image briefly
+  const blink = (Math.floor(t)%3===0) && ((t%1)>0.05 && (t%1)<0.16);
+  mkImg.setAttribute('src', A + (blink? 'moki-mascot-blink.webp':'moki-mascot.webp'));
+}
+
+// expose for capture
+window.__render = render;
+window.__DUR = DUR;
+// default preview shows a mid frame
+render(0);
+</script>
+</body>
+</html>

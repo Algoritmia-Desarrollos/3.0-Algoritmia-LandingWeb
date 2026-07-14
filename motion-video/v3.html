@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;600;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1080px;overflow:hidden;background:#050308}
+  #stage{position:relative;width:1080px;height:1080px;overflow:hidden;
+    font-family:Inter,-apple-system,"Helvetica Neue",Arial,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+  .layer{position:absolute;inset:0}
+  .abs{position:absolute}
+  #base{background:radial-gradient(circle at 50% 55%,#170f24 0%,#0a0710 55%,#050308 100%)}
+  #mesh{mix-blend-mode:screen}
+  .blob{position:absolute;border-radius:50%;filter:blur(95px);will-change:transform,opacity}
+  #cam{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform}
+  #fx{position:absolute;inset:0;pointer-events:none}
+  #scene{position:absolute;inset:0}
+  #vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%,transparent 46%,rgba(3,1,7,.66) 100%)}
+  #grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.05}
+  #flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;mix-blend-mode:screen}
+  .step{position:absolute;inset:0;will-change:opacity}
+  .kick{display:inline-flex;align-items:center;gap:12px;font-size:16px;font-weight:800;letter-spacing:.26em;color:#c8b3f6;text-transform:uppercase}
+  .kick i{width:9px;height:9px;border-radius:50%;background:#a980f3;box-shadow:0 0 14px 2px rgba(169,128,243,.7)}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* ---- STEP 1 idea ---- */
+  #s1{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px}
+  #s1 .big{font-family:Fraunces,serif;font-weight:900;font-size:120px;letter-spacing:-.03em;line-height:.9;text-align:center}
+  #s1 .big em{font-style:italic;color:#b998fb}
+  #cmd{display:flex;align-items:center;gap:16px;height:84px;padding:0 26px;border-radius:18px;
+    border:1px solid rgba(179,145,255,.3);background:rgba(23,16,34,.6);backdrop-filter:blur(14px);
+    box-shadow:0 24px 60px rgba(60,25,120,.35),inset 0 1px rgba(255,255,255,.08)}
+  #cmd .dot{width:12px;height:12px;border-radius:50%;background:#8a5cf0;box-shadow:0 0 14px #8a5cf0}
+  #cmdT{font-size:27px;font-weight:600;color:#efeaf6;white-space:nowrap}
+  #cmdC{display:inline-block;width:3px;height:30px;background:#b998fb;vertical-align:middle;margin-left:2px}
+
+  /* ---- STEP 2 library ---- */
+  #s2{opacity:0}
+  .row{position:absolute;left:0;display:flex;gap:16px;will-change:transform}
+  .rcard{width:168px;height:210px;border-radius:16px;overflow:hidden;flex:none;border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 18px 40px rgba(8,3,20,.5);background:#15101d}
+  .rcard img{width:100%;height:100%;object-fit:cover}
+  #s2 .ov{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;
+    background:linear-gradient(180deg,transparent,rgba(6,3,12,.62) 22%,rgba(6,3,12,.62) 78%,transparent);padding:40px 0}
+  #s2 .ov h2{font-family:Fraunces,serif;font-weight:900;font-size:82px;line-height:.94;letter-spacing:-.03em}
+  #s2 .ov h2 em{font-style:italic;color:#c9a96a}
+  #s2 .ov p{margin-top:16px;font-size:22px;color:#d7cee6;font-weight:600}
+
+  /* ---- shared CARD (steps 3-6) ---- */
+  #cardWrap{position:absolute;left:320px;top:205px;width:440px;height:550px;will-change:transform,opacity;opacity:0;transform-origin:50% 50%}
+  #card{position:absolute;inset:0;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#0d0a13;
+    box-shadow:0 44px 100px rgba(20,8,45,.66),inset 0 1px rgba(255,255,255,.07)}
+  .cimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:opacity,filter,transform}
+  #vSel{opacity:0}
+  #vRaw{opacity:0;filter:saturate(.72) brightness(.9)}
+  #vHero{opacity:0}
+  #cardGloss{position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,255,255,.1),transparent 26%,transparent 74%,rgba(255,255,255,.05))}
+  #selStamp{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-9deg) scale(0);
+    padding:12px 26px;border:3px solid #3fc68c;border-radius:14px;color:#3fc68c;font-size:30px;font-weight:900;letter-spacing:.14em;
+    background:rgba(6,20,14,.55);text-shadow:0 2px 10px rgba(0,0,0,.4);white-space:nowrap;z-index:5}
+  #finalAd{position:absolute;left:360px;top:315px;width:360px;height:450px;border-radius:22px;overflow:hidden;opacity:0;
+    border:1px solid rgba(255,255,255,.18);box-shadow:0 40px 100px rgba(20,8,45,.72)}
+  #finalAd img{width:100%;height:100%;object-fit:cover}
+  #finalAd .exp{position:absolute;left:12px;top:12px;padding:6px 11px;border-radius:8px;background:rgba(63,198,140,.92);color:#052b1c;font-size:14px;font-weight:900;letter-spacing:.03em}
+  #tagRaw{position:absolute;left:14px;top:14px;padding:7px 12px;border-radius:9px;background:rgba(0,0,0,.5);font-size:15px;font-weight:700;opacity:0}
+  #scan{position:absolute;left:-5%;width:110%;height:5px;top:0;opacity:0;background:linear-gradient(90deg,transparent,rgba(226,209,255,.95),transparent);box-shadow:0 0 30px 8px rgba(169,128,243,.6)}
+  #shine{position:absolute;top:-20%;left:-60%;width:45%;height:140%;opacity:0;transform:rotate(12deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);filter:blur(3px)}
+
+  /* ---- AD text furniture (step 5) ---- */
+  #adHead{position:absolute;left:0;right:0;top:96px;text-align:center;opacity:0}
+  #adHead .k{font-size:15px;font-weight:800;letter-spacing:.24em;color:#c8b3f6;margin-bottom:8px}
+  #adHead h2{font-family:Fraunces,serif;font-weight:900;font-size:60px;line-height:.94;letter-spacing:-.02em}
+  #adHead h2 em{font-style:italic;color:#c9a96a}
+  .callout{position:absolute;display:flex;align-items:center;gap:10px;opacity:0;will-change:transform,opacity}
+  .callout .pill{padding:11px 16px;border-radius:12px;background:rgba(255,255,255,.94);color:#241a33;font-size:19px;font-weight:800;white-space:nowrap;box-shadow:0 14px 30px rgba(20,8,40,.4)}
+  .callout .pill.small{font-size:16px;font-weight:700}
+  #calLines{position:absolute;inset:0;pointer-events:none}
+  #adPrice{position:absolute;left:0;right:0;top:800px;display:flex;align-items:center;justify-content:center;gap:18px;opacity:0}
+  #adPrice .now{font-size:58px;font-weight:900;letter-spacing:-.03em}
+  #adPrice .old{font-size:28px;color:#9a90a8;text-decoration:line-through;font-weight:700}
+  #adPrice .off{padding:8px 12px;border-radius:10px;background:#c9a96a;color:#2a1a06;font-size:20px;font-weight:900}
+  #adCta{position:absolute;left:50%;top:876px;transform:translateX(-50%) scale(.9);opacity:0;
+    display:inline-flex;align-items:center;gap:14px;height:74px;padding:0 40px;border-radius:20px;
+    background:linear-gradient(135deg,#7e4ee9,#5926c3);color:#fff;font-size:26px;font-weight:900;letter-spacing:.02em;
+    box-shadow:0 22px 50px rgba(100,45,213,.5),inset 0 1px rgba(255,255,255,.25)}
+  #adCta .ar{width:26px;height:26px;stroke:#fff;stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  #adSub{position:absolute;left:0;right:0;top:962px;text-align:center;font-size:17px;font-weight:600;color:#d9cff0;opacity:0}
+
+  /* ---- STEP labels (persistent bottom-left process HUD) ---- */
+  #stepHud{position:absolute;left:56px;bottom:52px;display:flex;align-items:center;gap:14px;opacity:0}
+  #stepHud .num{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;color:#a980f3;letter-spacing:.1em}
+  #stepHud .bar{width:90px;height:3px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}
+  #stepHud .bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#7e4ee9,#c9a96a)}
+  #stepHud .lbl{font-size:16px;font-weight:700;color:#e7dff2}
+
+  /* chips */
+  #chips{position:absolute;left:0;right:0;top:790px;display:flex;justify-content:center;gap:10px;opacity:0}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border-radius:12px;font-size:16px;font-weight:600;
+    border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#dcd4e8}
+  .chip .sw{display:flex;gap:4px}.chip .sw i{width:11px;height:11px;border-radius:50%}
+
+  /* result */
+  #s6{position:absolute;inset:0;opacity:0}
+  #tagWrap{position:absolute;left:0;right:0;top:120px;text-align:center;opacity:0}
+  #tagWrap .k{font-size:15px;font-weight:800;letter-spacing:.26em;color:#c8b3f6;margin-bottom:14px}
+  #tagline{font-family:Fraunces,serif;font-weight:600;font-size:58px;line-height:1.02;letter-spacing:-.01em}
+  #tagline em{font-style:italic;color:#c9a96a}
+  #lockup{position:absolute;left:0;right:0;bottom:92px;text-align:center;font-size:17px;font-weight:800;letter-spacing:.34em;color:rgba(255,255,255,.72);opacity:0}
+  #lockup i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#a980f3;margin:0 14px 2px;vertical-align:middle;box-shadow:0 0 12px #a980f3}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="layer" id="base"></div>
+  <div id="cam">
+    <div class="layer" id="mesh"></div>
+    <canvas id="fx" width="1080" height="1080"></canvas>
+    <div id="scene">
+
+      <!-- STEP 1 -->
+      <div class="step" id="s1">
+        <div class="kick" id="s1kick"><i></i>ALGORITMIA · CREATIVE STUDIO</div>
+        <div class="big">De una idea<br>a un <em>anuncio.</em></div>
+        <div id="cmd"><span class="dot"></span><span id="cmdT"></span><span id="cmdC"></span></div>
+      </div>
+
+      <!-- STEP 2 library -->
+      <div class="step" id="s2">
+        <div class="row" id="row1"></div>
+        <div class="row" id="row2"></div>
+        <div class="row" id="row3"></div>
+        <div class="ov"><h2>+500 estructuras<br>que <em>ya venden</em></h2><p>probadas en millones de dólares en ads</p></div>
+      </div>
+
+      <!-- shared CARD -->
+      <div id="cardWrap">
+        <div id="card">
+          <img class="cimg" id="vSel"  src="assets/refs/ref01.jpg" alt="">
+          <img class="cimg" id="vRaw"  src="assets/prod-raw.png" alt="">
+          <img class="cimg" id="vHero" src="assets/hero-scene.png" alt="">
+          <div id="cardGloss"></div>
+          <div id="tagRaw" class="mono">TU FOTO ORIGINAL</div>
+          <div id="scan"></div>
+          <div id="shine"></div>
+        </div>
+        <div id="selStamp">ELEGIDA</div>
+      </div>
+      <div id="finalAd"><img src="assets/ad-final.png" alt=""><div class="exp">✓ ANUNCIO LISTO</div></div>
+
+      <!-- brand chips (step 4) -->
+      <div id="chips">
+        <span class="chip"><span class="sw"><i style="background:#7442dc"></i><i style="background:#a980f3"></i><i style="background:#c9a96a"></i></span>Tu marca</span>
+        <span class="chip">Logo</span>
+        <span class="chip">@lume.skincare</span>
+      </div>
+
+      <!-- AD furniture (step 5) -->
+      <div id="adHead"><div class="k" id="adK"></div><h2 id="adH"></h2></div>
+      <svg id="calLines" viewBox="0 0 1080 1080"><g id="calG" stroke="rgba(255,255,255,.55)" stroke-width="2" fill="none"></g></svg>
+      <div class="callout" id="c1"><span class="pill">Resultados en 7 días</span></div>
+      <div class="callout" id="c2"><span class="pill">Hidratación profunda</span></div>
+      <div class="callout" id="c3"><span class="pill">Luminosidad instantánea</span></div>
+      <div class="callout" id="c4"><span class="pill small">★★★★★  +12.000 clientes</span></div>
+      <div id="adPrice"><span class="now" id="pNow">$72.000</span><span class="old">$90.000</span><span class="off">-20%</span></div>
+      <a id="adCta">COMPRAR AHORA <svg class="ar" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div id="adSub">Envío gratis 24–48h · Sin tarjeta para probar</div>
+
+      <!-- STEP 6 result -->
+      <div id="s6">
+        <div id="tagWrap"><div class="k">DE UNA IDEA A UN ANUNCIO QUE VENDE</div><div id="tagline">Vos elegís la idea.<br><em>La app la vuelve venta.</em></div></div>
+      </div>
+      <div id="lockup">ALGORITMIA<i></i>CREATIVE STUDIO</div>
+
+      <!-- process HUD -->
+      <div id="stepHud"><span class="num" id="hudNum">01</span><span class="bar"><b id="hudBar"></b></span><span class="lbl" id="hudLbl">La idea</span></div>
+    </div>
+    <div id="flash"></div>
+  </div>
+  <div class="layer" id="vignette"></div>
+  <canvas id="grain" width="360" height="360"></canvas>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const stage=$('stage'), cam=$('cam'), mesh=$('mesh');
+const fx=$('fx'), fxc=fx.getContext('2d');
+const grain=$('grain'), gc=grain.getContext('2d');
+const TAU=Math.PI*2;
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const lerp=(a,b,t)=>a+(b-a)*t;
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);}
+
+/* mesh blobs */
+const blobColors=['#7c4dea','#b154e8','#5b8cff','#e15fae','#6d35e8'];
+const blobs=blobColors.map((c,i)=>{const b=document.createElement('div');b.className='blob';
+  b.style.background=c;b.style.width=(540+i*70)+'px';b.style.height=(540+i*70)+'px';mesh.appendChild(b);return b;});
+function renderMesh(t){blobs.forEach((b,i)=>{const sp=0.05+i*0.016,ph=i*1.7;
+  const cx=540+Math.cos(t*sp*TAU+ph)*(230+i*22),cy=560+Math.sin(t*sp*TAU*0.8+ph*1.3)*(200+i*20);
+  const sc=0.9+0.18*Math.sin(t*0.1*TAU+ph);
+  b.style.left=(cx-(270+i*35))+'px';b.style.top=(cy-(270+i*35))+'px';
+  b.style.transform=`scale(${sc})`;b.style.opacity=0.4+0.22*Math.sin(t*0.13*TAU+ph);});}
+const N=110;
+function renderFX(t){fxc.clearRect(0,0,1080,1080);
+  for(let i=0;i<N;i++){const sx=rnd(i),sy=rnd(i+99),ss=rnd(i+7);
+    let x=((sx+t*(0.006+ss*0.016))%1)*1080,y=((sy+t*(0.004+ss*0.01))%1+1)%1*1080;
+    const r=0.6+ss*2.4,tw=0.3+0.7*Math.abs(Math.sin(t*(0.4+ss)*0.9+i));
+    fxc.beginPath();fxc.arc(x,y,r,0,TAU);fxc.fillStyle=`rgba(${200+ss*55|0},${180+sx*60|0},255,${0.1+tw*0.3})`;fxc.fill();}}
+const gimg=gc.createImageData(360,360);
+function renderGrain(t){const d=gimg.data,base=Math.floor(t*48);
+  for(let i=0;i<d.length;i+=4){const v=rnd((i>>2)+base*13.13)*255|0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255;}gc.putImageData(gimg,0,0);}
+
+/* build library rows */
+const refCount=12;
+function buildRow(rowEl,offset){let h='';for(let k=0;k<24;k++){const n=String((k+offset)%refCount+1).padStart(2,'0');
+  h+=`<div class="rcard"><img src="assets/refs/ref${n}.jpg"></div>`;}rowEl.innerHTML=h;}
+buildRow($('row1'),0);buildRow($('row2'),4);buildRow($('row3'),8);
+$('row1').style.top='250px';$('row2').style.top='476px';$('row3').style.top='702px';
+
+/* typewriter helper */
+function typer(tl,el,text,dur,pos){const o={i:0};tl.to(o,{i:text.length,duration:dur,ease:'none',
+  onUpdate:()=>{el.textContent=text.slice(0,Math.round(o.i));}},pos);}
+
+/* ============ MASTER TIMELINE ============ */
+gsap.registerPlugin();
+const tl=gsap.timeline({paused:true,defaults:{ease:'power3.out'}});
+
+/* -- STEP 1 : idea (0 - 3.0) -- */
+tl.from('#s1kick',{opacity:0,y:-14,duration:.5},0);
+tl.from('#s1 .big',{opacity:0,y:34,scale:.94,duration:.7,ease:'back.out(1.5)'},.15);
+tl.from('#cmd',{opacity:0,y:22,duration:.5},.6);
+typer(tl,$('cmdT'),'Sérum facial que venda más',1.1,.8);
+tl.to('#s1',{opacity:0,scale:1.06,duration:.5,ease:'power2.in'},2.5);
+
+/* -- STEP 2 : library (2.7 - 5.6) -- */
+tl.set('#s2',{opacity:1},2.7);
+tl.fromTo('#row1',{x:60},{x:-1700,duration:3.0,ease:'power1.inOut'},2.7);
+tl.fromTo('#row2',{x:-1700},{x:60,duration:3.0,ease:'power1.inOut'},2.7);
+tl.fromTo('#row3',{x:40},{x:-1500,duration:3.0,ease:'power1.inOut'},2.7);
+tl.from('#s2 .ov h2',{opacity:0,y:30,duration:.6,ease:'back.out(1.4)'},3.0);
+tl.from('#s2 .ov p',{opacity:0,y:16,duration:.5},3.3);
+tl.to('#s2 .ov',{opacity:0,duration:.4},5.0);
+tl.to(['#row1','#row2','#row3'],{opacity:0,filter:'blur(6px)',duration:.5},5.1);
+tl.to('#s2',{opacity:0,duration:.3},5.4);
+
+/* -- STEP 3 : selection (5.4 - 7.0) -- */
+tl.set('#cardWrap',{opacity:1},5.4);
+tl.set('#vSel',{opacity:1},5.4);
+tl.fromTo('#cardWrap',{scale:.5,y:120,rotationY:-18,opacity:0},{scale:1,y:0,rotationY:0,opacity:1,duration:.8,ease:'back.out(1.3)'},5.4);
+tl.fromTo('#selStamp',{scale:0,rotation:-20},{scale:1,rotation:-9,duration:.5,ease:'back.out(2)'},6.2);
+tl.to('#selStamp',{opacity:0,duration:.4},6.9);
+
+/* -- STEP 4 : your product (7.0 - 9.4) -- */
+tl.to('#vSel',{opacity:0,duration:.4},7.0);
+tl.fromTo('#vRaw',{opacity:0,scale:1.1},{opacity:1,scale:1,duration:.6},7.1);
+tl.fromTo('#tagRaw',{opacity:0,x:-12},{opacity:1,x:0,duration:.4},7.4);
+tl.from('#chips .chip',{opacity:0,y:18,stagger:.1,duration:.4},7.6);
+tl.to('#chips',{opacity:1,duration:.01},7.55);
+tl.to('#chips',{opacity:0,y:-10,duration:.4},9.0);
+tl.to('#tagRaw',{opacity:0,duration:.3},9.0);
+
+/* -- STEP 5 : generate -> AD compose (9.4 - 14.6) -- */
+tl.to('#scan',{opacity:1,duration:.2},9.4);
+tl.fromTo('#scan',{top:'0%'},{top:'100%',duration:1.0,ease:'power1.inOut'},9.4);
+tl.to('#flash',{opacity:.85,duration:.12},9.7);
+tl.to('#flash',{opacity:0,duration:.5},9.85);
+tl.to('#vRaw',{opacity:0,duration:.5},9.7);
+tl.fromTo('#vHero',{opacity:0,scale:1.08,filter:'blur(16px) saturate(.6)'},{opacity:1,scale:1,filter:'blur(0px) saturate(1.05)',duration:.9,ease:'power2.out'},9.7);
+tl.to('#scan',{opacity:0,duration:.3},10.4);
+// headline types
+tl.to('#adHead',{opacity:1,duration:.01},10.5);
+typer(tl,$('adK'),'LUMÉ · SKINCARE',.5,10.5);
+typer(tl,$('adH'),'Glow visible en 7 días',1.0,10.7);
+// callouts draw in with connector lines (positions handled in JS by class)
+['#c1','#c2','#c3','#c4'].forEach((c,i)=>{
+  tl.fromTo(c,{opacity:0,x:(i<2?-30:30)},{opacity:1,x:0,duration:.45,ease:'back.out(1.5)'},11.5+i*.42);
+});
+// price count-up + CTA
+tl.to('#adPrice',{opacity:1,duration:.4},13.2);
+const pObj={v:90000};
+tl.to(pObj,{v:72000,duration:.7,ease:'power1.out',onUpdate:()=>{$('pNow').textContent='$'+Math.round(pObj.v).toLocaleString('es-AR');}},13.2);
+tl.fromTo('#adCta',{opacity:0,scale:.9,y:14},{opacity:1,scale:1,y:0,duration:.5,ease:'back.out(1.6)'},13.6);
+tl.to('#adSub',{opacity:1,duration:.4},13.9);
+tl.fromTo('#shine',{left:'-60%',opacity:1},{left:'140%',opacity:1,duration:.8,ease:'power1.inOut'},13.7);
+tl.set('#shine',{opacity:0},14.5);
+
+/* -- STEP 6 : result (14.6 - 17.4) -- */
+// shrink whole ad group to make room + tagline
+const adGroup=['#cardWrap','#adHead','#c1','#c2','#c3','#c4','#adPrice','#adCta','#adSub','#calLines'];
+tl.to(adGroup,{opacity:0,duration:.5,ease:'power2.in'},14.6);
+tl.set('#s6',{opacity:1},14.6);
+tl.fromTo('#finalAd',{opacity:0,scale:.82,y:24},{opacity:1,scale:1,y:0,duration:.75,ease:'back.out(1.4)'},14.9);
+tl.fromTo('#tagWrap',{opacity:0,y:20},{opacity:1,y:0,duration:.7},15.1);
+tl.fromTo('#lockup',{opacity:0},{opacity:.85,duration:.6},15.7);
+// gentle outro fade for loop
+tl.to('#scene',{opacity:0,duration:.7,ease:'power2.inOut'},16.7);
+tl.to('#scene',{opacity:1,duration:0},17.4);
+
+const DUR=tl.duration();
+
+/* callout line positions (drawn each frame based on element opacity) */
+const calDefs=[
+  {id:'c1',x:70, y:330, sx:250,sy:300},   // left-top -> bottle upper
+  {id:'c2',x:70, y:470, sx:250,sy:430},   // left-mid
+  {id:'c3',x:760,y:360, sx:830,sy:340},   // right-top (pill right-aligned)
+  {id:'c4',x:735,y:520, sx:830,sy:470},   // right-mid
+];
+function layoutCallouts(){
+  // position pill wrappers; right side pills align right
+  $('#c1')&&0;
+  const set=(id,left,top,right)=>{const e=$(id);e.style.top=top+'px';if(right){e.style.right=(1080-right)+'px';e.style.left='auto';e.style.flexDirection='row-reverse';}else{e.style.left=left+'px';e.style.right='auto';}};
+  set('c1',88,315,false); set('c2',88,452,false);
+  set('c3',null,352,745); set('c4',null,506,745);
+}
+layoutCallouts();
+function renderCallLines(){
+  // connector from each visible callout to the bottle center-ish inside card
+  // card is at left320 top205 w440 h550 but may be scaled in step6; approximate using bottle anchor
+  const anchors={c1:[350,360],c2:[350,470],c3:[730,380],c4:[730,500]};
+  const bottle=[540,470];
+  let h='';
+  ['c1','c2','c3','c4'].forEach(id=>{const e=$(id);const op=parseFloat(getComputedStyle(e).opacity)||0;
+    if(op>0.05){const a=anchors[id];h+=`<path d="M ${a[0]} ${a[1]} C ${(a[0]+bottle[0])/2} ${a[1]}, ${(a[0]+bottle[0])/2} ${bottle[1]}, ${bottle[0]} ${bottle[1]}" stroke-opacity="${0.5*op}"/><circle cx="${bottle[0]}" cy="${bottle[1]}" r="3" fill="#fff" fill-opacity="${0.6*op}" stroke="none"/>`;}});
+  $('calG').innerHTML=h;
+}
+
+/* process HUD */
+const steps=[[0,'01','La idea'],[2.7,'02','La biblioteca'],[5.4,'03','Elegís una'],[7.0,'04','Tu producto'],[9.4,'05','Se genera'],[14.7,'06','Listo para vender']];
+function renderHud(t){
+  let s=steps[0];for(const st of steps){if(t>=st[0])s=st;}
+  $('hudNum').textContent=s[1];$('hudLbl').textContent=s[2];
+  $('hudBar').style.width=(parseInt(s[1])/6*100)+'%';
+  $('stepHud').style.opacity = (t>0.6 && t<16.6)?0.9:0;
+  $('cmdC').style.opacity=(Math.floor(t*2)%2===0)?1:.2;
+}
+
+/* camera */
+function renderCamera(t){
+  let z=lerp(1.02,1.05,clamp(t/DUR,0,1)), tx=0,ty=0;
+  // punch in during generation
+  const g=clamp((t-9.4)/1.0,0,1); z+=0.05*g; ty-=14*g;
+  const back=clamp((t-14.7)/1.0,0,1); z-=0.06*back; ty+=12*back;
+  tx+=Math.sin(t*0.5)*4; ty+=Math.cos(t*0.42)*3.2;
+  cam.style.transform=`translate(${tx}px,${ty}px) scale(${z})`;
+}
+
+function render(t){
+  tl.time(clamp(t,0,DUR));
+  renderMesh(t);renderFX(t);renderGrain(t);renderCamera(t);renderCallLines();renderHud(t);
+}
+window.__render=render; window.__DUR=DUR;
+render(0.6);
+</script>
+</body>
+</html>

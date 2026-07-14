@@ -5,11 +5,28 @@ import '@fontsource-variable/inter';
 interface Props {
 	title: string;
 	description?: string;
-    noindex?: boolean;
+	noindex?: boolean;
+	ogTitle?: string;
+	ogDescription?: string;
+	ogImage?: string;
+	favicon?: string;
+	appleTouchIcon?: string;
+	manifest?: string;
 }
 
-const { title, description = "Algoritmia: agencia experta en Meta Ads para negocios establecidos en Argentina. Escalamos ventas con método probado. ROAS 43–70. Casos reales. Consulta gratuita.", noindex = false } = Astro.props;
+const {
+	title,
+	description = "Algoritmia: agencia experta en Meta Ads para negocios establecidos en Argentina. Escalamos ventas con método probado. ROAS 43–70. Casos reales. Consulta gratuita.",
+	noindex = false,
+	ogTitle = 'Algoritmia | Expertos en Meta Ads',
+	ogDescription = 'Escalamos negocios establecidos con Meta Ads. ROAS 43–70. Método probado. Casos reales.',
+	ogImage = '/og-image.jpg',
+	favicon = '/favicon-96x96.png',
+	appleTouchIcon = '/apple-touch-icon.png',
+	manifest = '/site.webmanifest'
+} = Astro.props;
 const canonicalURL = Astro.url.href;
+const socialImageURL = new URL(ogImage, Astro.site || Astro.url).href;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -53,11 +70,10 @@ const jsonLd = {
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<link rel="manifest" href="/site.webmanifest" />
+		<link rel="icon" type="image/png" href={favicon} sizes="96x96" />
+		<link rel="shortcut icon" href={favicon} />
+		<link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
+		<link rel="manifest" href={manifest} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
@@ -71,16 +87,20 @@ const jsonLd = {
 		<link rel="preconnect" href="https://connect.facebook.net" />
 
 		<!-- Open Graph -->
-		<meta property="og:title" content="Algoritmia | Expertos en Meta Ads" />
-		<meta property="og:description" content="Escalamos negocios establecidos con Meta Ads. ROAS 43–70. Método probado. Casos reales." />
-		<meta property="og:url" content="https://algoritmiadesarrollos.com.ar" />
+		<meta property="og:title" content={ogTitle} />
+		<meta property="og:description" content={ogDescription} />
+		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="es_AR" />
-		<meta property="og:image" content="https://algoritmiadesarrollos.com.ar/og-image.jpg" />
+		<meta property="og:image" content={socialImageURL} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={ogTitle} />
 		<!-- Twitter Cards -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Algoritmia | Expertos en Meta Ads" />
-		<meta name="twitter:description" content="Escalamos negocios establecidos con Meta Ads. ROAS 43–70. Método probado." />
+		<meta name="twitter:title" content={ogTitle} />
+		<meta name="twitter:description" content={ogDescription} />
+		<meta name="twitter:image" content={socialImageURL} />
 
 		<!-- JSON-LD Structured Data -->
 		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

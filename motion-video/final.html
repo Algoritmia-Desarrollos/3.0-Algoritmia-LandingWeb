@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;600;900&display=swap" rel="stylesheet" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1080px;overflow:hidden;background:#050308}
+  #stage{position:relative;width:1080px;height:1080px;overflow:hidden;
+    font-family:Inter,-apple-system,"Helvetica Neue",Arial,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+  .layer{position:absolute;inset:0}
+  .abs{position:absolute}
+  #base{background:radial-gradient(circle at 50% 58%,#160f22 0%,#0a0710 55%,#050308 100%)}
+  #mesh{mix-blend-mode:screen}
+  .blob{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform,opacity}
+  #cam{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform}
+  #fx{position:absolute;inset:0;pointer-events:none}
+  #scene{position:absolute;inset:0}
+  #vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(circle at 50% 45%,transparent 48%,rgba(3,1,7,.62) 100%)}
+  #grain{position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.055}
+  #uiframe{position:absolute;inset:30px;border:1px solid rgba(255,255,255,.05);border-radius:34px;pointer-events:none}
+  #corners span{position:absolute;width:34px;height:34px;border:2px solid rgba(179,145,255,.35)}
+  #corners .tl{left:44px;top:44px;border-right:0;border-bottom:0;border-radius:10px 0 0 0}
+  #corners .tr{right:44px;top:44px;border-left:0;border-bottom:0;border-radius:0 10px 0 0}
+  #corners .bl{left:44px;bottom:44px;border-right:0;border-top:0;border-radius:0 0 0 10px}
+  #corners .br{right:44px;bottom:44px;border-left:0;border-top:0;border-radius:0 0 10px 0}
+
+  /* ---------- PHASE A: idea ---------- */
+  #cmdWrap{position:absolute;left:50%;top:452px;transform:translate(-50%,-50%);width:720px;text-align:center;will-change:transform,opacity}
+  #kicker{display:inline-flex;align-items:center;gap:11px;font-size:15px;font-weight:800;letter-spacing:.28em;color:#c8b3f6;margin-bottom:22px}
+  #kicker i{width:8px;height:8px;border-radius:50%;background:#a980f3;box-shadow:0 0 14px 2px rgba(169,128,243,.7)}
+  #cmdBar{display:flex;align-items:center;gap:18px;height:96px;padding:0 30px;border-radius:22px;
+    border:1px solid rgba(179,145,255,.28);background:rgba(23,16,34,.55);backdrop-filter:blur(16px);
+    box-shadow:0 30px 80px rgba(60,25,120,.35),inset 0 1px rgba(255,255,255,.08);text-align:left}
+  #cmdBar .spark{width:30px;height:30px;flex:none;position:relative}
+  #cmdBar .spark::before,#cmdBar .spark::after{content:'';position:absolute;background:#c9b1ff;border-radius:2px}
+  #cmdBar .spark::before{left:13px;top:2px;width:4px;height:26px;box-shadow:0 0 12px #a980f3}
+  #cmdBar .spark::after{left:2px;top:13px;width:26px;height:4px;box-shadow:0 0 12px #a980f3}
+  #cmdText{font-size:29px;font-weight:600;color:#efeaf6;white-space:nowrap;overflow:hidden}
+  #caret{display:inline-block;width:3px;height:34px;background:#b998fb;vertical-align:middle;margin-left:3px;box-shadow:0 0 10px #a980f3}
+  #chips{display:flex;justify-content:center;gap:11px;margin-top:22px}
+  .chip{display:inline-flex;align-items:center;gap:9px;padding:12px 17px;border-radius:13px;font-size:16px;font-weight:600;
+    border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#d9d2e6}
+  .chip .sw{display:flex;gap:4px}
+  .chip .sw i{width:11px;height:11px;border-radius:50%}
+  #seed{position:absolute;left:50%;top:452px;width:26px;height:26px;border-radius:50%;transform:translate(-50%,-50%) scale(0);
+    background:radial-gradient(circle at 40% 35%,#eadcff,#8a5cf0 60%,#5b2ec8);box-shadow:0 0 40px 10px rgba(138,92,240,.7)}
+
+  /* ---------- central CARD (B-E) ---------- */
+  #cardWrap{position:absolute;left:220px;top:150px;width:640px;height:800px;will-change:transform,opacity;transform-origin:50% 55%;z-index:5}
+  #card{position:absolute;inset:0;border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.14);
+    background:#0d0a13;box-shadow:0 50px 120px rgba(20,8,45,.65),0 0 0 1px rgba(179,145,255,.10),inset 0 1px rgba(255,255,255,.06)}
+  .cimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:opacity,filter,transform,clip-path}
+  #imgRaw{filter:saturate(.75) brightness(.9) contrast(.95)}
+  #cardGloss{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(125deg,rgba(255,255,255,.10) 0%,transparent 26%,transparent 74%,rgba(255,255,255,.05) 100%)}
+  #scanBar{position:absolute;left:-4%;width:108%;height:5px;top:0;opacity:0;
+    background:linear-gradient(90deg,transparent,rgba(226,209,255,.95),transparent);
+    box-shadow:0 0 30px 8px rgba(169,128,243,.6),0 0 90px 20px rgba(120,66,220,.35)}
+  #shine{position:absolute;top:-20%;left:-60%;width:45%;height:140%;opacity:0;transform:rotate(12deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);filter:blur(3px)}
+  /* variant ghosts */
+  .ghost{position:absolute;top:0;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 40px 90px rgba(10,4,30,.6);opacity:0;will-change:transform,opacity;z-index:2}
+  .ghost img{width:100%;height:100%;object-fit:cover}
+  .ghost b{position:absolute;left:12px;bottom:12px;padding:5px 10px;border-radius:8px;background:rgba(0,0,0,.45);
+    font-size:14px;font-weight:800;letter-spacing:.06em;backdrop-filter:blur(4px)}
+
+  /* HUD nodes around card */
+  #hud{position:absolute;inset:0;pointer-events:none}
+  #hudSvg{position:absolute;inset:0;width:1080px;height:1080px}
+  .node{position:absolute;display:flex;align-items:center;gap:10px;padding:12px 15px;border-radius:13px;
+    border:1px solid rgba(179,145,255,.28);background:rgba(20,13,30,.72);backdrop-filter:blur(10px);
+    box-shadow:0 16px 40px rgba(30,12,60,.5);opacity:0;will-change:transform,opacity}
+  .node .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(139,92,246,.18);color:#c9b1ff;font-size:15px}
+  .node small{display:block;font-size:11px;font-weight:800;letter-spacing:.14em;color:#8f84a6}
+  .node b{display:block;font-size:15px;margin-top:2px;color:#efeaf6}
+
+  /* generating label */
+  #genHud{position:absolute;left:50%;top:986px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;opacity:0}
+  #genRing{width:34px;height:34px}
+  #genHud .t{font-size:18px;font-weight:700;color:#d9d0ec;letter-spacing:.02em}
+  #genHud .pct{font-size:18px;font-weight:800;color:#b998fb;font-variant-numeric:tabular-nums}
+
+  /* accent rings over baked ad */
+  .accent{position:absolute;border-radius:50%;border:2px solid rgba(201,169,106,.9);opacity:0;will-change:transform,opacity}
+  #ctaGlow{position:absolute;border-radius:40px;opacity:0;box-shadow:0 0 40px 6px rgba(109,53,232,.55);will-change:opacity}
+
+  /* result tagline */
+  #tagWrap{position:absolute;left:0;right:0;top:120px;text-align:center;opacity:0;will-change:opacity,transform;z-index:20}
+  #cmdWrap,#lockup,#genHud{z-index:20}
+  #tagKick{font-size:15px;font-weight:800;letter-spacing:.26em;color:#c8b3f6;margin-bottom:14px}
+  #tagline{font-family:Fraunces,serif;font-weight:600;font-size:56px;line-height:1.02;letter-spacing:-.01em}
+  #tagline em{font-style:italic;color:#c9a96a}
+  #lockup{position:absolute;left:0;right:0;bottom:96px;text-align:center;opacity:0;font-size:17px;font-weight:800;letter-spacing:.34em;color:rgba(255,255,255,.72)}
+  #lockup i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#a980f3;margin:0 14px 2px;vertical-align:middle;box-shadow:0 0 12px #a980f3}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="layer" id="base"></div>
+  <div id="cam">
+    <div class="layer" id="mesh"></div>
+    <canvas id="fx" width="1080" height="1080"></canvas>
+    <div id="scene">
+      <!-- HUD lines -->
+      <div id="hud">
+        <svg id="hudSvg" viewBox="0 0 1080 1080"><g id="hudLines" stroke="rgba(169,128,243,0.5)" stroke-width="1.5" fill="none"></g></svg>
+      </div>
+      <!-- CARD -->
+      <div id="cardWrap">
+        <div id="card">
+          <img class="cimg" id="imgRaw"  src="assets/prod-raw.png" alt="">
+          <img class="cimg" id="imgHero" src="assets/hero-scene.png" alt="">
+          <img class="cimg" id="imgAd"   src="assets/ad-final.png" alt="">
+          <div id="cardGloss"></div>
+          <div id="scanBar"></div>
+          <div id="shine"></div>
+          <!-- accents over baked ad -->
+          <div class="accent" id="accBadge"></div>
+          <div id="ctaGlow"></div>
+        </div>
+      </div>
+      <!-- ghosts -->
+      <div class="ghost" id="ghostA"><img src="assets/ad-final.png"><b>1:1</b></div>
+      <div class="ghost" id="ghostB"><img src="assets/ad-final.png"><b>9:16</b></div>
+      <!-- nodes -->
+      <div class="node" id="n1"><div class="ic">◆</div><div><small>MARCA</small><b>LUMÉ · violeta</b></div></div>
+      <div class="node" id="n2"><div class="ic">▣</div><div><small>PRODUCTO</small><b>Sérum colágeno</b></div></div>
+      <div class="node" id="n3"><div class="ic">◎</div><div><small>OBJETIVO</small><b>Vender más</b></div></div>
+      <div class="node" id="n4"><div class="ic">▤</div><div><small>FORMATO</small><b>4:5 · Feed</b></div></div>
+      <!-- gen hud -->
+      <div id="genHud"><svg id="genRing" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle id="genArc" cx="18" cy="18" r="15" fill="none" stroke="#a980f3" stroke-width="3" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg><span class="t">Generando anuncio</span><span class="pct" id="genPct">0%</span></div>
+      <!-- IDEA phase -->
+      <div id="cmdWrap">
+        <div id="kicker"><i></i>ALGORITMIA · CREATIVE STUDIO</div>
+        <div id="cmdBar"><span class="spark"></span><span id="cmdText"></span><span id="caret"></span></div>
+        <div id="chips">
+          <span class="chip"><span class="sw"><i style="background:#7442dc"></i><i style="background:#a980f3"></i><i style="background:#c9a96a"></i></span>@lume.skincare</span>
+          <span class="chip">Objetivo: Vender más</span>
+          <span class="chip">Formato: 4:5</span>
+        </div>
+      </div>
+      <div id="seed"></div>
+      <!-- result -->
+      <div id="tagWrap">
+        <div id="tagKick">DE UNA IDEA A UN ANUNCIO QUE VENDE</div>
+        <div id="tagline">De una idea,<br><em>un anuncio que vende.</em></div>
+      </div>
+      <div id="lockup">ALGORITMIA<i></i>CREATIVE STUDIO</div>
+    </div>
+  </div>
+  <div class="layer" id="vignette"></div>
+  <canvas id="grain" width="360" height="360"></canvas>
+  <div id="uiframe"></div>
+  <div id="corners"><span class="tl"></span><span class="tr"></span><span class="bl"></span><span class="br"></span></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const stage=$('stage'), cam=$('cam'), mesh=$('mesh');
+const fx=$('fx'), fxc=fx.getContext('2d');
+const grain=$('grain'), gc=grain.getContext('2d');
+
+const DUR=18, TAU=Math.PI*2;
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const prog=(t,a,b)=>clamp((t-a)/(b-a),0,1);
+const eOut=t=>1-Math.pow(1-t,3);
+const eInOut=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eBack=t=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);};
+function env(t,a,b,fi,fo){if(t<a||t>b)return 0;return Math.min(clamp((t-a)/fi,0,1),clamp((b-t)/fo,0,1));}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);}
+function setS(n,o){for(const k in o)n.style[k]=o[k];}
+
+// phase windows
+const A=[0,2.6], B=[2.6,5.6], C=[5.6,9.6], D=[9.6,13.8], E=[13.8,16.6], OUT=[16.6,18];
+
+// --- mesh blobs ---
+const blobColors=['#7c4dea','#b154e8','#5b8cff','#e15fae','#6d35e8'];
+const blobs=blobColors.map((c,i)=>{const b=document.createElement('div');b.className='blob';
+  b.style.background=c;b.style.width=(540+i*70)+'px';b.style.height=(540+i*70)+'px';mesh.appendChild(b);return b;});
+function renderMesh(t){
+  blobs.forEach((b,i)=>{const sp=0.05+i*0.016,ph=i*1.7;
+    const cx=540+Math.cos(t*sp*TAU+ph)*(230+i*22), cy=560+Math.sin(t*sp*TAU*0.8+ph*1.3)*(200+i*20);
+    const sc=0.9+0.18*Math.sin(t*0.1*TAU+ph);
+    b.style.left=(cx-(270+i*35))+'px'; b.style.top=(cy-(270+i*35))+'px';
+    b.style.transform=`scale(${sc})`; b.style.opacity=0.42+0.22*Math.sin(t*0.13*TAU+ph);});
+}
+// --- particles ---
+const N=100;
+function renderFX(t){
+  fxc.clearRect(0,0,1080,1080);
+  for(let i=0;i<N;i++){
+    const sx=rnd(i),sy=rnd(i+99),ss=rnd(i+7);
+    let x=((sx+t*(0.006+ss*0.016))%1)*1080;
+    let y=((sy+t*(0.004+ss*0.010))%1+1)%1*1080;
+    const r=0.6+ss*2.4, tw=0.3+0.7*Math.abs(Math.sin(t*(0.4+ss)*0.9+i));
+    fxc.beginPath();fxc.arc(x,y,r,0,TAU);
+    fxc.fillStyle=`rgba(${200+ss*55|0},${180+sx*60|0},255,${0.10+tw*0.30})`;fxc.fill();
+  }
+}
+// --- grain ---
+const gimg=gc.createImageData(360,360);
+function renderGrain(t){const d=gimg.data,base=Math.floor(t*48);
+  for(let i=0;i<d.length;i+=4){const v=rnd((i>>2)+base*13.13)*255|0;d[i]=d[i+1]=d[i+2]=v;d[i+3]=255;}
+  gc.putImageData(gimg,0,0);}
+
+// --- camera ---
+function renderCamera(t){
+  let z=1.0, tx=0, ty=0;
+  z=lerp(1.02,1.05,eInOut(prog(t,0,DUR)));
+  // subtle push toward card during C/D
+  const focus=prog(t,C[0],D[0]);
+  z+=0.05*eInOut(focus);
+  ty-=18*eInOut(focus);
+  // pull back at result
+  const back=prog(t,E[0],E[0]+1.0);
+  z-=0.06*eInOut(back);
+  ty+=14*eInOut(back);
+  // handheld
+  tx+=Math.sin(t*0.5)*4; ty+=Math.cos(t*0.42)*3.5;
+  cam.style.transform=`translate(${tx}px,${ty}px) scale(${z})`;
+}
+
+const cmdWord='Sérum de colágeno · oferta de lanzamiento';
+
+function render(t){
+  renderCamera(t); renderMesh(t); renderFX(t); renderGrain(t);
+
+  // corners/frame subtle presence
+  $('uiframe').style.opacity = 0.5+0.3*Math.sin(t*0.6);
+
+  /* ===================== PHASE A : IDEA ===================== */
+  const aOn=env(t,A[0],A[1]+0.15,0.5,0.35);
+  $('cmdWrap').style.opacity=aOn;
+  {
+    const typed=Math.round(lerp(0,cmdWord.length,clamp(prog(t,0.35,2.0),0,1)));
+    $('cmdText').textContent=cmdWord.slice(0,typed);
+    $('caret').style.opacity=(Math.floor(t*2)%2===0)?1:.2;
+    // entrance
+    const inp=eOut(prog(t,0.05,0.7));
+    setS($('cmdWrap'),{transform:`translate(-50%,-50%) translateY(${lerp(26,0,inp)}px) scale(${lerp(.96,1,inp)})`});
+    // chips cascade
+    ['chips'].forEach(()=>{});
+    document.querySelectorAll('#chips .chip').forEach((c,i)=>{const p=clamp(prog(t,1.7+i*0.12,2.0+i*0.12),0,1);c.style.opacity=p;c.style.transform=`translateY(${lerp(12,0,eOut(p))}px)`;});
+    // collapse into seed near end of A
+    const col=prog(t,A[1]-0.5,A[1]+0.1);
+    if(col>0){ $('cmdWrap').style.opacity=aOn*(1-col);
+      setS($('seed'),{transform:`translate(-50%,-50%) scale(${eBack(clamp(col,0,1))})`,opacity:clamp(col,0,1)}); }
+    else setS($('seed'),{opacity:0});
+  }
+  // seed sinks & fades as B starts
+  {
+    const s=prog(t,A[1],B[0]+0.3);
+    if(t>=A[1]) setS($('seed'),{top:(452+lerp(0,98,eInOut(s)))+'px',opacity:(1-s)});
+  }
+
+  /* ===================== CARD visibility across B–E ===================== */
+  const cardOn=env(t,B[0]+0.15,OUT[0]+0.2,0.45,0.5);
+  $('cardWrap').style.opacity=cardOn;
+
+  // card base transform + phase motion
+  let cScale=1, cRotY=0, cY=0;
+  const appear=eBack(prog(t,B[0]+0.1,B[0]+0.9));
+  cScale=lerp(0.9,1,clamp(appear,0,1));
+  // during E: shrink & drop to free space for the tagline
+  const shrink=eInOut(prog(t,E[0]-0.1,E[0]+1.0));
+  cScale*=lerp(1,0.68,shrink);
+  cY=lerp(0,70,shrink);
+  const float=Math.sin((t-E[0])*1.3)*7*clamp(prog(t,E[0]+0.6,E[0]+1.6),0,1);
+  cRotY=Math.sin(t*0.5)*1.0 + 3*eInOut(prog(t,D[0],D[0]+0.8))*(1-shrink);
+  setS($('cardWrap'),{transform:`translateY(${cY+float}px) perspective(1400px) rotateY(${cRotY}deg) scale(${cScale})`});
+
+  /* raw image: visible B until generation replaces it */
+  const rawGone=prog(t,C[0]+0.4,C[1]-0.6);
+  $('imgRaw').style.opacity=clamp(1-rawGone,0,1)*(t<B[0]?0:1);
+
+  /* ===================== PHASE B : ASSEMBLE ===================== */
+  // nodes fan out with connecting lines to card center
+  const nodePos=[[92,250],[92,690],[840,250],[840,690]];
+  const nodeIds=['n1','n2','n3','n4'];
+  const cardCx=540, cardCy=550;
+  const lines=$('hudLines');
+  let lineHtml='';
+  nodeIds.forEach((id,i)=>{
+    const a=B[0]+0.2+i*0.16;
+    const p=clamp(prog(t,a,a+0.5),0,1);
+    const node=$(id);
+    // fade nodes out during C
+    const off=prog(t,C[0]+0.3,C[0]+1.0);
+    const op=p*(1-off);
+    node.style.opacity=op;
+    setS(node,{left:nodePos[i][0]+'px',top:nodePos[i][1]+'px',transform:`translateY(${lerp(14,0,eOut(p))}px)`});
+    if(op>0.05){
+      const nx=nodePos[i][0]+ (i<2?150:0), ny=nodePos[i][1]+22;
+      lineHtml+=`<line x1="${nx}" y1="${ny}" x2="${cardCx}" y2="${cardCy}" stroke-opacity="${0.35*op}"/>`;
+      lineHtml+=`<circle cx="${cardCx}" cy="${cardCy}" r="3" fill="#a980f3" fill-opacity="${0.5*op}" stroke="none"/>`;
+    }
+  });
+  lines.innerHTML=lineHtml;
+
+  /* ===================== PHASE C : GENERATION ===================== */
+  const genP=prog(t,C[0]+0.2,C[1]-0.4); // 0..1 generation progress
+  const inC=t>=C[0]&&t<D[0]+0.3;
+  // scan bar travels top->bottom (two passes)
+  {
+    const sb=$('scanBar');
+    if(t>=C[0]&&t<C[1]){ const pass=prog(t,C[0]+0.2,C[1]-0.3);
+      const yy=(pass*1.0)%1; sb.style.top=(yy*100)+'%'; sb.style.opacity=env(t,C[0]+0.1,C[1]-0.2,0.3,0.4);
+    } else sb.style.opacity=0;
+  }
+  // hero reveal: clip from top following genP, blur->0, saturate up
+  {
+    const hero=$('imgHero');
+    const reveal=eInOut(genP);
+    hero.style.opacity=clamp(prog(t,C[0]+0.3,C[0]+0.9),0,1)* (t<B[0]?0:1);
+    hero.style.clipPath=`inset(0 0 ${(1-reveal)*100}% 0)`;
+    const blur=lerp(26,0,eOut(genP));
+    const sat=lerp(.4,1.08,genP), br=lerp(.7,1.0,genP);
+    hero.style.filter=`blur(${blur}px) saturate(${sat}) brightness(${br})`;
+    // keep hero fully visible after generation until ad reveal
+    if(t>=C[1]-0.4){ hero.style.clipPath='inset(0 0 0 0)'; hero.style.filter='none'; hero.style.opacity=(t<B[0]?0:1); }
+  }
+  // gen HUD
+  {
+    const g=$('genHud'); g.style.opacity=env(t,C[0]+0.2,C[1]-0.3,0.3,0.3);
+    const pc=Math.round(genP*100); $('genPct').textContent=pc+'%';
+    const arc=$('genArc'), circ=2*Math.PI*15; arc.style.strokeDasharray=circ; arc.style.strokeDashoffset=circ*(1-genP);
+  }
+
+  /* ===================== PHASE D : COMPOSE AD ===================== */
+  const adReveal=prog(t,D[0]+0.2,D[0]+1.4);
+  {
+    const ad=$('imgAd');
+    ad.style.opacity=(t>=D[0]?1:0);
+    // wipe reveal downward (like printing the layout in)
+    const rv=eInOut(adReveal);
+    ad.style.clipPath=`inset(0 0 ${(1-rv)*100}% 0)`;
+    if(t>=D[0]+1.4){ ad.style.clipPath='inset(0 0 0 0)'; }
+    if(t<D[0]) ad.style.clipPath='inset(0 0 100% 0)';
+    // hide hero once ad covers
+    if(t>=D[0]) $('imgHero').style.opacity = clamp(1-adReveal,0,1);
+  }
+  // shine sweep across finished ad
+  {
+    const sh=$('shine'); const sp=prog(t,D[0]+1.4,D[0]+2.2);
+    sh.style.opacity= (sp>0&&sp<1)?1:0; sh.style.left=lerp(-60,140,sp)+'%';
+  }
+  // accent ring over -20% badge + CTA glow (badge approx position within card)
+  {
+    // badge is around top-right of the ad; card is 640x800; badge center ~ (525,300) local
+    const acc=$('accBadge');
+    const ap=env(t,D[0]+1.6,E[0]+0.6,0.3,0.4);
+    setS(acc,{left:'486px',top:'250px',width:'96px',height:'96px',opacity:ap*(0.6+0.4*Math.sin(t*4)),
+      transform:`scale(${1+0.06*Math.sin(t*4)})`});
+    const cg=$('ctaGlow');
+    setS(cg,{left:'330px',top:'700px',width:'250px',height:'64px',opacity:env(t,D[0]+1.8,E[0]+0.6,0.3,0.4)*(0.5+0.5*Math.abs(Math.sin(t*3)))});
+  }
+  // variant ghosts fan behind during D
+  {
+    const gp=env(t,D[0]+0.7,E[0]+0.3,0.5,0.5);
+    const gA=$('ghostA'), gB=$('ghostB');
+    setS(gA,{left:'220px',top:'150px',width:'640px',height:'800px',opacity:gp*0.42,
+      transform:`translate(64px,-8px) rotate(7deg) scale(.9)`});
+    setS(gB,{left:'220px',top:'150px',width:'640px',height:'800px',opacity:gp*0.34,
+      transform:`translate(-64px,-8px) rotate(-7deg) scale(.9)`});
+  }
+
+  /* ===================== PHASE E : RESULT ===================== */
+  {
+    const tw=$('tagWrap'); const tp=env(t,E[0]+0.2,OUT[0]+0.3,0.5,0.4);
+    tw.style.opacity=tp;
+    tw.style.transform=`translateY(${lerp(18,0,eOut(prog(t,E[0]+0.2,E[0]+1.0)))}px)`;
+    $('lockup').style.opacity=env(t,E[0]+0.7,OUT[0]+0.3,0.5,0.4)*0.85;
+  }
+
+  /* ===================== OUTRO / loop ===================== */
+  {
+    const o=prog(t,OUT[0],DUR);
+    $('scene').style.opacity= (t>=OUT[0])? lerp(1,0,eInOut(o)) : 1;
+    // bring back faint cmd for seamless loop feel handled by A fade-in at t~0
+  }
+}
+window.__render=render; window.__DUR=DUR;
+render(0.5);
+</script>
+</body>
+</html>

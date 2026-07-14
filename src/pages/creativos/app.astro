@@ -1,0 +1,24 @@
+---
+export const prerender = true;
+import Layout from '../../layouts/Layout.astro';
+import CreativeApp from '../../components/creativos/CreativeApp';
+---
+
+<Layout
+	title="Creative Studio | Algoritmia"
+	description="Generá creativos estáticos para Meta Ads a partir de estructuras validadas, con tu producto y tu marca."
+	ogTitle="Creative Studio | Algoritmia"
+	ogDescription="Una biblioteca en expansión, tu producto y tu marca. Generá imágenes listas para vender."
+	ogImage="/images/creativos/moki-og.jpg"
+	favicon="/images/creativos/moki-favicon-96.png"
+	appleTouchIcon="/images/creativos/moki-apple-touch.png"
+	manifest="/creative-studio.webmanifest"
+	noindex={true}
+>
+	<CreativeApp client:load />
+</Layout>
+
+<style is:global>
+	body { margin: 0; background: #f8f7fa; }
+	#preloader { background: #f8f7fa; }
+</style>
