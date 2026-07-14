@@ -12,6 +12,7 @@ interface Props {
 	favicon?: string;
 	appleTouchIcon?: string;
 	manifest?: string;
+	disableZoom?: boolean;
 }
 
 const {
@@ -23,7 +24,8 @@ const {
 	ogImage = '/og-image.jpg',
 	favicon = '/favicon-96x96.png',
 	appleTouchIcon = '/apple-touch-icon.png',
-	manifest = '/site.webmanifest'
+	manifest = '/site.webmanifest',
+	disableZoom = false
 } = Astro.props;
 const canonicalURL = Astro.url.href;
 const socialImageURL = new URL(ogImage, Astro.site || Astro.url).href;
@@ -69,7 +71,12 @@ const jsonLd = {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="viewport"
+			content={disableZoom
+				? 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+				: 'width=device-width, initial-scale=1.0'}
+		/>
 		<link rel="icon" type="image/png" href={favicon} sizes="96x96" />
 		<link rel="shortcut icon" href={favicon} />
 		<link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />

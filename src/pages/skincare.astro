@@ -39,10 +39,13 @@ const testimonials = [
   title="Más ventas para marcas de cosmética — Algoritmia"
   description="Publicidad, email marketing y atención con IA para aumentar las ventas de tu marca de cosmética."
   noindex={true}
+  disableZoom={true}
 >
   <Fragment slot="head">
     <link rel="preconnect" href="https://czocbnyoenjbpxmcqobn.supabase.co" crossorigin />
     <link rel="dns-prefetch" href="https://czocbnyoenjbpxmcqobn.supabase.co" />
+    <link rel="preconnect" href="https://link.1prompt.com" crossorigin />
+    <link rel="dns-prefetch" href="https://link.1prompt.com" />
   </Fragment>
   <main>
     <section class="hero-section" aria-labelledby="page-title">
@@ -95,7 +98,7 @@ const testimonials = [
           scrolling="no"
           id="QRU7dBIDhhv78Ir66Mv9"
           title="Formulario de aplicación"
-          loading="lazy"
+          loading="eager"
         ></iframe>
       </div>
       <script is:inline src="https://link.1prompt.com/js/form_embed.js"></script>
@@ -166,8 +169,8 @@ const testimonials = [
 </Layout>
 
 <style>
-  :global(html) { scroll-behavior: smooth; }
-  :global(body) { margin: 0; background: #fffaf8; }
+  :global(html) { scroll-behavior: smooth; touch-action: pan-x pan-y; }
+  :global(body) { margin: 0; background: #fffaf8; touch-action: pan-x pan-y; }
   main { min-height: 100vh; overflow: hidden; color: #191518; background: #fffaf8; }
   .hero-section { min-height: 100vh; box-sizing: border-box; padding: 28px 24px 88px; position: relative; background: radial-gradient(circle at 50% 8%, rgba(255,204,214,.45), transparent 34%), linear-gradient(180deg, #fffaf8 0%, #fff 100%); }
   .hero-copy { max-width: 920px; margin: 48px auto 38px; text-align: center; }
@@ -218,6 +221,8 @@ const testimonials = [
   @media (max-width: 640px) {
     .hero-section { min-height: auto; padding: 22px 18px 70px; }
     .hero-copy { margin: 34px auto 30px; }
+    .hero-copy > .eyebrow { margin-bottom: 14px; gap: 6px; font-size: 9px; letter-spacing: .07em; white-space: nowrap; }
+    .hero-copy > .eyebrow span { width: 5px; height: 5px; box-shadow: 0 0 0 3px rgba(230,45,88,.1); }
     .hero-copy h1 { font-size: clamp(42px, 13vw, 62px); }
     .hero-subtitle { font-size: 16px; }
     .vsl-frame { padding: 5px; border-radius: 20px; }
