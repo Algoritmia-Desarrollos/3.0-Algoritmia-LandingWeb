@@ -143,10 +143,11 @@ const jsonLd = {
 		<!-- Meta Pixel: Re-fire PageView on Astro View Transitions -->
 		<script is:inline>
 			// Astro View Transitions triggers 'astro:page-load' on every navigation.
-			// We re-fire PageView so Meta Pixel tracks all virtual page changes.
+			// Keep virtual PageViews scoped to the site's primary pixel. Landing pages
+			// can initialize additional pixels without receiving unrelated events.
 			document.addEventListener('astro:page-load', function() {
 				if (window.fbq) {
-					window.fbq('track', 'PageView');
+					window.fbq('trackSingle', '558246843661902', 'PageView');
 				}
 			});
 		</script>

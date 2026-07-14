@@ -41,6 +41,9 @@ const testimonials = [
   noindex={true}
   disableZoom={true}
 >
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=989984603929968&ev=PageView&noscript=1" alt="" />
+  </noscript>
   <Fragment slot="head">
     <link rel="preconnect" href="https://czocbnyoenjbpxmcqobn.supabase.co" crossorigin />
     <link rel="dns-prefetch" href="https://czocbnyoenjbpxmcqobn.supabase.co" />
@@ -118,10 +121,18 @@ const testimonials = [
           const formCard = iframe.closest('.form-embed-card');
           const formSection = document.getElementById('formulario');
           let formLoaded = false;
+          let formLoadTracked = false;
+
+          const track = (eventName, parameters = {}, standard = false) => {
+            if (typeof window.skincareTrack === 'function') {
+              window.skincareTrack(eventName, parameters, standard);
+            }
+          };
 
           const loadForm = () => {
             if (formLoaded) return;
             formLoaded = true;
+            track('FormLoadRequested');
             iframe.src = formUrl;
 
             const embedScript = document.createElement('script');
@@ -129,6 +140,12 @@ const testimonials = [
             embedScript.async = true;
             document.head.appendChild(embedScript);
           };
+
+          iframe.addEventListener('load', () => {
+            if (!formLoaded || formLoadTracked || !iframe.src.startsWith(formOrigin)) return;
+            formLoadTracked = true;
+            track('FormLoaded');
+          });
 
           if ('IntersectionObserver' in window && formSection) {
             const observer = new IntersectionObserver((entries) => {
@@ -150,6 +167,8 @@ const testimonials = [
             if (event.origin !== formOrigin || event.source !== iframe.contentWindow) return;
             if (!Array.isArray(event.data) || event.data[0] !== 'set-sticky-contacts') return;
 
+            track('Lead', { content_name: 'Aplicación Sistema C.A.R', content_category: 'Skincare' }, true);
+            track('ApplicationQualified', { destination: qualifiedRedirectUrl });
             window.location.assign(qualifiedRedirectUrl);
           });
 
@@ -186,8 +205,8 @@ const testimonials = [
       </div>
       <div class="marquee" aria-label="Testimonios de clientes">
         <div class="marquee-track">
-          {testimonials.map((testimonial) => (
-            <article class="testimonial-card">
+          {testimonials.map((testimonial, index) => (
+            <article class="testimonial-card" data-testimonial-index={index + 1} data-result={testimonial.highlight}>
               <div class="testimonial-video">
                 <img class="video-cover" src={testimonial.cover} alt="" loading="lazy" decoding="async" fetchpriority="low" />
                 <video class="testimonial-player hidden" preload="none" playsinline data-src={testimonial.video}></video>
@@ -287,12 +306,53 @@ const testimonials = [
 </style>
 
 <script>
+  const META_PIXEL_ID = '989984603929968';
+  type PixelParameters = Record<string, string | number | boolean>;
+  type SkincarePixelWindow = Window & {
+    fbq?: (...args: unknown[]) => void;
+    skincareTrack?: (eventName: string, parameters?: PixelParameters, standard?: boolean) => void;
+    __skincarePixelInitialized?: boolean;
+    __skincareTrackingAbort?: AbortController;
+  };
+  const pixelWindow = window as SkincarePixelWindow;
+  const trackSkincare = (eventName: string, parameters: PixelParameters = {}, standard = false) => {
+    if (typeof pixelWindow.fbq !== 'function') return;
+    pixelWindow.fbq(
+      standard ? 'trackSingle' : 'trackSingleCustom',
+      META_PIXEL_ID,
+      eventName,
+      parameters,
+    );
+  };
+  pixelWindow.skincareTrack = trackSkincare;
+
   document.addEventListener('astro:page-load', () => {
     const vsl = document.getElementById('vsl-video') as HTMLVideoElement | null;
     const vslUnmute = document.getElementById('vsl-unmute') as HTMLButtonElement | null;
+    if (!vsl) return;
+
+    if (typeof pixelWindow.fbq === 'function') {
+      if (!pixelWindow.__skincarePixelInitialized) {
+        pixelWindow.fbq('init', META_PIXEL_ID);
+        pixelWindow.__skincarePixelInitialized = true;
+      }
+      trackSkincare('PageView', {}, true);
+      trackSkincare('ViewContent', {
+        content_name: 'Landing Sistema C.A.R para cosmética',
+        content_category: 'Skincare',
+      }, true);
+    }
+
+    pixelWindow.__skincareTrackingAbort?.abort();
+    const trackingAbort = new AbortController();
+    pixelWindow.__skincareTrackingAbort = trackingAbort;
+    const trackingOptions = { signal: trackingAbort.signal };
+
     if (vsl && vslUnmute && vsl.dataset.initialized !== 'true') {
       vsl.dataset.initialized = 'true';
       let teaserMode = true;
+      let fullPlaybackStarted = false;
+      const reachedVslMilestones = new Set<string>();
       const teaserSource = vsl.querySelector<HTMLSourceElement>('source[data-src]');
 
       const playMutedTeaser = () => {
@@ -329,14 +389,81 @@ const testimonials = [
         try {
           await vsl.play();
           vsl.muted = false;
+          if (!fullPlaybackStarted) {
+            fullPlaybackStarted = true;
+            trackSkincare('VSLStarted', { sound: true });
+          }
         } catch {
           vslUnmute.classList.remove('hidden');
           vsl.controls = true;
         }
       });
 
+      vsl.addEventListener('timeupdate', () => {
+        if (!fullPlaybackStarted) return;
+
+        const secondMilestones = [
+          { seconds: 5, event: 'VSL5Seconds' },
+          { seconds: 10, event: 'VSL10Seconds' },
+        ];
+        secondMilestones.forEach(({ seconds, event }) => {
+          if (vsl.currentTime < seconds || reachedVslMilestones.has(event)) return;
+          reachedVslMilestones.add(event);
+          trackSkincare(event, { seconds });
+        });
+
+        if (!Number.isFinite(vsl.duration) || vsl.duration <= 0) return;
+        const percent = (vsl.currentTime / vsl.duration) * 100;
+        [25, 50, 75, 90].forEach(milestone => {
+          const event = `VSL${milestone}Percent`;
+          if (percent < milestone || reachedVslMilestones.has(event)) return;
+          reachedVslMilestones.add(event);
+          trackSkincare(event, { percent: milestone });
+        });
+      });
+
+      vsl.addEventListener('ended', () => {
+        if (!fullPlaybackStarted || reachedVslMilestones.has('VSLCompleted')) return;
+        reachedVslMilestones.add('VSLCompleted');
+        trackSkincare('VSLCompleted', { percent: 100 });
+      });
+
       playMutedTeaser();
     }
+
+    document.querySelector<HTMLAnchorElement>('.video-cta')?.addEventListener('click', () => {
+      trackSkincare('PrimaryCTAClick', { destination: 'formulario' });
+    }, trackingOptions);
+
+    const formSection = document.getElementById('formulario');
+    if (formSection && 'IntersectionObserver' in window) {
+      const formObserver = new IntersectionObserver((entries) => {
+        if (!entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .35)) return;
+        trackSkincare('FormViewed', { visible_percent: 35 });
+        formObserver.disconnect();
+      }, { threshold: [.35] });
+      formObserver.observe(formSection);
+      trackingAbort.signal.addEventListener('abort', () => formObserver.disconnect(), { once: true });
+    }
+
+    const reachedScrollDepth = new Set<number>();
+    let scrollFramePending = false;
+    const measureScrollDepth = () => {
+      scrollFramePending = false;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const depth = Math.round((window.scrollY / scrollable) * 100);
+      [25, 50, 75, 90].forEach(milestone => {
+        if (depth < milestone || reachedScrollDepth.has(milestone)) return;
+        reachedScrollDepth.add(milestone);
+        trackSkincare('ScrollDepth', { percent: milestone });
+      });
+    };
+    window.addEventListener('scroll', () => {
+      if (scrollFramePending) return;
+      scrollFramePending = true;
+      requestAnimationFrame(measureScrollDepth);
+    }, { passive: true, signal: trackingAbort.signal });
 
     const marquee = document.querySelector<HTMLElement>('.marquee');
     const marqueeTrack = document.querySelector<HTMLElement>('.marquee-track');
@@ -380,8 +507,14 @@ const testimonials = [
         marquee.scrollBy({ left: direction * (card.offsetWidth + 18), behavior: 'smooth' });
       };
 
-      document.getElementById('testimonials-prev')?.addEventListener('click', () => moveCarousel(-1));
-      document.getElementById('testimonials-next')?.addEventListener('click', () => moveCarousel(1));
+      document.getElementById('testimonials-prev')?.addEventListener('click', () => {
+        moveCarousel(-1);
+        trackSkincare('TestimonialCarouselNavigate', { direction: 'previous' });
+      });
+      document.getElementById('testimonials-next')?.addEventListener('click', () => {
+        moveCarousel(1);
+        trackSkincare('TestimonialCarouselNavigate', { direction: 'next' });
+      });
     }
 
     const syncCarouselWithVideos = () => {
@@ -398,6 +531,10 @@ const testimonials = [
       video.dataset.ready = 'true';
 
       overlay.addEventListener('click', async () => {
+        trackSkincare('TestimonialPlay', {
+          position: Number(card.dataset.testimonialIndex || 0),
+          result: card.dataset.result || '',
+        });
         document.querySelectorAll<HTMLVideoElement>('.testimonial-player').forEach(other => {
           if (other !== video && !other.paused) other.pause();
         });
