@@ -1,0 +1,30 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+import HeaderAds from '../components/ads/HeaderAds.astro';
+import HeroAds from '../components/ads/HeroAds.astro';
+import LogoTicker from '../components/LogoTicker.astro';
+import ProcessAds from '../components/ads/ProcessAds.astro';
+import Qualification from '../components/ads/Qualification.astro';
+import ContactAds from '../components/ads/ContactAds.astro';
+import FooterAds from '../components/ads/FooterAds.astro';
+import Work from '../components/Work.astro';
+import WhatsAppButton from '../components/ads/WhatsAppButton.astro';
+---
+
+<Layout title="Algoritmia | Expertos en Meta Ads" description="Algoritmia: agencia experta en Meta Ads para negocios establecidos en Argentina. Escalamos ventas con método probado. ROAS 43–70. Casos reales. Consulta gratuita.">
+  
+  <HeaderAds />
+
+  <main>
+    <HeroAds />
+    <LogoTicker />
+    <ProcessAds />
+    <Work />
+    <Qualification />
+    <ContactAds />
+  </main>
+  
+  <FooterAds />
+  <WhatsAppButton />
+</Layout>
