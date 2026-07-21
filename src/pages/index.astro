@@ -183,8 +183,8 @@ const faqs = [
 						class="hero-native-video"
 					></video>
 					<button class="sound-overlay-badge" id="soundBadge" aria-label="Activar sonido">
-						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
-						<span>Toca para reproducir con sonido</span>
+						<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+						<span>Tocar para activar sonido</span>
 					</button>
 				</div>
 
@@ -1432,35 +1432,36 @@ const faqs = [
 
 	.sound-overlay-badge {
 		position: absolute;
-		bottom: 24px;
+		bottom: 16px;
 		left: 50%;
 		transform: translateX(-50%);
-		display: flex;
+		display: inline-flex;
 		align-items: center;
-		gap: 10px;
-		padding: 12px 24px;
-		background: rgba(0, 0, 0, 0.78);
-		backdrop-filter: blur(12px);
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		border-radius: 30px;
+		gap: 6px;
+		padding: 6px 14px;
+		background: rgba(0, 0, 0, 0.72);
+		backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 20px;
 		color: #FFF;
-		font-size: 14px;
-		font-weight: 700;
+		font-size: 12px;
+		font-weight: 600;
+		white-space: nowrap;
 		cursor: pointer;
 		z-index: 10;
-		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 		transition: transform 0.2s ease, background 0.2s ease;
-		animation: pulseBadge 2s infinite ease-in-out;
+		animation: pulseBadge 2.5s infinite ease-in-out;
 	}
 
 	.sound-overlay-badge:hover {
-		transform: translateX(-50%) scale(1.05);
-		background: rgba(0, 0, 0, 0.9);
+		transform: translateX(-50%) scale(1.04);
+		background: rgba(0, 0, 0, 0.88);
 	}
 
 	@keyframes pulseBadge {
 		0%, 100% { transform: translateX(-50%) scale(1); }
-		50% { transform: translateX(-50%) scale(1.04); }
+		50% { transform: translateX(-50%) scale(1.03); }
 	}
 
 	.secondary-cta-btn {
