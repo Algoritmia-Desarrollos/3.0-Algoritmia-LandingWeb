@@ -1454,6 +1454,16 @@ const faqs = [
 		animation: pulseBadge 2.5s infinite ease-in-out;
 	}
 
+	@media (min-width: 768px) {
+		.sound-overlay-badge {
+			bottom: 24px;
+			padding: 10px 20px;
+			font-size: 14px;
+			gap: 8px;
+			border-radius: 26px;
+		}
+	}
+
 	.sound-overlay-badge:hover {
 		transform: translateX(-50%) scale(1.04);
 		background: rgba(0, 0, 0, 0.88);
