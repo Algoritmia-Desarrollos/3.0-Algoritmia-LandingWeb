@@ -169,20 +169,23 @@ const faqs = [
 					con <em>campañas rentables</em> en Meta Ads.
 				</h1>
 				
-				<!-- Hero Video Container matching TryHolo look, configured for Wistia 16:9 -->
-				<div class="hero-video-container wistia-container">
+				<!-- Hero Video Container con video alojado en Supabase -->
+				<div class="hero-video-container" id="heroVideoContainer">
 					<div class="video-border-effect"></div>
-					<script src="https://fast.wistia.com/player.js" async></script>
-					<script src="https://fast.wistia.com/embed/47f4av3ic5.js" async type="module"></script>
-					<style>
-						wistia-player[media-id='47f4av3ic5']:not(:defined) {
-							background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/47f4av3ic5/swatch');
-							display: block;
-							filter: blur(5px);
-							padding-top: 56.25%;
-						}
-					</style>
-					<wistia-player media-id="47f4av3ic5" aspect="1.7777777777777777"></wistia-player>
+					<video 
+						id="heroVideo"
+						src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/creattia-media/heroVideoAlgoritmia.mp4"
+						autoplay 
+						muted 
+						playsinline 
+						loop
+						preload="auto"
+						class="hero-native-video"
+					></video>
+					<button class="sound-overlay-badge" id="soundBadge" aria-label="Activar sonido">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+						<span>Toca para reproducir con sonido</span>
+					</button>
 				</div>
 
 				<div class="hero-content-block">
@@ -812,6 +815,34 @@ const faqs = [
 		}
 	});
 
+	// Lógica de reproducción del Hero Video con reinicio al tocar
+	const heroVideoContainer = document.getElementById('heroVideoContainer');
+	const heroVideo = document.getElementById('heroVideo') as HTMLVideoElement | null;
+	const soundBadge = document.getElementById('soundBadge');
+
+	if (heroVideo && heroVideoContainer) {
+		let isAudioActive = false;
+
+		const activateAudioAndRestart = () => {
+			if (!isAudioActive) {
+				isAudioActive = true;
+				heroVideo.currentTime = 0;
+				heroVideo.muted = false;
+				heroVideo.controls = true;
+				heroVideo.play().catch(console.error);
+				if (soundBadge) soundBadge.style.display = 'none';
+			}
+		};
+
+		heroVideoContainer.addEventListener('click', activateAudioAndRestart);
+		if (soundBadge) {
+			soundBadge.addEventListener('click', (e) => {
+				e.stopPropagation();
+				activateAudioAndRestart();
+			});
+		}
+	}
+
 	// Efecto 3D Scroll Perspective en el Video Walkthrough
 	const walkthroughVideo = document.querySelector('.walkthrough-video-container') as HTMLElement | null;
 	if (walkthroughVideo) {
@@ -1382,6 +1413,7 @@ const faqs = [
 		box-shadow: 0 40px 100px -20px rgba(0,0,0,0.12);
 		background: #000;
 		margin-bottom: 12px;
+		cursor: pointer;
 	}
 
 	@media (min-width: 1024px) {
@@ -1396,6 +1428,39 @@ const faqs = [
 		height: 100%;
 		object-fit: cover;
 		display: block;
+	}
+
+	.sound-overlay-badge {
+		position: absolute;
+		bottom: 24px;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px 24px;
+		background: rgba(0, 0, 0, 0.78);
+		backdrop-filter: blur(12px);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		border-radius: 30px;
+		color: #FFF;
+		font-size: 14px;
+		font-weight: 700;
+		cursor: pointer;
+		z-index: 10;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+		transition: transform 0.2s ease, background 0.2s ease;
+		animation: pulseBadge 2s infinite ease-in-out;
+	}
+
+	.sound-overlay-badge:hover {
+		transform: translateX(-50%) scale(1.05);
+		background: rgba(0, 0, 0, 0.9);
+	}
+
+	@keyframes pulseBadge {
+		0%, 100% { transform: translateX(-50%) scale(1); }
+		50% { transform: translateX(-50%) scale(1.04); }
 	}
 
 	.secondary-cta-btn {
