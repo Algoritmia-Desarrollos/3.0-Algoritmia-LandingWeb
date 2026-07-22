@@ -50,10 +50,27 @@ import {
           </div>
         </div>
 
-        <!-- Loading State -->
-        <div id="form-loading" class="hidden absolute inset-0 z-30 bg-white/95 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center gap-4">
-          <div class="w-9 h-9 border-3 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          <p class="text-slate-700 font-medium text-xs md:text-sm">Procesando postulación...</p>
+        <!-- Loading State (inline, not absolute) -->
+        <div id="form-loading" class="hidden py-16 flex flex-col items-center justify-center gap-4">
+          <div class="w-10 h-10 border-[3px] border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-slate-700 font-semibold text-sm">Enviando tu postulación...</p>
+          <p class="text-slate-400 text-xs">Esto puede tomar unos segundos</p>
+        </div>
+
+        <!-- Error State (inline) -->
+        <div id="form-error" class="hidden py-10 flex flex-col items-center justify-center gap-4 text-center">
+          <div class="w-11 h-11 bg-red-50 border border-red-200 rounded-2xl flex items-center justify-center text-red-500">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+          </div>
+          <h2 class="text-lg font-bold text-slate-900">Error al enviar</h2>
+          <p class="text-slate-500 text-xs max-w-xs leading-relaxed">Ocurrió un problema al enviar tu postulación. Por favor escribinos directamente por WhatsApp.</p>
+          <div class="flex gap-2.5">
+            <a href="https://wa.me/5493476245523" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.99 2h-.02A9.99 9.99 0 0 0 2 12c0 1.77.465 3.43 1.27 4.876L2 22l5.247-1.247A9.947 9.947 0 0 0 12.01 22H12c5.514 0 10-4.486 10-10S17.514 2 11.99 2z"/></svg>
+              WhatsApp
+            </a>
+            <button type="button" id="retry-btn" class="text-xs font-semibold px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all">Intentar de nuevo</button>
+          </div>
         </div>
 
         <!-- Disqualified State Card (Condicional) -->
@@ -477,6 +494,25 @@ import {
     }
   }
 
+  /* Loading/error/success states */
+  #form-loading, #form-error {
+    animation: stepFadeIn 0.2s ease-out forwards;
+  }
+
+  /* Button spinner */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
   /* Tap feedback on option cards */
   .option-card:active {
     transform: scale(0.98);
@@ -611,12 +647,32 @@ import {
       });
     });
 
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+    const errorDiv = document.getElementById('form-error');
+    const retryBtn = document.getElementById('retry-btn');
+
+    // Retry button resets form to step 6
+    retryBtn?.addEventListener('click', () => {
+      if (errorDiv) errorDiv.classList.add('hidden');
+      if (progressContainer) progressContainer.classList.remove('hidden');
+      form.classList.remove('hidden');
+    });
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const loading = document.getElementById('form-loading');
       const success = document.getElementById('form-success');
 
+      // Show inline loading, hide form
+      form.classList.add('hidden');
+      if (progressContainer) progressContainer.classList.add('hidden');
       if (loading) loading.classList.remove('hidden');
+
+      // Disable submit button and show spinner
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<div class="btn-spinner"></div><span>Enviando...</span>';
+      }
 
       try {
         const formData = new FormData(form);
@@ -631,16 +687,24 @@ import {
         if (loading) loading.classList.add('hidden');
 
         if (res.ok) {
-          form.classList.add('hidden');
-          if (progressContainer) progressContainer.classList.add('hidden');
           if (success) success.classList.remove('hidden');
         } else {
-          alert('Ocurrió un error al enviar tu solicitud. Podés contactarnos directamente por WhatsApp.');
+          // Show inline error state
+          if (errorDiv) errorDiv.classList.remove('hidden');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>Enviar Postulación</span>';
+          }
         }
       } catch (err) {
-        console.error(err);
+        console.error('Submit error:', err);
         if (loading) loading.classList.add('hidden');
-        alert('Ocurrió un problema de conexión. Escribinos directamente por WhatsApp.');
+        // Show inline error state
+        if (errorDiv) errorDiv.classList.remove('hidden');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Enviar Postulación</span>';
+        }
       }
     });
   });

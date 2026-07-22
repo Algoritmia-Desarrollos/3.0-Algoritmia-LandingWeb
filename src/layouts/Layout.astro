@@ -140,12 +140,11 @@ const jsonLd = {
 		</noscript>
 		<!-- End Meta Pixel Code -->
 
-		<!-- Meta Pixel: Re-fire PageView on Astro View Transitions -->
+		<!-- Meta Pixel: Re-fire PageView on Astro View Transitions (NOT on initial load) -->
 		<script is:inline>
-			// Astro View Transitions triggers 'astro:page-load' on every navigation.
-			// Keep virtual PageViews scoped to the site's primary pixel. Landing pages
-			// can initialize additional pixels without receiving unrelated events.
-			document.addEventListener('astro:page-load', function() {
+			// astro:after-swap only fires on SPA navigations, not on the initial page load.
+			// The initial PageView is already tracked by the inline init script above.
+			document.addEventListener('astro:after-swap', function() {
 				if (window.fbq) {
 					window.fbq('trackSingle', '558246843661902', 'PageView');
 				}
