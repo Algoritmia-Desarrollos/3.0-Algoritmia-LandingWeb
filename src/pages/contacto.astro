@@ -1,0 +1,667 @@
+---
+export const prerender = true;
+import Layout from '../layouts/Layout.astro';
+import { 
+  ShoppingBag, 
+  Briefcase, 
+  GraduationCap, 
+  Laptop, 
+  Store, 
+  CheckCircle2, 
+  Clock,
+  XCircle, 
+  Code2, 
+  MessageSquare,
+  TrendingUp, 
+  Ban,
+  Zap,
+  DollarSign, 
+  Coins,
+  Wallet,
+  BarChart3,
+  Trophy,
+  AlertTriangle, 
+  ArrowLeft, 
+  ArrowRight,
+  Send,
+  MessageCircle,
+  Instagram
+} from 'lucide-astro';
+---
+
+<Layout title="Postulación Paso a Paso | Algoritmia" description="Completa el cuestionario interactivo para calificar tu negocio y escalar tus ventas con Meta Ads.">
+  <div class="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-slate-900 selection:text-white flex flex-col justify-start">
+    
+    <!-- Minimal Centered Header Navigation -->
+    <header class="max-w-5xl mx-auto w-full px-6 pt-4 pb-3 flex items-center justify-center">
+      <a href="/" class="flex items-center gap-2.5 group">
+        <img src="/logoAlgoritmia.webp" alt="Algoritmia Logo" class="w-8 h-8 object-contain transition-transform group-hover:scale-105" />
+        <span class="font-bold text-xl tracking-tight text-slate-900">Algoritmia</span>
+      </a>
+    </header>
+
+    <!-- Main Section (Alineado arriba fijamente con espacio respirable) -->
+    <main class="flex-1 flex flex-col items-center justify-start px-2 sm:px-4 pt-2 pb-10">
+      <div class="w-full max-w-xl mx-auto">
+
+        <!-- Form Card Container -->
+        <div class="bg-white border border-slate-200 rounded-3xl p-5 sm:p-7 md:p-8 shadow-[0_12px_35px_rgba(0,0,0,0.04)] relative overflow-hidden">
+          
+          <!-- Progress Tracker Bar (Inside Card at Top) -->
+          <div id="progress-container" class="mb-6">
+            <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mb-4">
+              <div id="progress-bar" class="bg-slate-900 h-full w-[16%] transition-all duration-300 ease-out"></div>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div id="form-loading" class="hidden absolute inset-0 z-30 bg-white/95 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center gap-4">
+            <div class="w-9 h-9 border-3 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-slate-700 font-medium text-xs md:text-sm">Procesando postulación...</p>
+          </div>
+
+          <!-- Disqualified State Card (Condicional) -->
+          <div id="form-disqualified" class="hidden text-center py-4 animate-fade-in">
+            <div class="w-11 h-11 bg-amber-50 border border-amber-200 rounded-2xl flex items-center justify-center mx-auto mb-3.5 text-amber-600 shadow-xs">
+              <AlertTriangle class="w-5.5 h-5.5" />
+            </div>
+            <h2 id="dq-title" class="text-lg md:text-xl font-bold text-slate-900 mb-2">No podemos tomar tu proyecto en esta etapa</h2>
+            <p id="dq-message" class="text-slate-600 text-xs md:text-sm max-w-md mx-auto mb-5 leading-relaxed">
+              Para garantizar resultados positivos en Meta Ads, únicamente trabajamos con marcas que ya tienen una oferta validada y ventas activas en su tienda online.
+            </p>
+
+            <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl text-left max-w-md mx-auto mb-5 text-xs text-slate-600 space-y-1">
+              <p class="font-semibold text-slate-900">💡 Se ha notificado a nuestro equipo</p>
+              <p>Guardamos tus datos para contactarte cuando abramos programas para etapas iniciales. Te invitamos a seguir nuestro contenido gratuito en Instagram.</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
+              <a href="https://www.instagram.com/algoritmia.ads" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-md">
+                <Instagram class="w-4 h-4 text-pink-400" />
+                <span>Instagram de Algoritmia</span>
+              </a>
+              <button type="button" onclick="window.location.reload()" class="inline-flex items-center justify-center text-xs font-semibold px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all">
+                Reiniciar Formulario
+              </button>
+            </div>
+          </div>
+
+          <!-- Success State Card -->
+          <div id="form-success" class="hidden text-center py-4 animate-fade-in">
+            <div class="w-11 h-11 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-center mx-auto mb-3.5 text-emerald-600 shadow-xs">
+              <CheckCircle2 class="w-5.5 h-5.5" />
+            </div>
+            <h2 class="text-lg md:text-xl font-bold text-slate-900 mb-2">¡Tu perfil califica!</h2>
+            <p class="text-slate-600 text-xs md:text-sm max-w-md mx-auto mb-5 leading-relaxed">
+              Recibimos tu postulación correctamente. Evaluaremos tus datos y te escribiremos por WhatsApp en <strong class="text-slate-900">menos de 24 horas</strong>.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2.5 justify-center">
+              <a href="https://wa.me/5493476245523" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-xl font-bold text-xs transition-all shadow-md">
+                <MessageCircle class="w-4 h-4" />
+                <span>Hablar por WhatsApp Ahora</span>
+              </a>
+              <a href="/" class="inline-flex items-center justify-center px-5 py-3 rounded-xl font-semibold text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 transition-all">
+                Volver al Inicio
+              </a>
+            </div>
+          </div>
+
+          <!-- Main Interactive Form -->
+          <form id="stepForm" class="space-y-4">
+            
+            <!-- PASO 1: Tipo de Negocio -->
+            <div class="form-step" data-step="1">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-2">
+                <div><!-- Sin Atrás en Paso 1 --></div>
+                <span>Paso 1 de 6</span>
+              </div>
+
+              <div class="mb-5">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿A qué se dedica tu negocio?</h2>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3">
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-blue-600 flex items-center justify-center transition-colors shrink-0">
+                    <ShoppingBag class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Ecommerce / Productos Físicos</span>
+                  <input type="radio" name="businessType" value="Ecommerce" required class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-purple-600 flex items-center justify-center transition-colors shrink-0">
+                    <Briefcase class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Servicios B2B / Agencia</span>
+                  <input type="radio" name="businessType" value="Servicios B2B" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-amber-600 flex items-center justify-center transition-colors shrink-0">
+                    <GraduationCap class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Infoproductos / Cursos</span>
+                  <input type="radio" name="businessType" value="Infoproductos" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-indigo-600 flex items-center justify-center transition-colors shrink-0">
+                    <Laptop class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Software / SaaS / App</span>
+                  <input type="radio" name="businessType" value="Software" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
+                    <Store class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Negocio Local / Físico</span>
+                  <input type="radio" name="businessType" value="Local" class="sr-only" />
+                </label>
+              </div>
+
+              <div class="pt-5">
+                <button type="button" class="next-step-btn w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md text-xs md:text-sm flex items-center justify-center gap-2">
+                  <span>Siguiente</span>
+                  <ArrowRight class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <!-- PASO 2: Validación de Ventas Activas (CONDICIONAL) -->
+            <div class="form-step hidden" data-step="2">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-2">
+                <button type="button" class="prev-step-btn inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 font-semibold transition-colors">
+                  <ArrowLeft class="w-3.5 h-3.5" />
+                  <span>Atrás</span>
+                </button>
+                <span>Paso 2 de 6</span>
+              </div>
+
+              <div class="mb-5">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Tenés una oferta validada y ventas activas?</h2>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3">
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
+                    <CheckCircle2 class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Sí, tengo ventas activas (online, local físico o canal directo)</span>
+                  <input type="radio" name="hasValidatedOffer" value="yes_active" required class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-amber-600 flex items-center justify-center transition-colors shrink-0">
+                    <Clock class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Tengo tienda o local pero todavía NO tengo ventas regulares</span>
+                  <input type="radio" name="hasValidatedOffer" value="no_sales" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-rose-600 flex items-center justify-center transition-colors shrink-0">
+                    <XCircle class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">No tengo ventas activas ni oferta validada aún</span>
+                  <input type="radio" name="hasValidatedOffer" value="no_store" class="sr-only" />
+                </label>
+              </div>
+
+              <div class="pt-5">
+                <button type="button" class="next-step-btn w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md text-xs md:text-sm flex items-center justify-center gap-2">
+                  <span>Siguiente</span>
+                  <ArrowRight class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <!-- PASO 3: Plataforma de Tienda / Web -->
+            <div class="form-step hidden" data-step="3">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-2">
+                <button type="button" class="prev-step-btn inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 font-semibold transition-colors">
+                  <ArrowLeft class="w-3.5 h-3.5" />
+                  <span>Atrás</span>
+                </button>
+                <span>Paso 3 de 6</span>
+              </div>
+
+              <div class="mb-5">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Dónde tenés alojada tu tienda online o sitio?</h2>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3">
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 flex items-center justify-center transition-colors shrink-0">
+                    <img src="/images/platforms/tiendanubeoscuro.png" alt="Tiendanube Logo" class="w-5.5 h-5.5 object-contain" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Tiendanube</span>
+                  <input type="radio" name="platform" value="Tiendanube" required class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 flex items-center justify-center transition-colors shrink-0">
+                    <img src="/images/platforms/shopify-bag.webp" alt="Shopify Logo" class="w-5.5 h-5.5 object-contain" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Shopify</span>
+                  <input type="radio" name="platform" value="Shopify" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 flex items-center justify-center transition-colors shrink-0">
+                    <img src="/images/platforms/logowordpress.webp" alt="WooCommerce / WordPress Logo" class="w-5.5 h-5.5 object-contain" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">WooCommerce / WordPress</span>
+                  <input type="radio" name="platform" value="WooCommerce" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 flex items-center justify-center transition-colors shrink-0">
+                    <img src="/images/platforms/vercel.svg" alt="Vercel Logo" class="w-4.5 h-4.5 object-contain" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Desarrollo Propio / Vercel / Webflow / Otro</span>
+                  <input type="radio" name="platform" value="Custom" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-600 flex items-center justify-center transition-colors shrink-0">
+                    <MessageSquare class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">No aplica / Canal directo (WhatsApp, Instagram, etc.)</span>
+                  <input type="radio" name="platform" value="No aplica" class="sr-only" />
+                </label>
+              </div>
+
+              <div class="pt-5">
+                <button type="button" class="next-step-btn w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md text-xs md:text-sm flex items-center justify-center gap-2">
+                  <span>Siguiente</span>
+                  <ArrowRight class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <!-- PASO 4: Inversión en Meta Ads -->
+            <div class="form-step hidden" data-step="4">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-2">
+                <button type="button" class="prev-step-btn inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 font-semibold transition-colors">
+                  <ArrowLeft class="w-3.5 h-3.5" />
+                  <span>Atrás</span>
+                </button>
+                <span>Paso 4 de 6</span>
+              </div>
+
+              <div class="mb-5">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Invertís actualmente en Meta Ads?</h2>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3">
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-500 flex items-center justify-center transition-colors shrink-0">
+                    <Ban class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">No invierto actualmente</span>
+                  <input type="radio" name="adSpend" value="never" required class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-indigo-600 flex items-center justify-center transition-colors shrink-0">
+                    <TrendingUp class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Entre $0 a $500 USD / mes</span>
+                  <input type="radio" name="adSpend" value="0_500" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-blue-600 flex items-center justify-center transition-colors shrink-0">
+                    <TrendingUp class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Entre $500 a $1.500 USD / mes</span>
+                  <input type="radio" name="adSpend" value="500_1500" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-teal-600 flex items-center justify-center transition-colors shrink-0">
+                    <TrendingUp class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Entre $1.500 a $5.000 USD / mes</span>
+                  <input type="radio" name="adSpend" value="1500_5000" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
+                    <Zap class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Más de $5.000 USD / mes</span>
+                  <input type="radio" name="adSpend" value="plus_5000" class="sr-only" />
+                </label>
+              </div>
+
+              <div class="pt-5">
+                <button type="button" class="next-step-btn w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md text-xs md:text-sm flex items-center justify-center gap-2">
+                  <span>Siguiente</span>
+                  <ArrowRight class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <!-- PASO 5: Facturación Mensual Promedio -->
+            <div class="form-step hidden" data-step="5">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-2">
+                <button type="button" class="prev-step-btn inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 font-semibold transition-colors">
+                  <ArrowLeft class="w-3.5 h-3.5" />
+                  <span>Atrás</span>
+                </button>
+                <span>Paso 5 de 6</span>
+              </div>
+
+              <div class="mb-5">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Cuál es tu facturación mensual promedio?</h2>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3">
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-blue-600 flex items-center justify-center transition-colors shrink-0">
+                    <DollarSign class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Entre $0 a $5.000 USD / mes</span>
+                  <input type="radio" name="revenue" value="0_5k" required class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-teal-600 flex items-center justify-center transition-colors shrink-0">
+                    <Coins class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Entre $5.000 a $20.000 USD / mes</span>
+                  <input type="radio" name="revenue" value="5k_20k" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-indigo-600 flex items-center justify-center transition-colors shrink-0">
+                    <Wallet class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Entre $20.000 a $50.000 USD / mes</span>
+                  <input type="radio" name="revenue" value="20k_50k" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
+                    <BarChart3 class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Entre $50.000 a $100.000 USD / mes</span>
+                  <input type="radio" name="revenue" value="50k_100k" class="sr-only" />
+                </label>
+
+                <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-slate-400 cursor-pointer transition-all bg-white">
+                  <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-amber-600 flex items-center justify-center transition-colors shrink-0">
+                    <Trophy class="w-5 h-5" />
+                  </div>
+                  <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Más de $100.000 USD / mes</span>
+                  <input type="radio" name="revenue" value="plus_100k" class="sr-only" />
+                </label>
+              </div>
+
+              <div class="pt-5">
+                <button type="button" class="next-step-btn w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md text-xs md:text-sm flex items-center justify-center gap-2">
+                  <span>Siguiente</span>
+                  <ArrowRight class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <!-- PASO 6: Datos de Contacto -->
+            <div class="form-step hidden" data-step="6">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-2">
+                <button type="button" class="prev-step-btn inline-flex items-center gap-1 text-slate-500 hover:text-slate-900 font-semibold transition-colors">
+                  <ArrowLeft class="w-3.5 h-3.5" />
+                  <span>Atrás</span>
+                </button>
+                <span>Paso 6 de 6</span>
+              </div>
+
+              <div class="mb-5">
+                <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">Completá tus datos para ser contactado</h2>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <label for="nombre" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nombre Completo *</label>
+                  <input 
+                    type="text" 
+                    id="nombre" 
+                    name="nombre" 
+                    required 
+                    placeholder="Ej: Juan Pérez"
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:bg-white transition-all text-xs md:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label for="email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Email Profesional *</label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="juan@tunegocio.com"
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:bg-white transition-all text-xs md:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label for="telefono" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">WhatsApp / Teléfono *</label>
+                  <input 
+                    type="tel" 
+                    id="telefono" 
+                    name="telefono" 
+                    required 
+                    placeholder="+54 9 11 1234 5678"
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:bg-white transition-all text-xs md:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label for="comments" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Comentarios o URL de tu Tienda / Web (Opcional)</label>
+                  <textarea 
+                    id="comments" 
+                    name="comments" 
+                    rows="2" 
+                    placeholder="https://tutienda.com o detalles adicionales sobre tu negocio..."
+                    class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:bg-white transition-all text-xs md:text-sm resize-none"
+                  ></textarea>
+                </div>
+
+                <div class="pt-4">
+                  <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md text-xs md:text-sm flex items-center justify-center gap-2">
+                    <span>Enviar Postulación</span>
+                    <Send class="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+</Layout>
+
+<style>
+  /* Visual selection state for radio card labels */
+  .option-card:has(input[type="radio"]:checked) {
+    border-color: #0f172a;
+    background-color: #f8fafc;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  }
+  .option-card:has(input[type="radio"]:checked) .icon-box {
+    border-color: #cbd5e1;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('stepForm') as HTMLFormElement | null;
+    if (!form) return;
+
+    const steps = Array.from(document.querySelectorAll('.form-step')) as HTMLElement[];
+    const nextBtns = document.querySelectorAll('.next-step-btn');
+    const prevBtns = document.querySelectorAll('.prev-step-btn');
+    
+    const progressBar = document.getElementById('progress-bar');
+    const progressContainer = document.getElementById('progress-container');
+
+    const formDisqualified = document.getElementById('form-disqualified');
+    const dqTitle = document.getElementById('dq-title');
+    const dqMessage = document.getElementById('dq-message');
+
+    let currentStepIndex = 0;
+
+    const stepPercentages = ['16%', '33%', '50%', '66%', '83%', '100%'];
+
+    const updateStepUI = (index: number) => {
+      steps.forEach((step, i) => {
+        if (i === index) {
+          step.classList.remove('hidden');
+        } else {
+          step.classList.add('hidden');
+        }
+      });
+
+      if (progressBar) progressBar.style.width = stepPercentages[index];
+    };
+
+    // FUNCIÓN PARA ENVIAR MAIL DE DESCALIFICACIÓN
+    const sendDisqualificationEmail = async (reason: string) => {
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        data.disqualificationReason = reason;
+
+        await fetch('/api/qualify-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } catch (err) {
+        console.warn('Disqualification email dispatch attempt:', err);
+      }
+    };
+
+    const showDisqualification = (title: string, message: string) => {
+      form.classList.add('hidden');
+      if (progressContainer) progressContainer.classList.add('hidden');
+      if (dqTitle) dqTitle.textContent = title;
+      if (dqMessage) dqMessage.textContent = message;
+      if (formDisqualified) formDisqualified.classList.remove('hidden');
+      
+      // Enviar mail automático al descalificar
+      sendDisqualificationEmail(title + ': ' + message);
+    };
+
+    // Card selection feedback & auto-check on click
+    document.querySelectorAll('.option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const radio = card.querySelector('input[type="radio"]') as HTMLInputElement | null;
+        if (radio) {
+          radio.checked = true;
+        }
+      });
+    });
+
+    nextBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const currentStep = steps[currentStepIndex];
+        const inputs = currentStep.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+
+        inputs.forEach(input => {
+          const el = input as HTMLInputElement | HTMLSelectElement;
+          if (!el.checkValidity()) {
+            el.reportValidity();
+            isValid = false;
+          }
+        });
+
+        if (!isValid) return;
+
+        // CONDICIONAL EVALUATIONS BEFORE MOVING TO NEXT STEPS
+        const formData = new FormData(form);
+
+        // Conditional Check on Paso 2: Sin Ventas / Sin Oferta Validada
+        if (currentStepIndex === 1) {
+          const hasOffer = formData.get('hasValidatedOffer');
+          if (hasOffer === 'no_sales' || hasOffer === 'no_store') {
+            showDisqualification(
+              'Disculpanos, por el momento no somos el match adecuado',
+              'Para garantizar un retorno positivo de la inversión en Meta Ads, trabajamos únicamente con marcas que ya tienen una oferta validada con ventas activas (online, local físico o canal directo).'
+            );
+            return;
+          }
+        }
+
+        // Conditional Check on Paso 5: Menos de $5.000 USD Facturación
+        if (currentStepIndex === 4) {
+          const revenue = formData.get('revenue');
+          if (revenue === '0_5k') {
+            showDisqualification(
+              'Gracias por tu interés en Algoritmia',
+              'Actualmente nos enfocamos en marcas que facturan a partir de $5.000 USD mensuales. Esto nos asegura que el presupuesto de pauta no ahogue el margen de tu negocio.'
+            );
+            return;
+          }
+        }
+
+        if (currentStepIndex < steps.length - 1) {
+          currentStepIndex++;
+          updateStepUI(currentStepIndex);
+        }
+      });
+    });
+
+    prevBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (currentStepIndex > 0) {
+          currentStepIndex--;
+          updateStepUI(currentStepIndex);
+        }
+      });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const loading = document.getElementById('form-loading');
+      const success = document.getElementById('form-success');
+
+      if (loading) loading.classList.remove('hidden');
+
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+
+        const res = await fetch('/api/qualify-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (loading) loading.classList.add('hidden');
+
+        if (res.ok) {
+          form.classList.add('hidden');
+          if (progressContainer) progressContainer.classList.add('hidden');
+          if (success) success.classList.remove('hidden');
+        } else {
+          alert('Ocurrió un error al enviar tu solicitud. Podés contactarnos directamente por WhatsApp.');
+        }
+      } catch (err) {
+        console.error(err);
+        if (loading) loading.classList.add('hidden');
+        alert('Ocurrió un problema de conexión. Escribinos directamente por WhatsApp.');
+      }
+    });
+  });
+</script>

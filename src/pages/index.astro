@@ -138,11 +138,11 @@ const faqs = [
 			<a href="#testimonios">Testimonios</a>
 			<a href="#como-funciona">Cómo funciona</a>
 			<a href="#faq">Preguntas</a>
-			<a href="#contacto">Contacto</a>
+			<a href="/contacto">Contacto</a>
 		</nav>
 		<div class="header-actions">
-			<a class="outline-cta" href="#contacto">Comencemos <span>→</span></a>
-			<a class="header-cta-mobile" href="#contacto">Comencemos</a>
+			<a class="outline-cta" href="/contacto">Comencemos <span>→</span></a>
+			<a class="header-cta-mobile" href="/contacto">Comencemos</a>
 			<button class="mobile-menu-toggle" aria-label="Abrir menú" id="mobile-toggle">
 				<span></span><span></span><span></span>
 			</button>
@@ -155,8 +155,8 @@ const faqs = [
 			<a href="#testimonios" class="mobile-nav-link">Testimonios</a>
 			<a href="#como-funciona" class="mobile-nav-link">Cómo funciona</a>
 			<a href="#faq" class="mobile-nav-link">Preguntas</a>
-			<a href="#contacto" class="mobile-nav-link">Contacto</a>
-			<a class="mobile-cta" href="#contacto">Comencemos</a>
+			<a href="/contacto" class="mobile-nav-link">Contacto</a>
+			<a class="mobile-cta" href="/contacto">Comencemos</a>
 		</nav>
 	</div>
 
@@ -194,7 +194,7 @@ const faqs = [
 						Conseguimos resultados consistentes, escalables y predecibles.
 					</p>
 					<div class="hero-actions">
-						<a class="gradient-cta" href="#contacto">
+						<a class="gradient-cta" href="/contacto">
 							<span>Quiero escalar mi marca</span>
 							<svg class="cta-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
 						</a>
@@ -316,7 +316,7 @@ const faqs = [
 		<section class="how-it-works" id="como-funciona">
 			<div class="section-header">
 				<span class="section-tag font-bold">CÓMO FUNCIONA</span>
-				<h2>Método Algor paso a paso</h2>
+				<h2>Método Algoritmia paso a paso</h2>
 			</div>
 			
 			<div class="steps-vertical-container">
@@ -337,53 +337,77 @@ const faqs = [
 								<p>{step.copy}</p>
 							</div>
 							
-							{step.kind !== 'publish' && (
-								<div class="step-vertical-demo-box">
-									{step.kind === 'url' && (
-										<video autoplay loop muted playsinline class="step-video-demo">
-											<source src="https://tryholo.ai/rootPage/assets/howItWorks/inputUrl.webm" type="video/webm" />
-										</video>
-									)}
-									{step.kind === 'ideas' && (
-										<video autoplay loop muted playsinline class="step-video-demo">
-											<source src="https://tryholo.ai/rootPage/assets/howItWorks/SwipeIdeas.webm" type="video/webm" />
-										</video>
-									)}
-									{step.kind === 'edit' && (
-										<video autoplay loop muted playsinline class="step-video-demo">
-											<source src="https://tryholo.ai/rootPage/assets/howItWorks/Edit.webm" type="video/webm" />
-										</video>
-									)}
-								</div>
-							)}
+							<div class="step-vertical-demo-box">
+								{step.number === '01' && (
+									<div class="step-card-mockup step-card-video-wrapper">
+										<video 
+											src="/videos/step01.mp4" 
+											autoplay 
+											loop 
+											muted 
+											playsinline 
+											class="remotion-step-video"
+										></video>
+									</div>
+								)}
+
+								{step.number === '02' && (
+									<div class="step-card-mockup step-card-02">
+										<div class="mockup-header">
+											<div class="mac-dots">
+												<span class="dot red"></span>
+												<span class="dot yellow"></span>
+												<span class="dot green"></span>
+											</div>
+										</div>
+
+										<div class="pixel-box">
+											<div class="pixel-info">
+												<div class="meta-logo">∞</div>
+												<div>
+													<div class="pixel-title">Meta Ads Pixel</div>
+													<div class="pixel-status"><span class="pulse-dot"></span> Medición Activa</div>
+												</div>
+											</div>
+											<div class="progress-bar-track">
+												<div class="progress-bar-fill"></div>
+											</div>
+										</div>
+
+										<div class="audiences-list">
+											<div class="audience-pill">
+												<span>Audiencia Lookalike 1%</span>
+												<span class="pill-badge">PROSPECTOS</span>
+											</div>
+											<div class="audience-pill">
+												<span>Retargeting 30 Días</span>
+												<span class="pill-badge">CARRITOS</span>
+											</div>
+										</div>
+
+										<div class="mockup-footer-badge">
+											<span>Estructura & Creativos</span>
+											<span class="check-icon">✓</span>
+										</div>
+									</div>
+								)}
+
+								{step.number === '03' && (
+									<div class="step-card-mockup step-card-video-wrapper">
+										<video 
+											src="/videos/step03.mp4" 
+											autoplay 
+											loop 
+											muted 
+											playsinline 
+											class="remotion-step-video"
+										></video>
+									</div>
+								)}
+							</div>
 						</div>
 					</div>
 				))}
-			</div>
-		</section>
-
-		<!-- The All-in-One Marketing Tool Section (TryHolo 3D Cylinder Clone) -->
-		<section class="all-in-one-section">
-			<div class="section-header max-w-[800px] margin-auto">
-				<span class="section-tag">ANUNCIOS QUE CONVIERTEN</span>
-				<h2>La primera impresión es la que vende.</h2>
-				<p class="section-desc">Diseñamos creativos publicitarios de alto impacto específicamente pensados para campañas de conversión en Meta Ads. No hacemos imágenes decorativas: creamos anuncios estructurados para detener el scroll de tu cliente ideal y maximizar el ROAS.</p>
-			</div>
-
-			<div class="cylinder-carousel-container">
-				<div class="carousel-cylinder">
-					{cylinderImages.map((src, idx) => {
-						const angle = idx * 30; // 12 cards * 30deg = 360deg
-						return (
-							<div 
-								class="cylinder-card" 
-								style={`transform: rotateY(${angle}deg) translateZ(var(--carousel-radius));`}
-							>
-								<img src={src} alt={`Ejemplo creativo ${idx + 1}`} decoding="async" loading="lazy"/>
-							</div>
-						);
-					})}
-				</div>
 			</div>
 		</section>
 
@@ -682,8 +706,29 @@ const faqs = [
 			</div>
 		</section>
 
-		<!-- Contact / Postulation Form -->
-		<ContactAds />
+		<!-- Contact / Postulation Section -->
+		<section class="py-24 px-6 md:px-12 bg-white border-t border-gray-100 text-center relative overflow-hidden">
+			<div class="max-w-3xl mx-auto reveal">
+				<div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs font-semibold px-4 py-2 rounded-full mb-6">
+					<span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+					Solo aceptamos 3 clientes nuevos por mes
+				</div>
+				<h2 class="text-3xl md:text-5xl font-extrabold text-primary mb-4 tracking-tight">
+					¿Listo para multiplicar la facturación de tu negocio?
+				</h2>
+				<p class="text-primary/60 text-base md:text-lg mb-8 max-w-xl mx-auto">
+					Completá nuestra postulación paso a paso en menos de 1 minuto. Evaluamos la compatibilidad de tu marca sin compromiso.
+				</p>
+				<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+					<a href="/contacto" class="gradient-cta group w-full sm:w-auto px-8 py-4 font-bold text-base rounded-2xl flex items-center justify-center gap-3 shadow-xl transition-all hover:scale-105 active:scale-95">
+						<span>Comenzar Postulación Paso a Paso</span>
+						<svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</section>
 	</main>
 
 	<!-- Footer -->
@@ -701,7 +746,7 @@ const faqs = [
 			<a href="#testimonios">Testimonios</a>
 			<a href="#como-funciona">Cómo funciona</a>
 			<a href="#faq">Preguntas</a>
-			<a href="#contacto">Contacto</a>
+			<a href="/contacto">Contacto</a>
 		</div>
 		<div class="footer-col">
 			<h4>Redes</h4>
@@ -1007,7 +1052,7 @@ const faqs = [
 
 	/* Color de Acento de Algoritmia (Azul #0082fe -> #0066e6) */
 	:root {
-		--holo-gradient: linear-gradient(to right, #0082fe 0%, #0066e6 100%);
+		--holo-gradient: #0f172a;
 		--border-color: #E6E6E7;
 		--bg-light: #FBFBFB;
 		--text-dark: #1D1D1F;
@@ -1091,13 +1136,13 @@ const faqs = [
 		align-items: center;
 		gap: 8px;
 		border-radius: 24px;
-		background: linear-gradient(to right, #0082fe 0%, #0066e6 100%);
+		background: #0f172a;
 		border: none;
 		color: #FFF;
 		font-size: 15px;
 		font-weight: 700;
 		text-decoration: none;
-		box-shadow: 0 4px 18px rgba(0, 130, 254, 0.3);
+		box-shadow: 0 4px 18px rgba(15, 23, 42, 0.25);
 		transition: all 0.2s ease;
 	}
 
@@ -1109,7 +1154,8 @@ const faqs = [
 
 	.outline-cta:hover {
 		transform: scale(1.03);
-		box-shadow: 0 6px 22px rgba(0, 130, 254, 0.45);
+		box-shadow: 0 6px 22px rgba(15, 23, 42, 0.4);
+		background: #1e293b;
 	}
 
 	.header-actions {
@@ -1125,7 +1171,7 @@ const faqs = [
 		height: 40px;
 		padding: 0 16px;
 		border-radius: 20px;
-		background: linear-gradient(to right, #0082fe 0%, #0066e6 100%);
+		background: #0f172a;
 		color: #FFF;
 		font-size: 14px;
 		font-weight: 700;
@@ -1304,9 +1350,7 @@ const faqs = [
 
 	.hero-title em {
 		font-style: normal;
-		background: linear-gradient(to right, #0082fe 0%, #0066e6 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		color: #0f172a;
 	}
 
 	.hero-subtitle {
@@ -1330,19 +1374,19 @@ const faqs = [
 		height: 56px;
 		padding: 0 32px;
 		border-radius: 28px;
-		background: linear-gradient(to right, #0082fe 0%, #0066e6 100%);
+		background: #0f172a;
 		color: #FFF;
 		font-size: 17px;
 		font-weight: 700;
 		text-decoration: none;
-		box-shadow: 0 8px 25px rgba(0, 130, 254, 0.35);
-		transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+		box-shadow: 0 8px 25px rgba(15, 23, 42, 0.25);
+		transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, background 0.2s ease;
 	}
 
 	.gradient-cta:hover {
 		transform: scale(1.03);
-		box-shadow: 0 12px 30px rgba(0, 130, 254, 0.5);
-		filter: brightness(1.08);
+		background: #1e293b;
+		box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
 	}
 
 	.cta-arrow {
@@ -1965,32 +2009,585 @@ const faqs = [
 
 	.step-vertical-demo-box {
 		width: 100%;
-		max-width: 380px;
+		max-width: 310px;
 		height: auto;
-		margin-top: 24px;
+		margin-top: 20px;
 	}
 
 	@media (min-width: 810px) {
 		.step-vertical-demo-box {
 			margin-top: 0;
-			width: 300px;
+			width: 290px;
 			flex-shrink: 0;
 		}
 	}
 
 	@media (min-width: 1200px) {
 		.step-vertical-demo-box {
-			width: 380px;
+			width: 310px;
 		}
 	}
 
-	.step-video-demo {
+	/* -------------------------------------------------------------
+	   TARJETAS ANIMADAS MOCKUP SUTILES & COMPACTAS (ESTILO CLON)
+	   ------------------------------------------------------------- */
+	.step-card-video-wrapper {
+		padding: 0 !important;
+		overflow: hidden;
+		background: transparent !important;
+		border: 1px solid rgba(0, 0, 0, 0.06);
+		border-radius: 22px;
+	}
+	.remotion-step-video {
 		width: 100%;
-		height: auto;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 22px;
 		display: block;
+	}
+
+	.step-card-mockup {
+		background: rgba(255, 255, 255, 0.45);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border: 1px solid rgba(0, 0, 0, 0.06);
+		border-radius: 22px;
+		padding: 16px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 10px;
+		width: 100%;
+		max-width: 300px;
+		margin: 0 auto;
+		aspect-ratio: 3/4;
+		box-sizing: border-box;
+		position: relative;
+		overflow: hidden;
+		transition: all 0.3s ease;
+	}
+
+	.step-card-mockup:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 14px 35px rgba(0, 0, 0, 0.05);
+	}
+
+	.mockup-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.mac-dots {
+		display: flex;
+		gap: 6px;
+	}
+
+	.mac-dots .dot {
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		opacity: 0.8;
+	}
+	.mac-dots .dot.red { background-color: #EF4444; }
+	.mac-dots .dot.yellow { background-color: #F59E0B; }
+	.mac-dots .dot.green { background-color: #10B981; }
+
+	/* SEARCH BAR CON ANIMACIÓN DE TIPEADO DELGADO */
+	.search-bar-pill {
+		background: rgba(255, 255, 255, 0.85);
+		border: 1px solid rgba(99, 102, 241, 0.35);
+		border-radius: 999px;
+		padding: 8px 14px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+	}
+	.typing-text {
+		font-size: 13px;
+		font-weight: 600;
+		color: #1E293B;
+		letter-spacing: -0.01em;
+		display: flex;
+		align-items: center;
+	}
+	.typed-chars-example {
+		display: inline-block;
+		white-space: nowrap;
+		overflow: hidden;
+		animation: typeSequenceExample 5s steps(15, end) infinite;
+	}
+	@keyframes typeSequenceExample {
+		0%, 20% { width: 0; }
+		45%, 90% { width: 15ch; }
+		100% { width: 0; }
+	}
+	.cursor-blink {
+		color: #6366F1;
+		animation: blink 0.8s infinite;
+		font-weight: 400;
+		margin-left: 1px;
+	}
+	@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+	/* ESTADO ANALIZANDO... */
+	.analyzing-status-box {
+		background: rgba(248, 250, 252, 0.85);
+		border: 1px solid rgba(0, 0, 0, 0.05);
+		border-radius: 12px;
+		padding: 8px 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		opacity: 0;
+		animation: analyzeFade 5s ease-in-out infinite;
+	}
+	.analyzing-loader {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+	.spinner-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: #6366F1;
+		animation: pulseDot 1s infinite alternate;
+	}
+	@keyframes pulseDot { 0% { opacity: 0.3; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); } }
+	.analyzing-text {
+		font-size: 11px;
+		font-weight: 700;
+		color: #475569;
+	}
+	.analyzing-progress-bar {
+		width: 100%;
+		height: 4px;
+		background: #E2E8F0;
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.analyzing-progress-fill {
+		height: 100%;
+		background: #6366F1;
+		width: 0%;
+		border-radius: 999px;
+		animation: analyzeProgress 5s ease-in-out infinite;
+	}
+
+	@keyframes analyzeFade {
+		0%, 42% { opacity: 0; transform: translateY(4px); }
+		45%, 85% { opacity: 1; transform: translateY(0); }
+		90%, 100% { opacity: 0; }
+	}
+
+	@keyframes analyzeProgress {
+		0%, 45% { width: 0%; }
+		75%, 90% { width: 100%; }
+		95%, 100% { width: 0%; }
+	}
+
+	/* AUDIT GAUGE */
+	.audit-gauge-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		margin: 2px 0;
+	}
+	.gauge-svg {
+		width: 120px;
+		height: 120px;
+		transform: rotate(-90deg);
+	}
+	.gauge-bg {
+		fill: none;
+		stroke: #F1F5F9;
+		stroke-width: 10;
+	}
+	.gauge-fill {
+		fill: none;
+		stroke: url(#auditGrad);
+		stroke-width: 10;
+		stroke-dasharray: 365;
+		stroke-dashoffset: 20;
+		stroke-linecap: round;
+		animation: gaugeAnim 4.5s ease-in-out infinite alternate;
+	}
+	@keyframes gaugeAnim {
+		0%, 20% { stroke-dashoffset: 280; }
+		60%, 100% { stroke-dashoffset: 15; }
+	}
+	.gauge-text {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	.gauge-num {
+		font-size: 30px;
+		font-weight: 800;
+		color: #0F172A;
+		line-height: 1;
+		letter-spacing: -0.02em;
+	}
+	.gauge-label {
+		font-size: 9px;
+		font-weight: 800;
+		color: #6366F1;
+		letter-spacing: 0.05em;
+		margin-top: 2px;
+	}
+
+	/* PIXEL BOX */
+	.pixel-box {
+		background: rgba(255, 255, 255, 0.7);
+		border: 1px solid rgba(0, 0, 0, 0.05);
+		border-radius: 14px;
+		padding: 10px 12px;
+	}
+	.pixel-info {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 6px;
+	}
+	.meta-logo {
+		width: 28px;
+		height: 28px;
+		border-radius: 8px;
+		background: #1877F2;
+		color: #FFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 18px;
+		font-weight: bold;
+	}
+	.pixel-title {
+		font-size: 13px;
+		font-weight: 800;
+		color: #0F172A;
+	}
+	.pixel-status {
+		font-size: 10px;
+		font-weight: 700;
+		color: #10B981;
+	}
+	.progress-bar-track {
+		width: 100%;
+		background: #F1F5F9;
+		height: 5px;
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.progress-bar-fill {
+		height: 100%;
+		background: linear-gradient(90deg, #1877F2 0%, #6366F1 100%);
+		width: 100%;
+		border-radius: 999px;
+		animation: fillAnim 4.5s ease-in-out infinite alternate;
+	}
+	@keyframes fillAnim { 0%, 20% { width: 10%; } 60%, 100% { width: 100%; } }
+
+	/* AUDIENCES LIST */
+	.audiences-list {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.audience-pill {
+		padding: 8px 12px;
+		border-radius: 12px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 12px;
+		font-weight: 700;
+	}
+	.audience-pill.pill-blue { background: rgba(248, 250, 252, 0.8); border: 1px solid rgba(0, 0, 0, 0.05); color: #334155; }
+	.audience-pill.pill-purple { background: rgba(248, 250, 252, 0.8); border: 1px solid rgba(0, 0, 0, 0.05); color: #334155; }
+	.pill-badge {
+		font-size: 9px;
+		font-weight: 700;
+		background: #FFFFFF;
+		padding: 2px 6px;
+		border-radius: 999px;
+		border: 1px solid rgba(0, 0, 0, 0.05);
+	}
+
+	/* FOOTER BADGE */
+	.mockup-footer-badge {
+		background: rgba(248, 250, 252, 0.8);
+		border: 1px solid rgba(0, 0, 0, 0.05);
+		border-radius: 12px;
+		padding: 8px 12px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 12px;
+		font-weight: 700;
+		color: #334155;
+	}
+	.mockup-footer-badge.pink { background: rgba(248, 250, 252, 0.8); border-color: rgba(0, 0, 0, 0.05); color: #334155; }
+	.mockup-footer-badge.orange { background: rgba(248, 250, 252, 0.8); border-color: rgba(0, 0, 0, 0.05); color: #334155; }
+	.check-icon {
+		font-weight: 800;
+		color: #6366F1;
+		font-size: 13px;
+	}
+
+	/* STEP 03 SWITCH & REVENUE */
+	.status-switch-box {
+		background: rgba(236, 253, 245, 0.8);
+		border: 1px solid rgba(167, 243, 208, 0.8);
 		border-radius: 16px;
-		border: 1px solid rgba(0,0,0,0.03);
-		box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+		padding: 12px 14px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.status-sub {
+		font-size: 10px;
+		font-weight: 800;
+		color: #059669;
+		letter-spacing: 0.05em;
+	}
+	.status-title {
+		font-size: 16px;
+		font-weight: 800;
+		color: #047857;
+	}
+	.toggle-switch {
+		width: 42px;
+		height: 22px;
+		background: #10B981;
+		border-radius: 999px;
+		padding: 2px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		box-sizing: border-box;
+	}
+	.toggle-circle {
+		width: 18px;
+		height: 18px;
+		background: #FFF;
+		border-radius: 50%;
+		box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+	}
+
+	.revenue-box {
+		background: rgba(255, 255, 255, 0.9);
+		border: 1px solid rgba(226, 232, 240, 0.8);
+		border-radius: 16px;
+		padding: 14px;
+		box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+	}
+	.revenue-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 4px;
+	}
+	.revenue-sub {
+		font-size: 11px;
+		font-weight: 800;
+		color: #64748B;
+		text-transform: uppercase;
+	}
+	.roas-pill {
+		font-size: 11px;
+		font-weight: 800;
+		color: #059669;
+		background: #D1FAE5;
+		padding: 2px 8px;
+		border-radius: 999px;
+	}
+	.revenue-amount {
+		font-size: 28px;
+		font-weight: 800;
+		color: #0F172A;
+		letter-spacing: -0.02em;
+		line-height: 1;
+	}
+	.usd-text {
+		font-size: 15px;
+		color: #64748B;
+	}
+
+	.chart-svg-wrapper {
+		height: 50px;
+		width: 100%;
+		margin-top: 6px;
+	}
+	.animated-line {
+		stroke-dasharray: 400;
+		stroke-dashoffset: 0;
+		animation: dashAnim 3s ease-in-out infinite alternate;
+	}
+	@keyframes dashAnim { 0% { stroke-dashoffset: 300; } 100% { stroke-dashoffset: 0; } }
+
+	/* STEP 04 SCALE BANNER & METRICS */
+	.scale-banner {
+		background: rgba(255, 247, 237, 0.8);
+		border: 1px solid rgba(254, 215, 170, 0.8);
+		border-radius: 16px;
+		padding: 12px 14px;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.scale-icon {
+		font-size: 24px;
+	}
+	.scale-title {
+		font-size: 16px;
+		font-weight: 800;
+		color: #9A3412;
+	}
+	.scale-sub {
+		font-size: 11px;
+		font-weight: 700;
+		color: #EA580C;
+	}
+
+	.metrics-grid {
+		display: flex;
+		gap: 8px;
+	}
+	.metric-box {
+		flex: 1;
+		border-radius: 14px;
+		padding: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.metric-box.box-red { background: rgba(254, 242, 242, 0.8); border: 1px solid rgba(252, 165, 165, 0.8); }
+	.metric-box.box-green { background: rgba(236, 253, 245, 0.8); border: 1px solid rgba(110, 231, 183, 0.8); }
+	.m-label { font-size: 10px; font-weight: 800; color: #475569; }
+	.m-val { font-size: 18px; font-weight: 800; }
+	.box-red .m-val { color: #DC2626; }
+	.box-green .m-val { color: #059669; }
+
+	/* -------------------------------------------------------------
+	   ANIMACIÓN DE CURSOR MOUSE & INTERACCIÓN DE CLIC 
+	   ------------------------------------------------------------- */
+	.animated-mouse {
+		position: absolute;
+		z-index: 20;
+		pointer-events: none;
+		filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+	}
+
+	.click-ripple {
+		position: absolute;
+		top: -4px;
+		left: -4px;
+		width: 28px;
+		height: 28px;
+		border-radius: 50%;
+		background: rgba(99, 102, 241, 0.5);
+		transform: scale(0);
+		opacity: 0;
+	}
+
+	/* Animación Mouse 01 (Búsqueda & Auditoría) */
+	.mouse-step-01 {
+		animation: moveMouse01 4.5s ease-in-out infinite;
+	}
+	.mouse-step-01 .click-ripple {
+		animation: rippleClick01 4.5s ease-in-out infinite;
+	}
+
+	@keyframes moveMouse01 {
+		0% { top: 80%; left: 85%; opacity: 0; }
+		15% { top: 80%; left: 85%; opacity: 1; }
+		45% { top: 22%; left: 45%; }
+		50% { top: 22%; left: 45%; transform: scale(0.85); }
+		55% { top: 22%; left: 45%; transform: scale(1); }
+		75% { top: 62%; left: 50%; }
+		80% { top: 62%; left: 50%; transform: scale(0.85); }
+		85% { top: 62%; left: 50%; transform: scale(1); }
+		100% { top: 80%; left: 85%; opacity: 0; }
+	}
+
+	@keyframes rippleClick01 {
+		50% { transform: scale(1.6); opacity: 0.8; }
+		55% { transform: scale(2.2); opacity: 0; }
+		80% { transform: scale(1.6); opacity: 0.8; }
+		85% { transform: scale(2.2); opacity: 0; }
+	}
+
+	/* Animación Mouse 02 (Segmentos & Audiencias) */
+	.mouse-step-02 {
+		animation: moveMouse02 4.5s ease-in-out infinite;
+	}
+	.mouse-step-02 .click-ripple {
+		animation: rippleClick02 4.5s ease-in-out infinite;
+	}
+
+	@keyframes moveMouse02 {
+		0% { top: 85%; left: 10%; opacity: 0; }
+		15% { top: 85%; left: 10%; opacity: 1; }
+		50% { top: 58%; left: 40%; }
+		55% { top: 58%; left: 40%; transform: scale(0.85); }
+		60% { top: 58%; left: 40%; transform: scale(1); }
+		100% { top: 85%; left: 10%; opacity: 0; }
+	}
+
+	@keyframes rippleClick02 {
+		55% { transform: scale(1.8); opacity: 0.8; }
+		60% { transform: scale(2.4); opacity: 0; }
+	}
+
+	/* Animación Mouse 03 (Interruptor EN VIVO) */
+	.mouse-step-03 {
+		animation: moveMouse03 4.5s ease-in-out infinite;
+	}
+	.mouse-step-03 .click-ripple {
+		animation: rippleClick03 4.5s ease-in-out infinite;
+	}
+
+	@keyframes moveMouse03 {
+		0% { top: 80%; left: 85%; opacity: 0; }
+		15% { top: 80%; left: 85%; opacity: 1; }
+		45% { top: 18%; left: 78%; }
+		50% { top: 18%; left: 78%; transform: scale(0.85); }
+		55% { top: 18%; left: 78%; transform: scale(1); }
+		100% { top: 80%; left: 85%; opacity: 0; }
+	}
+
+	@keyframes rippleClick03 {
+		50% { transform: scale(1.8); opacity: 0.9; }
+		55% { transform: scale(2.4); opacity: 0; }
+	}
+
+	/* Animación Mouse 04 (Ajuste & Escala) */
+	.mouse-step-04 {
+		animation: moveMouse04 4.5s ease-in-out infinite;
+	}
+	.mouse-step-04 .click-ripple {
+		animation: rippleClick04 4.5s ease-in-out infinite;
+	}
+
+	@keyframes moveMouse04 {
+		0% { top: 85%; left: 20%; opacity: 0; }
+		15% { top: 85%; left: 20%; opacity: 1; }
+		50% { top: 20%; left: 45%; }
+		55% { top: 20%; left: 45%; transform: scale(0.85); }
+		60% { top: 20%; left: 45%; transform: scale(1); }
+		100% { top: 85%; left: 20%; opacity: 0; }
+	}
+
+	@keyframes rippleClick04 {
+		55% { transform: scale(1.8); opacity: 0.8; }
+		60% { transform: scale(2.4); opacity: 0; }
 	}
 
 	.btn-download {
