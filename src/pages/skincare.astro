@@ -3,36 +3,43 @@ import Layout from '../layouts/Layout.astro';
 
 const testimonials = [
   {
+    tag: 'E-commerce USA',
     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-skirting.webp',
     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/manuel-descartes.mp4',
     before: 'Aumentó sus ventas un', highlight: '+300%', after: 'en el primer mes',
   },
   {
+    tag: 'High Ticket',
     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-jack.webp',
     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/puertas-jack.mp4',
     before: 'Multiplicó sus ventas', highlight: '×10', after: 'en 6 meses',
   },
   {
+    tag: 'Mayorista B2B',
     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-libreria-leo.webp',
     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/libreria-leo.mp4',
     before: 'Pasó de 2 pedidos por semana a', highlight: 'USD 150K al año', after: '',
   },
   {
+    tag: 'Salud / Servicios',
     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-juan.webp',
     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/juan-tesari.mp4',
     before: 'Generó', highlight: '+300 consultas / mes', after: '',
   },
   {
+    tag: 'Construcción Premium',
     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-atermicos.webp',
     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/atermicos-pinamar.mp4',
     before: 'Consiguió', highlight: '+200% en ventas', after: 'en solo 2 meses',
   },
   {
+    tag: 'Salud / Bienestar',
     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-rocio.webp',
     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/psicologa-rocio.mp4',
     before: 'Aumentó su clientela un', highlight: '+400%', after: 'en 1 mes',
   },
   {
+    tag: 'E-commerce',
     cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-case-rossi.webp',
     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/case-rossi.mp4',
     before: 'Duplicó su facturación:', highlight: '+100%', after: 'en 1 mes',
@@ -269,9 +276,9 @@ const testimonials = [
   .marquee-track { width: max-content; display: flex; }
   .testimonial-card { width: min(410px, 80vw); margin: 0 9px; flex: 0 0 auto; overflow: hidden; border: 1px solid rgba(255,255,255,.1); border-radius: 22px; background: #241d21; scroll-snap-align: center; }
   .testimonial-video { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #090708; }
-  .video-cover, .testimonial-player { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
-  .testimonial-player { z-index: 1; }
-  .video-overlay { position: absolute; inset: 0; z-index: 2; padding: 0; border: 0; display: grid; place-items: center; color: #191518; background: rgba(0,0,0,.18); cursor: pointer; transition: background .2s ease; }
+  .video-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; z-index: 1; }
+  .testimonial-player { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; z-index: 2; }
+  .video-overlay { position: absolute; inset: 0; z-index: 3; padding: 0; border: 0; display: grid; place-items: center; color: #191518; background: rgba(0,0,0,.18); cursor: pointer; transition: background .2s ease; }
   .video-overlay:hover { background: rgba(0,0,0,.08); }
   .video-overlay span { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: white; box-shadow: 0 10px 32px rgba(0,0,0,.28); font-size: 32px; transition: transform .2s ease; }
   .video-overlay:hover span { transform: scale(1.08); }
@@ -282,7 +289,7 @@ const testimonials = [
     .hero-copy { margin: 30px auto 26px; }
     .hero-copy > .eyebrow { margin-bottom: 14px; gap: 6px; font-size: 9px; letter-spacing: .07em; white-space: nowrap; }
     .hero-copy > .eyebrow span { width: 5px; height: 5px; box-shadow: 0 0 0 3px rgba(230,45,88,.1); }
-    .hero-copy h1 { max-width: 360px; font-size: clamp(36px, 10.8vw, 48px); line-height: 1.03; letter-spacing: -.05em; }
+    .hero-copy h1 { max-width: 370px; font-size: clamp(33px, 9.4vw, 44px); line-height: 1.04; letter-spacing: -.05em; text-wrap: balance; }
     .hero-subtitle { max-width: 340px; margin-top: 17px; font-size: 14px; line-height: 1.45; }
     .vsl-frame { padding: 5px; border-radius: 20px; }
     .vsl-video { border-radius: 15px; }
