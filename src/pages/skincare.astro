@@ -253,7 +253,7 @@ const testimonials = [
   :global(html) { scroll-behavior: smooth; touch-action: pan-x pan-y; }
   :global(body) { margin: 0; background: #fffaf8; touch-action: pan-x pan-y; }
   main { min-height: 100vh; overflow: hidden; color: #191518; background: #fffaf8; }
-  .hero-section { min-height: 100vh; box-sizing: border-box; padding: 28px 24px 88px; position: relative; background: radial-gradient(circle at 50% 8%, rgba(255,204,214,.45), transparent 34%), linear-gradient(180deg, #fffaf8 0%, #fff 100%); }
+  .hero-section { min-height: 100vh; box-sizing: border-box; padding: 28px 24px 0; position: relative; background: radial-gradient(circle at 50% 8%, rgba(255,204,214,.45), transparent 34%), linear-gradient(180deg, #fffaf8 0%, #fff 100%); }
   .hero-copy { max-width: 920px; margin: 48px auto 20px; text-align: center; }
   .hero-copy h1 { max-width: 860px; margin: 0 auto; font-size: clamp(42px, 5.8vw, 76px); line-height: 1.01; letter-spacing: -.055em; font-weight: 750; text-wrap: balance; }
   .subtle-underline { padding-bottom: .01em; background-image: linear-gradient(transparent 86%, rgba(244,63,94,.66) 86%, rgba(244,63,94,.66) 89%, transparent 89%); background-repeat: no-repeat; }
@@ -276,7 +276,7 @@ const testimonials = [
     0%, 100% { transform: scale(1); opacity: 0.15; filter: blur(4px); }
     50% { transform: scale(1.03, 1.1); opacity: 0.45; filter: blur(7px); }
   }
-  .cta-rating-wrap { margin-top: 44px; display: flex; justify-content: center; }
+  .cta-rating-wrap { margin-top: 74px; margin-bottom: 74px; display: flex; justify-content: center; }
   .rating-stars { display: inline-flex; align-items: center; gap: 8px; padding: 5px 13px; background: #ffffff; border-radius: 999px; border: 1px solid rgba(24,19,22,.1); box-shadow: 0 4px 16px rgba(0,0,0,.04); }
   .avatars-group { display: flex; }
   .rating-avatar-img { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #ffffff; margin-right: -6px; object-fit: cover; }
@@ -284,7 +284,7 @@ const testimonials = [
   .rating-text { font-size: 12px; font-weight: 500; color: #1d1d1f; }
   .rating-text strong { font-weight: 700; }
   .rating-star-icon { width: 15px; height: 15px; }
-  .form-section { min-height: 100vh; box-sizing: border-box; padding: 100px 22px 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 0%, rgba(255,198,212,.32), transparent 35%); }
+  .form-section { min-height: 100vh; box-sizing: border-box; padding: 0 22px 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ffffff; }
   .form-heading { max-width: 630px; margin-bottom: 34px; text-align: center; }
   .meta-pill { margin: 0; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0; background: transparent; border: none; color: #191518; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
   .meta-logo-img { width: 17px; height: 17px; display: inline-block; flex-shrink: 0; fill: #0081FB; }
@@ -322,7 +322,7 @@ const testimonials = [
   .testimonial-result { min-height: 94px; box-sizing: border-box; margin: 0; padding: 20px 22px; color: rgba(255,255,255,.8); font-size: 15px; font-weight: 650; line-height: 1.45; }
   .testimonial-result strong { display: inline; margin-inline: .2em; color: #ff7894; font-size: 1.18em; font-weight: 900; letter-spacing: -.02em; text-shadow: 0 0 24px rgba(255,120,148,.25); }
   @media (max-width: 640px) {
-    .hero-section { min-height: auto; padding: 22px 18px 70px; }
+    .hero-section { min-height: auto; padding: 22px 18px 0; }
     .hero-copy { margin: 26px auto 16px; }
     .eyebrow-wrap { margin-bottom: 14px; }
     .meta-pill { padding: 5px 12px; gap: 6px; font-size: 10px; letter-spacing: .08em; white-space: nowrap; }
@@ -337,7 +337,9 @@ const testimonials = [
     .vsl-unmute-pill { bottom: 8px; min-height: 39px; padding: 5px 13px 5px 6px; gap: 7px; }
     .vsl-unmute-icon { width: 29px; height: 29px; font-size: 17px; }
     .vsl-unmute strong { font-size: 11px; }
-    .form-section { min-height: 100svh; padding: 52px 16px 70px; justify-content: flex-start; }
+    .video-cta { margin-top: 32px; margin-bottom: 0; }
+    .cta-rating-wrap { margin-top: 66px; margin-bottom: 66px; }
+    .form-section { min-height: 100svh; padding: 0 16px 70px; justify-content: flex-start; }
     .form-heading { margin-bottom: 27px; }
     .form-heading h2 { font-size: clamp(36px, 10.5vw, 44px); line-height: 1.02; }
     .form-heading > p:last-child { font-size: 14px; }
