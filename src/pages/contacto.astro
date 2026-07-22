@@ -50,11 +50,18 @@ import {
           </div>
         </div>
 
-        <!-- Loading State (inline, not absolute) -->
-        <div id="form-loading" class="hidden py-16 flex flex-col items-center justify-center gap-4">
-          <div class="w-10 h-10 border-[3px] border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-          <p class="text-slate-700 font-semibold text-sm">Enviando tu postulación...</p>
-          <p class="text-slate-400 text-xs">Esto puede tomar unos segundos</p>
+        <!-- Loading State (inline) -->
+        <div id="form-loading" class="hidden py-12 flex flex-col items-center justify-center gap-5 text-center">
+          <div class="w-12 h-12 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-center text-blue-600 shadow-xs">
+            <div class="w-6 h-6 border-[3px] border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <div class="space-y-1">
+            <h3 id="loading-status" class="text-base font-bold text-slate-900">Enviando postulación...</h3>
+            <p id="loading-substatus" class="text-xs text-slate-500">Conectando con el servidor de correo...</p>
+          </div>
+          <div class="w-full max-w-xs bg-slate-100 h-2 rounded-full overflow-hidden">
+            <div id="sending-progress-bar" class="bg-blue-600 h-full w-[25%] transition-all duration-500 ease-out"></div>
+          </div>
         </div>
 
         <!-- Error State (inline) -->
@@ -520,9 +527,13 @@ import {
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  function initForm() {
     const form = document.getElementById('stepForm') as HTMLFormElement | null;
     if (!form) return;
+
+    // Avoid double-initialization on re-renders
+    if (form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
 
     const steps = Array.from(document.querySelectorAll('.form-step')) as HTMLElement[];
     const prevBtns = document.querySelectorAll('.prev-step-btn');
@@ -650,6 +661,9 @@ import {
     const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
     const errorDiv = document.getElementById('form-error');
     const retryBtn = document.getElementById('retry-btn');
+    const sendingProgressBar = document.getElementById('sending-progress-bar');
+    const loadingStatus = document.getElementById('loading-status');
+    const loadingSubstatus = document.getElementById('loading-substatus');
 
     // Retry button resets form to step 6
     retryBtn?.addEventListener('click', () => {
@@ -663,7 +677,7 @@ import {
       const loading = document.getElementById('form-loading');
       const success = document.getElementById('form-success');
 
-      // Recolectar datos ANTES de ocultar el form (garantizado en todos los navegadores)
+      // Recolectar datos ANTES de ocultar el form
       const formData = new FormData(form);
       const data = Object.fromEntries(formData);
       console.log('📤 Enviando postulación:', data);
@@ -674,10 +688,21 @@ import {
         submitBtn.innerHTML = '<div class="btn-spinner"></div><span>Enviando...</span>';
       }
 
-      // Show inline loading, hide form
+      // Show inline loading UI with progress bar
       form.classList.add('hidden');
       if (progressContainer) progressContainer.classList.add('hidden');
       if (loading) loading.classList.remove('hidden');
+
+      // Progress bar animation steps
+      if (sendingProgressBar) sendingProgressBar.style.width = '20%';
+      if (loadingStatus) loadingStatus.textContent = 'Procesando datos...';
+      if (loadingSubstatus) loadingSubstatus.textContent = 'Validando tu perfil de marca';
+
+      setTimeout(() => {
+        if (sendingProgressBar) sendingProgressBar.style.width = '65%';
+        if (loadingStatus) loadingStatus.textContent = 'Enviando email de notificación...';
+        if (loadingSubstatus) loadingSubstatus.textContent = 'Enviando a algoritmiadesarrollos@gmail.com';
+      }, 400);
 
       try {
         const res = await fetch('/api/qualify-lead', {
@@ -687,12 +712,18 @@ import {
         });
 
         console.log('📬 Respuesta API:', res.status, res.ok);
-        if (loading) loading.classList.add('hidden');
 
         if (res.ok) {
-          if (success) success.classList.remove('hidden');
+          if (sendingProgressBar) sendingProgressBar.style.width = '100%';
+          if (loadingStatus) loadingStatus.textContent = '¡Mail enviado con éxito!';
+          if (loadingSubstatus) loadingSubstatus.textContent = 'Postulación registrada correctamente';
+
+          setTimeout(() => {
+            if (loading) loading.classList.add('hidden');
+            if (success) success.classList.remove('hidden');
+          }, 600);
         } else {
-          // Show inline error state
+          if (loading) loading.classList.add('hidden');
           if (errorDiv) errorDiv.classList.remove('hidden');
           if (submitBtn) {
             submitBtn.disabled = false;
@@ -702,7 +733,6 @@ import {
       } catch (err) {
         console.error('Submit error:', err);
         if (loading) loading.classList.add('hidden');
-        // Show inline error state
         if (errorDiv) errorDiv.classList.remove('hidden');
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -710,5 +740,9 @@ import {
         }
       }
     });
-  });
+  }
+
+  // Support both normal load and Astro View Transitions
+  document.addEventListener('DOMContentLoaded', initForm);
+  document.addEventListener('astro:page-load', initForm);
 </script>
