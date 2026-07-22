@@ -127,7 +127,7 @@ import {
         </div>
 
         <!-- Main Interactive Form -->
-        <form id="stepForm" class="space-y-4">
+        <form id="stepForm" class="space-y-4" novalidate>
           
           <!-- PASO 1: Tipo de Negocio -->
           <div class="form-step" data-step="1">
@@ -672,8 +672,43 @@ import {
       form.classList.remove('hidden');
     });
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    let isSubmitting = false;
+
+    const doSubmit = async () => {
+      if (isSubmitting) return;
+
+      const nombreInput = document.getElementById('nombre') as HTMLInputElement | null;
+      const emailInput = document.getElementById('email') as HTMLInputElement | null;
+      const telefonoInput = document.getElementById('telefono') as HTMLInputElement | null;
+
+      let hasFieldError = false;
+      if (!nombreInput || !nombreInput.value.trim()) {
+        nombreInput?.classList.add('border-red-500', 'bg-red-50');
+        hasFieldError = true;
+      } else {
+        nombreInput?.classList.remove('border-red-500', 'bg-red-50');
+      }
+
+      if (!emailInput || !emailInput.value.trim()) {
+        emailInput?.classList.add('border-red-500', 'bg-red-50');
+        hasFieldError = true;
+      } else {
+        emailInput?.classList.remove('border-red-500', 'bg-red-50');
+      }
+
+      if (!telefonoInput || !telefonoInput.value.trim()) {
+        telefonoInput?.classList.add('border-red-500', 'bg-red-50');
+        hasFieldError = true;
+      } else {
+        telefonoInput?.classList.remove('border-red-500', 'bg-red-50');
+      }
+
+      if (hasFieldError) {
+        alert('Por favor completá tu Nombre, Email y WhatsApp para enviar la postulación.');
+        return;
+      }
+
+      isSubmitting = true;
       const loading = document.getElementById('form-loading');
       const success = document.getElementById('form-success');
 
@@ -694,12 +729,12 @@ import {
       if (loading) loading.classList.remove('hidden');
 
       // Progress bar animation steps
-      if (sendingProgressBar) sendingProgressBar.style.width = '20%';
+      if (sendingProgressBar) sendingProgressBar.style.width = '25%';
       if (loadingStatus) loadingStatus.textContent = 'Procesando datos...';
       if (loadingSubstatus) loadingSubstatus.textContent = 'Validando tu perfil de marca';
 
       setTimeout(() => {
-        if (sendingProgressBar) sendingProgressBar.style.width = '65%';
+        if (sendingProgressBar) sendingProgressBar.style.width = '70%';
         if (loadingStatus) loadingStatus.textContent = 'Enviando email de notificación...';
         if (loadingSubstatus) loadingSubstatus.textContent = 'Enviando a algoritmiadesarrollos@gmail.com';
       }, 400);
@@ -721,8 +756,9 @@ import {
           setTimeout(() => {
             if (loading) loading.classList.add('hidden');
             if (success) success.classList.remove('hidden');
-          }, 600);
+          }, 500);
         } else {
+          isSubmitting = false;
           if (loading) loading.classList.add('hidden');
           if (errorDiv) errorDiv.classList.remove('hidden');
           if (submitBtn) {
@@ -731,6 +767,7 @@ import {
           }
         }
       } catch (err) {
+        isSubmitting = false;
         console.error('Submit error:', err);
         if (loading) loading.classList.add('hidden');
         if (errorDiv) errorDiv.classList.remove('hidden');
@@ -739,6 +776,16 @@ import {
           submitBtn.innerHTML = '<span>Enviar Postulación</span>';
         }
       }
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      doSubmit();
+    });
+
+    submitBtn?.addEventListener('click', (e) => {
+      e.preventDefault();
+      doSubmit();
     });
   }
 
