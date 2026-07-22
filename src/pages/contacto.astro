@@ -663,10 +663,10 @@ import {
       const loading = document.getElementById('form-loading');
       const success = document.getElementById('form-success');
 
-      // Show inline loading, hide form
-      form.classList.add('hidden');
-      if (progressContainer) progressContainer.classList.add('hidden');
-      if (loading) loading.classList.remove('hidden');
+      // Recolectar datos ANTES de ocultar el form (garantizado en todos los navegadores)
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      console.log('📤 Enviando postulación:', data);
 
       // Disable submit button and show spinner
       if (submitBtn) {
@@ -674,16 +674,19 @@ import {
         submitBtn.innerHTML = '<div class="btn-spinner"></div><span>Enviando...</span>';
       }
 
-      try {
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
+      // Show inline loading, hide form
+      form.classList.add('hidden');
+      if (progressContainer) progressContainer.classList.add('hidden');
+      if (loading) loading.classList.remove('hidden');
 
+      try {
         const res = await fetch('/api/qualify-lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
 
+        console.log('📬 Respuesta API:', res.status, res.ok);
         if (loading) loading.classList.add('hidden');
 
         if (res.ok) {
