@@ -96,7 +96,7 @@ const testimonials = [
             data-full-src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-final-1080p.mp4"
             poster="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-poster-1280-v2.jpg"
             aria-label="Presentación del sistema de crecimiento para marcas de cosmética"
-          >
+           loading="lazy">
             <source data-src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/skincare/vsl-teaser-5s-720p.mp4" type="video/mp4" />
             Tu navegador no soporta la reproducción de video.
           </video>
@@ -233,7 +233,7 @@ const testimonials = [
             <article class="testimonial-card" data-testimonial-index={index + 1} data-result={testimonial.highlight}>
               <div class="testimonial-video">
                 <img class="video-cover" src={testimonial.cover} alt="" loading="lazy" decoding="async" fetchpriority="low" />
-                <video class="testimonial-player hidden" preload="none" playsinline data-src={testimonial.video}></video>
+                <video class="testimonial-player hidden" preload="none" playsinline data-src={testimonial.video} loading="lazy"></video>
                 <button class="video-overlay" type="button" aria-label="Reproducir testimonio">
                   <span class="material-symbols-outlined">play_arrow</span>
                 </button>

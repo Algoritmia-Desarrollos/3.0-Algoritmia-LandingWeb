@@ -40,7 +40,7 @@ import Button from './UI/Button.astro';
       muted
       playsinline
       data-src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov"
-    >
+     loading="lazy">
       Tu navegador no soporta videos HTML5.
     </video>
     
@@ -77,7 +77,7 @@ import Button from './UI/Button.astro';
           playsinline
           controls
           controlslist="nofullscreen"
-        >
+         loading="lazy" preload="none">
           <source src="https://res.cloudinary.com/dfixkx6yi/video/upload/v1770474082/PRESENTACION_1_ej0uok.mov" type="video/mp4">
           Tu navegador no soporta videos HTML5.
         </video>

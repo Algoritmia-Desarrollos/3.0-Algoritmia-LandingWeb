@@ -164,7 +164,7 @@ const faqs = [
 						loop
 						preload="auto"
 						class="hero-native-video"
-					></video>
+					 loading="lazy"></video>
 					<button class="sound-overlay-badge" id="soundBadge" aria-label="Activar sonido">
 						<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
 						<span>Tocar para activar sonido</span>
@@ -213,7 +213,7 @@ const faqs = [
 						{videoTestimonials.map((item) => (
 							<div class="showcase-card testimonial-video-card">
 								<img class="video-cover-img" src={item.cover} alt={`Portada de ${item.title}`} loading="lazy" />
-								<video class="testimonial-video" preload="none" playsinline loop controls>
+								<video class="testimonial-video" preload="none" playsinline loop controls loading="lazy">
 									<source src={item.video} type="video/mp4" />
 								</video>
 								<div class="card-overlay">
@@ -250,7 +250,7 @@ const faqs = [
 				<p class="manifesto-line">
 					En Algoritmia estamos revolucionando cómo los negocios
 					<span class="inline-video-wrapper">
-						<video autoplay loop muted playsinline preload="metadata">
+						<video autoplay loop muted playsinline preload="metadata" loading="lazy">
 							<source src="https://tryholo.ai/rootPage/assets/integrationText/Bulb.mp4" type="video/mp4" />
 						</video>
 					</span>
@@ -259,13 +259,13 @@ const faqs = [
 				<p class="manifesto-line">
 					Usando nuestro método probado de pauta y creativos de alto rendimiento impulsamos
 					<span class="inline-video-wrapper">
-						<video autoplay loop muted playsinline preload="metadata">
+						<video autoplay loop muted playsinline preload="metadata" loading="lazy">
 							<source src="https://tryholo.ai/rootPage/assets/integrationText/brain.mp4" type="video/mp4" />
 						</video>
 					</span>
 					la facturación de tu marca logrando resultados predecibles en todas las
 					<span class="inline-video-wrapper">
-						<video autoplay loop muted playsinline preload="metadata">
+						<video autoplay loop muted playsinline preload="metadata" loading="lazy">
 							<source src="https://tryholo.ai/rootPage/assets/integrationText/socials.mp4" type="video/mp4" />
 						</video>
 					</span>
@@ -274,7 +274,7 @@ const faqs = [
 				<p class="manifesto-line">
 					Para que puedas hacer crecer tu negocio de forma sostenida
 					<span class="inline-video-wrapper">
-						<video autoplay loop muted playsinline preload="metadata">
+						<video autoplay loop muted playsinline preload="metadata" loading="lazy">
 							<source src="https://tryholo.ai/rootPage/assets/integrationText/team.mp4" type="video/mp4" />
 						</video>
 					</span>
@@ -287,7 +287,7 @@ const faqs = [
 		<!-- <section class="walkthrough-video-section" style="display: none;">
 			<div class="walkthrough-video-wrapper">
 				<div class="walkthrough-video-container">
-					<video autoplay muted loop playsinline preload="metadata">
+					<video autoplay muted loop playsinline preload="metadata" loading="lazy">
 						<source src="https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/creattia-media/walkthrough.mp4" type="video/mp4" />
 					</video>
 				</div>
@@ -329,7 +329,7 @@ const faqs = [
 											muted 
 											playsinline 
 											class="remotion-step-video"
-										></video>
+										 loading="lazy" preload="none"></video>
 									</div>
 								)}
 
@@ -383,7 +383,7 @@ const faqs = [
 											muted 
 											playsinline 
 											class="remotion-step-video"
-										></video>
+										 loading="lazy" preload="none"></video>
 									</div>
 								)}
 							</div>
@@ -846,6 +846,27 @@ const faqs = [
 		};
 		
 		requestAnimationFrame(animate);
+	}
+
+	// IntersectionObserver para reproducción diferida (lazy play) de videos inline
+	if ('IntersectionObserver' in window) {
+		const lazyVideos = document.querySelectorAll('video[autoplay]');
+		const videoObserver = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				const video = entry.target as HTMLVideoElement;
+				if (entry.isIntersecting) {
+					if (video.paused && !video.closest('.testimonial-video-card')) {
+						video.play().catch(() => {});
+					}
+				} else {
+					if (!video.paused && video.id !== 'heroVideo') {
+						video.pause();
+					}
+				}
+			});
+		}, { threshold: 0.15 });
+
+		lazyVideos.forEach(v => videoObserver.observe(v));
 	}
 </script>
 

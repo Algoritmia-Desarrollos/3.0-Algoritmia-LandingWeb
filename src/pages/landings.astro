@@ -394,7 +394,7 @@ const faqs = [
                 </div>
                 <div class="testimonial-card relative group cursor-pointer rounded-2xl overflow-hidden bg-black shadow-lg aspect-[4/5] w-full">
                   <img class="video-cover-img absolute inset-0 w-full h-full object-cover" src={item.cover} alt={`Portada de ${item.title}`} loading="lazy" />
-                  <video class="hero-testimonial-video absolute inset-0 w-full h-full object-cover bg-black hidden" preload="none" playsinline>
+                  <video class="hero-testimonial-video absolute inset-0 w-full h-full object-cover bg-black hidden" preload="none" playsinline loading="lazy">
                     <source src={item.video} type="video/mp4" />
                   </video>
                   <div class="video-overlay absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-all duration-300">
