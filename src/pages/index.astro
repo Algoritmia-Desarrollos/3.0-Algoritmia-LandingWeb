@@ -125,14 +125,11 @@ const faqs = [
 	ogTitle="Algoritmia | Expertos en Meta Ads"
 	ogDescription="Multiplicamos la facturación de tu negocio en Meta Ads con nuestro método probado y anuncios de alto rendimiento."
 >
-	<link rel="preload" href="https://tryholo.ai/fonts/Satoshi-Variable.woff2" as="font" crossorigin="anonymous" type="font/woff2" slot="head" />
-	<link rel="preload" href="https://tryholo.ai/fonts/Satoshi-VariableItalic.woff2" as="font" crossorigin="anonymous" type="font/woff2" slot="head" />
-	<link rel="preload" href="https://tryholo.ai/fonts/Wonderkids-Regular.ttf" as="font" crossorigin="anonymous" type="font/ttf" slot="head" />
 
 	<!-- Header de Navegación -->
 	<header class="floating-header" aria-label="Navegación principal">
 		<a class="logo-bubble" href="#inicio" aria-label="Algoritmia, volver al inicio">
-			<img src="/logoAlgoritmia.webp" alt="Algoritmia Logo" width="1254" height="1254" decoding="async"/>
+			<img loading="eager" decoding="async" src="/logoAlgoritmia.webp" alt="Algoritmia Logo" width="42" height="42" decoding="async"/>
 		</a>
 		<nav class="nav-links">
 			<a href="#testimonios">Testimonios</a>
@@ -143,22 +140,8 @@ const faqs = [
 		<div class="header-actions">
 			<a class="outline-cta" href="/contacto">Comencemos <span>→</span></a>
 			<a class="header-cta-mobile" href="/contacto">Comencemos</a>
-			<button class="mobile-menu-toggle" aria-label="Abrir menú" id="mobile-toggle">
-				<span></span><span></span><span></span>
-			</button>
 		</div>
 	</header>
-
-	<!-- Menú móvil colapsable -->
-	<div class="mobile-nav-overlay" id="mobile-overlay">
-		<nav class="mobile-nav">
-			<a href="#testimonios" class="mobile-nav-link">Testimonios</a>
-			<a href="#como-funciona" class="mobile-nav-link">Cómo funciona</a>
-			<a href="#faq" class="mobile-nav-link">Preguntas</a>
-			<a href="/contacto" class="mobile-nav-link">Contacto</a>
-			<a class="mobile-cta" href="/contacto">Comencemos</a>
-		</nav>
-	</div>
 
 	<main class="landing-content">
 		<!-- Hero Section -->
@@ -418,7 +401,7 @@ const faqs = [
 					<h2>Estrategias creativas que validan tu mercado.</h2>
 					<p>No dependas de una sola idea. Desarrollamos y testeamos variaciones continuas de anuncios para tu marca. En base al rendimiento real, optimizamos la comunicación visual para enfocar el presupuesto en lo que realmente genera clientes calificados.</p>
 					<div class="moki-tip-bubble">
-						<img src="/logoAlgoritmia.webp" alt="Algoritmia" decoding="async"/>
+						<img loading="eager" decoding="async" src="/logoAlgoritmia.webp" alt="Algoritmia" decoding="async"/>
 						<p>"Analizamos las métricas clave de cada creativo para asegurar la escala de tu negocio."</p>
 					</div>
 				</div>
@@ -467,7 +450,7 @@ const faqs = [
 						<tr>
 							<th class="col-feature"></th>
 							<th class="col-creattia">
-								<img class="header-logo creattia-logo" src="/logoAlgoritmia.webp" alt="Algoritmia" decoding="async"/>
+								<img loading="eager" decoding="async" class="header-logo creattia-logo" src="/logoAlgoritmia.webp" alt="Algoritmia" decoding="async"/>
 							</th>
 							<th class="col-competitor">
 								<svg viewBox="0 0 24 24" width="28" height="28" stroke="#8c8c8c" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 6px;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="16"></line><line x1="15" y1="22" x2="15" y2="16"></line><line x1="9" y1="16" x2="15" y2="16"></line><path d="M8 6h.01M16 6h.01M9 10h.01M15 10h.01M12 6h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"></path></svg>
@@ -657,7 +640,7 @@ const faqs = [
 	<footer class="main-footer">
 		<div class="footer-brand">
 			<a href="#inicio" class="footer-logo">
-				<img src="/logoAlgoritmia.webp" alt="Algoritmia Logo" decoding="async"/>
+				<img loading="eager" decoding="async" src="/logoAlgoritmia.webp" alt="Algoritmia Logo" decoding="async"/>
 				<strong>Algoritmia</strong>
 			</a>
 			<p>Multiplicamos la facturación de tu negocio con Meta Ads.</p>
@@ -712,28 +695,6 @@ const faqs = [
 			});
 		});
 	});
-
-	// Menú móvil
-	const mobileToggle = document.getElementById('mobile-toggle');
-	const mobileOverlay = document.getElementById('mobile-overlay');
-
-	if (mobileToggle && mobileOverlay) {
-		mobileToggle.addEventListener('click', () => {
-			mobileToggle.classList.toggle('active');
-			mobileOverlay.classList.toggle('active');
-			document.body.classList.toggle('menu-open');
-		});
-
-		// Cerrar menú al hacer clic en enlaces del menú
-		const mobileLinks = mobileOverlay.querySelectorAll('.mobile-nav-link');
-		mobileLinks.forEach(link => {
-			link.addEventListener('click', () => {
-				mobileToggle.classList.remove('active');
-				mobileOverlay.classList.remove('active');
-				document.body.classList.remove('menu-open');
-			});
-		});
-	}
 
 	// Lógica de reproducción de video en los testimonios
 	const testimonialCards = document.querySelectorAll('.testimonial-video-card');
@@ -830,37 +791,41 @@ const faqs = [
 		updatePerspective();
 	}
 
-	// Lógica de Scroll de Showcase Carousel (Auto-scroll + Manual + Drag)
+	// Lógica de Scroll de Showcase Carousel (Touch, Drag & WebView compatible)
 	const track = document.querySelector('.showcase-marquee') as HTMLElement | null;
 	const prevBtn = document.querySelector('.prev-btn');
 	const nextBtn = document.querySelector('.next-btn');
 	if (track && prevBtn && nextBtn) {
-		const cardWidth = 300; // 280px card + 20px gap
+		const getStep = () => {
+			const card = track.querySelector('.showcase-card') as HTMLElement | null;
+			return card ? card.offsetWidth + 20 : 300;
+		};
 		
-		const scrollNext = () => {
+		const scrollNext = (e?: Event) => {
+			if (e) { e.preventDefault(); e.stopPropagation(); }
+			const step = getStep();
 			const maxScrollLeft = track.scrollWidth - track.clientWidth;
-			if (track.scrollLeft >= maxScrollLeft - 10) {
+			if (track.scrollLeft >= maxScrollLeft - 15) {
 				track.scrollTo({ left: 0, behavior: 'smooth' });
 			} else {
-				track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+				track.scrollBy({ left: step, behavior: 'smooth' });
 			}
 		};
 		
-		const scrollPrev = () => {
-			if (track.scrollLeft <= 10) {
+		const scrollPrev = (e?: Event) => {
+			if (e) { e.preventDefault(); e.stopPropagation(); }
+			const step = getStep();
+			if (track.scrollLeft <= 15) {
 				track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
 			} else {
-				track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+				track.scrollBy({ left: -step, behavior: 'smooth' });
 			}
 		};
 		
-		prevBtn.addEventListener('click', () => {
-			scrollPrev();
+		['click', 'touchend'].forEach(evtType => {
+			prevBtn.addEventListener(evtType, scrollPrev, { passive: false });
+			nextBtn.addEventListener(evtType, scrollNext, { passive: false });
 		});
-		nextBtn.addEventListener('click', () => {
-			scrollNext();
-		});
-
 	}
 
 	// Lógica de Rotación 3D del Cylinder Carousel (All-in-One)
@@ -1634,6 +1599,7 @@ const faqs = [
 		width: 100%;
 		overflow-x: auto;
 		scroll-behavior: smooth;
+		scroll-snap-type: x mandatory;
 		touch-action: pan-x pan-y;
 		scrollbar-width: none; /* Hide scrollbar Firefox */
 		padding: 0;
@@ -1651,6 +1617,8 @@ const faqs = [
 	}
 	.showcase-card {
 		width: 280px;
+		flex-shrink: 0;
+		scroll-snap-align: start;
 		aspect-ratio: 9/16;
 		border-radius: 24px;
 		overflow: hidden;
@@ -1814,9 +1782,15 @@ const faqs = [
 		align-items: center;
 		justify-content: center;
 		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
 		transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 		user-select: none;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+	}
+
+	.arrow-nav-btn svg {
+		pointer-events: none;
 	}
 
 	.arrow-nav-btn:hover {

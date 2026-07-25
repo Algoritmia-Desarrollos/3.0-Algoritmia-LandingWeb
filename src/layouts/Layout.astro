@@ -170,19 +170,23 @@ const jsonLd = {
         document.documentElement.style.setProperty('--vh', vh + 'px');
       })();
 
-      // Preloader Logic
-      document.addEventListener('astro:page-load', () => {
-        // Short timeout to ensure smooth transition
-        setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.remove();
-                }, 500);
-            }
-        }, 100);
-      });
+      // Preloader Logic - Fast dismiss
+      function hidePreloader() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+          preloader.style.opacity = '0';
+          setTimeout(() => {
+            preloader.remove();
+          }, 300);
+        }
+      }
+
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        hidePreloader();
+      } else {
+        document.addEventListener('DOMContentLoaded', hidePreloader, { once: true });
+      }
+      document.addEventListener('astro:page-load', hidePreloader);
     </script>
 	</body>
 </html>

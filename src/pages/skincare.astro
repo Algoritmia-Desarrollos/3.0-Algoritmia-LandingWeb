@@ -54,7 +54,7 @@ const testimonials = [
   disableZoom={true}
 >
   <noscript>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=989984603929968&ev=PageView&noscript=1" alt="" />
+    <img loading="lazy" decoding="async" height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=989984603929968&ev=PageView&noscript=1" alt="" />
   </noscript>
   <Fragment slot="head">
     <link rel="preconnect" href="https://czocbnyoenjbpxmcqobn.supabase.co" crossorigin />
@@ -276,8 +276,8 @@ const testimonials = [
     0%, 100% { transform: scale(1); opacity: 0.15; filter: blur(4px); }
     50% { transform: scale(1.03, 1.1); opacity: 0.45; filter: blur(7px); }
   }
-  .cta-rating-wrap { margin-top: 74px; margin-bottom: 74px; display: flex; justify-content: center; }
-  .rating-stars { display: inline-flex; align-items: center; gap: 8px; padding: 15px 13px; background: #ffffff; border-radius: 999px; border: 1px solid rgba(24,19,22,.1); box-shadow: 0 4px 16px rgba(0,0,0,.04); }
+  .cta-rating-wrap { margin-top: 76px; margin-bottom: 76px; display: flex; justify-content: center; }
+  .rating-stars { display: inline-flex; align-items: center; gap: 8px; padding: 5px 13px; background: #ffffff; border-radius: 999px; border: 1px solid rgba(24,19,22,.1); box-shadow: 0 4px 16px rgba(0,0,0,.04); }
   .avatars-group { display: flex; }
   .rating-avatar-img { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #ffffff; margin-right: -6px; object-fit: cover; }
   .rating-avatar-img:last-child { margin-right: 0; }
@@ -338,7 +338,7 @@ const testimonials = [
     .vsl-unmute-icon { width: 29px; height: 29px; font-size: 17px; }
     .vsl-unmute strong { font-size: 11px; }
     .video-cta { margin-top: 32px; margin-bottom: 0; }
-    .cta-rating-wrap { margin-top: 66px; margin-bottom: 66px; }
+    .cta-rating-wrap { margin-top: 76px; margin-bottom: 76px; }
     .form-section { min-height: 100svh; padding: 0 16px 70px; justify-content: flex-start; }
     .form-heading { margin-bottom: 27px; }
     .form-heading h2 { font-size: clamp(36px, 10.5vw, 44px); line-height: 1.02; }
