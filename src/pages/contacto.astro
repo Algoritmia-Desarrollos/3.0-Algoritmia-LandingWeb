@@ -87,7 +87,7 @@ import {
           </div>
           <h2 id="dq-title" class="text-lg md:text-xl font-bold text-slate-900 mb-2">No podemos tomar tu proyecto en esta etapa</h2>
           <p id="dq-message" class="text-slate-600 text-xs md:text-sm max-w-md mx-auto mb-5 leading-relaxed">
-            Para garantizar resultados positivos en Meta Ads, únicamente trabajamos con marcas que ya tienen una oferta validada y ventas activas en su tienda online.
+            Para garantizar resultados positivos en Meta Ads, únicamente trabajamos con marcas que ya tienen una oferta validada y clientes o ventas activas.
           </p>
 
           <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl text-left max-w-md mx-auto mb-5 text-xs text-slate-600 space-y-1">
@@ -191,7 +191,7 @@ import {
             </div>
           </div>
 
-          <!-- PASO 2: Validación de Ventas Activas (CONDICIONAL) -->
+          <!-- PASO 2: Validación de Clientes y Ventas (CONDICIONAL) -->
           <div class="form-step hidden" data-step="2">
             <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-3">
               <button type="button" class="prev-step-btn inline-flex items-center gap-1 text-slate-500 hover:text-blue-600 font-semibold transition-colors">
@@ -202,7 +202,7 @@ import {
             </div>
 
             <div class="mb-5">
-              <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Tenés una oferta validada y ventas activas?</h2>
+              <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Tenés una oferta validada y clientes o ventas activas?</h2>
             </div>
 
             <div class="grid grid-cols-1 gap-3">
@@ -210,7 +210,7 @@ import {
                 <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
                   <CheckCircle2 class="w-5 h-5" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Sí, tengo ventas activas (online, local físico o canal directo)</span>
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Sí, ya tengo clientes o ventas activas</span>
                 <input type="radio" name="hasValidatedOffer" value="yes_active" required class="sr-only" />
               </label>
 
@@ -218,7 +218,7 @@ import {
                 <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-amber-600 flex items-center justify-center transition-colors shrink-0">
                   <Clock class="w-5 h-5" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Tengo tienda o local pero todavía NO tengo ventas regulares</span>
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Tengo oferta o negocio pero todavía NO tengo clientes ni ventas regulares</span>
                 <input type="radio" name="hasValidatedOffer" value="no_sales" class="sr-only" />
               </label>
 
@@ -226,13 +226,13 @@ import {
                 <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-rose-600 flex items-center justify-center transition-colors shrink-0">
                   <XCircle class="w-5 h-5" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">No tengo ventas activas ni oferta validada aún</span>
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">No tengo clientes ni oferta validada aún</span>
                 <input type="radio" name="hasValidatedOffer" value="no_store" class="sr-only" />
               </label>
             </div>
           </div>
 
-          <!-- PASO 3: Plataforma de Tienda / Web -->
+          <!-- PASO 3: Plataforma de Sitio / Web / Canal -->
           <div class="form-step hidden" data-step="3">
             <div class="flex items-center justify-between text-xs font-medium text-slate-400 mb-3">
               <button type="button" class="prev-step-btn inline-flex items-center gap-1 text-slate-500 hover:text-blue-600 font-semibold transition-colors">
@@ -243,7 +243,7 @@ import {
             </div>
 
             <div class="mb-5">
-              <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Dónde tenés alojada tu tienda online o sitio?</h2>
+              <h2 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">¿Dónde tenés alojado tu sitio web, tienda o landing page?</h2>
             </div>
 
             <div class="grid grid-cols-1 gap-3">
@@ -265,26 +265,26 @@ import {
 
               <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-xs cursor-pointer transition-all bg-white">
                 <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 flex items-center justify-center transition-colors shrink-0">
-                  <img src="/images/platforms/logowordpress.webp" alt="WooCommerce / WordPress Logo" class="w-5.5 h-5.5 object-contain" loading="lazy" decoding="async" />
+                  <img src="/images/platforms/logowordpress.webp" alt="WordPress Logo" class="w-5.5 h-5.5 object-contain" loading="lazy" decoding="async" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">WooCommerce / WordPress</span>
-                <input type="radio" name="platform" value="WooCommerce" class="sr-only" />
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">WordPress / WooCommerce</span>
+                <input type="radio" name="platform" value="WordPress / WooCommerce" class="sr-only" />
               </label>
 
               <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-xs cursor-pointer transition-all bg-white">
                 <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-700 flex items-center justify-center transition-colors shrink-0">
                   <Code2 class="w-5 h-5" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Desarrollo Propio / Vercel / Webflow / Otro</span>
-                <input type="radio" name="platform" value="Custom" class="sr-only" />
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Web propia / Landing Page</span>
+                <input type="radio" name="platform" value="Web Propia / Landing Page" class="sr-only" />
               </label>
 
               <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-xs cursor-pointer transition-all bg-white">
-                <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-600 flex items-center justify-center transition-colors shrink-0">
+                <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
                   <MessageSquare class="w-5 h-5" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">No aplica / Canal directo (WhatsApp, Instagram, etc.)</span>
-                <input type="radio" name="platform" value="No aplica" class="sr-only" />
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Sin sitio web aún (vendo directo por WhatsApp / Instagram)</span>
+                <input type="radio" name="platform" value="Canal Directo (WhatsApp/IG)" class="sr-only" />
               </label>
             </div>
           </div>
@@ -615,7 +615,7 @@ import {
         if (hasOffer === 'no_sales' || hasOffer === 'no_store') {
           showDisqualification(
             'Disculpanos, por el momento no somos el match adecuado',
-            'Para garantizar un retorno positivo de la inversión en Meta Ads, trabajamos únicamente con marcas que ya tienen una oferta validada con ventas activas (online, local físico o canal directo).'
+            'Para garantizar un retorno positivo de la inversión en Meta Ads, trabajamos únicamente con marcas que ya tienen una oferta validada con clientes o ventas activas.'
           );
           return;
         }
