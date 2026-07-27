@@ -6,7 +6,7 @@ import {
   Briefcase, 
   GraduationCap, 
   Laptop, 
-  Store, 
+  Building2, 
   CheckCircle2, 
   Clock,
   XCircle, 
@@ -34,7 +34,7 @@ import {
     <!-- Header Navigation (Alineado a la izquierda con el contenido) -->
     <header class="max-w-lg mx-auto w-full px-5 sm:px-8 pt-6 pb-4">
       <div class="inline-flex items-center gap-2.5">
-        <img loading="eager" decoding="async" src="/logoAlgoritmia.webp" alt="Algoritmia Logo" class="w-8 h-8 object-contain" />
+        <img loading="eager" decoding="async" src="/logoAlgoritmia.webp" alt="Algoritmia Logo" class="w-8 h-8 object-contain" transition:animate="none" />
         <span class="font-bold text-xl tracking-tight text-slate-900">Algoritmia</span>
       </div>
     </header>
@@ -153,7 +153,23 @@ import {
                 <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-purple-600 flex items-center justify-center transition-colors shrink-0">
                   <Briefcase class="w-5 h-5" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Servicios B2B / Agencia</span>
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Servicios / Consultoría / Salud</span>
+                <input type="radio" name="businessType" value="Servicios" class="sr-only" />
+              </label>
+
+              <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-xs cursor-pointer transition-all bg-white">
+                <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
+                  <Building2 class="w-5 h-5" />
+                </div>
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Inmobiliaria / Desarrollos / High Ticket</span>
+                <input type="radio" name="businessType" value="Inmobiliaria / High Ticket" class="sr-only" />
+              </label>
+
+              <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-xs cursor-pointer transition-all bg-white">
+                <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-indigo-600 flex items-center justify-center transition-colors shrink-0">
+                  <TrendingUp class="w-5 h-5" />
+                </div>
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Servicios B2B / Empresa</span>
                 <input type="radio" name="businessType" value="Servicios B2B" class="sr-only" />
               </label>
 
@@ -161,24 +177,16 @@ import {
                 <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-amber-600 flex items-center justify-center transition-colors shrink-0">
                   <GraduationCap class="w-5 h-5" />
                 </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Infoproductos / Cursos</span>
+                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Infoproductos / Cursos / Educación</span>
                 <input type="radio" name="businessType" value="Infoproductos" class="sr-only" />
               </label>
 
               <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-xs cursor-pointer transition-all bg-white">
-                <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-indigo-600 flex items-center justify-center transition-colors shrink-0">
+                <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-sky-600 flex items-center justify-center transition-colors shrink-0">
                   <Laptop class="w-5 h-5" />
                 </div>
                 <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Software / SaaS / App</span>
                 <input type="radio" name="businessType" value="Software" class="sr-only" />
-              </label>
-
-              <label class="option-card group flex items-center gap-3.5 p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-xs cursor-pointer transition-all bg-white">
-                <div class="icon-box w-10 h-10 rounded-xl bg-slate-100 border border-slate-200/80 text-emerald-600 flex items-center justify-center transition-colors shrink-0">
-                  <Store class="w-5 h-5" />
-                </div>
-                <span class="text-sm md:text-base font-semibold text-slate-900 flex-1 leading-snug">Negocio Local / Físico</span>
-                <input type="radio" name="businessType" value="Local" class="sr-only" />
               </label>
             </div>
           </div>
@@ -596,6 +604,8 @@ import {
       sendDisqualificationEmail(title + ': ' + message);
     };
 
+    let isAdvancing = false;
+
     const handleStepAdvance = () => {
       const formData = new FormData(form);
 
@@ -623,34 +633,33 @@ import {
         }
       }
 
-      // Avance directo al siguiente paso
+      // Avance directo al siguiente paso (estrictamente de uno en uno)
       if (currentStepIndex < steps.length - 1) {
         currentStepIndex++;
         updateStepUI(currentStepIndex);
       }
     };
 
-    // Auto-avance al hacer clic en cualquier opción (event delegation)
-    form.addEventListener('click', (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const card = target.closest('.option-card') as HTMLElement | null;
-      if (!card) return;
+    // Auto-avance seguro al cambiar la opción seleccionada
+    form.addEventListener('change', (e: Event) => {
+      const target = e.target as HTMLInputElement | null;
+      if (target && target.type === 'radio') {
+        if (isAdvancing) return;
+        isAdvancing = true;
 
-      const radio = card.querySelector('input[type="radio"]') as HTMLInputElement | null;
-      if (radio) {
-        radio.checked = true;
-        // Dispatch change so :has() CSS selector updates immediately
-        radio.dispatchEvent(new Event('change', { bubbles: true }));
+        setTimeout(() => {
+          handleStepAdvance();
+          setTimeout(() => {
+            isAdvancing = false;
+          }, 350);
+        }, 120);
       }
-
-      // 80ms: just enough for visual feedback, feels instant
-      setTimeout(() => {
-        handleStepAdvance();
-      }, 80);
     });
 
     prevBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
         if (currentStepIndex > 0) {
           currentStepIndex--;
           updateStepUI(currentStepIndex);

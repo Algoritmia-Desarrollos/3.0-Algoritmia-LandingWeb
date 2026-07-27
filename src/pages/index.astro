@@ -73,11 +73,12 @@ const plans = [
 
 
 const videoTestimonials = [
-  { title: 'The Skirting Factory',   stat: '+300% ventas el 1º mes',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-skirting.webp',     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/manuel-descartes.mp4', tag: 'E-commerce USA' },
-  { title: 'Librería Mayorista Leo', stat: '$150K USD anuales',              cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-libreria-leo.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/libreria-leo.mp4',    tag: 'Mayorista B2B' },
-  { title: 'Puertas Blindadas Jack', stat: 'x10 ventas High Ticket',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-jack.webp',       video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/puertas-jack.mp4',    tag: 'High Ticket' },
+  { title: 'The Skirting Factory',   stat: '+300% ventas el 1º mes',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-skirting.webp',     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/manuel-descartes.mp4', tag: 'E-commerce' },
+  { title: 'Librería Mayorista Leo', stat: '$150K USD anuales',              cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-libreria-leo.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/libreria-leo.mp4',    tag: 'E-commerce B2B' },
+  { title: 'Puertas Blindadas Jack', stat: 'x10 ventas High Ticket',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-jack.webp',       video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/puertas-jack.mp4',    tag: 'Producto High Ticket' },
   { title: 'Dr. Juan Tesari',        stat: '+300 consultas / mes',           cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-juan.webp',         video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/juan-tesari.mp4',     tag: 'Salud / Servicios' },
   { title: 'Atérmicos Pinamar',      stat: '+15 contratos High Ticket / mes', cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-atermicos.webp', video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/atermicos-pinamar.mp4', tag: 'Construcción Premium' },
+  { title: 'Rocío',                  stat: '+15 pacientes / semana',         cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-rocio.webp',     video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/psicologa-rocio.mp4',  tag: 'Servicios' },
   { title: 'Case Rossi',             stat: 'ROAS récord 70x',                cover: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/portada-case-rossi.webp',  video: 'https://czocbnyoenjbpxmcqobn.supabase.co/storage/v1/object/public/testimonials/case-rossi.mp4',     tag: 'Ecommerce' }
 ];
 
@@ -129,17 +130,17 @@ const faqs = [
 	<!-- Header de Navegación -->
 	<header class="floating-header" aria-label="Navegación principal">
 		<a class="logo-bubble" href="#inicio" aria-label="Algoritmia, volver al inicio">
-			<img loading="eager" decoding="async" src="/logoAlgoritmia.webp" alt="Algoritmia Logo" width="42" height="42" decoding="async"/>
+			<img loading="eager" decoding="async" src="/logoAlgoritmia.webp" alt="Algoritmia Logo" width="42" height="42" decoding="async" transition:animate="none" />
 		</a>
 		<nav class="nav-links">
 			<a href="#testimonios">Testimonios</a>
 			<a href="#como-funciona">Cómo funciona</a>
 			<a href="#faq">Preguntas</a>
-			<a href="/contacto">Contacto</a>
+			<a href="/contacto" data-astro-reload>Contacto</a>
 		</nav>
 		<div class="header-actions">
-			<a class="outline-cta" href="/contacto">Comencemos <span>→</span></a>
-			<a class="header-cta-mobile" href="/contacto">Comencemos</a>
+			<a class="outline-cta" href="/contacto" data-astro-reload>Comencemos <span>→</span></a>
+			<a class="header-cta-mobile" href="/contacto" data-astro-reload>Comencemos</a>
 		</div>
 	</header>
 
@@ -175,7 +176,7 @@ const faqs = [
 						Logramos en promedio un aumento del 45% en el retorno de inversión (ROAS) y un 50% de incremento en facturación neta dentro de los primeros 90 días.
 					</p>
 					<div class="hero-actions">
-						<a class="gradient-cta" href="/contacto">
+						<a class="gradient-cta" href="/contacto" data-astro-reload>
 							<span>Quiero escalar mi marca</span>
 							<svg class="cta-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg>
 						</a>
@@ -201,9 +202,8 @@ const faqs = [
 		<section class="showcase-section" id="testimonios">
 			<div class="showcase-container">
 				<div class="showcase-header-wrapper" style="text-align: left; margin-bottom: 40px;">
-					<h2 class="banner-heading" style="font-size: clamp(18px, 4.8vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.03em; color: var(--text-dark); margin: 0;">
-						Probablemente ya viste nuestro trabajo.<br />
-						Solo que no sabías que era de Algoritmia.
+					<h2 class="banner-heading" style="font-size: clamp(22px, 4.8vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.03em; color: var(--text-dark); margin: 0;">
+						Casos de éxito & testimonios reales
 					</h2>
 				</div>
 
@@ -595,7 +595,7 @@ const faqs = [
 					Completá nuestra postulación paso a paso en menos de 1 minuto. Evaluamos la compatibilidad de tu marca sin compromiso.
 				</p>
 				<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-					<a href="/contacto" class="gradient-cta group w-full sm:w-auto px-5 sm:px-8 py-4 font-bold text-sm sm:text-base rounded-2xl flex items-center justify-center gap-2.5 sm:gap-3 shadow-xl transition-all hover:scale-105 active:scale-95 whitespace-nowrap">
+					<a href="/contacto" data-astro-reload class="gradient-cta group w-full sm:w-auto px-5 sm:px-8 py-4 font-bold text-sm sm:text-base rounded-2xl flex items-center justify-center gap-2.5 sm:gap-3 shadow-xl transition-all hover:scale-105 active:scale-95 whitespace-nowrap">
 						<span class="whitespace-nowrap">Comenzar Postulación Paso a Paso</span>
 						<svg class="w-5 h-5 shrink-0 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path>
@@ -1446,6 +1446,7 @@ const faqs = [
 		display: flex;
 		justify-content: center;
 		margin-top: 40px;
+		margin-bottom: 40px;
 		width: 100%;
 		order: 3;
 	}
@@ -1454,6 +1455,7 @@ const faqs = [
 		.hero-rating-wrapper {
 			order: 3;
 			margin-top: 60px;
+			margin-bottom: 60px;
 		}
 	}
 
