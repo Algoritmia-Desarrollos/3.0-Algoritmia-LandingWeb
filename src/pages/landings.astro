@@ -385,7 +385,7 @@ const faqs = [
         </div>
 
         <div class="relative">
-          <div id="testimonials-track" class="flex gap-4 sm:gap-5 overflow-x-auto snap-x snap-mandatory pb-4 -mx-3 px-3 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
+          <div id="testimonials-track" class="flex gap-4 sm:gap-5 overflow-x-hidden touch-pan-y select-none pb-4 -mx-3 px-3 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
             {testimonials.map(item => (
               <div class="snap-start shrink-0 w-[78%] sm:w-[48%] lg:w-[32%] p-4 sm:p-5 rounded-[20px] bg-white border border-zinc-200 shadow-sm flex flex-col gap-3">
                 <div class="flex flex-col gap-1.5 min-h-[82px]">
@@ -852,8 +852,23 @@ const faqs = [
         const gap = parseInt(style.columnGap || style.gap || '20', 10) || 20;
         return first.offsetWidth + gap;
       };
-      prev?.addEventListener('click', () => track.scrollBy({ left: -getStep(), behavior: 'smooth' }));
-      next?.addEventListener('click', () => track.scrollBy({ left: getStep(), behavior: 'smooth' }));
+      prev?.addEventListener('click', () => {
+        const step = getStep();
+        if (track.scrollLeft <= 15) {
+          track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: -step, behavior: 'smooth' });
+        }
+      });
+      next?.addEventListener('click', () => {
+        const step = getStep();
+        const maxScrollLeft = track.scrollWidth - track.clientWidth;
+        if (track.scrollLeft >= maxScrollLeft - 15) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: step, behavior: 'smooth' });
+        }
+      });
     }
 
     function bootLanding() {

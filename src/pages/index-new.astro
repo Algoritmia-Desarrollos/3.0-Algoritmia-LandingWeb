@@ -219,10 +219,18 @@ const faqs = [
 		<!-- Showcase Section / Testimonials Carousel -->
 		<section class="showcase-section" id="testimonios">
 			<div class="showcase-container">
-				<div class="showcase-header-wrapper" style="text-align: left; margin-bottom: 40px;">
-					<h2 class="banner-heading" style="font-size: clamp(22px, 4.8vw, 38px); font-weight: 800; line-height: 1.25; letter-spacing: -0.03em; color: var(--text-dark); margin: 0;">
+				<div class="showcase-header-wrapper">
+					<h2 class="banner-heading">
 						Casos de éxito & testimonios reales
 					</h2>
+					<div class="carousel-nav-arrows">
+						<button class="arrow-nav-btn prev-btn" aria-label="Anterior">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+						</button>
+						<button class="arrow-nav-btn next-btn" aria-label="Siguiente">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+						</button>
+					</div>
 				</div>
 
 				<div class="showcase-marquee" aria-label="Testimonios en video de Algoritmia">
@@ -245,17 +253,6 @@ const faqs = [
 								</div>
 							</div>
 						))}
-					</div>
-				</div>
-				
-				<div class="showcase-footer-nav">
-					<div class="carousel-nav-arrows">
-						<button class="arrow-nav-btn prev-btn" aria-label="Anterior">
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
-						</button>
-						<button class="arrow-nav-btn next-btn" aria-label="Siguiente">
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-						</button>
 					</div>
 				</div>
 			</div>
@@ -1551,13 +1548,17 @@ const faqs = [
 		max-width: 1120px;
 		margin: 0 auto;
 		width: 100%;
-		overflow: hidden;
+		overflow: visible;
 	}
 
 	.showcase-header-wrapper {
 		width: 100%;
-		margin: 0 0 40px;
-		text-align: left;
+		margin: 0 0 24px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		flex-wrap: wrap;
 	}
 
 	.rating-stars {
@@ -1618,9 +1619,11 @@ const faqs = [
 		width: 100%;
 		overflow-x: hidden;
 		scroll-behavior: smooth;
-		touch-action: none;
+		touch-action: pan-y;
 		scrollbar-width: none; /* Hide scrollbar Firefox */
 		padding: 20px 0;
+		user-select: none;
+		-webkit-user-select: none;
 	}
 
 	.showcase-marquee::-webkit-scrollbar {
@@ -1774,16 +1777,12 @@ const faqs = [
 		background: rgba(255, 255, 255, 0.8);
 	}
 
-	.showcase-footer-nav {
-		width: 100%;
-		margin: 30px auto 0;
-		display: flex;
-		justify-content: flex-end;
-	}
-
 	.carousel-nav-arrows {
 		display: flex;
 		gap: 8px;
+		align-items: center;
+		padding: 6px;
+		z-index: 10;
 	}
 
 	.arrow-nav-btn {
@@ -1799,13 +1798,14 @@ const faqs = [
 		cursor: pointer;
 		transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 		user-select: none;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+		flex-shrink: 0;
 	}
 
 	.arrow-nav-btn:hover {
 		background: #F8F9FA;
 		transform: scale(1.05);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 	}
 
 	@keyframes imageRail {
