@@ -664,6 +664,10 @@ const faqs = [
 				<strong>Algoritmia</strong>
 			</a>
 			<p>Multiplicamos la facturación de tu negocio con Meta Ads.</p>
+			<div class="footer-legal-tag">
+				<span>QUILLSTONE DIGITAL LLC</span>
+				<span>1057 NW 136TH AVE, MIAMI, FL 33182</span>
+			</div>
 		</div>
 		
 		<div class="footer-col">
@@ -685,7 +689,8 @@ const faqs = [
 		</div>
 
 		<div class="footer-bottom">
-			<p>© 2026 Algoritmia. Todos los derechos reservados.</p>
+			<p>© 2026 Algoritmia · QUILLSTONE DIGITAL LLC. Todos los derechos reservados.</p>
+			<p>1057 NW 136TH AVE, MIAMI, FL 33182</p>
 		</div>
 	</footer>
 	<WhatsAppButton />
@@ -3382,9 +3387,31 @@ const faqs = [
 		grid-column: 1 / -1;
 		border-top: 1px solid var(--border-color);
 		padding-top: 30px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		align-items: center;
 		text-align: center;
 		font-size: 12px;
 		color: var(--text-grey);
+	}
+
+	@media (min-width: 768px) {
+		.footer-bottom {
+			flex-direction: row;
+			justify-content: space-between;
+			text-align: left;
+		}
+	}
+
+	.footer-legal-tag {
+		margin-top: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		font-size: 12px;
+		color: #64748b;
+		font-weight: 500;
 	}
 
 	/* ==========================================
